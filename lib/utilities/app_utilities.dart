@@ -16,3 +16,12 @@ MaterialColor appTheme = const MaterialColor(0xFF79a207, {
   800: appColor,
   900: appColor,
 });
+
+/// static Logos and Images path
+
+const String mainPostBottomNavigationSvg = 'assets/post.svg';
+const String mainCategoryBottomNavigationSvg = 'assets/category.svg';
+const String mainHomeBottomNavigationSvg = 'assets/home.svg';
+const String mainFavoriteBottomNavigationSvg = 'assets/favorite.svg';
+const String mainProfileBottomNavigationSvg = 'assets/profile.svg';
+const String homeLogoSvg = 'assets/logo.svg';

@@ -62,42 +62,79 @@ class _MainPageState extends State<MainPage> {
         items: [
           BottomNavigationBarItem(
               icon: Column(
-                children: const [
-                  Icon(Icons.home),
-                  Text("Home"),
+                children: [
+                  SvgPicture.asset(
+                    mainHomeBottomNavigationSvg,
+                    semanticsLabel: '',
+                    height: 24,
+                    width: 24,
+                    color: currentIndex == 0 ? appColor : null,
+                  ),
+                  Text(
+                    "Home",
+                    style:
+                        TextStyle(color: currentIndex == 0 ? appColor : null),
+                  ),
                 ],
               ),
               label: ""),
           BottomNavigationBarItem(
             icon: Column(
-              children: const [
-                Icon(Icons.category),
-                Text("Category"),
+              children: [
+                SvgPicture.asset(
+                  mainCategoryBottomNavigationSvg,
+                  semanticsLabel: '',
+                  height: 24,
+                  width: 24,
+                  color: currentIndex == 1 ? appColor : null,
+                ),
+                Text(
+                  "Category",
+                  style: TextStyle(color: currentIndex == 1 ? appColor : null),
+                ),
               ],
             ),
             label: "",
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
-              'assets/post.svg',
+              mainPostBottomNavigationSvg,
               semanticsLabel: '',
             ),
             label: "",
           ),
           BottomNavigationBarItem(
             icon: Column(
-              children: const [
-                Icon(Icons.favorite),
-                Text("Favorite"),
+              children: [
+                SvgPicture.asset(
+                  mainFavoriteBottomNavigationSvg,
+                  semanticsLabel: '',
+                  height: 24,
+                  width: 24,
+                  color: currentIndex == 3 ? appColor : null,
+                ),
+                Text(
+                  "Favorite",
+                  style: TextStyle(color: currentIndex == 3 ? appColor : null),
+                ),
               ],
             ),
             label: "",
           ),
           BottomNavigationBarItem(
             icon: Column(
-              children: const [
-                Icon(Icons.account_circle),
-                Text("Profile"),
+              children: [
+                SvgPicture.asset(
+                  mainProfileBottomNavigationSvg,
+                  semanticsLabel: '',
+                  height: 24,
+                  width: 24,
+                  color: currentIndex == 4 ? appColor : null,
+                ),
+                Text(
+                  "Profile",
+                  style: TextStyle(color: currentIndex == 4 ? appColor : null),
+                ),
               ],
             ),
             label: "",
