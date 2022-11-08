@@ -1,0 +1,18 @@
+import 'package:flutter/material.dart';
+
+/// Application base color
+const Color appColor = Color(0xFF79a207);
+
+/// Application base theme
+MaterialColor appTheme = const MaterialColor(0xFF79a207, {
+  50: appColor,
+  100: appColor,
+  200: appColor,
+  300: appColor,
+  400: appColor,
+  500: appColor,
+  600: appColor,
+  700: appColor,
+  800: appColor,
+  900: appColor,
+});

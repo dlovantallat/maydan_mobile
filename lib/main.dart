@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maydan/utilities/app_utilities.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,21 +13,22 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: appTheme,
+        appBarTheme: const AppBarTheme(elevation: 0),
       ),
-      home: const MyHomePage(),
+      home: const MainPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
