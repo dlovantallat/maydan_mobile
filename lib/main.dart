@@ -50,19 +50,32 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       body: _children[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        unselectedFontSize: 0,
+        selectedFontSize: 0,
         currentIndex: currentIndex,
         type: BottomNavigationBarType.fixed,
         onTap: (pos) => setState(() {
           currentIndex = pos;
         }),
         items: [
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.category),
-            label: "Category",
+          BottomNavigationBarItem(
+              icon: Column(
+                children: const [
+                  Icon(Icons.home),
+                  Text("Home"),
+                ],
+              ),
+              label: ""),
+          BottomNavigationBarItem(
+            icon: Column(
+              children: const [
+                Icon(Icons.category),
+                Text("Category"),
+              ],
+            ),
+            label: "",
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
@@ -71,13 +84,23 @@ class _MainPageState extends State<MainPage> {
             ),
             label: "",
           ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: "Order",
+          BottomNavigationBarItem(
+            icon: Column(
+              children: const [
+                Icon(Icons.favorite),
+                Text("Favorite"),
+              ],
+            ),
+            label: "",
           ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.format_list_bulleted_rounded),
-            label: "More",
+          BottomNavigationBarItem(
+            icon: Column(
+              children: const [
+                Icon(Icons.account_circle),
+                Text("Profile"),
+              ],
+            ),
+            label: "",
           ),
         ],
       ),
