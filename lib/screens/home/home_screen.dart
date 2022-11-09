@@ -19,6 +19,11 @@ class _HomeScreenState extends State<HomeScreen> {
           homeLogoSvg,
           semanticsLabel: '',
         ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(30),
+          ),
+        ),
       ),
       body: const Center(
         child: Text("Home"),

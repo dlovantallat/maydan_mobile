@@ -11,12 +11,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Category"),
+        title: const Text(
+          "Category",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.transparent,
       ),
-      body: const Center(
-        child: Text("category"),
-      ),
+      body: const Text("category"),
     );
   }
 }

@@ -11,12 +11,15 @@ class _PostScreenState extends State<PostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Post"),
+        title: const Text(
+          "Post",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.transparent,
       ),
-      body: const Center(
-        child: Text("post"),
-      ),
+      body: const Text("post"),
     );
   }
 }

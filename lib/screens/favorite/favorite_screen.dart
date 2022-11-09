@@ -11,12 +11,15 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Favorite"),
+        title: const Text(
+          "Favorite",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.transparent,
       ),
-      body: const Center(
-        child: Text("favorite"),
-      ),
+      body: const Text("favorite"),
     );
   }
 }
