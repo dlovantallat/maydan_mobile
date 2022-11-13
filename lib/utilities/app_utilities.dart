@@ -23,5 +23,7 @@ const String mainPostBottomNavigationSvg = 'assets/post.svg';
 const String mainCategoryBottomNavigationSvg = 'assets/category.svg';
 const String mainHomeBottomNavigationSvg = 'assets/home.svg';
 const String mainFavoriteBottomNavigationSvg = 'assets/favorite.svg';
+const String mainFullFavoriteBottomNavigationSvg = 'assets/full_favorite.svg';
 const String mainProfileBottomNavigationSvg = 'assets/profile.svg';
 const String homeLogoSvg = 'assets/logo.svg';
+const String favBoarderSvg = 'assets/fav_border.svg';

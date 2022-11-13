@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:maydan/screens/home/home_item.dart';
 
 import '../../utilities/app_utilities.dart';
 
@@ -53,14 +54,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: ListView(
-        children: [
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-          Text("data"),
-        ],
+      body: ListView.builder(
+        itemBuilder: (context, index) => HomeItem(
+          index: index,
+        ),
+        itemCount: 5,
       ),
     );
   }
