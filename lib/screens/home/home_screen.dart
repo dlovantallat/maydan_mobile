@@ -14,19 +14,53 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: SvgPicture.asset(
-          homeLogoSvg,
-          semanticsLabel: '',
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(30),
-          ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(130.0),
+        child: Column(
+          children: [
+            AppBar(
+              title: SvgPicture.asset(
+                homeLogoSvg,
+                semanticsLabel: '',
+              ),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(30),
+                ),
+              ),
+            ),
+            Container(
+              margin:
+                  const EdgeInsetsDirectional.only(start: 8, end: 8, top: 8),
+              child: const TextField(
+                decoration: InputDecoration(
+                  hintText: "What are you looking for?",
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: appColor, width: 2),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16.0),
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16.0),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-      body: const Center(
-        child: Text("Home"),
+      body: ListView(
+        children: [
+          Text("data"),
+          Text("data"),
+          Text("data"),
+          Text("data"),
+          Text("data"),
+        ],
       ),
     );
   }
