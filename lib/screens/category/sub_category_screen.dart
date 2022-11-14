@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../common/model/category.dart';
+import 'sub_category_item.dart';
 
 class SubCategoryScreen extends StatefulWidget {
   final Category category;
@@ -17,7 +18,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title:  Text(
+        title: Text(
           widget.category.title,
           style: const TextStyle(color: Colors.black),
         ),
@@ -25,6 +26,12 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
           color: Colors.black,
         ),
         backgroundColor: Colors.transparent,
+      ),
+      body: ListView.builder(
+        itemBuilder: (context, index) => SubCategoryItem(
+          context: context,
+        ),
+        itemCount: 5,
       ),
     );
   }
