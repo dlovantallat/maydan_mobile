@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maydan/screens/category/category_item.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key? key}) : super(key: key);
@@ -19,7 +20,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
         ),
         backgroundColor: Colors.transparent,
       ),
-      body: const Text("category"),
+      body: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, mainAxisExtent: 104),
+        itemBuilder: (BuildContext context, int index) => const CategoryItem(),
+        itemCount: 30,
+      ),
     );
   }
 }
