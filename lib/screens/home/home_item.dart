@@ -139,80 +139,97 @@ class HomeSubItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.hardEdge,
-      margin: const EdgeInsetsDirectional.only(end: 16),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.transparent,
-        ),
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
+    return Card(
+      elevation: 4,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
-      width: 165,
-      child: Column(
-        children: [
-          Stack(
-            children: [
-              SizedBox(
-                height: 155,
-                width: 165,
-                child: Image.network(
-                  "https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1988&q=80",
-                  fit: BoxFit.cover,
-                ),
+      color: const Color(0xFFE5E5E5),
+      margin: const EdgeInsetsDirectional.only(start: 4, end: 4, bottom: 16),
+      child: SizedBox(
+        width: 165,
+        child: Column(
+          children: [
+            Container(
+              clipBehavior: Clip.hardEdge,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadiusDirectional.only(
+                    topStart: Radius.circular(20), topEnd: Radius.circular(20)),
               ),
-              Align(
-                alignment: AlignmentDirectional.topEnd,
-                child: IconButton(
-                  icon: Stack(
-                    children: [
-                      SvgPicture.asset(
-                        favBoarderSvg,
-                        semanticsLabel: '',
-                      ),
-                      Container(
-                        margin: const EdgeInsetsDirectional.all(8),
-                        child: Align(
-                          child: SvgPicture.asset(
-                            mainFullFavoriteBottomNavigationSvg,
-                            color: appColor,
-                            semanticsLabel: '',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  onPressed: () {},
-                ),
-              ),
-            ],
-          ),
-          Container(
-            height: 45,
-            color: const Color(0xFFE5E5E5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.only(start: 8.0),
-                    child: Text(
-                      "item Home SubItem item HomeSubItem item HomeSubItem",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400, color: Colors.black),
+              child: Stack(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    height: 155,
+                    child: Image.network(
+                      "https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1988&q=80",
+                      fit: BoxFit.cover,
                     ),
                   ),
-                ),
-                Padding(
+                  Align(
+                    alignment: AlignmentDirectional.topEnd,
+                    child: IconButton(
+                      icon: Stack(
+                        children: [
+                          SvgPicture.asset(
+                            favBoarderSvg,
+                            semanticsLabel: '',
+                          ),
+                          Container(
+                            margin: const EdgeInsetsDirectional.all(8),
+                            child: Align(
+                              child: SvgPicture.asset(
+                                mainFullFavoriteBottomNavigationSvg,
+                                color: appColor,
+                                semanticsLabel: '',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Padding(
+                      padding: EdgeInsetsDirectional.only(start: 8, top: 8),
+                      child: Text(
+                        "item Home SubItem ssd",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400, color: Colors.black),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.only(start: 8, bottom: 4),
+                      child: Text(
+                        "25/12/2022",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400, color: Colors.black),
+                      ),
+                    ),
+                  ],
+                )),
+                const Padding(
                   padding: EdgeInsetsDirectional.only(start: 8, end: 8),
                   child: Text("10\$"),
                 ),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -223,30 +240,39 @@ class HomeProfileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.hardEdge,
-      margin: const EdgeInsetsDirectional.only(end: 16),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.transparent,
-        ),
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
+    return Card(
+      elevation: 4,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
-      width: 165,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 155,
-            width: 165,
-            child: Image.network(
-              "https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1988&q=80",
-              fit: BoxFit.cover,
+      color: const Color(0xFFE5E5E5),
+      margin: const EdgeInsetsDirectional.only(start: 4, end: 4, bottom: 16),
+      child: SizedBox(
+        width: 165,
+        child: Column(children: [
+          Container(
+            clipBehavior: Clip.hardEdge,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadiusDirectional.only(
+                  topStart: Radius.circular(20), topEnd: Radius.circular(20)),
+            ),
+            child: SizedBox(
+              width: double.infinity,
+              height: 155,
+              child: Image.network(
+                "https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1988&q=80",
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Container(
+            clipBehavior: Clip.hardEdge,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadiusDirectional.only(
+                  topStart: Radius.circular(20), topEnd: Radius.circular(20)),
+            ),
             height: 45,
             width: 165,
-            color: const Color(0xFFE5E5E5),
             child: const Padding(
               padding: EdgeInsetsDirectional.only(start: 8, top: 8),
               child: Text(
@@ -258,7 +284,7 @@ class HomeProfileItem extends StatelessWidget {
               ),
             ),
           ),
-        ],
+        ]),
       ),
     );
   }
