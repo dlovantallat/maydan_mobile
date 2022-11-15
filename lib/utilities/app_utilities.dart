@@ -27,3 +27,4 @@ const String mainFullFavoriteBottomNavigationSvg = 'assets/full_favorite.svg';
 const String mainProfileBottomNavigationSvg = 'assets/profile.svg';
 const String homeLogoSvg = 'assets/logo.svg';
 const String favBoarderSvg = 'assets/fav_border.svg';
+const String shareSvg = 'assets/share.svg';
