@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:maydan/screens/item_detail/item_detail.dart';
 
 import '../../utilities/app_utilities.dart';
+import '../company_profile/company_profile_screen.dart';
+import '../item_detail/item_detail.dart';
 
 class HomeItem extends StatelessWidget {
   final int index;
@@ -249,51 +250,57 @@ class HomeProfileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-      ),
-      color: const Color(0xFFE5E5E5),
-      margin: const EdgeInsetsDirectional.only(start: 4, end: 4, bottom: 16),
-      child: SizedBox(
-        width: 165,
-        child: Column(children: [
-          Container(
-            clipBehavior: Clip.hardEdge,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadiusDirectional.only(
-                  topStart: Radius.circular(20), topEnd: Radius.circular(20)),
-            ),
-            child: SizedBox(
-              width: double.infinity,
-              height: 155,
-              child: Image.network(
-                "https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1988&q=80",
-                fit: BoxFit.cover,
+    return InkWell(
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (_) => const CompanyProfileScreen()));
+      },
+      child: Card(
+        elevation: 4,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        color: const Color(0xFFE5E5E5),
+        margin: const EdgeInsetsDirectional.only(start: 4, end: 4, bottom: 16),
+        child: SizedBox(
+          width: 165,
+          child: Column(children: [
+            Container(
+              clipBehavior: Clip.hardEdge,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadiusDirectional.only(
+                    topStart: Radius.circular(20), topEnd: Radius.circular(20)),
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                height: 155,
+                child: Image.network(
+                  "https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1988&q=80",
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          Container(
-            clipBehavior: Clip.hardEdge,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadiusDirectional.only(
-                  topStart: Radius.circular(20), topEnd: Radius.circular(20)),
-            ),
-            height: 45,
-            width: 165,
-            child: const Padding(
-              padding: EdgeInsetsDirectional.only(start: 8, top: 8),
-              child: Text(
-                "item Home item Home item Home ",
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style:
-                    TextStyle(fontWeight: FontWeight.w400, color: Colors.black),
+            Container(
+              clipBehavior: Clip.hardEdge,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadiusDirectional.only(
+                    topStart: Radius.circular(20), topEnd: Radius.circular(20)),
+              ),
+              height: 45,
+              width: 165,
+              child: const Padding(
+                padding: EdgeInsetsDirectional.only(start: 8, top: 8),
+                child: Text(
+                  "item Home item Home item Home ",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400, color: Colors.black),
+                ),
               ),
             ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }
