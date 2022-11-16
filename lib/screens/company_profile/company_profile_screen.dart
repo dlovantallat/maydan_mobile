@@ -46,7 +46,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
           ),
           // This button presents popup menu items.
           PopupMenuButton<Menu>(
-              // Callback that sets the selected popup menu item.
+              icon: const Icon(Icons.more_vert),
               onSelected: (Menu item) {
                 setState(() {
                   _selectedMenu = item.name;
