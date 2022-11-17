@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maydan/screens/login/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -19,7 +20,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         backgroundColor: Colors.transparent,
       ),
-      body: const Text("profile"),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => LoginScreen()));
+          },
+          child: const Text("profile"),
+        ),
+      ),
     );
   }
 }
