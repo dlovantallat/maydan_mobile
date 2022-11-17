@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:maydan/screens/login/otp_screen.dart';
 
 import '../../utilities/app_utilities.dart';
 
@@ -148,7 +149,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const OtpScreen()));
+                },
                 child: const Text("Continue")),
           ),
         ],
