@@ -28,3 +28,4 @@ const String mainProfileBottomNavigationSvg = 'assets/profile.svg';
 const String homeLogoSvg = 'assets/logo.svg';
 const String favBoarderSvg = 'assets/fav_border.svg';
 const String shareSvg = 'assets/share.svg';
+const String editProfileSvg = 'assets/edit_profile.svg';

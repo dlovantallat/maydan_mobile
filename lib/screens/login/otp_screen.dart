@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maydan/screens/register/company_register_screen.dart';
 import 'package:maydan/screens/register/personal_register_screen.dart';
 import 'package:maydan/widgets/otp/otp_field.dart';
 
@@ -62,8 +63,10 @@ class _OtpScreenState extends State<OtpScreen> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const PersonalRegisterScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const CompanyRegisterScreen()));
                   },
                   child: const Text("Verify")),
             ),
