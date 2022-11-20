@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:maydan/screens/login/otp_screen.dart';
 
 import '../../utilities/app_utilities.dart';
+import 'otp_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Expanded(
                 flex: 2,
                 child: Container(
-                  margin: EdgeInsetsDirectional.only(start: 8, end: 8),
+                  margin: const EdgeInsetsDirectional.only(start: 8, end: 8),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.black),
                     borderRadius:
@@ -150,8 +150,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const OtpScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => OtpScreen(
+                                isPersonal: isPersonal,
+                              )));
                 },
                 child: const Text("Continue")),
           ),

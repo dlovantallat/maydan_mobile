@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:maydan/screens/register/company_register_screen.dart';
-import 'package:maydan/screens/register/personal_register_screen.dart';
-import 'package:maydan/widgets/otp/otp_field.dart';
 
+import '../../widgets/otp/otp_field.dart';
 import '../../widgets/otp/style.dart';
+import '../register/company_register_screen.dart';
+import '../register/personal_register_screen.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({Key? key}) : super(key: key);
+  final bool isPersonal;
+
+  const OtpScreen({Key? key, required this.isPersonal}) : super(key: key);
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -66,7 +68,10 @@ class _OtpScreenState extends State<OtpScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => const CompanyRegisterScreen()));
+                          builder: (_) => !widget.isPersonal
+                              ? const PersonalRegisterScreen()
+                              : const CompanyRegisterScreen(),
+                        ));
                   },
                   child: const Text("Verify")),
             ),
