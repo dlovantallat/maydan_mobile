@@ -17,7 +17,9 @@ class SubCategoryItem extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) {
-        return const ListItemsScreen();
+        return ListItemsScreen(
+          subCategory: subCategory,
+        );
       }),
     );
   }

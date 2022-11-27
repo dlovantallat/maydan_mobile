@@ -71,7 +71,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               crossAxisCount: 3, mainAxisExtent: 104),
           itemBuilder: (BuildContext context, int index) => CategoryItem(
             context: context,
-            category: categories.data!.list[0],
+            category: categories.data!.list[index],
           ),
           itemCount: categories.data!.list.length,
         );
