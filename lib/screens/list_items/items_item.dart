@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -80,7 +82,7 @@ class ItemsItem extends StatelessWidget {
                       padding:
                           const EdgeInsetsDirectional.only(start: 8, top: 8),
                       child: Text(
-                        item?.title ?? " check item name",
+                        jsonDecode(item?.title ?? "")['en'] ?? "check name",
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
