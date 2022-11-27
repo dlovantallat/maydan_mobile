@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:maydan/common/model/category.dart';
 
+import '../../common/model/category.dart';
 import '../../utilities/app_utilities.dart';
 import 'sub_category_screen.dart';
 
@@ -17,7 +16,7 @@ class CategoryItem extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => SubCategoryScreen(
-          category: CategoryData(id: 'Animal', image: '', description: ''),
+          category: category,
         ),
       ),
     );

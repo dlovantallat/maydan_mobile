@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../../common/model/category.dart';
 import '../list_items/list_items_screen.dart';
 
 class SubCategoryItem extends StatelessWidget {
   final BuildContext context;
+  final SubCategoryData subCategory;
 
-  const SubCategoryItem({Key? key, required this.context}) : super(key: key);
+  const SubCategoryItem({
+    Key? key,
+    required this.context,
+    required this.subCategory,
+  }) : super(key: key);
 
   void onSubItemClick() {
     Navigator.push(
@@ -27,11 +33,12 @@ class SubCategoryItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Padding(
-                  padding: EdgeInsetsDirectional.only(start: 8),
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 8),
                   child: Text(
-                    "Cow",
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                    subCategory.id,
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w400),
                   ),
                 ),
                 IconButton(

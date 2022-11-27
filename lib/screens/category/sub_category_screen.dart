@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../cloud_functions/api_response.dart';
+import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/category.dart';
 import 'sub_category_item.dart';
 
@@ -13,6 +16,28 @@ class SubCategoryScreen extends StatefulWidget {
 }
 
 class _SubCategoryScreenState extends State<SubCategoryScreen> {
+  MaydanServices get service => GetIt.I<MaydanServices>();
+  late ApiResponse<SubCategoryList> subCategories;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    getSubCategories();
+    super.initState();
+  }
+
+  void getSubCategories() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    subCategories = await service.getSubCategories(widget.category.id);
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,12 +52,33 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
         ),
         backgroundColor: Colors.transparent,
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) => SubCategoryItem(
-          context: context,
-        ),
-        itemCount: 5,
-      ),
+      body: Builder(builder: (context) {
+        if (isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if (subCategories.requestStatus) {
+          return const Center(
+            child: Text("Failed"),
+          );
+        }
+
+        if (subCategories.data!.list.isEmpty) {
+          return const Center(
+            child: Text("Empty"),
+          );
+        }
+
+        return ListView.builder(
+          itemBuilder: (context, index) => SubCategoryItem(
+            context: context,
+            subCategory: subCategories.data!.list[index],
+          ),
+          itemCount: subCategories.data!.list.length,
+        );
+      }),
     );
   }
 }

@@ -1,10 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:maydan/common/model/category.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
+import '../../common/model/category.dart';
 import 'category_item.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -16,7 +15,7 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   MaydanServices get service => GetIt.I<MaydanServices>();
-  late ApiResponse<List<CategoryData>> categories;
+  late ApiResponse<CategoryList> categories;
   bool isLoading = false;
 
   @override
@@ -61,7 +60,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           );
         }
 
-        if (categories.data!.isEmpty) {
+        if (categories.data!.list.isEmpty) {
           return const Center(
             child: Text("Empty"),
           );
@@ -72,9 +71,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
               crossAxisCount: 3, mainAxisExtent: 104),
           itemBuilder: (BuildContext context, int index) => CategoryItem(
             context: context,
-            category: categories.data![0],
+            category: categories.data!.list[0],
           ),
-          itemCount: categories.data!.length,
+          itemCount: categories.data!.list.length,
         );
       }),
     );
