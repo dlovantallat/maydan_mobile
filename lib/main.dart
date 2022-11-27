@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 
+import 'cloud_functions/maydan_services.dart';
 import 'screens/category/category_screen.dart';
 import 'screens/favorite/favorite_screen.dart';
 import 'screens/home/home_screen.dart';
@@ -9,7 +11,12 @@ import 'screens/profile/profile_screen.dart';
 import 'utilities/app_utilities.dart';
 
 void main() {
+  servicesLocator();
   runApp(const MyApp());
+}
+
+void servicesLocator() {
+  GetIt.I.registerLazySingleton(() => MaydanServices());
 }
 
 class MyApp extends StatelessWidget {

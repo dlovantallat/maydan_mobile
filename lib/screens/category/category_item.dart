@@ -7,15 +7,17 @@ import 'sub_category_screen.dart';
 
 class CategoryItem extends StatelessWidget {
   final BuildContext context;
+  final CategoryData category;
 
-  const CategoryItem({Key? key, required this.context}) : super(key: key);
+  const CategoryItem({Key? key, required this.context, required this.category})
+      : super(key: key);
 
   void onItemClick() {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => SubCategoryScreen(
-          category: Category(title: 'Animal', image: '', description: ''),
+          category: CategoryData(id: 'Animal', image: '', description: ''),
         ),
       ),
     );
@@ -41,19 +43,26 @@ class CategoryItem extends StatelessWidget {
           children: [
             SizedBox(
               height: 65,
-              child: SvgPicture.asset(
-                homeLogoSvg,
-                semanticsLabel: '',
-                color: appColor,
+              child: Image.network(
+                imageLoader(category.image),
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => const Image(
+                  image: AssetImage(noInternet),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsetsDirectional.only(
+            Padding(
+              padding: const EdgeInsetsDirectional.only(
                 start: 8,
                 end: 8,
                 bottom: 8,
               ),
-              child: Text("Category"),
+              child: Text(
+                category.id,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),

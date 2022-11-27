@@ -4,7 +4,7 @@ import '../../common/model/category.dart';
 import 'sub_category_item.dart';
 
 class SubCategoryScreen extends StatefulWidget {
-  final Category category;
+  final CategoryData category;
 
   const SubCategoryScreen({Key? key, required this.category}) : super(key: key);
 
@@ -19,7 +19,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          widget.category.title,
+          widget.category.id,
           style: const TextStyle(color: Colors.black),
         ),
         iconTheme: const IconThemeData(

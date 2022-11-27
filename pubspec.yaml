@@ -39,6 +39,12 @@ dependencies:
 
   flutter_svg: ^1.1.6
 
+  #service locator
+  get_it: ^7.2.0
+
+  #api request handler
+  http: ^0.13.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
