@@ -6,7 +6,7 @@ import '../common/model/item.dart';
 import 'api_response.dart';
 
 class MaydanServices {
-  final String baseURL = "http://192.168.30.131:8000/api/";
+  final String baseURL = "https://maydan.farm/maydan_api/public/api/mobile/";
   static const int timeOutInSecond = 15;
 
   Future<ApiResponse<CategoryList>> getCategories() {
@@ -36,7 +36,7 @@ class MaydanServices {
 
   Future<ApiResponse<SubCategoryList>> getSubCategories(String categoryId) {
     return http
-        .get(Uri.parse("${baseURL}subcategories/category/$categoryId"))
+        .get(Uri.parse("${baseURL}categories/$categoryId/subcategories"))
         .timeout(const Duration(seconds: timeOutInSecond))
         .then(
       (data) {
