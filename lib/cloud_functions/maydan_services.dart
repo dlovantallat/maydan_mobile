@@ -1,8 +1,9 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
+
 import '../common/model/category.dart';
 import '../common/model/item.dart';
+import '../common/model/login.dart';
 import 'api_response.dart';
 
 class MaydanServices {
@@ -81,6 +82,34 @@ class MaydanServices {
           errorMessage: s.toString() == "Connection failed"
               ? " No Internet, Please check your internet connection."
               : "API Down we are working to get things back to normal. Please have a patient"),
+    );
+  }
+
+  Future<ApiResponse<LoginData>> login(String phoneNumber, String password) {
+    var request = http.MultipartRequest('POST', Uri.parse("${baseURL}login"));
+
+    request.fields['msisdn'] = phoneNumber;
+    request.fields['password'] = password;
+
+    return request.send().then(
+      (data) async {
+        if (data.statusCode == 200) {
+          final respStr = await data.stream.bytesToString();
+
+          final login = LoginData.json(jsonDecode(respStr));
+
+          return ApiResponse<LoginData>(data: login);
+        } else if (data.statusCode == 401) {
+          final respStr = await data.stream.bytesToString();
+          final login = LoginData.json(jsonDecode(respStr));
+          return ApiResponse<LoginData>(data: login);
+        }
+        return ApiResponse<LoginData>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<LoginData>(
+          requestStatus: true, errorMessage: s.toString()),
     );
   }
 }

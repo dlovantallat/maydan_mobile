@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../cloud_functions/api_response.dart';
+import '../../cloud_functions/maydan_services.dart';
+import '../../common/model/login.dart';
 import '../../utilities/app_utilities.dart';
 import '../login/login_screen.dart';
 
@@ -11,6 +15,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final phoneNumberController = TextEditingController();
+  final passwordController = TextEditingController();
+  int phoneCounter = 0;
+  int passwordCounter = 0;
+
+  MaydanServices get service => GetIt.I<MaydanServices>();
+  late ApiResponse<LoginData> login;
+  bool isLoading = false;
   bool isTokenLoading = false;
   bool isLogin = false;
   String token = "";
@@ -21,7 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
   }
 
-  void tokenCheck() async {
+  tokenCheck() async {
     setState(() {
       isTokenLoading = true;
     });
@@ -46,6 +58,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
     print("object");
   }
 
+  loginRequest() async {
+    loading(context);
+    setState(() {
+      isLoading = true;
+    });
+    login = await service.login("+9647503231905", "12345678");
+    if (!mounted) return;
+
+    if (login.data != null) {
+      if (login.data!.token != null) {
+        setToken(login.data!.token!);
+        tokenCheck();
+        Navigator.pop(context);
+      } else if (login.data!.message != null) {
+        setSnackBar(context, login.data!.message!);
+      } else {
+        print("something wrong please check manually");
+      }
+    } else {
+      setSnackBar(context, login.errorMessage);
+    }
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,22 +98,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Builder(builder: (context) {
         if (isTokenLoading) {
-          print("ss");
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
 
         if (isLogin) {
-          print("ss1");
-          return Text("login");
+          return Column(
+            children: [
+              const Text("login"),
+              ElevatedButton(
+                onPressed: () {
+                  setToken("");
+                  tokenCheck();
+                },
+                child: const Text("logout"),
+              ),
+            ],
+          );
         } else {
           return Column(
             children: [
-              const Padding(
-                padding: EdgeInsetsDirectional.all(8.0),
+              Padding(
+                padding: const EdgeInsetsDirectional.all(8.0),
                 child: TextField(
-                  decoration: InputDecoration(
+                  controller: phoneNumberController,
+                  onChanged: (text) {
+                    setState(() {
+                      phoneCounter = phoneNumberController.text.trim().length;
+                    });
+                  },
+                  decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black, width: 2),
                       borderRadius: BorderRadius.all(
@@ -91,10 +145,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsetsDirectional.only(start: 8, end: 8),
+              Padding(
+                padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
                 child: TextField(
-                  decoration: InputDecoration(
+                  controller: passwordController,
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: true,
+                  onChanged: (text) {
+                    setState(() {
+                      passwordCounter = passwordController.text.trim().length;
+                    });
+                  },
+                  decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black, width: 2),
                       borderRadius: BorderRadius.all(
@@ -112,7 +174,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: phoneCounter >= 10 && passwordCounter >= 1
+                    ? loginRequest
+                    : null,
                 child: const Text("Login"),
               ),
               ElevatedButton(

@@ -57,3 +57,30 @@ Future<String> getToken() async {
   // Read value
   return prefs.getString(appToken) ?? "";
 }
+
+void setSnackBar(BuildContext context, String text) {
+  final snackBar = SnackBar(
+    content: Text(text),
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+void loading(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (_) {
+      return AlertDialog(
+        content: Wrap(
+          alignment: WrapAlignment.center,
+          children: [
+            SizedBox(
+              height: 150,
+              width: 150,
+              child: Image.asset('assets/loading.gif'),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
