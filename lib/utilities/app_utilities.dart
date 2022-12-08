@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// imageLoader is a helper method for loading image from API
 /// imageName is a string parameter which we retrieving from API
@@ -37,3 +38,22 @@ const String homeLogoSvg = 'assets/logo.svg';
 const String favBoarderSvg = 'assets/fav_border.svg';
 const String shareSvg = 'assets/share.svg';
 const String editProfileSvg = 'assets/edit_profile.svg';
+
+/// Static Strings for static values
+const String appToken = "app-token";
+
+/// Static functions
+
+void setToken(String token) async {
+  // Create storage
+  final prefs = await SharedPreferences.getInstance();
+  // Write value
+  prefs.setString(appToken, token);
+}
+
+Future<String> getToken() async {
+  // Create storage
+  final prefs = await SharedPreferences.getInstance();
+  // Read value
+  return prefs.getString(appToken) ?? "";
+}
