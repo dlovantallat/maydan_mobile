@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:maydan/screens/profile/profile.dart';
 
 import '../common/model/category.dart';
 import '../common/model/item.dart';
@@ -9,6 +10,10 @@ import 'api_response.dart';
 class MaydanServices {
   final String baseURL = "https://maydan.farm/maydan_api/public/api/mobile/";
   static const int timeOutInSecond = 15;
+
+  Map<String, String> headers({String token = ''}) {
+    return {'Authorization': 'Bearer $token'};
+  }
 
   Future<ApiResponse<CategoryList>> getCategories() {
     return http
@@ -110,6 +115,31 @@ class MaydanServices {
     ).catchError(
       (s) => ApiResponse<LoginData>(
           requestStatus: true, errorMessage: s.toString()),
+    );
+  }
+
+  Future<ApiResponse<ProfileData>> getMe(String token) {
+    return http
+        .get(Uri.parse("${baseURL}users"), headers: headers(token: token))
+        .timeout(const Duration(seconds: timeOutInSecond))
+        .then(
+      (data) {
+        if (data.statusCode == 200) {
+          final jsonData = json.decode(data.body);
+
+          final profile = ProfileData.fromJson(jsonData);
+
+          return ApiResponse<ProfileData>(data: profile);
+        }
+        return ApiResponse<ProfileData>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<ProfileData>(
+          requestStatus: true,
+          errorMessage: s.toString() == "Connection failed"
+              ? " No Internet, Please check your internet connection."
+              : "API Down we are working to get things back to normal. Please have a patient"),
     );
   }
 }

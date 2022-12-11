@@ -6,6 +6,7 @@ import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/login.dart';
 import '../../utilities/app_utilities.dart';
 import '../login/login_screen.dart';
+import 'profile.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -22,6 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<LoginData> login;
+  late ApiResponse<ProfileData> profile;
   bool isLoading = false;
   bool isTokenLoading = false;
   bool isLogin = false;
@@ -54,8 +56,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
-  getMe() {
-    print("object");
+  getMe() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    profile = await service.getMe(token);
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   loginRequest() async {
@@ -104,9 +114,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
         }
 
         if (isLogin) {
+          if (isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (profile.requestStatus) {
+            return const Center(
+              child: Text("error"),
+            );
+          }
+
           return Column(
             children: [
-              const Text("login"),
+              Text("user name: ${profile.data!.name}"),
+              Text("user email: ${profile.data!.email}"),
               ElevatedButton(
                 onPressed: () {
                   setToken("");
