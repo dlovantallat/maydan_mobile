@@ -8,7 +8,7 @@ import '../common/model/login.dart';
 import 'api_response.dart';
 
 class MaydanServices {
-  final String baseURL = "https://maydan.farm/maydan_api/public/api/mobile/";
+  final String baseURL = "https://api.maydan.farm/api/mobile/";
   static const int timeOutInSecond = 15;
 
   Map<String, String> headers({String token = ''}) {
