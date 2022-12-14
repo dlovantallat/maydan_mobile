@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../cloud_functions/api_response.dart';
+import '../../cloud_functions/maydan_services.dart';
 import '../../utilities/app_utilities.dart';
+import 'register.dart';
 
 class PersonalRegisterScreen extends StatefulWidget {
   const PersonalRegisterScreen({Key? key}) : super(key: key);
@@ -11,6 +15,24 @@ class PersonalRegisterScreen extends StatefulWidget {
 }
 
 class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
+  MaydanServices get service => GetIt.I<MaydanServices>();
+  late ApiResponse<RegisterModel> register;
+
+  registerRequest() async {
+    register = await service.register(
+        "dlo", "d5@mail.com", "+96475042312205", "12345678");
+
+    if (register.requestStatus) {
+      print(register.errorMessage);
+    } else {
+      if (register.statusCode == 422) {
+        print("object");
+      } else {
+        print(register.data!.user.name);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,7 +127,9 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
                       },
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    registerRequest();
+                  },
                   child: const Text("Register")),
             )
           ],

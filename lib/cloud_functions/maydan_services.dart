@@ -1,18 +1,22 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:maydan/screens/profile/profile.dart';
 
 import '../common/model/category.dart';
 import '../common/model/item.dart';
 import '../common/model/login.dart';
+import '../screens/profile/profile.dart';
+import '../screens/register/register.dart';
 import 'api_response.dart';
 
 class MaydanServices {
   final String baseURL = "https://api.maydan.farm/api/mobile/";
   static const int timeOutInSecond = 15;
 
+  /*
+  header : "" : "application/json"
+   */
   Map<String, String> headers({String token = ''}) {
-    return {'Authorization': 'Bearer $token'};
+    return {'Authorization': 'Bearer $token', 'Accept': 'application/json'};
   }
 
   Future<ApiResponse<CategoryList>> getCategories() {
@@ -114,6 +118,39 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<LoginData>(
+          requestStatus: true, errorMessage: s.toString()),
+    );
+  }
+
+  Future<ApiResponse<RegisterModel>> register(
+      String name, String email, String phoneNumber, String password) {
+    var request =
+        http.MultipartRequest('POST', Uri.parse("${baseURL}register"));
+
+    request.fields['name'] = name;
+    request.fields['email'] = email;
+    request.fields['password'] = password;
+    request.fields['password_confirmation'] = password;
+    request.fields['msisdn'] = phoneNumber;
+
+    request.headers.addAll(headers());
+
+    return request.send().then(
+      (data) async {
+        if (data.statusCode == 201) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = RegisterModel.json(jsonDecode(respStr));
+
+          return ApiResponse<RegisterModel>(data: register);
+        } else if (data.statusCode == 422) {
+          return ApiResponse<RegisterModel>(statusCode: 422);
+        }
+        return ApiResponse<RegisterModel>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<RegisterModel>(
           requestStatus: true, errorMessage: s.toString()),
     );
   }
