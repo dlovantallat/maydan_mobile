@@ -30,22 +30,22 @@ class _LoginWidgetState extends State<LoginWidget> {
   loginRequest() async {
     loading(context);
 
-    login = await service.login("+9647503231905", "12345678");
+    String phone = phoneNumberController.text.trim();
+    String password = passwordController.text.trim();
+    login = await service.login(phone, password);
     if (!mounted) return;
 
-    if (login.data != null) {
-      if (login.data!.token != null) {
-        setToken(login.data!.token!);
-        widget.callBack.onLogin();
-        //tokenCheck();
-        Navigator.pop(context);
-      } else if (login.data!.message != null) {
+    if (login.requestStatus) {
+      Navigator.pop(context);
+      setSnackBar(context, login.errorMessage);
+    } else {
+      Navigator.pop(context);
+      if (login.statusCode == 401) {
         setSnackBar(context, login.data!.message!);
       } else {
-        print("something wrong please check manually");
+        setToken(login.data!.token!);
+        widget.callBack.onLogin();
       }
-    } else {
-      setSnackBar(context, login.errorMessage);
     }
   }
 

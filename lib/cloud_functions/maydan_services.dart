@@ -100,6 +100,8 @@ class MaydanServices {
     request.fields['msisdn'] = phoneNumber;
     request.fields['password'] = password;
 
+    request.headers.addAll(headers());
+
     return request.send().then(
       (data) async {
         if (data.statusCode == 200) {
@@ -110,8 +112,10 @@ class MaydanServices {
           return ApiResponse<LoginData>(data: login);
         } else if (data.statusCode == 401) {
           final respStr = await data.stream.bytesToString();
+
           final login = LoginData.json(jsonDecode(respStr));
-          return ApiResponse<LoginData>(data: login);
+
+          return ApiResponse<LoginData>(data: login, statusCode: 401);
         }
         return ApiResponse<LoginData>(
             requestStatus: true, errorMessage: "API Communication Down");
