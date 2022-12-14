@@ -7,8 +7,13 @@ import 'personal_register_screen.dart';
 
 class OtpScreen extends StatefulWidget {
   final bool isPersonal;
+  final String phoneNumber;
 
-  const OtpScreen({Key? key, required this.isPersonal}) : super(key: key);
+  const OtpScreen({
+    Key? key,
+    required this.isPersonal,
+    required this.phoneNumber,
+  }) : super(key: key);
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();

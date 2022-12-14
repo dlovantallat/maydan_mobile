@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
+import 'package:maydan/screens/register/register.dart';
 
+import '../../cloud_functions/api_response.dart';
+import '../../cloud_functions/maydan_services.dart';
 import '../../utilities/app_utilities.dart';
 import 'otp_screen.dart';
 
@@ -12,7 +16,39 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  MaydanServices get service => GetIt.I<MaydanServices>();
+  late ApiResponse<OtpRespond> otp;
   bool isPersonal = false;
+  final phoneNumberController = TextEditingController();
+  int phoneCounter = 0;
+
+  otpRequest() async {
+    String phoneNumber = phoneNumberController.text.trim();
+    otp = await service.requestPinCode(phoneNumber);
+    if (!mounted) return;
+    if (otp.requestStatus) {
+      setSnackBar(context, otp.errorMessage);
+    } else {
+      if (otp.statusCode == 403) {
+        setSnackBar(context, otp.data!.message);
+      } else {
+        setSnackBar(context, "200: ${otp.data!.message}");
+        nextScreen(phoneNumber);
+      }
+    }
+  }
+
+  nextScreen(String phoneNumber) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => OtpScreen(
+          isPersonal: isPersonal,
+          phoneNumber: phoneNumber,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,15 +155,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   height: 40,
                   width: 100,
-                  child: const Padding(
-                    padding: EdgeInsetsDirectional.only(start: 4, end: 4),
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.only(start: 4, end: 4),
                     child: Center(
-                        child: TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: '750 XXX XXXX',
+                      child: TextField(
+                        maxLength: 10,
+                        controller: phoneNumberController,
+                        onChanged: (v) {
+                          setState(() {
+                            phoneCounter = v.trim().length;
+                          });
+                        },
+                        decoration: const InputDecoration(
+                          counterText: "",
+                          border: InputBorder.none,
+                          hintText: '750 XXX XXXX',
+                        ),
                       ),
-                    )),
+                    ),
                   ),
                 ),
               ),
@@ -135,7 +180,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
           Padding(
             padding:
-                const EdgeInsetsDirectional.only(top: 64, start: 8, end: 8),
+                const EdgeInsetsDirectional.only(top: 64, start: 16, end: 16),
             child: ElevatedButton(
                 style: ButtonStyle(
                   minimumSize: MaterialStateProperty.resolveWith<Size>(
@@ -148,15 +193,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
+                  backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.disabled)) {
+                        return const Color(0x8179a207);
+                      }
+                      return null; // Use the component's default.
+                    },
+                  ),
                 ),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => OtpScreen(
-                                isPersonal: isPersonal,
-                              )));
-                },
+                onPressed: phoneCounter >= 10 ? otpRequest : null,
                 child: const Text("Continue")),
           ),
         ],

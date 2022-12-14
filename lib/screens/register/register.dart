@@ -19,3 +19,13 @@ class RegisterData {
     return RegisterData(name: it['name']);
   }
 }
+
+class OtpRespond {
+  String message;
+
+  OtpRespond({required this.message});
+
+  factory OtpRespond.json(dynamic it) {
+    return OtpRespond(message: it['message'] as String);
+  }
+}

@@ -94,6 +94,8 @@ class MaydanServices {
     );
   }
 
+
+
   Future<ApiResponse<LoginData>> login(String phoneNumber, String password) {
     var request = http.MultipartRequest('POST', Uri.parse("${baseURL}login"));
 
@@ -103,7 +105,7 @@ class MaydanServices {
     request.headers.addAll(headers());
 
     return request.send().then(
-      (data) async {
+          (data) async {
         if (data.statusCode == 200) {
           final respStr = await data.stream.bytesToString();
 
@@ -121,7 +123,40 @@ class MaydanServices {
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-      (s) => ApiResponse<LoginData>(
+          (s) => ApiResponse<LoginData>(
+          requestStatus: true, errorMessage: s.toString()),
+    );
+  }
+
+
+  Future<ApiResponse<OtpRespond>> requestPinCode(String phoneNumber) {
+    var request = http.MultipartRequest('POST', Uri.parse("${baseURL}requestPincode"));
+
+    request.fields['msisdn'] = phoneNumber;
+
+    request.headers.addAll(headers());
+
+    return request.send().then(
+      (data) async {
+        if (data.statusCode == 200) {
+          final respStr = await data.stream.bytesToString();
+
+          final login = OtpRespond.json(jsonDecode(respStr));
+
+          return ApiResponse<OtpRespond>(data: login);
+        } else if (data.statusCode == 403) {
+          final respStr = await data.stream.bytesToString();
+
+          final login = OtpRespond.json(jsonDecode(respStr));
+
+          return ApiResponse<OtpRespond>(data: login, statusCode: 403);
+        }
+
+        return ApiResponse<OtpRespond>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<OtpRespond>(
           requestStatus: true, errorMessage: s.toString()),
     );
   }
