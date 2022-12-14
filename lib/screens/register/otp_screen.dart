@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../widgets/otp/otp_field.dart';
 import '../../widgets/otp/style.dart';
-import '../register/company_register_screen.dart';
-import '../register/personal_register_screen.dart';
+import 'company_register_screen.dart';
+import 'personal_register_screen.dart';
 
 class OtpScreen extends StatefulWidget {
   final bool isPersonal;

@@ -6,7 +6,7 @@ import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/login.dart';
 import '../../utilities/app_utilities.dart';
-import '../login/register_screen.dart';
+import '../register/register_screen.dart';
 import 'profile.dart';
 
 class ProfileScreen extends StatefulWidget {
