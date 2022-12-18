@@ -82,7 +82,7 @@ class ItemsItem extends StatelessWidget {
                       padding:
                           const EdgeInsetsDirectional.only(start: 8, top: 8),
                       child: Text(
-                        jsonDecode(item?.title ?? "")['en'] ?? "check name",
+                        "jsonDecode(item?.title ?? "")['en'] ?? check name",
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(

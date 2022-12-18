@@ -19,7 +19,7 @@ class ListItemsScreen extends StatefulWidget {
 
 class _ListItemsScreenState extends State<ListItemsScreen> {
   MaydanServices get service => GetIt.I<MaydanServices>();
-  late ApiResponse<ItemList> items;
+  late ApiResponse<ItemObj> items;
   bool isLoading = false;
 
   @override

@@ -71,24 +71,24 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<ItemList>> getItems(String subCategoryId) {
+  Future<ApiResponse<ItemObj>> getItems(String subCategoryId) {
     return http
-        .get(Uri.parse("${baseURL}items/subcategory/$subCategoryId"))
+        .get(Uri.parse("${baseURL}subcategories/$subCategoryId/items"))
         .timeout(const Duration(seconds: timeOutInSecond))
         .then(
       (data) {
         if (data.statusCode == 200) {
           final jsonData = json.decode(data.body);
 
-          final list = ItemList.getList(jsonData);
+          final list = ItemObj.fromJson(jsonData);
 
-          return ApiResponse<ItemList>(data: list);
+          return ApiResponse<ItemObj>(data: list);
         }
-        return ApiResponse<ItemList>(
+        return ApiResponse<ItemObj>(
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-      (s) => ApiResponse<ItemList>(
+      (s) => ApiResponse<ItemObj>(
           requestStatus: true,
           errorMessage: s.toString() == "Connection failed"
               ? " No Internet, Please check your internet connection."

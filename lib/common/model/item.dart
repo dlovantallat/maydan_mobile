@@ -1,28 +1,28 @@
-class ItemList {
+class ItemObj {
   List<ItemData> list;
 
-  ItemList({required this.list});
+  ItemObj({required this.list});
 
-  factory ItemList.getList(dynamic jsonData) {
+  factory ItemObj.fromJson(Map<String, dynamic> item) {
     List<ItemData> l = [];
-    for (var i in jsonData) {
+    for (var i in item['data']) {
       l.add(ItemData.fromJson(i));
     }
-    return ItemList(list: l);
+    return ItemObj(list: l);
   }
 }
 
 class ItemData {
   String id;
-  String title;
-  String description;
+  // String title;
+  // String description;
   String image;
   String priceAnnounced;
 
   ItemData({
     required this.id,
-    required this.title,
-    required this.description,
+    // required this.title,
+    // required this.description,
     required this.image,
     required this.priceAnnounced,
   });
@@ -30,8 +30,8 @@ class ItemData {
   factory ItemData.fromJson(Map<String, dynamic> item) {
     return ItemData(
       id: item['id'] ?? "",
-      title: item['title'] ?? "",
-      description: item['description'] ?? "",
+      // title: item['title'] ?? "",
+      // description: item['description'] ?? "",
       image: item['image'] ?? "",
       priceAnnounced: item['price_announced'] ?? "",
     );
