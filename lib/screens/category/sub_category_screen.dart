@@ -17,7 +17,7 @@ class SubCategoryScreen extends StatefulWidget {
 
 class _SubCategoryScreenState extends State<SubCategoryScreen> {
   MaydanServices get service => GetIt.I<MaydanServices>();
-  late ApiResponse<SubCategoryList> subCategories;
+  late ApiResponse<SubCategoryObj> subCategories;
   bool isLoading = false;
 
   @override
@@ -65,7 +65,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
           );
         }
 
-        if (subCategories.data!.list.isEmpty) {
+        if (subCategories.data!.data.isEmpty) {
           return const Center(
             child: Text("Empty"),
           );
@@ -74,9 +74,9 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
         return ListView.builder(
           itemBuilder: (context, index) => SubCategoryItem(
             context: context,
-            subCategory: subCategories.data!.list[index],
+            subCategory: subCategories.data!.data[index],
           ),
-          itemCount: subCategories.data!.list.length,
+          itemCount: subCategories.data!.data.length,
         );
       }),
     );

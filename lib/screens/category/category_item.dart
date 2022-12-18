@@ -43,7 +43,7 @@ class CategoryItem extends StatelessWidget {
             SizedBox(
               height: 65,
               child: Image.network(
-                imageLoader(category.image),
+                imageLoader(category.title),
                 fit: BoxFit.cover,
                 errorBuilder: (_, __, ___) => const Image(
                   image: AssetImage(noInternet),
@@ -58,7 +58,7 @@ class CategoryItem extends StatelessWidget {
                 bottom: 8,
               ),
               child: Text(
-                category.id,
+                category.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

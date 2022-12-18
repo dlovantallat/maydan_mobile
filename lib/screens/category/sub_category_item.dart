@@ -38,7 +38,7 @@ class SubCategoryItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsetsDirectional.only(start: 8),
                   child: Text(
-                    subCategory.id,
+                    subCategory.title,
                     style: const TextStyle(
                         fontSize: 14, fontWeight: FontWeight.w400),
                   ),

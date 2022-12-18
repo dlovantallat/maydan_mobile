@@ -12,16 +12,17 @@ class MaydanServices {
   final String baseURL = "https://api.maydan.farm/api/mobile/";
   static const int timeOutInSecond = 15;
 
-  /*
-  header : "" : "application/json"
-   */
   Map<String, String> headers({String token = ''}) {
-    return {'Authorization': 'Bearer $token', 'Accept': 'application/json'};
+    return {
+      'Authorization': 'Bearer $token',
+      'Accept': 'application/json',
+      'app-language': 'en',
+    };
   }
 
   Future<ApiResponse<CategoryList>> getCategories() {
     return http
-        .get(Uri.parse("${baseURL}categories"))
+        .get(Uri.parse("${baseURL}categories"), headers: headers())
         .timeout(const Duration(seconds: timeOutInSecond))
         .then(
       (data) {
@@ -44,24 +45,25 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<SubCategoryList>> getSubCategories(String categoryId) {
+  Future<ApiResponse<SubCategoryObj>> getSubCategories(String categoryId) {
     return http
-        .get(Uri.parse("${baseURL}categories/$categoryId/subcategories"))
+        .get(Uri.parse("${baseURL}categories/$categoryId/subcategories"),
+            headers: headers())
         .timeout(const Duration(seconds: timeOutInSecond))
         .then(
       (data) {
         if (data.statusCode == 200) {
           final jsonData = json.decode(data.body);
 
-          final list = SubCategoryList.getList(jsonData);
+          final list = SubCategoryObj.fromJson(jsonData);
 
-          return ApiResponse<SubCategoryList>(data: list);
+          return ApiResponse<SubCategoryObj>(data: list);
         }
-        return ApiResponse<SubCategoryList>(
+        return ApiResponse<SubCategoryObj>(
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-      (s) => ApiResponse<SubCategoryList>(
+      (s) => ApiResponse<SubCategoryObj>(
           requestStatus: true,
           errorMessage: s.toString() == "Connection failed"
               ? " No Internet, Please check your internet connection."
@@ -94,8 +96,6 @@ class MaydanServices {
     );
   }
 
-
-
   Future<ApiResponse<LoginData>> login(String phoneNumber, String password) {
     var request = http.MultipartRequest('POST', Uri.parse("${baseURL}login"));
 
@@ -105,7 +105,7 @@ class MaydanServices {
     request.headers.addAll(headers());
 
     return request.send().then(
-          (data) async {
+      (data) async {
         if (data.statusCode == 200) {
           final respStr = await data.stream.bytesToString();
 
@@ -123,14 +123,14 @@ class MaydanServices {
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-          (s) => ApiResponse<LoginData>(
+      (s) => ApiResponse<LoginData>(
           requestStatus: true, errorMessage: s.toString()),
     );
   }
 
-
   Future<ApiResponse<OtpRespond>> requestPinCode(String phoneNumber) {
-    var request = http.MultipartRequest('POST', Uri.parse("${baseURL}requestPincode"));
+    var request =
+        http.MultipartRequest('POST', Uri.parse("${baseURL}requestPincode"));
 
     request.fields['msisdn'] = phoneNumber;
 

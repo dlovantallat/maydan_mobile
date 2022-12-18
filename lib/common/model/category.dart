@@ -14,48 +14,48 @@ class CategoryList {
 
 class CategoryData {
   String id;
-  String image;
+  String title;
   String description;
 
   CategoryData({
     required this.id,
-    required this.image,
+    required this.title,
     required this.description,
   });
 
   factory CategoryData.fromJson(Map<String, dynamic> item) {
     return CategoryData(
-      id: item['id'],
-      image: item[''] ?? "",
-      description: item['description'],
+      id: item['id'] ?? "",
+      title: item['title'] ?? "",
+      description: item['description'] ?? "",
     );
   }
 }
 
-class SubCategoryList {
-  List<SubCategoryData> list;
+class SubCategoryObj {
+  List<SubCategoryData> data;
 
-  SubCategoryList({required this.list});
+  SubCategoryObj({required this.data});
 
-  factory SubCategoryList.getList(dynamic jsonData) {
+  factory SubCategoryObj.fromJson(Map<String, dynamic> item) {
     List<SubCategoryData> l = [];
-    for (var i in jsonData) {
+    for (var i in item['data']) {
       l.add(SubCategoryData.fromJson(i));
     }
 
-    return SubCategoryList(list: l);
+    return SubCategoryObj(data: l);
   }
 }
 
 class SubCategoryData {
   String id;
-  String image;
+  String title;
   String description;
   String categoryId;
 
   SubCategoryData({
     required this.id,
-    required this.image,
+    required this.title,
     required this.description,
     required this.categoryId,
   });
@@ -63,7 +63,7 @@ class SubCategoryData {
   factory SubCategoryData.fromJson(Map<String, dynamic> item) {
     return SubCategoryData(
       id: item['id'] ?? "",
-      image: item['image'] ?? "",
+      title: item['title'] ?? "",
       description: item['description'] ?? "",
       categoryId: item['category_id'] ?? "",
     );

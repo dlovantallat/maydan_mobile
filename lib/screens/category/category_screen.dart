@@ -55,8 +55,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
         }
 
         if (categories.requestStatus) {
-          return const Center(
-            child: Text("Failed"),
+          return Center(
+            child: Text(categories.errorMessage),
           );
         }
 
