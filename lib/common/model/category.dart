@@ -16,11 +16,13 @@ class CategoryData {
   String id;
   String title;
   String description;
+  String urlImg;
 
   CategoryData({
     required this.id,
     required this.title,
     required this.description,
+    required this.urlImg,
   });
 
   factory CategoryData.fromJson(Map<String, dynamic> item) {
@@ -28,6 +30,7 @@ class CategoryData {
       id: item['id'] ?? "",
       title: item['title'] ?? "",
       description: item['description'] ?? "",
+      urlImg: item['url_img'] ?? "",
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// imageName is a string parameter which we retrieving from API
 /// and combining with base url
 String imageLoader(String imageName) {
-  return "http://192.168.30.131:8000/api/storage/app/public/image/$imageName";
+  return "https://devmaydan.s3.eu-central-1.amazonaws.com/$imageName";
 }
 
 /// Application base color

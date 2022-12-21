@@ -40,14 +40,17 @@ class CategoryItem extends StatelessWidget {
             ]),
         child: Column(
           children: [
-            SizedBox(
+            Container(
+              margin:
+                  const EdgeInsetsDirectional.only(start: 8, end: 8, top: 8),
               height: 65,
+              width: double.infinity,
               child: Image.network(
-                imageLoader(category.title),
+                imageLoader(category.urlImg),
                 fit: BoxFit.cover,
                 errorBuilder: (_, __, ___) => const Image(
                   image: AssetImage(noInternet),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitWidth,
                 ),
               ),
             ),
@@ -55,6 +58,7 @@ class CategoryItem extends StatelessWidget {
               padding: const EdgeInsetsDirectional.only(
                 start: 8,
                 end: 8,
+                top: 8,
                 bottom: 8,
               ),
               child: Text(
