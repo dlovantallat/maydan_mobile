@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:maydan/common/model/item.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -38,6 +39,7 @@ class _PostScreenState extends State<PostScreen> {
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<CategoryList> categories;
   late ApiResponse<SubCategoryObj> subCategories;
+  late ApiResponse<ItemRespond> postItem;
   bool isLoading = false;
   bool isSubLoading = false;
   bool isSubLoaded = false;
@@ -93,7 +95,22 @@ class _PostScreenState extends State<PostScreen> {
     print("hello from gallery");
   }
 
-  void save() async {}
+  void save() async {
+    String token = await getToken();
+
+    postItem = await service.postItem(token);
+
+    if (postItem.requestStatus) {
+      print("code ${postItem.errorMessage} t");
+    } else {
+      if (postItem.statusCode == 201) {
+        print(postItem.data!.id);
+      } else {
+        print("code ${postItem.statusCode} d");
+        print("code ${postItem.errorMessage} e");
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

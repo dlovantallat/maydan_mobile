@@ -14,6 +14,7 @@ class ItemObj {
 
 class ItemData {
   String id;
+
   // String title;
   // String description;
   String image;
@@ -34,6 +35,18 @@ class ItemData {
       // description: item['description'] ?? "",
       image: item['image'] ?? "",
       priceAnnounced: item['price_announced'] ?? "",
+    );
+  }
+}
+
+class ItemRespond {
+  String id;
+
+  ItemRespond({required this.id});
+
+  factory ItemRespond.json(dynamic it) {
+    return ItemRespond(
+      id: it['id'] as String,
     );
   }
 }
