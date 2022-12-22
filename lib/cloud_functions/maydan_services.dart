@@ -9,7 +9,7 @@ import '../screens/register/register.dart';
 import 'api_response.dart';
 
 class MaydanServices {
-  final String baseURL = "https://api.maydan.farm/api/mobile/";
+  final String baseURL = "https://apimaydan.tornet.co/api/mobile/";
   static const int timeOutInSecond = 15;
 
   Map<String, String> headers({String token = ''}) {
