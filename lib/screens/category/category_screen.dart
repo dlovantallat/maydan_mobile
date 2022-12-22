@@ -15,7 +15,7 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   MaydanServices get service => GetIt.I<MaydanServices>();
-  late ApiResponse<CategoryList> categories;
+  late ApiResponse<CategoryObj> categories;
   bool isLoading = false;
 
   @override
@@ -60,7 +60,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           );
         }
 
-        if (categories.data!.list.isEmpty) {
+        if (categories.data!.data.isEmpty) {
           return const Center(
             child: Text("Empty"),
           );
@@ -71,9 +71,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
               crossAxisCount: 3, mainAxisExtent: 120),
           itemBuilder: (BuildContext context, int index) => CategoryItem(
             context: context,
-            category: categories.data!.list[index],
+            category: categories.data!.data[index],
           ),
-          itemCount: categories.data!.list.length,
+          itemCount: categories.data!.data.length,
         );
       }),
     );

@@ -20,7 +20,7 @@ class MaydanServices {
     };
   }
 
-  Future<ApiResponse<CategoryList>> getCategories() {
+  Future<ApiResponse<CategoryObj>> getCategories() {
     return http
         .get(Uri.parse("${baseURL}categories"), headers: headers())
         .timeout(const Duration(seconds: timeOutInSecond))
@@ -29,15 +29,15 @@ class MaydanServices {
         if (data.statusCode == 200) {
           final jsonData = json.decode(data.body);
 
-          final list = CategoryList.getList(jsonData);
+          final list = CategoryObj.fromJson(jsonData);
 
-          return ApiResponse<CategoryList>(data: list);
+          return ApiResponse<CategoryObj>(data: list);
         }
-        return ApiResponse<CategoryList>(
+        return ApiResponse<CategoryObj>(
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-      (s) => ApiResponse<CategoryList>(
+      (s) => ApiResponse<CategoryObj>(
           requestStatus: true,
           errorMessage: s.toString() == "Connection failed"
               ? " No Internet, Please check your internet connection."

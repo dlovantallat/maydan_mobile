@@ -37,7 +37,7 @@ class _PostScreenState extends State<PostScreen> {
   SubCategoryDrop _dropdownSubCategoryValue = SubCategoryDrop("-1", "Select");
 
   MaydanServices get service => GetIt.I<MaydanServices>();
-  late ApiResponse<CategoryList> categories;
+  late ApiResponse<CategoryObj> categories;
   late ApiResponse<SubCategoryObj> subCategories;
   late ApiResponse<ItemRespond> postItem;
   bool isLoading = false;
@@ -58,7 +58,7 @@ class _PostScreenState extends State<PostScreen> {
     categories = await service.getCategories();
 
     _dropdownCategoriesDrop.clear();
-    for (var i in categories.data!.list) {
+    for (var i in categories.data!.data) {
       _dropdownCategoriesDrop.add(CategoryDrop(i.id, i.title));
     }
     _dropdownCategoryValue = _dropdownCategoriesDrop.first;
@@ -136,7 +136,7 @@ class _PostScreenState extends State<PostScreen> {
           );
         }
 
-        if (categories.data!.list.isEmpty) {
+        if (categories.data!.data.isEmpty) {
           return const Center(
             child: Text("Empty"),
           );

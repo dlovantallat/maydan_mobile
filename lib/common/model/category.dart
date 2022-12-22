@@ -1,14 +1,14 @@
-class CategoryList {
-  List<CategoryData> list;
+class CategoryObj {
+  List<CategoryData> data;
 
-  CategoryList({required this.list});
+  CategoryObj({required this.data});
 
-  factory CategoryList.getList(dynamic jsonData) {
+  factory CategoryObj.fromJson(Map<String, dynamic> item) {
     List<CategoryData> l = [];
-    for (var i in jsonData) {
+    for (var i in item['data']) {
       l.add(CategoryData.fromJson(i));
     }
-    return CategoryList(list: l);
+    return CategoryObj(data: l);
   }
 }
 
