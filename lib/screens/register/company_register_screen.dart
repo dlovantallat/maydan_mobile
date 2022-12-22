@@ -4,7 +4,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../utilities/app_utilities.dart';
 
 class CompanyRegisterScreen extends StatefulWidget {
-  const CompanyRegisterScreen({Key? key}) : super(key: key);
+  final String tempToken;
+
+  const CompanyRegisterScreen({Key? key, required this.tempToken})
+      : super(key: key);
 
   @override
   State<CompanyRegisterScreen> createState() => _CompanyRegisterScreenState();

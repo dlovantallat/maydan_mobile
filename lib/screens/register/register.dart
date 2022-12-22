@@ -20,12 +20,30 @@ class RegisterData {
   }
 }
 
-class OtpRespond {
+class RequestOtpRespond {
   String message;
 
-  OtpRespond({required this.message});
+  RequestOtpRespond({required this.message});
+
+  factory RequestOtpRespond.json(dynamic it) {
+    return RequestOtpRespond(
+      message: it['message'] == null ? "" : it['message'] as String,
+    );
+  }
+}
+
+class OtpRespond {
+  String message;
+  String token;
+  String type;
+
+  OtpRespond({required this.message, required this.token, required this.type});
 
   factory OtpRespond.json(dynamic it) {
-    return OtpRespond(message: it['message'] as String);
+    return OtpRespond(
+      message: it['message'] == null ? "" : it['message'] as String,
+      token: it['token'] == null ? "" : it['token'] as String,
+      type: it['type'] == null ? "" : it['type'] as String,
+    );
   }
 }

@@ -60,6 +60,13 @@ class _ProfileScreenState extends State<ProfileScreen>
 
     profile = await service.getMe(token);
 
+    if (!profile.requestStatus) {
+      if (profile.statusCode == 401) {
+        setToken("");
+        tokenCheck();
+      }
+    }
+
     setState(() {
       isLoading = false;
     });

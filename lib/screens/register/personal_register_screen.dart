@@ -8,7 +8,10 @@ import '../../utilities/app_utilities.dart';
 import 'register.dart';
 
 class PersonalRegisterScreen extends StatefulWidget {
-  const PersonalRegisterScreen({Key? key}) : super(key: key);
+  final String tempToken;
+
+  const PersonalRegisterScreen({Key? key, required this.tempToken})
+      : super(key: key);
 
   @override
   State<PersonalRegisterScreen> createState() => _PersonalRegisterScreenState();

@@ -98,10 +98,10 @@ class MaydanServices {
 
   Future<ApiResponse<ItemRespond>> postItem(String token) {
     var request = http.MultipartRequest('POST', Uri.parse("${baseURL}items"));
-    request.fields['title'] = jsonEncode({"en":"eee"});
+    request.fields['title'] = jsonEncode({"en": "eee"});
     request.fields['subcategory_id'] = "97edfeb0-f3a9-4cfe-8a15-3e4f14504407";
     request.fields['user_address_id'] = "98023c79-f1b0-4b2a-aee7-19445803c5ef";
-    request.fields['description'] =  jsonEncode({"en":"eee"});
+    request.fields['description'] = jsonEncode({"en": "eee"});
 
     request.headers.addAll(headers(token: token));
 
@@ -159,11 +159,48 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<OtpRespond>> requestPinCode(String phoneNumber) {
+  Future<ApiResponse<RequestOtpRespond>> requestPinCode(
+      String phoneNumber, bool isPersonal) {
     var request =
         http.MultipartRequest('POST', Uri.parse("${baseURL}requestPincode"));
 
-    request.fields['msisdn'] = phoneNumber;
+    request.fields['msisdn'] = "964$phoneNumber";
+    request.fields['usertype'] = !isPersonal ? "P" : "C";
+
+    request.headers.addAll(headers());
+
+    return request.send().then(
+      (data) async {
+        if (data.statusCode == 200) {
+          final respStr = await data.stream.bytesToString();
+
+          final login = RequestOtpRespond.json(jsonDecode(respStr));
+
+          return ApiResponse<RequestOtpRespond>(data: login);
+        } else if (data.statusCode == 403) {
+          final respStr = await data.stream.bytesToString();
+
+          final login = RequestOtpRespond.json(jsonDecode(respStr));
+
+          return ApiResponse<RequestOtpRespond>(data: login, statusCode: 403);
+        }
+
+        return ApiResponse<RequestOtpRespond>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<RequestOtpRespond>(
+          requestStatus: true, errorMessage: s.toString()),
+    );
+  }
+
+  Future<ApiResponse<OtpRespond>> verifyPinCode(
+      String phoneNumber, String otp) {
+    var request =
+        http.MultipartRequest('POST', Uri.parse("${baseURL}verifyPincode"));
+
+    request.fields['msisdn'] = "964$phoneNumber";
+    request.fields['pincode'] = otp;
 
     request.headers.addAll(headers());
 
@@ -174,7 +211,7 @@ class MaydanServices {
 
           final login = OtpRespond.json(jsonDecode(respStr));
 
-          return ApiResponse<OtpRespond>(data: login);
+          return ApiResponse<OtpRespond>(data: login, statusCode: 200);
         } else if (data.statusCode == 403) {
           final respStr = await data.stream.bytesToString();
 
@@ -184,11 +221,13 @@ class MaydanServices {
         }
 
         return ApiResponse<OtpRespond>(
-            requestStatus: true, errorMessage: "API Communication Down");
+            requestStatus: true,
+            errorMessage: "API Communication Down",
+            statusCode: 0);
       },
     ).catchError(
       (s) => ApiResponse<OtpRespond>(
-          requestStatus: true, errorMessage: s.toString()),
+          requestStatus: true, errorMessage: s.toString(), statusCode: 0),
     );
   }
 
@@ -237,6 +276,8 @@ class MaydanServices {
           final profile = ProfileData.fromJson(jsonData);
 
           return ApiResponse<ProfileData>(data: profile);
+        } else if (data.statusCode == 401) {
+          return ApiResponse<ProfileData>(statusCode: 401);
         }
         return ApiResponse<ProfileData>(
             requestStatus: true, errorMessage: "API Communication Down");

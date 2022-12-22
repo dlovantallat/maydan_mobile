@@ -17,14 +17,14 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   MaydanServices get service => GetIt.I<MaydanServices>();
-  late ApiResponse<OtpRespond> otp;
+  late ApiResponse<RequestOtpRespond> otp;
   bool isPersonal = false;
   final phoneNumberController = TextEditingController();
   int phoneCounter = 0;
 
   otpRequest() async {
     String phoneNumber = phoneNumberController.text.trim();
-    otp = await service.requestPinCode(phoneNumber);
+    otp = await service.requestPinCode(phoneNumber,isPersonal);
     if (!mounted) return;
     if (otp.requestStatus) {
       setSnackBar(context, otp.errorMessage);
