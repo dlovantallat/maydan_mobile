@@ -42,20 +42,22 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends State<MainPage> with HomeDrawerListener {
   int currentIndex = 0;
-  final List<Widget> _children = [
-    const HomeScreen(),
-    const CategoryScreen(),
-    const PostScreen(),
-    const FavoriteScreen(),
-    const ProfileScreen(),
-  ];
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> children = [
+      HomeScreen(
+        listener: this,
+      ),
+      const CategoryScreen(),
+      const PostScreen(),
+      const FavoriteScreen(),
+      const ProfileScreen(),
+    ];
     return Scaffold(
-      body: _children[currentIndex],
+      body: children[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -149,5 +151,12 @@ class _MainPageState extends State<MainPage> {
         ],
       ),
     );
+  }
+
+  @override
+  void indexListener(int index) {
+    setState(() {
+      currentIndex = index;
+    });
   }
 }

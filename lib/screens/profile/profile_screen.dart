@@ -16,7 +16,8 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with LoginCallBack {
+class _ProfileScreenState extends State<ProfileScreen>
+    with LoginCallBack, LogoutListener {
   MaydanServices get service => GetIt.I<MaydanServices>();
 
   late ApiResponse<ProfileData> profile;
@@ -193,8 +194,7 @@ class _ProfileScreenState extends State<ProfileScreen> with LoginCallBack {
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        setToken("");
-                        tokenCheck();
+                        logout(context, this);
                       },
                       child: Container(
                         margin: const EdgeInsetsDirectional.only(
@@ -222,6 +222,13 @@ class _ProfileScreenState extends State<ProfileScreen> with LoginCallBack {
 
   @override
   void onLogin() {
+    tokenCheck();
+  }
+
+  @override
+  void onLogout() {
+    Navigator.pop(context);
+    setToken("");
     tokenCheck();
   }
 }

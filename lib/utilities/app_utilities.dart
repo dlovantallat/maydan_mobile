@@ -85,3 +85,66 @@ void loading(BuildContext context) {
     },
   );
 }
+
+logout(BuildContext context, LogoutListener listener) {
+  showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: const Center(child: Text("Logout")),
+          content: Wrap(
+            alignment: WrapAlignment.center,
+            children: [
+              Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsetsDirectional.only(top: 8, bottom: 16),
+                    child: Text("Are you sure of logout"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      listener.onLogout();
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color(0xFFEB5757),
+                      ),
+                      minimumSize: MaterialStateProperty.resolveWith<Size>(
+                        (Set<MaterialState> states) {
+                          return const Size(
+                            double.infinity,
+                            40,
+                          );
+                        },
+                      ),
+                    ),
+                    child: Text("Logout".toUpperCase()),
+                  ),
+                  TextButton(
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.resolveWith<Size>(
+                        (Set<MaterialState> states) {
+                          return const Size(
+                            double.infinity,
+                            40,
+                          );
+                        },
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text("cancel".toUpperCase()),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+      barrierDismissible: true);
+}
+
+abstract class LogoutListener {
+  void onLogout();
+}

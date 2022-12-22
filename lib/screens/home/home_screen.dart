@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maydan/screens/home/home_item.dart';
+import 'package:maydan/screens/my_ads/my_ads_screen.dart';
 
 import '../../utilities/app_utilities.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final HomeDrawerListener listener;
+
+  const HomeScreen({Key? key, required this.listener}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with LogoutListener {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,22 +75,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     Padding(
                       padding:
                           const EdgeInsetsDirectional.only(top: 8, bottom: 32),
-                      child: Row(
-                        children: [
-                          Container(
-                            margin: const EdgeInsetsDirectional.only(end: 16),
-                            height: 40,
-                            width: 40,
-                            color: const Color(0x49000000),
-                          ),
-                          const Text(
-                            'My Profile',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18),
-                          ),
-                        ],
+                      child: InkWell(
+                        onTap: () {
+                          widget.listener.indexListener(4);
+                        },
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsetsDirectional.only(end: 16),
+                              height: 40,
+                              width: 40,
+                              color: const Color(0x49000000),
+                            ),
+                            const Text(
+                              'My Profile',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Row(
@@ -165,8 +173,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     onTap: () {
-                      // Update the state of the app.
-                      // ...
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const MyAdsScreen()));
                     },
                   ),
                   ListTile(
@@ -181,8 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     onTap: () {
-                      // Update the state of the app.
-                      // ...
+                      widget.listener.indexListener(3);
                     },
                   ),
                   ListTile(
@@ -229,8 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     onTap: () {
-                      // Update the state of the app.
-                      // ...
+                      logout(context, this);
                     },
                   ),
                   ListTile(
@@ -270,4 +278,14 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  @override
+  void onLogout() {
+    Navigator.pop(context);
+    setToken("");
+  }
+}
+
+abstract class HomeDrawerListener {
+  void indexListener(int index);
 }
