@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
+import 'package:maydan/screens/home/home.dart';
 import 'package:maydan/screens/home/home_item.dart';
 import 'package:maydan/screens/my_ads/my_ads_screen.dart';
 
+import '../../cloud_functions/api_response.dart';
+import '../../cloud_functions/maydan_services.dart';
 import '../../utilities/app_utilities.dart';
+import 'home_slider.dart';
 
 class HomeScreen extends StatefulWidget {
   final HomeDrawerListener listener;
@@ -15,6 +20,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with LogoutListener {
+  MaydanServices get service => GetIt.I<MaydanServices>();
+  late ApiResponse<HomeObj> home;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    getHome();
+    super.initState();
+  }
+
+  void getHome() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    home = await service.getHome();
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,12 +84,44 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
           ],
         ),
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) => HomeItem(
-          index: index,
-        ),
-        itemCount: 5,
-      ),
+      body: Builder(builder: (context) {
+        if (isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if (home.requestStatus) {
+          return Center(
+            child: Text(home.errorMessage),
+          );
+        }
+
+        return ListView(
+          children: [
+            Container(
+              margin: const EdgeInsetsDirectional.only(
+                start: 12,
+                end: 12,
+                top: 16,
+                bottom: 16,
+              ),
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: homeSlider(context, home.data!.bannerList),
+              ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) => HomeItem(
+                index: index,
+              ),
+              itemCount: 5,
+            )
+          ],
+        );
+      }),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,

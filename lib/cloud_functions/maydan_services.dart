@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:maydan/screens/home/home.dart';
 
 import '../common/model/category.dart';
 import '../common/model/item.dart';
@@ -18,6 +19,31 @@ class MaydanServices {
       'Accept': 'application/json',
       'app-language': 'en',
     };
+  }
+
+  Future<ApiResponse<HomeObj>> getHome() {
+    return http
+        .get(Uri.parse("${baseURL}home"), headers: headers())
+        .timeout(const Duration(seconds: timeOutInSecond))
+        .then(
+      (data) {
+        if (data.statusCode == 200) {
+          final jsonData = json.decode(data.body);
+
+          final list = HomeObj.fromJson(jsonData);
+
+          return ApiResponse<HomeObj>(data: list);
+        }
+        return ApiResponse<HomeObj>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<HomeObj>(
+          requestStatus: true,
+          errorMessage: s.toString() == "Connection failed"
+              ? " No Internet, Please check your internet connection."
+              : "API Down we are working to get things back to normal. Please have a patient"),
+    );
   }
 
   Future<ApiResponse<CategoryObj>> getCategories() {

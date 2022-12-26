@@ -28,6 +28,7 @@ MaterialColor appTheme = const MaterialColor(0xFF79a207, {
 /// static Logos and Images path
 
 const String noInternet = 'assets/no_internet.png';
+const String imageHolder = 'assets/image_holder.jpeg';
 const String mainPostBottomNavigationSvg = 'assets/post.svg';
 const String mainCategoryBottomNavigationSvg = 'assets/category.svg';
 const String mainHomeBottomNavigationSvg = 'assets/home.svg';
