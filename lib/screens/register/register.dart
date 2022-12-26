@@ -1,11 +1,13 @@
 class RegisterModel {
-  RegisterData user;
+  RegisterData? user;
+  String message;
 
-  RegisterModel({required this.user});
+  RegisterModel({required this.user, required this.message});
 
   factory RegisterModel.json(dynamic it) {
     return RegisterModel(
-      user: RegisterData.json(it['user']),
+      user: it['user'] == null ? null : RegisterData.json(it['user']),
+      message: it['message'] == null ? "" : it['message'] as String,
     );
   }
 }
@@ -16,7 +18,7 @@ class RegisterData {
   RegisterData({required this.name});
 
   factory RegisterData.json(dynamic it) {
-    return RegisterData(name: it['name']);
+    return RegisterData(name: it['name'] == null ? "" : it['name'] as String);
   }
 }
 

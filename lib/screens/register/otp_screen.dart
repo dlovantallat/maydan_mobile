@@ -44,7 +44,11 @@ class _OtpScreenState extends State<OtpScreen> {
             context,
             MaterialPageRoute(
               builder: (_) => !widget.isPersonal
-                  ? PersonalRegisterScreen(tempToken: otpService.data!.token)
+                  ? PersonalRegisterScreen(
+                      phoneNumber: widget.phoneNumber,
+                      tempToken: otpService.data!.token,
+                      isPersonal: widget.isPersonal,
+                    )
                   : CompanyRegisterScreen(tempToken: otpService.data!.token),
             ));
       }

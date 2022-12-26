@@ -231,16 +231,21 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<RegisterModel>> register(
-      String name, String email, String phoneNumber, String password) {
+  Future<ApiResponse<RegisterModel>> register(String name, String email,
+      String token, String phoneNumber, String password, bool isPersonal) {
     var request =
         http.MultipartRequest('POST', Uri.parse("${baseURL}register"));
 
     request.fields['name'] = name;
     request.fields['email'] = email;
+    request.fields['token'] = token;
     request.fields['password'] = password;
     request.fields['password_confirmation'] = password;
     request.fields['msisdn'] = phoneNumber;
+
+    if (isPersonal) {
+      request.fields['category_id'] = "9808a274-5aba-4f93-9ecd-29ef2c66d60e";
+    }
 
     request.headers.addAll(headers());
 
@@ -253,8 +258,21 @@ class MaydanServices {
 
           return ApiResponse<RegisterModel>(data: register);
         } else if (data.statusCode == 422) {
-          return ApiResponse<RegisterModel>(statusCode: 422);
+          final respStr = await data.stream.bytesToString();
+
+          final register = RegisterModel.json(jsonDecode(respStr));
+          return ApiResponse<RegisterModel>(
+              statusCode: 422, errorMessage: register.message);
+        } else if (data.statusCode == 403) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = RegisterModel.json(jsonDecode(respStr));
+          return ApiResponse<RegisterModel>(
+              statusCode: 403, errorMessage: register.message);
         }
+
+        print(data.statusCode);
+
         return ApiResponse<RegisterModel>(
             requestStatus: true, errorMessage: "API Communication Down");
       },

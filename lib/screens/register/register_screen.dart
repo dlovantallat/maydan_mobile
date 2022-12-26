@@ -24,7 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   otpRequest() async {
     String phoneNumber = phoneNumberController.text.trim();
-    otp = await service.requestPinCode(phoneNumber,isPersonal);
+    otp = await service.requestPinCode(phoneNumber, isPersonal);
     if (!mounted) return;
     if (otp.requestStatus) {
       setSnackBar(context, otp.errorMessage);
@@ -33,6 +33,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         setSnackBar(context, otp.data!.message);
       } else {
         setSnackBar(context, "200: ${otp.data!.message}");
+        print("200: ${otp.data!.message}");
         nextScreen(phoneNumber);
       }
     }
