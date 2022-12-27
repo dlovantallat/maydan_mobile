@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
+import '../../common/model/category.dart';
 import '../../utilities/app_utilities.dart';
 import '../company_profile/company_profile_screen.dart';
 import '../item_detail/item_detail.dart';
+import 'home.dart';
 
 class HomeItem extends StatelessWidget {
   final int index;
+  final HomeObj homeObj;
 
-  const HomeItem({Key? key, required this.index}) : super(key: key);
+  const HomeItem({Key? key, required this.index, required this.homeObj})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +25,15 @@ class HomeItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                "Categories",
-                style: TextStyle(
+              Text(
+                index == 0
+                    ? "Categories"
+                    : index == 1
+                        ? "Profile"
+                        : index == 2
+                            ? "hot"
+                            : "items",
+                style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
                 ),
@@ -30,58 +41,49 @@ class HomeItem extends StatelessWidget {
               TextButton(onPressed: () {}, child: const Text("View All")),
             ],
           ),
-          cases(index),
+          cases(index, homeObj),
         ],
       ),
     );
   }
 }
 
-Widget cases(int index) {
-  switch (index) {
-    case 0:
-      return homeItemRow([
-        "1",
-        "2",
-        "3",
-      ], index);
-
-    case 4:
-      return homeItemRow([
-        "1",
-        "4",
-      ], index);
-
-    default:
-      return homeItemRow([
-        "1",
-        "2",
-        "3",
-        "4",
-      ], index);
+Widget cases(int index, HomeObj homeObj) {
+  if (index == 0) {
+    return homeItemRow(homeObj.categoryList.length, index, homeObj);
+  } else if (index == 1) {
+    return homeItemRow(homeObj.profile.length, index, homeObj);
+  } else if (index == 2) {
+    return homeItemRow(homeObj.itemSection.hotDeals.length, index, homeObj);
+  } else {
+    return homeItemRow(homeObj.itemSection.latest.length, index, homeObj);
   }
 }
 
-Widget homeItemRow(List<String> category, int index) {
+Widget homeItemRow(int length, int index, HomeObj homeObj) {
   var list = <Widget>[
     Container(
       width: 0,
     )
   ];
 
-  for (var i in category) {
-    switch (index) {
-      case 0:
-        list.add(const HomeCategoryItem());
-        break;
-
-      case 4:
-        list.add(const HomeProfileItem());
-        break;
-
-      default:
-        list.add(const HomeSubItem());
-        break;
+  for (var i = 0; i < length; i++) {
+    if (index == 0) {
+      list.add(HomeCategoryItem(
+        data: homeObj.categoryList[i],
+      ));
+    } else if (index == 1) {
+      list.add(HomeProfileItem(
+        profile: homeObj.profile[i],
+      ));
+    } else if (index == 2) {
+      list.add(HomeSubItem(
+        data: homeObj.itemSection.hotDeals[i],
+      ));
+    } else {
+      list.add(HomeSubItem(
+        data: homeObj.itemSection.latest[i],
+      ));
     }
   }
 
@@ -95,11 +97,14 @@ Widget homeItemRow(List<String> category, int index) {
 }
 
 class HomeCategoryItem extends StatelessWidget {
-  const HomeCategoryItem({Key? key}) : super(key: key);
+  final CategoryData data;
+
+  const HomeCategoryItem({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      clipBehavior: Clip.hardEdge,
       margin: const EdgeInsetsDirectional.only(end: 12),
       decoration: BoxDecoration(
           color: const Color(0xffffffff),
@@ -111,24 +116,34 @@ class HomeCategoryItem extends StatelessWidget {
                 color: const Color(0x06b4b0b0).withOpacity(.8),
                 spreadRadius: -9)
           ]),
-      width: 90,
+      width: 100,
       child: Column(
         children: [
           SizedBox(
             height: 65,
-            child: SvgPicture.asset(
-              homeLogoSvg,
-              semanticsLabel: '',
-              color: appColor,
+            width: double.infinity,
+            child: Image.network(
+              imageLoader(data.urlImg),
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => const Image(
+                image: AssetImage(noInternet),
+                fit: BoxFit.fitWidth,
+              ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsetsDirectional.only(
+          Padding(
+            padding: const EdgeInsetsDirectional.only(
+              top: 8,
               start: 8,
               end: 8,
               bottom: 8,
             ),
-            child: Text("Category"),
+            child: Text(
+              "${data.title}\n",
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+            ),
           ),
         ],
       ),
@@ -137,7 +152,9 @@ class HomeCategoryItem extends StatelessWidget {
 }
 
 class HomeSubItem extends StatelessWidget {
-  const HomeSubItem({Key? key}) : super(key: key);
+  final HomeItemObj data;
+
+  const HomeSubItem({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -170,8 +187,12 @@ class HomeSubItem extends StatelessWidget {
                       width: double.infinity,
                       height: 155,
                       child: Image.network(
-                        "https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1988&q=80",
+                        imageLoader(data.itemPhotos[0].filePath),
                         fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => const Image(
+                          image: AssetImage(noInternet),
+                          fit: BoxFit.fitWidth,
+                        ),
                       ),
                     ),
                     Align(
@@ -204,36 +225,43 @@ class HomeSubItem extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                      child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Padding(
-                        padding: EdgeInsetsDirectional.only(start: 8, top: 8),
-                        child: Text(
-                          "item Home SubItem ssd",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, color: Colors.black),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(bottom: 8.0),
+                    child: Expanded(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 8, top: 8),
+                          child: Text(
+                            data.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.only(start: 8, bottom: 4),
-                        child: Text(
-                          "25/12/2022",
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, color: Colors.black),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 8, bottom: 4),
+                          child: Text(
+                            DateFormat("d MMM yyyy")
+                                .format(DateTime.parse(data.statusDate)),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black),
+                          ),
                         ),
-                      ),
-                    ],
-                  )),
-                  const Padding(
-                    padding: EdgeInsetsDirectional.only(start: 8, end: 8),
-                    child: Text("10\$"),
+                      ],
+                    )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
+                    child: Text("${data.priceAnnounced}\$"),
                   ),
                 ],
               ),
@@ -246,7 +274,9 @@ class HomeSubItem extends StatelessWidget {
 }
 
 class HomeProfileItem extends StatelessWidget {
-  const HomeProfileItem({Key? key}) : super(key: key);
+  final CompanyProfile profile;
+
+  const HomeProfileItem({Key? key, required this.profile}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -275,8 +305,12 @@ class HomeProfileItem extends StatelessWidget {
                 width: double.infinity,
                 height: 155,
                 child: Image.network(
-                  "https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1988&q=80",
+                  imageLoader(profile.urlPhoto),
                   fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => const Image(
+                    image: AssetImage(noInternet),
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
               ),
             ),
@@ -288,13 +322,13 @@ class HomeProfileItem extends StatelessWidget {
               ),
               height: 45,
               width: 165,
-              child: const Padding(
-                padding: EdgeInsetsDirectional.only(start: 8, top: 8),
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(start: 8, top: 8),
                 child: Text(
-                  "item Home item Home item Home ",
+                  profile.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.w400, color: Colors.black),
                 ),
               ),

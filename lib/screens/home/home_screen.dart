@@ -116,8 +116,9 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) => HomeItem(
                 index: index,
+                homeObj: home.data!,
               ),
-              itemCount: 5,
+              itemCount: 4,
             )
           ],
         );
