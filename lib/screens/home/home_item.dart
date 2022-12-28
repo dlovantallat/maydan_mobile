@@ -225,39 +225,40 @@ class HomeSubItem extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(bottom: 8.0),
-                    child: Expanded(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                              start: 8, top: 8),
-                          child: Text(
-                            data.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.only(bottom: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.only(
+                                start: 8, top: 8),
+                            child: Text(
+                              data.title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black),
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                              start: 8, bottom: 4),
-                          child: Text(
-                            DateFormat("d MMM yyyy")
-                                .format(DateTime.parse(data.statusDate)),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.only(
+                                start: 8, bottom: 4),
+                            child: Text(
+                              DateFormat("d MMM yyyy")
+                                  .format(DateTime.parse(data.statusDate)),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black),
+                            ),
                           ),
-                        ),
-                      ],
-                    )),
+                        ],
+                      ),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
