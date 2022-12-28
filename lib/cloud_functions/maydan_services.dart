@@ -6,6 +6,7 @@ import 'package:maydan/screens/my_ads/my_items_obj.dart';
 import '../common/model/category.dart';
 import '../common/model/item.dart';
 import '../common/model/login.dart';
+import '../screens/favorite/favoriteObj.dart';
 import '../screens/profile/profile.dart';
 import '../screens/register/register.dart';
 import 'api_response.dart';
@@ -338,7 +339,8 @@ class MaydanServices {
 
   Future<ApiResponse<MyItemsObj>> getMyItems(String token) {
     return http
-        .get(Uri.parse("${baseURL}items/myItems"), headers: headers(token: token))
+        .get(Uri.parse("${baseURL}items/myItems"),
+            headers: headers(token: token))
         .timeout(const Duration(seconds: timeOutInSecond))
         .then(
       (data) {
@@ -356,6 +358,61 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<MyItemsObj>(
+          requestStatus: true,
+          errorMessage: s.toString() == "Connection failed"
+              ? " No Internet, Please check your internet connection."
+              : "API Down we are working to get things back to normal. Please have a patient"),
+    );
+  }
+
+  Future<ApiResponse<MyItemsObj>> getMyFavorite(String token) {
+    return http
+        .get(Uri.parse("${baseURL}favorites"), headers: headers(token: token))
+        .timeout(const Duration(seconds: timeOutInSecond))
+        .then(
+      (data) {
+        if (data.statusCode == 200) {
+          final jsonData = json.decode(data.body);
+
+          final profile = MyItemsObj.fromJson(jsonData);
+
+          return ApiResponse<MyItemsObj>(data: profile);
+        } else if (data.statusCode == 401) {
+          return ApiResponse<MyItemsObj>(statusCode: 401);
+        }
+        return ApiResponse<MyItemsObj>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<MyItemsObj>(
+          requestStatus: true,
+          errorMessage: s.toString() == "Connection failed"
+              ? " No Internet, Please check your internet connection."
+              : "API Down we are working to get things back to normal. Please have a patient"),
+    );
+  }
+
+  Future<ApiResponse<FavoriteRemove>> deleteFavorite(String token, String id) {
+    return http
+        .delete(Uri.parse("${baseURL}items/$id/favorite"),
+            headers: headers(token: token))
+        .timeout(const Duration(seconds: timeOutInSecond))
+        .then(
+      (data) {
+        if (data.statusCode == 200) {
+          final jsonData = json.decode(data.body);
+
+          final profile = FavoriteRemove.fromJson(jsonData);
+
+          return ApiResponse<FavoriteRemove>(data: profile, statusCode: 200);
+        } else if (data.statusCode == 401) {
+          return ApiResponse<FavoriteRemove>(statusCode: 401);
+        }
+        return ApiResponse<FavoriteRemove>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<FavoriteRemove>(
           requestStatus: true,
           errorMessage: s.toString() == "Connection failed"
               ? " No Internet, Please check your internet connection."

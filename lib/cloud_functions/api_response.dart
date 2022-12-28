@@ -8,6 +8,6 @@ class ApiResponse<T> {
     this.data,
     this.requestStatus = false,
     this.errorMessage = "",
-    this.statusCode = 200,
+    this.statusCode = -1,
   });
 }

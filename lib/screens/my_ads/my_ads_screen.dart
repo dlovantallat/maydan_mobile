@@ -15,7 +15,8 @@ class MyAdsScreen extends StatefulWidget {
   State<MyAdsScreen> createState() => _MyAdsScreenState();
 }
 
-class _MyAdsScreenState extends State<MyAdsScreen> with LoginCallBack {
+class _MyAdsScreenState extends State<MyAdsScreen>
+    with LoginCallBack, ItemListener {
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<MyItemsObj> myItems;
   bool isLoading = false;
@@ -102,6 +103,8 @@ class _MyAdsScreenState extends State<MyAdsScreen> with LoginCallBack {
           return ListView.builder(
             itemBuilder: (context, index) => MyItemsItemList(
               data: myItems.data!.data[index],
+              listener: this,
+              isFav: false,
             ),
             itemCount: myItems.data!.data.length,
           );
@@ -117,5 +120,10 @@ class _MyAdsScreenState extends State<MyAdsScreen> with LoginCallBack {
   @override
   void onLogin() {
     tokenCheck();
+  }
+
+  @override
+  void onFavRemove(String id) {
+    // TODO: implement onFavRemove
   }
 }

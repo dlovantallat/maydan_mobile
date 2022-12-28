@@ -5,8 +5,15 @@ import 'my_items_obj.dart';
 
 class MyItemsItemList extends StatelessWidget {
   final MyItemData data;
+  final bool isFav;
+  final ItemListener listener;
 
-  const MyItemsItemList({Key? key, required this.data}) : super(key: key);
+  const MyItemsItemList({
+    Key? key,
+    required this.data,
+    required this.listener,
+    required this.isFav,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +64,8 @@ class MyItemsItemList extends StatelessWidget {
                   Text("${data.priceAnnounced} \$"),
                 ],
               )),
-          Expanded(
+          if (!isFav)
+            Expanded(
               flex: 1,
               child: Container(
                 decoration: const BoxDecoration(
@@ -82,9 +90,31 @@ class MyItemsItemList extends StatelessWidget {
                     ],
                   ),
                 ),
-              )),
+              ),
+            )
+          else
+            Expanded(
+              flex: 1,
+              child: Container(
+                decoration: const BoxDecoration(
+                  border: BorderDirectional(
+                    start: BorderSide(width: 1.0, color: Colors.black),
+                  ),
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    listener.onFavRemove(data.id);
+                  },
+                  icon: const Icon(Icons.delete_outline),
+                ),
+              ),
+            ),
         ],
       ),
     );
   }
+}
+
+abstract class ItemListener {
+  void onFavRemove(String id);
 }
