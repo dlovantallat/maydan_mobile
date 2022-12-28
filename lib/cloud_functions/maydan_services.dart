@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:maydan/screens/home/home.dart';
+import 'package:maydan/screens/my_ads/my_items_obj.dart';
 
 import '../common/model/category.dart';
 import '../common/model/item.dart';
@@ -328,6 +329,33 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<ProfileData>(
+          requestStatus: true,
+          errorMessage: s.toString() == "Connection failed"
+              ? " No Internet, Please check your internet connection."
+              : "API Down we are working to get things back to normal. Please have a patient"),
+    );
+  }
+
+  Future<ApiResponse<MyItemsObj>> getMyItems(String token) {
+    return http
+        .get(Uri.parse("${baseURL}items/myItems"), headers: headers(token: token))
+        .timeout(const Duration(seconds: timeOutInSecond))
+        .then(
+      (data) {
+        if (data.statusCode == 200) {
+          final jsonData = json.decode(data.body);
+
+          final profile = MyItemsObj.fromJson(jsonData);
+
+          return ApiResponse<MyItemsObj>(data: profile);
+        } else if (data.statusCode == 401) {
+          return ApiResponse<MyItemsObj>(statusCode: 401);
+        }
+        return ApiResponse<MyItemsObj>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<MyItemsObj>(
           requestStatus: true,
           errorMessage: s.toString() == "Connection failed"
               ? " No Internet, Please check your internet connection."
