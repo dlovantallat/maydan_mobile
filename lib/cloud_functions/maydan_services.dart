@@ -6,7 +6,7 @@ import 'package:maydan/screens/my_ads/my_items_obj.dart';
 import '../common/model/category.dart';
 import '../common/model/item.dart';
 import '../common/model/login.dart';
-import '../screens/favorite/favoriteObj.dart';
+import '../screens/favorite/favorite_obj.dart';
 import '../screens/profile/profile.dart';
 import '../screens/register/register.dart';
 import 'api_response.dart';
@@ -385,6 +385,34 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<MyItemsObj>(
+          requestStatus: true,
+          errorMessage: s.toString() == "Connection failed"
+              ? " No Internet, Please check your internet connection."
+              : "API Down we are working to get things back to normal. Please have a patient"),
+    );
+  }
+
+  Future<ApiResponse<FavoriteRequest>> postFavorite(String token, String id) {
+    return http
+        .post(Uri.parse("${baseURL}items/$id/favorite"),
+            headers: headers(token: token))
+        .timeout(const Duration(seconds: timeOutInSecond))
+        .then(
+      (data) {
+        if (data.statusCode == 201) {
+          final jsonData = json.decode(data.body);
+
+          final profile = FavoriteRequest.fromJson(jsonData);
+
+          return ApiResponse<FavoriteRequest>(data: profile, statusCode: 201);
+        } else if (data.statusCode == 401) {
+          return ApiResponse<FavoriteRequest>(statusCode: 401);
+        }
+        return ApiResponse<FavoriteRequest>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<FavoriteRequest>(
           requestStatus: true,
           errorMessage: s.toString() == "Connection failed"
               ? " No Internet, Please check your internet connection."

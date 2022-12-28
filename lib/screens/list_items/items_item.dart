@@ -1,16 +1,41 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
+import 'package:maydan/screens/favorite/favorite_obj.dart';
 
+import '../../cloud_functions/api_response.dart';
+import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
 import '../item_detail/item_detail.dart';
 
-class ItemsItem extends StatelessWidget {
+class ItemsItem extends StatefulWidget {
   final ItemData? item;
 
   const ItemsItem({Key? key, this.item}) : super(key: key);
+
+  @override
+  State<ItemsItem> createState() => _ItemsItemState();
+}
+
+class _ItemsItemState extends State<ItemsItem> {
+  MaydanServices get service => GetIt.I<MaydanServices>();
+  late ApiResponse<FavoriteRequest> favReq;
+
+  bool isFav = false;
+
+  void fav() async {
+    String token = await getToken();
+    favReq = await service.postFavorite(token, widget.item!.id);
+
+    if (!favReq.requestStatus) {
+      if (favReq.statusCode == 201) {
+        setState(() {
+          isFav = !isFav;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +65,12 @@ class ItemsItem extends StatelessWidget {
                     width: double.infinity,
                     height: 155,
                     child: Image.network(
-                      "https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1988&q=80",
+                      imageLoader(widget.item!.image),
                       fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => const Image(
+                        image: AssetImage(imageHolder),
+                        fit: BoxFit.fitWidth,
+                      ),
                     ),
                   ),
                   Align(
@@ -57,7 +86,9 @@ class ItemsItem extends StatelessWidget {
                             margin: const EdgeInsetsDirectional.all(8),
                             child: Align(
                               child: SvgPicture.asset(
-                                mainFullFavoriteBottomNavigationSvg,
+                                isFav
+                                    ? mainFullFavoriteBottomNavigationSvg
+                                    : mainFavoriteBottomNavigationSvg,
                                 color: appColor,
                                 semanticsLabel: '',
                               ),
@@ -65,7 +96,7 @@ class ItemsItem extends StatelessWidget {
                           ),
                         ],
                       ),
-                      onPressed: () {},
+                      onPressed: fav,
                     ),
                   ),
                 ],
@@ -82,7 +113,7 @@ class ItemsItem extends StatelessWidget {
                       padding:
                           const EdgeInsetsDirectional.only(start: 8, top: 8),
                       child: Text(
-                        "jsonDecode(item?.title ?? "")['en'] ?? check name",
+                        "jsonDecode(item?.title ?? " ")['en'] ?? check name",
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
