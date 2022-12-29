@@ -1,19 +1,19 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:maydan/screens/home/home.dart';
-import 'package:maydan/screens/my_ads/my_items_obj.dart';
 
 import '../common/model/category.dart';
 import '../common/model/item.dart';
 import '../common/model/login.dart';
 import '../screens/favorite/favorite_obj.dart';
+import '../screens/home/home.dart';
 import '../screens/profile/profile.dart';
 import '../screens/register/register.dart';
 import 'api_response.dart';
 
 class MaydanServices {
   final String baseURL = "https://apimaydan.tornet.co/api/mobile/";
-  static const int timeOutInSecond = 15;
+
+  static const Duration timeOutDuration = Duration(seconds: 15);
 
   Map<String, String> headers({String token = ''}) {
     return {
@@ -26,7 +26,7 @@ class MaydanServices {
   Future<ApiResponse<HomeObj>> getHome(String token) {
     return http
         .get(Uri.parse("${baseURL}home"), headers: headers(token: token))
-        .timeout(const Duration(seconds: timeOutInSecond))
+        .timeout(timeOutDuration)
         .then(
       (data) {
         if (data.statusCode == 200) {
@@ -51,7 +51,7 @@ class MaydanServices {
   Future<ApiResponse<CategoryObj>> getCategories() {
     return http
         .get(Uri.parse("${baseURL}categories"), headers: headers())
-        .timeout(const Duration(seconds: timeOutInSecond))
+        .timeout(timeOutDuration)
         .then(
       (data) {
         if (data.statusCode == 200) {
@@ -77,7 +77,7 @@ class MaydanServices {
     return http
         .get(Uri.parse("${baseURL}categories/$categoryId/subcategories"),
             headers: headers())
-        .timeout(const Duration(seconds: timeOutInSecond))
+        .timeout(timeOutDuration)
         .then(
       (data) {
         if (data.statusCode == 200) {
@@ -103,7 +103,7 @@ class MaydanServices {
     return http
         .get(Uri.parse("${baseURL}subcategories/$subCategoryId/items"),
             headers: headers(token: token))
-        .timeout(const Duration(seconds: timeOutInSecond))
+        .timeout(timeOutDuration)
         .then(
       (data) {
         if (data.statusCode == 200) {
@@ -136,7 +136,6 @@ class MaydanServices {
 
     return request.send().then(
       (data) async {
-        print("codeee : ${data.statusCode}");
         if (data.statusCode == 201) {
           final respStr = await data.stream.bytesToString();
 
@@ -300,8 +299,6 @@ class MaydanServices {
               statusCode: 403, errorMessage: register.message);
         }
 
-        print(data.statusCode);
-
         return ApiResponse<RegisterModel>(
             requestStatus: true, errorMessage: "API Communication Down");
       },
@@ -314,15 +311,15 @@ class MaydanServices {
   Future<ApiResponse<ProfileData>> getMe(String token) {
     return http
         .get(Uri.parse("${baseURL}users"), headers: headers(token: token))
-        .timeout(const Duration(seconds: timeOutInSecond))
+        .timeout(timeOutDuration)
         .then(
       (data) {
         if (data.statusCode == 200) {
           final jsonData = json.decode(data.body);
 
-          final profile = ProfileData.fromJson(jsonData);
+          final me = ProfileData.fromJson(jsonData);
 
-          return ApiResponse<ProfileData>(data: profile);
+          return ApiResponse<ProfileData>(data: me);
         } else if (data.statusCode == 401) {
           return ApiResponse<ProfileData>(statusCode: 401);
         }
@@ -342,15 +339,15 @@ class MaydanServices {
     return http
         .get(Uri.parse("${baseURL}items/myItems"),
             headers: headers(token: token))
-        .timeout(const Duration(seconds: timeOutInSecond))
+        .timeout(timeOutDuration)
         .then(
       (data) {
         if (data.statusCode == 200) {
           final jsonData = json.decode(data.body);
 
-          final profile = ItemObj.fromJson(jsonData);
+          final myItems = ItemObj.fromJson(jsonData);
 
-          return ApiResponse<ItemObj>(data: profile);
+          return ApiResponse<ItemObj>(data: myItems);
         } else if (data.statusCode == 401) {
           return ApiResponse<ItemObj>(statusCode: 401);
         }
@@ -369,15 +366,15 @@ class MaydanServices {
   Future<ApiResponse<ItemObj>> getMyFavorite(String token) {
     return http
         .get(Uri.parse("${baseURL}favorites"), headers: headers(token: token))
-        .timeout(const Duration(seconds: timeOutInSecond))
+        .timeout(timeOutDuration)
         .then(
       (data) {
         if (data.statusCode == 200) {
           final jsonData = json.decode(data.body);
 
-          final profile = ItemObj.fromJson(jsonData);
+          final fav = ItemObj.fromJson(jsonData);
 
-          return ApiResponse<ItemObj>(data: profile);
+          return ApiResponse<ItemObj>(data: fav);
         } else if (data.statusCode == 401) {
           return ApiResponse<ItemObj>(statusCode: 401);
         }
@@ -397,15 +394,15 @@ class MaydanServices {
     return http
         .post(Uri.parse("${baseURL}items/$id/favorite"),
             headers: headers(token: token))
-        .timeout(const Duration(seconds: timeOutInSecond))
+        .timeout(timeOutDuration)
         .then(
       (data) {
         if (data.statusCode == 201) {
           final jsonData = json.decode(data.body);
 
-          final profile = FavoriteRequest.fromJson(jsonData);
+          final fav = FavoriteRequest.fromJson(jsonData);
 
-          return ApiResponse<FavoriteRequest>(data: profile, statusCode: 201);
+          return ApiResponse<FavoriteRequest>(data: fav, statusCode: 201);
         } else if (data.statusCode == 401) {
           return ApiResponse<FavoriteRequest>(statusCode: 401);
         }
@@ -425,15 +422,15 @@ class MaydanServices {
     return http
         .delete(Uri.parse("${baseURL}items/$id/favorite"),
             headers: headers(token: token))
-        .timeout(const Duration(seconds: timeOutInSecond))
+        .timeout(timeOutDuration)
         .then(
       (data) {
         if (data.statusCode == 200) {
           final jsonData = json.decode(data.body);
 
-          final profile = FavoriteRemove.fromJson(jsonData);
+          final fav = FavoriteRemove.fromJson(jsonData);
 
-          return ApiResponse<FavoriteRemove>(data: profile, statusCode: 200);
+          return ApiResponse<FavoriteRemove>(data: fav, statusCode: 200);
         } else if (data.statusCode == 401) {
           return ApiResponse<FavoriteRemove>(statusCode: 401);
         }

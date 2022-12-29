@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:maydan/screens/favorite/favorite_obj.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
+import '../favorite/favorite_obj.dart';
 import '../item_detail/item_detail.dart';
 
 class ItemsItem extends StatefulWidget {

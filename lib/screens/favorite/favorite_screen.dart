@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:maydan/screens/favorite/favorite_obj.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
 import '../my_ads/my_items_item_list.dart';
-import '../my_ads/my_items_obj.dart';
 import '../profile/login_widget.dart';
+import 'favorite_obj.dart';
 
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({Key? key}) : super(key: key);

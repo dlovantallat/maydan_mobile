@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:maydan/screens/profile/login_widget.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
-import '../../common/model/login.dart';
 import '../../utilities/app_utilities.dart';
-import '../register/register_screen.dart';
+import 'login_widget.dart';
 import 'profile.dart';
 
 class ProfileScreen extends StatefulWidget {

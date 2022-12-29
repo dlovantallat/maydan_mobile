@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:maydan/common/model/item.dart';
 
+import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
-import 'my_items_obj.dart';
 
 class MyItemsItemList extends StatelessWidget {
   final ItemData data;

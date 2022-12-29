@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:maydan/common/model/item.dart';
-import 'package:maydan/screens/my_ads/my_items_item_list.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
+import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
 import '../profile/login_widget.dart';
-import 'my_items_obj.dart';
+import 'my_items_item_list.dart';
 
 class MyAdsScreen extends StatefulWidget {
   const MyAdsScreen({Key? key}) : super(key: key);

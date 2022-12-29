@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:maydan/screens/item_detail/detail_item_meta_data.dart';
 
 import '../../utilities/app_utilities.dart';
 import '../list_items/items_item.dart';
+import 'detail_item_meta_data.dart';
 
 class ItemDetail extends StatefulWidget {
   const ItemDetail({Key? key}) : super(key: key);

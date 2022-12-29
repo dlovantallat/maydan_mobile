@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:maydan/screens/home/home.dart';
-import 'package:maydan/screens/home/home_item.dart';
-import 'package:maydan/screens/my_ads/my_ads_screen.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../utilities/app_utilities.dart';
+import '../my_ads/my_ads_screen.dart';
+import 'home.dart';
+import 'home_item.dart';
 import 'home_slider.dart';
 
 class HomeScreen extends StatefulWidget {

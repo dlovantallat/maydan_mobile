@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:maydan/cloud_functions/maydan_services.dart';
 
 import '../../cloud_functions/api_response.dart';
+import '../../cloud_functions/maydan_services.dart';
 import '../../utilities/app_utilities.dart';
 import '../../widgets/otp/otp_field.dart';
 import '../../widgets/otp/style.dart';

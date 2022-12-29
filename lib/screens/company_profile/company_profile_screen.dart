@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:maydan/utilities/app_utilities.dart';
 
+import '../../utilities/app_utilities.dart';
 import '../item_detail/detail_item_meta_data.dart';
 import '../list_items/items_item.dart';
 
@@ -11,12 +11,9 @@ class CompanyProfileScreen extends StatefulWidget {
   State<CompanyProfileScreen> createState() => _CompanyProfileScreenState();
 }
 
-// This is the type used by the popup menu below.
 enum Menu { itemOne, itemTwo, itemThree, itemFour }
 
 class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
-  String _selectedMenu = '';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,9 +49,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
           PopupMenuButton<Menu>(
               icon: const Icon(Icons.more_vert),
               onSelected: (Menu item) {
-                setState(() {
-                  _selectedMenu = item.name;
-                });
+                setState(() {});
               },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
                     const PopupMenuItem<Menu>(
@@ -98,7 +93,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
             ),
           ),
           Container(
-            margin: EdgeInsetsDirectional.all(8),
+            margin: const EdgeInsetsDirectional.all(8),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black),
               borderRadius: BorderRadius.circular(10),
