@@ -4,6 +4,7 @@ import 'package:maydan/screens/favorite/favorite_obj.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
+import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
 import '../my_ads/my_items_item_list.dart';
 import '../my_ads/my_items_obj.dart';
@@ -19,7 +20,7 @@ class FavoriteScreen extends StatefulWidget {
 class _FavoriteScreenState extends State<FavoriteScreen>
     with LoginCallBack, ItemListener {
   MaydanServices get service => GetIt.I<MaydanServices>();
-  late ApiResponse<MyItemsObj> myItems;
+  late ApiResponse<ItemObj> myItems;
   late ApiResponse<FavoriteRemove> removeFav;
   bool isLoading = false;
   bool isTokenLoading = false;
@@ -113,7 +114,7 @@ class _FavoriteScreenState extends State<FavoriteScreen>
             );
           }
 
-          if (myItems.data!.data.isEmpty) {
+          if (myItems.data!.list.isEmpty) {
             return const Center(
               child: Text("Empty"),
             );
@@ -123,11 +124,11 @@ class _FavoriteScreenState extends State<FavoriteScreen>
             padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
             child: ListView.builder(
               itemBuilder: (context, index) => MyItemsItemList(
-                data: myItems.data!.data[index],
+                data: myItems.data!.list[index],
                 listener: this,
                 isFav: true,
               ),
-              itemCount: myItems.data!.data.length,
+              itemCount: myItems.data!.list.length,
             ),
           );
         } else {

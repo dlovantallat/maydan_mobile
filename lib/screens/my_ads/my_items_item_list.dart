@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:maydan/common/model/item.dart';
 
 import '../../utilities/app_utilities.dart';
 import 'my_items_obj.dart';
 
 class MyItemsItemList extends StatelessWidget {
-  final MyItemData data;
+  final ItemData data;
   final bool isFav;
   final ItemListener listener;
 

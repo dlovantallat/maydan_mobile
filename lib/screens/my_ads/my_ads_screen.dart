@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:maydan/common/model/item.dart';
 import 'package:maydan/screens/my_ads/my_items_item_list.dart';
 
 import '../../cloud_functions/api_response.dart';
@@ -18,7 +19,7 @@ class MyAdsScreen extends StatefulWidget {
 class _MyAdsScreenState extends State<MyAdsScreen>
     with LoginCallBack, ItemListener {
   MaydanServices get service => GetIt.I<MaydanServices>();
-  late ApiResponse<MyItemsObj> myItems;
+  late ApiResponse<ItemObj> myItems;
   bool isLoading = false;
   bool isTokenLoading = false;
   bool isLogin = false;
@@ -94,7 +95,7 @@ class _MyAdsScreenState extends State<MyAdsScreen>
             );
           }
 
-          if (myItems.data!.data.isEmpty) {
+          if (myItems.data!.list.isEmpty) {
             return const Center(
               child: Text("Empty"),
             );
@@ -102,11 +103,11 @@ class _MyAdsScreenState extends State<MyAdsScreen>
 
           return ListView.builder(
             itemBuilder: (context, index) => MyItemsItemList(
-              data: myItems.data!.data[index],
+              data: myItems.data!.list[index],
               listener: this,
               isFav: false,
             ),
-            itemCount: myItems.data!.data.length,
+            itemCount: myItems.data!.list.length,
           );
         } else {
           return LoginWidget(

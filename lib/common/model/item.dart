@@ -14,30 +14,40 @@ class ItemObj {
 
 class ItemData {
   String id;
-
-  // String title;
-  // String description;
-  String image;
+  String status;
+  String title;
+  String description;
+  String statusDate;
   bool favorite;
   String priceAnnounced;
+  List<ItemPhotos> itemPhotos;
 
   ItemData({
     required this.id,
-    // required this.title,
-    // required this.description,
-    required this.image,
+    required this.status,
+    required this.title,
+    required this.description,
+    required this.statusDate,
     required this.favorite,
     required this.priceAnnounced,
+    required this.itemPhotos,
   });
 
   factory ItemData.fromJson(Map<String, dynamic> item) {
+    List<ItemPhotos> list = [];
+
+    for (var i in item['item_photos']) {
+      list.add(ItemPhotos.fromJson(i));
+    }
     return ItemData(
       id: item['id'] ?? "",
-      // title: item['title'] ?? "",
-      // description: item['description'] ?? "",
-      image: item['image'] ?? "",
+      status: item['status'] ?? "",
+      title: item['title'] ?? "",
+      description: item['description'] ?? "",
+      statusDate: item['status_date'] ?? "",
       favorite: item['favorite'] ?? false,
       priceAnnounced: item['price_announced'] ?? "",
+      itemPhotos: list,
     );
   }
 }
@@ -50,6 +60,20 @@ class ItemRespond {
   factory ItemRespond.json(dynamic it) {
     return ItemRespond(
       id: it['id'] as String,
+    );
+  }
+}
+
+class ItemPhotos {
+  String id;
+  String filePath;
+
+  ItemPhotos({required this.id, required this.filePath});
+
+  factory ItemPhotos.fromJson(Map<String, dynamic> item) {
+    return ItemPhotos(
+      id: item['id'],
+      filePath: item['file_path'],
     );
   }
 }

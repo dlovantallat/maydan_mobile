@@ -94,7 +94,7 @@ class _ItemsItemState extends State<ItemsItem> {
                     width: double.infinity,
                     height: 155,
                     child: Image.network(
-                      imageLoader(widget.item!.image),
+                      imageLoader(widget.item!.itemPhotos[0].filePath),
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, ___) => const Image(
                         image: AssetImage(imageHolder),

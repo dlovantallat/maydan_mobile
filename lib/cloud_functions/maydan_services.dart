@@ -338,7 +338,7 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<MyItemsObj>> getMyItems(String token) {
+  Future<ApiResponse<ItemObj>> getMyItems(String token) {
     return http
         .get(Uri.parse("${baseURL}items/myItems"),
             headers: headers(token: token))
@@ -348,17 +348,17 @@ class MaydanServices {
         if (data.statusCode == 200) {
           final jsonData = json.decode(data.body);
 
-          final profile = MyItemsObj.fromJson(jsonData);
+          final profile = ItemObj.fromJson(jsonData);
 
-          return ApiResponse<MyItemsObj>(data: profile);
+          return ApiResponse<ItemObj>(data: profile);
         } else if (data.statusCode == 401) {
-          return ApiResponse<MyItemsObj>(statusCode: 401);
+          return ApiResponse<ItemObj>(statusCode: 401);
         }
-        return ApiResponse<MyItemsObj>(
+        return ApiResponse<ItemObj>(
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-      (s) => ApiResponse<MyItemsObj>(
+      (s) => ApiResponse<ItemObj>(
           requestStatus: true,
           errorMessage: s.toString() == "Connection failed"
               ? " No Internet, Please check your internet connection."
@@ -366,7 +366,7 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<MyItemsObj>> getMyFavorite(String token) {
+  Future<ApiResponse<ItemObj>> getMyFavorite(String token) {
     return http
         .get(Uri.parse("${baseURL}favorites"), headers: headers(token: token))
         .timeout(const Duration(seconds: timeOutInSecond))
@@ -375,17 +375,17 @@ class MaydanServices {
         if (data.statusCode == 200) {
           final jsonData = json.decode(data.body);
 
-          final profile = MyItemsObj.fromJson(jsonData);
+          final profile = ItemObj.fromJson(jsonData);
 
-          return ApiResponse<MyItemsObj>(data: profile);
+          return ApiResponse<ItemObj>(data: profile);
         } else if (data.statusCode == 401) {
-          return ApiResponse<MyItemsObj>(statusCode: 401);
+          return ApiResponse<ItemObj>(statusCode: 401);
         }
-        return ApiResponse<MyItemsObj>(
+        return ApiResponse<ItemObj>(
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-      (s) => ApiResponse<MyItemsObj>(
+      (s) => ApiResponse<ItemObj>(
           requestStatus: true,
           errorMessage: s.toString() == "Connection failed"
               ? " No Internet, Please check your internet connection."

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/category.dart';
+import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
 import '../company_profile/company_profile_screen.dart';
 import '../favorite/favorite_obj.dart';
@@ -158,7 +159,7 @@ class HomeCategoryItem extends StatelessWidget {
 }
 
 class HomeSubItem extends StatefulWidget {
-  final HomeItemObj data;
+  final ItemData data;
   final bool isFav;
 
   const HomeSubItem({Key? key, required this.data, required this.isFav})
