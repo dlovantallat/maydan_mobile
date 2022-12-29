@@ -28,6 +28,7 @@ class _ItemsItemState extends State<ItemsItem> {
 
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<FavoriteRequest> favReq;
+  late ApiResponse<FavoriteRemove> removeFavo;
 
   bool isFav = false;
 
@@ -35,12 +36,33 @@ class _ItemsItemState extends State<ItemsItem> {
     String token = await getToken();
     favReq = await service.postFavorite(token, widget.item!.id);
 
+    if (!mounted) return;
     if (!favReq.requestStatus) {
       if (favReq.statusCode == 201) {
         setState(() {
           isFav = !isFav;
         });
       }
+    } else {
+      setSnackBar(context, removeFavo.errorMessage);
+    }
+  }
+
+  void removeFav() async {
+    String token = await getToken();
+
+    removeFavo = await service.deleteFavorite(token, widget.item!.id);
+
+    if (!mounted) return;
+
+    if (!removeFavo.requestStatus) {
+      if (removeFavo.statusCode == 200) {
+        setState(() {
+          isFav = !isFav;
+        });
+      }
+    } else {
+      setSnackBar(context, removeFavo.errorMessage);
     }
   }
 
@@ -103,7 +125,7 @@ class _ItemsItemState extends State<ItemsItem> {
                           ),
                         ],
                       ),
-                      onPressed: fav,
+                      onPressed: isFav ? removeFav : fav,
                     ),
                   ),
                 ],
@@ -115,19 +137,18 @@ class _ItemsItemState extends State<ItemsItem> {
                 Expanded(
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: const [
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.only(start: 8, top: 8),
+                      padding: EdgeInsetsDirectional.only(start: 8, top: 8),
                       child: Text(
                         "jsonDecode(item?.title ?? " ")['en'] ?? check name",
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontWeight: FontWeight.w400, color: Colors.black),
                       ),
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsetsDirectional.only(start: 8, bottom: 4),
                       child: Text(
                         "25/12/2022",

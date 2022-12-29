@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 
+import '../../cloud_functions/api_response.dart';
+import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/category.dart';
 import '../../utilities/app_utilities.dart';
 import '../company_profile/company_profile_screen.dart';
+import '../favorite/favorite_obj.dart';
 import '../item_detail/item_detail.dart';
 import 'home.dart';
 
@@ -79,10 +83,12 @@ Widget homeItemRow(int length, int index, HomeObj homeObj) {
     } else if (index == 2) {
       list.add(HomeSubItem(
         data: homeObj.itemSection.hotDeals[i],
+        isFav: homeObj.itemSection.latest[i].favorite,
       ));
     } else {
       list.add(HomeSubItem(
         data: homeObj.itemSection.latest[i],
+        isFav: homeObj.itemSection.latest[i].favorite,
       ));
     }
   }
@@ -151,10 +157,63 @@ class HomeCategoryItem extends StatelessWidget {
   }
 }
 
-class HomeSubItem extends StatelessWidget {
+class HomeSubItem extends StatefulWidget {
   final HomeItemObj data;
+  final bool isFav;
 
-  const HomeSubItem({Key? key, required this.data}) : super(key: key);
+  const HomeSubItem({Key? key, required this.data, required this.isFav})
+      : super(key: key);
+
+  @override
+  State<HomeSubItem> createState() => _HomeSubItemState();
+}
+
+class _HomeSubItemState extends State<HomeSubItem> {
+  @override
+  void initState() {
+    isFav = widget.isFav;
+    super.initState();
+  }
+
+  MaydanServices get service => GetIt.I<MaydanServices>();
+  late ApiResponse<FavoriteRequest> favReq;
+  late ApiResponse<FavoriteRemove> removeFavo;
+
+  bool isFav = false;
+
+  void fav() async {
+    String token = await getToken();
+    favReq = await service.postFavorite(token, widget.data.id);
+
+    if (!mounted) return;
+    if (!favReq.requestStatus) {
+      if (favReq.statusCode == 201) {
+        setState(() {
+          isFav = !isFav;
+        });
+      }
+    } else {
+      setSnackBar(context, removeFavo.errorMessage);
+    }
+  }
+
+  void removeFav() async {
+    String token = await getToken();
+
+    removeFavo = await service.deleteFavorite(token, widget.data.id);
+
+    if (!mounted) return;
+
+    if (!removeFavo.requestStatus) {
+      if (removeFavo.statusCode == 200) {
+        setState(() {
+          isFav = !isFav;
+        });
+      }
+    } else {
+      setSnackBar(context, removeFavo.errorMessage);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +246,7 @@ class HomeSubItem extends StatelessWidget {
                       width: double.infinity,
                       height: 155,
                       child: Image.network(
-                        imageLoader(data.itemPhotos[0].filePath),
+                        imageLoader(widget.data.itemPhotos[0].filePath),
                         fit: BoxFit.cover,
                         errorBuilder: (_, __, ___) => const Image(
                           image: AssetImage(noInternet),
@@ -208,7 +267,7 @@ class HomeSubItem extends StatelessWidget {
                               margin: const EdgeInsetsDirectional.all(8),
                               child: Align(
                                 child: SvgPicture.asset(
-                                  data.favorite
+                                  isFav
                                       ? mainFullFavoriteBottomNavigationSvg
                                       : mainFavoriteBottomNavigationSvg,
                                   color: appColor,
@@ -218,7 +277,7 @@ class HomeSubItem extends StatelessWidget {
                             ),
                           ],
                         ),
-                        onPressed: () {},
+                        onPressed: isFav ? removeFav : fav,
                       ),
                     ),
                   ],
@@ -237,7 +296,7 @@ class HomeSubItem extends StatelessWidget {
                             padding: const EdgeInsetsDirectional.only(
                                 start: 8, top: 8),
                             child: Text(
-                              data.title,
+                              widget.data.title,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -249,8 +308,8 @@ class HomeSubItem extends StatelessWidget {
                             padding: const EdgeInsetsDirectional.only(
                                 start: 8, bottom: 4),
                             child: Text(
-                              DateFormat("d MMM yyyy")
-                                  .format(DateTime.parse(data.statusDate)),
+                              DateFormat("d MMM yyyy").format(
+                                  DateTime.parse(widget.data.statusDate)),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -264,7 +323,7 @@ class HomeSubItem extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
-                    child: Text("${data.priceAnnounced}\$"),
+                    child: Text("${widget.data.priceAnnounced}\$"),
                   ),
                 ],
               ),
