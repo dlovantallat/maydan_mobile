@@ -23,9 +23,9 @@ class MaydanServices {
     };
   }
 
-  Future<ApiResponse<HomeObj>> getHome() {
+  Future<ApiResponse<HomeObj>> getHome(String token) {
     return http
-        .get(Uri.parse("${baseURL}home"), headers: headers())
+        .get(Uri.parse("${baseURL}home"), headers: headers(token: token))
         .timeout(const Duration(seconds: timeOutInSecond))
         .then(
       (data) {
@@ -99,9 +99,10 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<ItemObj>> getItems(String subCategoryId) {
+  Future<ApiResponse<ItemObj>> getItems(String token, String subCategoryId) {
     return http
-        .get(Uri.parse("${baseURL}subcategories/$subCategoryId/items"))
+        .get(Uri.parse("${baseURL}subcategories/$subCategoryId/items"),
+            headers: headers(token: token))
         .timeout(const Duration(seconds: timeOutInSecond))
         .then(
       (data) {

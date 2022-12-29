@@ -109,6 +109,7 @@ class HomeItemObj {
   String title;
   String priceAnnounced;
   String statusDate;
+  bool favorite;
   List<ItemPhotos> itemPhotos;
 
   HomeItemObj({
@@ -116,6 +117,7 @@ class HomeItemObj {
     required this.title,
     required this.priceAnnounced,
     required this.statusDate,
+    required this.favorite,
     required this.itemPhotos,
   });
 
@@ -131,6 +133,7 @@ class HomeItemObj {
       title: item['title'],
       priceAnnounced: item['price_announced'],
       statusDate: item['status_date'],
+      favorite: item['favorite'] ?? false,
       itemPhotos: list,
     );
   }

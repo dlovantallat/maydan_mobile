@@ -211,7 +211,9 @@ class _ItemDetailState extends State<ItemDetail> {
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2, mainAxisExtent: 220),
                       itemBuilder: (BuildContext context, int index) =>
-                          const ItemsItem(),
+                          const ItemsItem(
+                        isFav: false,
+                      ),
                       itemCount: 3,
                     ),
                   ],

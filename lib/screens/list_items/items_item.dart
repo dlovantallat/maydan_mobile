@@ -11,14 +11,21 @@ import '../item_detail/item_detail.dart';
 
 class ItemsItem extends StatefulWidget {
   final ItemData? item;
+  final bool isFav;
 
-  const ItemsItem({Key? key, this.item}) : super(key: key);
+  const ItemsItem({Key? key, this.item, required this.isFav}) : super(key: key);
 
   @override
   State<ItemsItem> createState() => _ItemsItemState();
 }
 
 class _ItemsItemState extends State<ItemsItem> {
+  @override
+  void initState() {
+    isFav = widget.isFav;
+    super.initState();
+  }
+
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<FavoriteRequest> favReq;
 

@@ -18,6 +18,7 @@ class ItemData {
   // String title;
   // String description;
   String image;
+  bool favorite;
   String priceAnnounced;
 
   ItemData({
@@ -25,6 +26,7 @@ class ItemData {
     // required this.title,
     // required this.description,
     required this.image,
+    required this.favorite,
     required this.priceAnnounced,
   });
 
@@ -34,6 +36,7 @@ class ItemData {
       // title: item['title'] ?? "",
       // description: item['description'] ?? "",
       image: item['image'] ?? "",
+      favorite: item['favorite'] ?? false,
       priceAnnounced: item['price_announced'] ?? "",
     );
   }

@@ -35,7 +35,8 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
       isLoading = true;
     });
 
-    home = await service.getHome();
+    String token = await getToken();
+    home = await service.getHome(token);
 
     setState(() {
       isLoading = false;

@@ -136,8 +136,9 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, mainAxisExtent: 220),
-              itemBuilder: (BuildContext context, int index) =>
-                  const ItemsItem(),
+              itemBuilder: (BuildContext context, int index) => const ItemsItem(
+                isFav: false,
+              ),
               itemCount: 3,
             ),
           ),

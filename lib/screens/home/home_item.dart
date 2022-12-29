@@ -208,7 +208,9 @@ class HomeSubItem extends StatelessWidget {
                               margin: const EdgeInsetsDirectional.all(8),
                               child: Align(
                                 child: SvgPicture.asset(
-                                  mainFullFavoriteBottomNavigationSvg,
+                                  data.favorite
+                                      ? mainFullFavoriteBottomNavigationSvg
+                                      : mainFavoriteBottomNavigationSvg,
                                   color: appColor,
                                   semanticsLabel: '',
                                 ),

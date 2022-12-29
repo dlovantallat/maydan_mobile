@@ -5,6 +5,7 @@ import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/category.dart';
 import '../../common/model/item.dart';
+import '../../utilities/app_utilities.dart';
 import 'items_item.dart';
 
 class ListItemsScreen extends StatefulWidget {
@@ -33,7 +34,8 @@ class _ListItemsScreenState extends State<ListItemsScreen> {
       isLoading = true;
     });
 
-    items = await service.getItems(widget.subCategory.id);
+    String token = await getToken();
+    items = await service.getItems(token, widget.subCategory.id);
 
     setState(() {
       isLoading = false;
@@ -80,6 +82,7 @@ class _ListItemsScreenState extends State<ListItemsScreen> {
                 crossAxisCount: 2, mainAxisExtent: 220),
             itemBuilder: (BuildContext context, int index) => ItemsItem(
               item: items.data!.list[index],
+              isFav: items.data!.list[index].favorite,
             ),
             itemCount: items.data!.list.length,
           ),
