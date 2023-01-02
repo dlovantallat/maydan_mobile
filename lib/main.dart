@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'cloud_functions/maydan_services.dart';
 import 'screens/category/category_screen.dart';
 import 'screens/favorite/favorite_screen.dart';
@@ -9,6 +11,7 @@ import 'screens/home/home_screen.dart';
 import 'screens/post/post_screen.dart';
 import 'screens/profile/profile_screen.dart';
 import 'utilities/app_utilities.dart';
+import 'package:maydan/l10n/l10n.dart';
 
 void main() {
   servicesLocator();
@@ -30,6 +33,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: appTheme,
         appBarTheme: const AppBarTheme(elevation: 0),
       ),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: L10n.all,
       home: const MainPage(),
     );
   }
