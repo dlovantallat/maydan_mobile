@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import '../common/model/category.dart';
 import '../common/model/item.dart';
 import '../common/model/login.dart';
+import '../screens/company_profile/company_obj.dart';
 import '../screens/favorite/favorite_obj.dart';
 import '../screens/home/home.dart';
 import '../screens/profile/profile.dart';
@@ -92,6 +93,31 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<SubCategoryObj>(
+          requestStatus: true,
+          errorMessage: s.toString() == "Connection failed"
+              ? " No Internet, Please check your internet connection."
+              : "API Down we are working to get things back to normal. Please have a patient"),
+    );
+  }
+
+  Future<ApiResponse<CompanyObj>> getActiveCompanies() {
+    return http
+        .get(Uri.parse("${baseURL}users/activesCompanies"), headers: headers())
+        .timeout(timeOutDuration)
+        .then(
+      (data) {
+        if (data.statusCode == 200) {
+          final jsonData = json.decode(data.body);
+
+          final list = CompanyObj.fromJson(jsonData);
+
+          return ApiResponse<CompanyObj>(data: list);
+        }
+        return ApiResponse<CompanyObj>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<CompanyObj>(
           requestStatus: true,
           errorMessage: s.toString() == "Connection failed"
               ? " No Internet, Please check your internet connection."

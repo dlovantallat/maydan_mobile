@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:maydan/screens/company_profile/company_list_screen.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -218,8 +219,10 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                       ],
                     ),
                     onTap: () {
-                      // Update the state of the app.
-                      // ...
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const CompanyListScreen()));
                     },
                   ),
                   ListTile(
