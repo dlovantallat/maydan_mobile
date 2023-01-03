@@ -43,6 +43,7 @@ const String maydanLogoSvg = 'assets/maydan_logo.svg';
 
 /// Static Strings for static values
 const String appToken = "app-token";
+const String languageKey = "languageKey";
 
 /// Static functions
 
@@ -58,6 +59,12 @@ Future<String> getToken() async {
   final prefs = await SharedPreferences.getInstance();
   // Read value
   return prefs.getString(appToken) ?? "";
+}
+
+Future<String> getLanguageKey() async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  String key = preferences.getString(languageKey) ?? "en";
+  return key;
 }
 
 void setSnackBar(BuildContext context, String text) {

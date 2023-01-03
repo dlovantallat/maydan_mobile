@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:maydan/screens/company_profile/company_list_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../utilities/app_utilities.dart';
+import '../../utilities/locale_provider.dart';
+import '../company_profile/company_list_screen.dart';
 import '../my_ads/my_ads_screen.dart';
 import 'home.dart';
 import 'home_item.dart';
@@ -27,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
 
   @override
   void initState() {
+    getLanguage();
     getHome();
     super.initState();
   }
@@ -42,6 +46,48 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
     setState(() {
       isLoading = false;
     });
+  }
+
+  bool isEnglish = false;
+  bool isKurdish = false;
+  bool isArabic = false;
+
+  void getLanguage() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String key = preferences.getString(languageKey) ?? "en";
+
+    checker(key);
+  }
+
+  setLanguage(String key) async {
+    final provider = Provider.of<LocaleProvider>(context, listen: false);
+    provider.setLocale(Locale(key));
+
+    checker(key);
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString(languageKey, key);
+  }
+
+  void checker(String key) {
+    if (key == "en") {
+      setState(() {
+        isEnglish = true;
+        isKurdish = false;
+        isArabic = false;
+      });
+    } else if (key == "ar") {
+      setState(() {
+        isEnglish = false;
+        isKurdish = false;
+        isArabic = true;
+      });
+    } else if (key == "ps") {
+      setState(() {
+        isEnglish = false;
+        isKurdish = true;
+        isArabic = false;
+      });
+    }
   }
 
   @override
@@ -162,23 +208,80 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text(
-                          'Kurdish',
-                          style: TextStyle(
-                            color: Colors.white,
+                      children: [
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.resolveWith<Color?>(
+                              (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.disabled)) {
+                                  return const Color(0x81acce52);
+                                }
+                                return Colors
+                                    .white; // Use the component's default.
+                              },
+                            ),
+                          ),
+                          onPressed: !isKurdish
+                              ? () {
+                                  Navigator.pop(context);
+                                  setLanguage("ps");
+                                }
+                              : null,
+                          child: Text(
+                            "Kurdish",
+                            style: TextStyle(
+                                color: !isKurdish ? appColor : Colors.white),
                           ),
                         ),
-                        Text(
-                          'Arabic',
-                          style: TextStyle(
-                            color: Colors.white,
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.resolveWith<Color?>(
+                              (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.disabled)) {
+                                  return const Color(0x81acce52);
+                                }
+                                return Colors
+                                    .white; // Use the component's default.
+                              },
+                            ),
+                          ),
+                          onPressed: !isArabic
+                              ? () {
+                                  Navigator.pop(context);
+                                  setLanguage("ar");
+                                }
+                              : null,
+                          child: Text(
+                            "Arabic",
+                            style: TextStyle(
+                                color: !isArabic ? appColor : Colors.white),
                           ),
                         ),
-                        Text(
-                          'English',
-                          style: TextStyle(
-                            color: Colors.white,
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.resolveWith<Color?>(
+                              (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.disabled)) {
+                                  return const Color(0x81acce52);
+                                }
+                                return Colors
+                                    .white; // Use the component's default.
+                              },
+                            ),
+                          ),
+                          onPressed: !isEnglish
+                              ? () {
+                                  Navigator.pop(context);
+                                  setLanguage("en");
+                                }
+                              : null,
+                          child: Text(
+                            "English",
+                            style: TextStyle(
+                                color: !isEnglish ? appColor : Colors.white),
                           ),
                         ),
                       ],

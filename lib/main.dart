@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+
 import 'cloud_functions/maydan_services.dart';
+import 'l10n/l10n.dart';
+import 'utilities/locale_provider.dart';
 import 'screens/category/category_screen.dart';
 import 'screens/favorite/favorite_screen.dart';
 import 'screens/home/home_screen.dart';
 import 'screens/post/post_screen.dart';
 import 'screens/profile/profile_screen.dart';
 import 'utilities/app_utilities.dart';
-import 'package:maydan/l10n/l10n.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   servicesLocator();
-  runApp(const MyApp());
+
+  String key = await getLanguageKey();
+  Locale locale = Locale(key);
+
+  runApp(MyApp(
+    locale: locale,
+  ));
 }
 
 void servicesLocator() {
@@ -23,26 +32,40 @@ void servicesLocator() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  bool isFirst = true;
+  Locale? locale;
+
+  MyApp({super.key, this.locale});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: appTheme,
-        appBarTheme: const AppBarTheme(elevation: 0),
-      ),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: L10n.all,
-      home: const MainPage(),
-    );
-  }
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+        create: (context) => LocaleProvider(),
+        builder: (context, child) {
+          final provider = Provider.of<LocaleProvider>(context);
+
+          if (isFirst) {
+            provider.setLocale(locale!);
+            isFirst = false;
+          }
+
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: appTheme,
+              appBarTheme: const AppBarTheme(elevation: 0),
+            ),
+            locale: provider.local,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: L10n.all,
+            home: const MainPage(),
+          );
+        },
+      );
 }
 
 class MainPage extends StatefulWidget {
@@ -151,7 +174,7 @@ class _MainPageState extends State<MainPage> with HomeDrawerListener {
                   color: currentIndex == 4 ? appColor : null,
                 ),
                 Text(
-                  "Profile",
+                  AppLocalizations.of(context)!.helloWorld,
                   style: TextStyle(color: currentIndex == 4 ? appColor : null),
                 ),
               ],
