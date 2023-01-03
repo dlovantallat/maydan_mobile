@@ -4,6 +4,8 @@ import 'package:get_it/get_it.dart';
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../utilities/app_utilities.dart';
+import '../item_detail/detail_item_meta_data.dart';
+import '../list_items/items_item.dart';
 import 'login_widget.dart';
 import 'profile.dart';
 
@@ -23,6 +25,8 @@ class _ProfileScreenState extends State<ProfileScreen>
   bool isTokenLoading = false;
   bool isLogin = false;
   String token = "";
+
+  bool isPersonal = true;
 
   @override
   void initState() {
@@ -59,6 +63,13 @@ class _ProfileScreenState extends State<ProfileScreen>
     profile = await service.getMe(token);
 
     if (!profile.requestStatus) {
+      if (profile.statusCode == 200) {
+        if (profile.data!.userType == "P") {
+          isPersonal = true;
+        } else {
+          isPersonal = false;
+        }
+      }
       if (profile.statusCode == 401) {
         setToken("");
         tokenCheck();
@@ -74,13 +85,43 @@ class _ProfileScreenState extends State<ProfileScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text(
-          "Profile",
-          style: TextStyle(color: Colors.black),
-        ),
-        backgroundColor: Colors.transparent,
-      ),
+      appBar: isPersonal
+          ? AppBar(
+              title: const Text(
+                "Profile",
+                style: TextStyle(color: Colors.black),
+              ),
+              backgroundColor: Colors.transparent,
+            )
+          : AppBar(
+              iconTheme: const IconThemeData(
+                color: Colors.black,
+              ),
+              backgroundColor: Colors.transparent,
+              actions: const [
+                Chip(
+                  shape: StadiumBorder(
+                      side: BorderSide(
+                    width: 1,
+                    color: Colors.black,
+                  )),
+                  backgroundColor: Colors.white,
+                  label: Text("Place an Ad"),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.only(start: 8, end: 16),
+                  child: Chip(
+                    shape: StadiumBorder(
+                        side: BorderSide(
+                      width: 1,
+                      color: Colors.black,
+                    )),
+                    backgroundColor: Colors.white,
+                    label: Text("Edit"),
+                  ),
+                ),
+              ],
+            ),
       body: Builder(builder: (context) {
         if (isTokenLoading) {
           return const Center(
@@ -101,121 +142,196 @@ class _ProfileScreenState extends State<ProfileScreen>
             );
           }
 
-          return Column(
-            children: [
-              Container(
-                height: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xFFF1F1F1),
-                ),
-                margin: const EdgeInsetsDirectional.only(start: 24, end: 24),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 4,
-                      child: Container(
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          border: BorderDirectional(
-                            end: BorderSide(color: Colors.black),
+          if (isPersonal) {
+            return Column(
+              children: [
+                Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color(0xFFF1F1F1),
+                  ),
+                  margin: const EdgeInsetsDirectional.only(start: 24, end: 24),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: Container(
+                          height: 100,
+                          decoration: const BoxDecoration(
+                            border: BorderDirectional(
+                              end: BorderSide(color: Colors.black),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                margin: const EdgeInsetsDirectional.only(
+                                    start: 8, end: 8),
+                                height: 50,
+                                width: 50,
+                                color: const Color(0xFFCACACA),
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(profile.data!.name),
+                                  Text(profile.data!.email),
+                                ],
+                              )
+                            ],
                           ),
                         ),
-                        child: Row(
-                          children: [
-                            Container(
-                              margin: const EdgeInsetsDirectional.only(
-                                  start: 8, end: 8),
-                              height: 50,
-                              width: 50,
-                              color: const Color(0xFFCACACA),
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(profile.data!.name),
-                                Text(profile.data!.email),
-                              ],
-                            )
-                          ],
+                      ),
+                      const Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding:
+                              EdgeInsetsDirectional.only(start: 16, top: 8),
+                          child: Text(
+                            "Edit",
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(fontSize: 14),
+                          ),
                         ),
                       ),
-                    ),
-                    const Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.only(start: 16, top: 8),
-                        child: Text(
-                          "Edit",
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      margin: const EdgeInsetsDirectional.only(
-                          start: 16, end: 8, top: 16),
-                      height: 110,
-                      color: const Color(0xFFF1F1F1),
-                      child: const Center(
-                        child: Text("Setting"),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsetsDirectional.only(
+                            start: 16, end: 8, top: 16),
+                        height: 110,
+                        color: const Color(0xFFF1F1F1),
+                        child: const Center(
+                          child: Text("Setting"),
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: const EdgeInsetsDirectional.only(
-                          start: 8, end: 16, top: 16),
-                      height: 110,
-                      color: const Color(0xFFF1F1F1),
-                      child: const Center(
-                        child: Text("About Maydan"),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      margin: const EdgeInsetsDirectional.only(
-                          start: 16, end: 8, top: 16),
-                      height: 110,
-                      color: const Color(0xFFF1F1F1),
-                      child: const Center(
-                        child: Text("Help Center"),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        logout(context, this);
-                      },
+                    Expanded(
                       child: Container(
                         margin: const EdgeInsetsDirectional.only(
                             start: 8, end: 16, top: 16),
                         height: 110,
                         color: const Color(0xFFF1F1F1),
                         child: const Center(
-                          child: Text("Logout"),
+                          child: Text("About Maydan"),
                         ),
                       ),
                     ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsetsDirectional.only(
+                            start: 16, end: 8, top: 16),
+                        height: 110,
+                        color: const Color(0xFFF1F1F1),
+                        child: const Center(
+                          child: Text("Help Center"),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          logout(context, this);
+                        },
+                        child: Container(
+                          margin: const EdgeInsetsDirectional.only(
+                              start: 8, end: 16, top: 16),
+                          height: 110,
+                          color: const Color(0xFFF1F1F1),
+                          child: const Center(
+                            child: Text("Logout"),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          } else {
+            return ListView(
+              children: [
+                Container(
+                  clipBehavior: Clip.hardEdge,
+                  margin: const EdgeInsetsDirectional.only(start: 8, end: 8),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
-                ],
-              ),
-            ],
-          );
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Image.network(
+                      width: double.infinity,
+                      'https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1988&q=80',
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => const Image(
+                        image: AssetImage(mainProfileBottomNavigationSvg),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsetsDirectional.all(8),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 50,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadiusDirectional.only(
+                              topStart: Radius.circular(10),
+                              topEnd: Radius.circular(10)),
+                          color: appColor,
+                        ),
+                        child: const Center(
+                          child: Text("Cow"),
+                        ),
+                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) =>
+                            const DetailItemMetaData(),
+                        itemCount: 3,
+                      )
+                    ],
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text("Products related to X company"),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 4, end: 4),
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, mainAxisExtent: 220),
+                    itemBuilder: (BuildContext context, int index) =>
+                        const ItemsItem(
+                      isFav: false,
+                    ),
+                    itemCount: 0,
+                  ),
+                ),
+              ],
+            );
+          }
         } else {
           return LoginWidget(
             callBack: this,

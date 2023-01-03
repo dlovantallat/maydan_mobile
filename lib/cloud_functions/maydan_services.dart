@@ -345,7 +345,7 @@ class MaydanServices {
 
           final me = ProfileData.fromJson(jsonData);
 
-          return ApiResponse<ProfileData>(data: me);
+          return ApiResponse<ProfileData>(data: me, statusCode: 200);
         } else if (data.statusCode == 401) {
           return ApiResponse<ProfileData>(statusCode: 401);
         }

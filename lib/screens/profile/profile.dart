@@ -3,12 +3,14 @@ class ProfileData {
   String name;
   String email;
   String msisdn;
+  String userType;
 
   ProfileData({
     required this.id,
     required this.name,
     required this.email,
     required this.msisdn,
+    required this.userType,
   });
 
   factory ProfileData.fromJson(Map<String, dynamic> item) {
@@ -17,6 +19,7 @@ class ProfileData {
       name: item['name'],
       email: item['email'],
       msisdn: item['msisdn'],
+      userType: item['usertype'],
     );
   }
 }
