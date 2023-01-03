@@ -214,7 +214,7 @@ class _ItemDetailState extends State<ItemDetail> {
                           const ItemsItem(
                         isFav: false,
                       ),
-                      itemCount: 3,
+                      itemCount: 0,
                     ),
                   ],
                 ),

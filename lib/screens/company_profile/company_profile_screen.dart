@@ -134,7 +134,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
               itemBuilder: (BuildContext context, int index) => const ItemsItem(
                 isFav: false,
               ),
-              itemCount: 3,
+              itemCount: 0,
             ),
           ),
         ],
