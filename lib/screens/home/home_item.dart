@@ -369,8 +369,8 @@ class HomeProfileItem extends StatelessWidget {
                   imageLoader(profile.urlPhoto),
                   fit: BoxFit.cover,
                   errorBuilder: (_, __, ___) => const Image(
-                    image: AssetImage(noInternet),
-                    fit: BoxFit.fitWidth,
+                    image: AssetImage(imageHolder),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),

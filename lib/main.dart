@@ -174,7 +174,7 @@ class _MainPageState extends State<MainPage> with HomeDrawerListener {
                   color: currentIndex == 4 ? appColor : null,
                 ),
                 Text(
-                  AppLocalizations.of(context)!.helloWorld,
+                  "Profile",
                   style: TextStyle(color: currentIndex == 4 ? appColor : null),
                 ),
               ],
