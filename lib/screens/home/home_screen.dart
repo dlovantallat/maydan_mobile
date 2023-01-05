@@ -404,8 +404,12 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                         Icon(Icons.arrow_forward_ios_outlined)
                       ],
                     ),
-                    onTap: () {
-                      logout(context, this);
+                    onTap: () async {
+                      String token = await getToken();
+
+                      if (token != "") {
+                        logout(context, this);
+                      }
                     },
                   ),
                   ListTile(

@@ -99,7 +99,7 @@ logout(BuildContext context, LogoutListener listener) {
       context: context,
       builder: (_) {
         return AlertDialog(
-          title: const Center(child: Text("Logout")),
+          title: Text(""),
           content: Wrap(
             alignment: WrapAlignment.center,
             children: [
@@ -109,41 +109,54 @@ logout(BuildContext context, LogoutListener listener) {
                     padding: EdgeInsetsDirectional.only(top: 8, bottom: 16),
                     child: Text("Are you sure of logout"),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      listener.onLogout();
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xFFEB5757),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            listener.onLogout();
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              appColor,
+                            ),
+                            minimumSize:
+                                MaterialStateProperty.resolveWith<Size>(
+                              (Set<MaterialState> states) {
+                                return const Size(
+                                  double.infinity,
+                                  40,
+                                );
+                              },
+                            ),
+                          ),
+                          child: Text("Logout".toUpperCase()),
+                        ),
                       ),
-                      minimumSize: MaterialStateProperty.resolveWith<Size>(
-                        (Set<MaterialState> states) {
-                          return const Size(
-                            double.infinity,
-                            40,
-                          );
-                        },
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.only(start: 8.0),
+                          child: OutlinedButton(
+                            style: ButtonStyle(
+                              minimumSize:
+                                  MaterialStateProperty.resolveWith<Size>(
+                                (Set<MaterialState> states) {
+                                  return const Size(
+                                    double.infinity,
+                                    40,
+                                  );
+                                },
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text("cancel".toUpperCase()),
+                          ),
+                        ),
                       ),
-                    ),
-                    child: Text("Logout".toUpperCase()),
-                  ),
-                  TextButton(
-                    style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.resolveWith<Size>(
-                        (Set<MaterialState> states) {
-                          return const Size(
-                            double.infinity,
-                            40,
-                          );
-                        },
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text("cancel".toUpperCase()),
-                  ),
+                    ],
+                  )
                 ],
               ),
             ],
