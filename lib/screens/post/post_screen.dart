@@ -1,6 +1,10 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -8,6 +12,7 @@ import '../../common/model/category.dart';
 import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
 import '../profile/login_widget.dart';
+import 'image_row_item.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({Key? key}) : super(key: key);
@@ -16,7 +21,8 @@ class PostScreen extends StatefulWidget {
   State<PostScreen> createState() => _PostScreenState();
 }
 
-class _PostScreenState extends State<PostScreen> with LoginCallBack {
+class _PostScreenState extends State<PostScreen>
+    with LoginCallBack, DeleteListener {
   final List<CategoryDrop> _dropdownCategoriesDrop = [];
   late CategoryDrop _dropdownCategoryValue;
 
@@ -48,6 +54,12 @@ class _PostScreenState extends State<PostScreen> with LoginCallBack {
   bool isTokenLoading = false;
   bool isLogin = false;
   String token = "";
+
+  File? image;
+
+  String path = "";
+
+  List<File> uploadedPhotos = [];
 
   @override
   void initState() {
@@ -117,8 +129,42 @@ class _PostScreenState extends State<PostScreen> with LoginCallBack {
     });
   }
 
-  void openGallery() {
-    print("hello from gallery");
+  void openGallery() async {
+    if (uploadedPhotos.length < 5) {
+      try {
+        final image =
+            await ImagePicker().pickImage(source: ImageSource.gallery);
+        if (image == null) {
+          return;
+        }
+
+        File tempCompressedImage = await customCompress(File(image.path));
+        path = tempCompressedImage.path;
+        final imageTemp = File(image.path);
+
+        this.image = imageTemp;
+        // setState(() {
+        //   this.image = imageTemp;
+        // });
+      } on PlatformException catch (e) {
+        print("an error occurred $e");
+      }
+
+      setState(() {
+        uploadedPhotos.addAll([image!]);
+      });
+
+      print("size: ${uploadedPhotos.length}");
+    } else {
+      setSnackBar(
+          context, "you have reached the limit: ${uploadedPhotos.length}");
+    }
+  }
+
+  Future<File> customCompress(File image) async {
+    var path = FlutterNativeImage.compressImage(image.absolute.path,
+        quality: 30, percentage: 50);
+    return path;
   }
 
   void save() async {
@@ -271,21 +317,59 @@ class _PostScreenState extends State<PostScreen> with LoginCallBack {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    InkWell(
-                      onTap: openGallery,
-                      child: Card(
-                        elevation: 8,
-                        child: Container(
-                            margin: const EdgeInsetsDirectional.only(
-                                start: 40, end: 40, top: 30, bottom: 30),
-                            child: SvgPicture.asset(
-                              editProfileSvg,
-                              height: 50,
-                              width: 30,
-                            )),
+                    SizedBox(
+                      height: 130,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: uploadedPhotos.length + 1,
+                        itemBuilder: (context, index) => index == 0
+                            ? InkWell(
+                                onTap: openGallery,
+                                child: Card(
+                                  elevation: 8,
+                                  child: Container(
+                                    height: 130,
+                                    width: 100,
+                                    color: Colors.grey,
+                                    child: Center(
+                                      child: SvgPicture.asset(
+                                        editProfileSvg,
+                                        height: 50,
+                                        width: 30,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : TestImage(
+                                index: index - 1,
+                                image: uploadedPhotos[index - 1],
+                                listener: this,
+                              ),
+                      ),
+                    )
+                  ],
+                ),
+                const Padding(
+                  padding: EdgeInsetsDirectional.only(bottom: 8, top: 20),
+                  child: Text("Title"),
+                ),
+                const TextField(
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 1),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(16.0),
                       ),
                     ),
-                  ],
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 1),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(16.0),
+                      ),
+                    ),
+                  ),
                 ),
                 Container(
                   margin: const EdgeInsetsDirectional.only(
@@ -385,46 +469,6 @@ class _PostScreenState extends State<PostScreen> with LoginCallBack {
                       ],
                     ),
                   ],
-                ),
-                const Padding(
-                  padding: EdgeInsetsDirectional.only(bottom: 8, top: 20),
-                  child: Text("Seller name"),
-                ),
-                const TextField(
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(16.0),
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(16.0),
-                      ),
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsetsDirectional.only(bottom: 8, top: 20),
-                  child: Text("Phone number"),
-                ),
-                const TextField(
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(16.0),
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(16.0),
-                      ),
-                    ),
-                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -536,6 +580,13 @@ class _PostScreenState extends State<PostScreen> with LoginCallBack {
   @override
   void onLogin() {
     tokenCheck();
+  }
+
+  @override
+  void onDelete(int index) {
+    setState(() {
+      uploadedPhotos.removeAt(index);
+    });
   }
 }
 

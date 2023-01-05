@@ -32,6 +32,12 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSCameraUsageDescription</key>
+    <string>User need update there profile picture</string>
+	<key>NSMicrophoneUsageDescription</key>
+    <string>User need update there profile picture</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>User need update there profile picture</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
