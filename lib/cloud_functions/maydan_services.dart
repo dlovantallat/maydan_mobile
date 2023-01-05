@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/src/media_type.dart';
 
 import '../common/model/category.dart';
 import '../common/model/item.dart';
@@ -7,6 +8,7 @@ import '../common/model/login.dart';
 import '../screens/company_profile/company_obj.dart';
 import '../screens/favorite/favorite_obj.dart';
 import '../screens/home/home.dart';
+import '../screens/post/post_obj.dart';
 import '../screens/profile/profile.dart';
 import '../screens/register/register.dart';
 import 'api_response.dart';
@@ -151,12 +153,29 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<ItemRespond>> postItem(String token) {
+  Future<ApiResponse<ItemRespond>> postItem({
+    required String token,
+    required String title,
+    required String description,
+    required String subCategory,
+    required List<UploadImage> uploadedPhotos,
+  }) async {
     var request = http.MultipartRequest('POST', Uri.parse("${baseURL}items"));
-    request.fields['title'] = jsonEncode({"en": "eee"});
-    request.fields['subcategory_id'] = "97edfeb0-f3a9-4cfe-8a15-3e4f14504407";
-    request.fields['user_address_id'] = "98023c79-f1b0-4b2a-aee7-19445803c5ef";
-    request.fields['description'] = jsonEncode({"en": "eee"});
+    request.fields['title'] = jsonEncode({"en": title});
+    request.fields['subcategory_id'] = subCategory;
+    request.fields['description'] = jsonEncode({"en": description});
+
+    List<http.MultipartFile> newList = <http.MultipartFile>[];
+
+    // --- Start uploading photos ---
+    for (int i = 0; i < uploadedPhotos.length; i++) {
+      print("Ddd");
+      newList.add(await http.MultipartFile.fromPath(
+          'photos[$i]', uploadedPhotos[i].path,
+          contentType: MediaType("image", "jpeg")));
+    }
+    request.files.addAll(newList);
+    // --- End uploading photos ---
 
     request.headers.addAll(headers(token: token));
 
@@ -172,6 +191,7 @@ class MaydanServices {
           return ApiResponse<ItemRespond>(statusCode: 422);
         }
 
+        print("code: ${data.statusCode}");
         return ApiResponse<ItemRespond>(
             requestStatus: true, errorMessage: "API Communication Down");
       },

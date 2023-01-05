@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:maydan/screens/post/post_obj.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -59,7 +61,7 @@ class _PostScreenState extends State<PostScreen>
 
   String path = "";
 
-  List<File> uploadedPhotos = [];
+  List<UploadImage> uploadedPhotos = [];
 
   @override
   void initState() {
@@ -147,14 +149,14 @@ class _PostScreenState extends State<PostScreen>
         //   this.image = imageTemp;
         // });
       } on PlatformException catch (e) {
-        print("an error occurred $e");
+        if (kDebugMode) {
+          print("an error occurred $e");
+        }
       }
 
       setState(() {
-        uploadedPhotos.addAll([image!]);
+        uploadedPhotos.addAll([UploadImage(path, image!)]);
       });
-
-      print("size: ${uploadedPhotos.length}");
     } else {
       setSnackBar(
           context, "you have reached the limit: ${uploadedPhotos.length}");
@@ -170,15 +172,28 @@ class _PostScreenState extends State<PostScreen>
   void save() async {
     String token = await getToken();
 
-    postItem = await service.postItem(token);
+    postItem = await service.postItem(
+      token: token,
+      title: "test from phone",
+      description: "test from phone",
+      subCategory: "982473a3-f9e2-4ce9-b66a-e943753de38d",
+      uploadedPhotos: uploadedPhotos,
+    );
+    if (!mounted) return;
 
-    if (postItem.requestStatus) {
-      print("code ${postItem.errorMessage} t");
-    } else {
+    if (!postItem.requestStatus) {
       if (postItem.statusCode == 201) {
-        print(postItem.data!.id);
+        setSnackBar(context, "post added: ${postItem.data!.id}");
       } else {
-        print("code ${postItem.statusCode} d");
+        if (kDebugMode) {
+          print("code ${postItem.statusCode} d");
+          print("code ${postItem.errorMessage} e");
+        }
+
+        setSnackBar(context, "post added: error ${postItem.errorMessage}");
+      }
+    } else {
+      if (kDebugMode) {
         print("code ${postItem.errorMessage} e");
       }
     }
@@ -344,7 +359,7 @@ class _PostScreenState extends State<PostScreen>
                               )
                             : TestImage(
                                 index: index - 1,
-                                image: uploadedPhotos[index - 1],
+                                image: uploadedPhotos[index - 1].image,
                                 listener: this,
                               ),
                       ),
