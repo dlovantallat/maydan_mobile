@@ -248,7 +248,9 @@ class _HomeSubItemState extends State<HomeSubItem> {
                       width: double.infinity,
                       height: 155,
                       child: Image.network(
-                        imageLoader(widget.data.itemPhotos[0].filePath),
+                        imageLoader(widget.data.itemPhotos.isEmpty
+                            ? ""
+                            : widget.data.itemPhotos[0].filePath),
                         fit: BoxFit.cover,
                         errorBuilder: (_, __, ___) => const Image(
                           image: AssetImage(noInternet),
