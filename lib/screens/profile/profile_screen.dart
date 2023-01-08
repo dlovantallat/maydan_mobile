@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -87,9 +88,9 @@ class _ProfileScreenState extends State<ProfileScreen>
       backgroundColor: Colors.white,
       appBar: isPersonal
           ? AppBar(
-              title: const Text(
-                "Profile",
-                style: TextStyle(color: Colors.black),
+              title: Text(
+                AppLocalizations.of(context)!.profile_title,
+                style: const TextStyle(color: Colors.black),
               ),
               backgroundColor: Colors.transparent,
             )
@@ -98,26 +99,26 @@ class _ProfileScreenState extends State<ProfileScreen>
                 color: Colors.black,
               ),
               backgroundColor: Colors.transparent,
-              actions: const [
+              actions: [
                 Chip(
-                  shape: StadiumBorder(
+                  shape: const StadiumBorder(
                       side: BorderSide(
                     width: 1,
                     color: Colors.black,
                   )),
                   backgroundColor: Colors.white,
-                  label: Text("Place an Ad"),
+                  label: Text(AppLocalizations.of(context)!.profile_place_ads),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.only(start: 8, end: 16),
+                  padding: const EdgeInsetsDirectional.only(start: 8, end: 16),
                   child: Chip(
-                    shape: StadiumBorder(
+                    shape: const StadiumBorder(
                         side: BorderSide(
                       width: 1,
                       color: Colors.black,
                     )),
                     backgroundColor: Colors.white,
-                    label: Text("Edit"),
+                    label: Text(AppLocalizations.of(context)!.profile_edit),
                   ),
                 ),
               ],
@@ -184,16 +185,16 @@ class _ProfileScreenState extends State<ProfileScreen>
                           ),
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                         flex: 1,
                         child: Padding(
-                          padding:
-                              EdgeInsetsDirectional.only(start: 16, top: 8),
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 16, top: 8),
                           child: Text(
-                            "Edit",
+                            AppLocalizations.of(context)!.profile_edit,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
-                            style: TextStyle(fontSize: 14),
+                            style: const TextStyle(fontSize: 14),
                           ),
                         ),
                       ),
@@ -208,8 +209,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                             start: 16, end: 8, top: 16),
                         height: 110,
                         color: const Color(0xFFF1F1F1),
-                        child: const Center(
-                          child: Text("Setting"),
+                        child: Center(
+                          child: Text(
+                              AppLocalizations.of(context)!.profile_setting),
                         ),
                       ),
                     ),
@@ -219,8 +221,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                             start: 8, end: 16, top: 16),
                         height: 110,
                         color: const Color(0xFFF1F1F1),
-                        child: const Center(
-                          child: Text("About Maydan"),
+                        child: Center(
+                          child: Text(
+                              AppLocalizations.of(context)!.profile_about_us),
                         ),
                       ),
                     ),
@@ -234,8 +237,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                             start: 16, end: 8, top: 16),
                         height: 110,
                         color: const Color(0xFFF1F1F1),
-                        child: const Center(
-                          child: Text("Help Center"),
+                        child: Center(
+                          child: Text(AppLocalizations.of(context)!
+                              .profile_help_center),
                         ),
                       ),
                     ),
@@ -249,8 +253,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                               start: 8, end: 16, top: 16),
                           height: 110,
                           color: const Color(0xFFF1F1F1),
-                          child: const Center(
-                            child: Text("Logout"),
+                          child: Center(
+                            child: Text(AppLocalizations.of(context)!
+                                .home_drawer_logout),
                           ),
                         ),
                       ),

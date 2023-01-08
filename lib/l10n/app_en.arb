@@ -22,5 +22,13 @@
   "home_drawer_privacy_policy": "Privacy Policy",
   "home_drawer_kurdish": "Kurdish",
   "home_drawer_arabic": "Arabic",
-  "home_drawer_english": "English"
+  "home_drawer_english": "English",
+  "category_title": "Category",
+  "favorite_title": "Favorite",
+  "profile_title": "Profile",
+  "profile_place_ads": "Place an Ad",
+  "profile_setting": "Setting",
+  "profile_about_us": "About Maydan",
+  "profile_help_center": "Help Center",
+  "profile_edit": "Edit"
 }
