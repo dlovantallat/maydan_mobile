@@ -491,4 +491,54 @@ class MaydanServices {
               : "API Down we are working to get things back to normal. Please have a patient"),
     );
   }
+
+  Future<ApiResponse<CityObj>> getCities() {
+    return http
+        .get(Uri.parse("${baseURL}cities"), headers: headers())
+        .timeout(timeOutDuration)
+        .then(
+      (data) {
+        if (data.statusCode == 200) {
+          final jsonData = json.decode(data.body);
+
+          final city = CityObj.fromJson(jsonData);
+
+          return ApiResponse<CityObj>(data: city);
+        }
+        return ApiResponse<CityObj>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<CityObj>(
+          requestStatus: true,
+          errorMessage: s.toString() == "Connection failed"
+              ? " No Internet, Please check your internet connection."
+              : "API Down we are working to get things back to normal. Please have a patient"),
+    );
+  }
+
+  Future<ApiResponse<DistrictObj>> getDistricts(String id) {
+    return http
+        .get(Uri.parse("${baseURL}cities/$id/districts"), headers: headers())
+        .timeout(timeOutDuration)
+        .then(
+      (data) {
+        if (data.statusCode == 200) {
+          final jsonData = json.decode(data.body);
+
+          final districts = DistrictObj.fromJson(jsonData);
+
+          return ApiResponse<DistrictObj>(data: districts);
+        }
+        return ApiResponse<DistrictObj>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<DistrictObj>(
+          requestStatus: true,
+          errorMessage: s.toString() == "Connection failed"
+              ? " No Internet, Please check your internet connection."
+              : "API Down we are working to get things back to normal. Please have a patient"),
+    );
+  }
 }

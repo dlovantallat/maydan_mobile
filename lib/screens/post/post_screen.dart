@@ -28,17 +28,16 @@ class _PostScreenState extends State<PostScreen>
   final List<CategoryDrop> _dropdownCategoriesDrop = [];
   late CategoryDrop _dropdownCategoryValue;
 
+  final List<CityDrop> _dropdownCitiesDrop = [];
+  late CityDrop _dropdownCityValue;
+  final List<DistrictDrop> _dropdownDistrictsDrop = [];
+  late DistrictDrop _dropdownDistrictValue;
+
   final List<String> _dropdownDurationDrop = ["7", "15", "30"];
   String _dropdownDurationValue = "7";
 
   final List<String> _dropdownPriceDrop = ["IQ", "USD"];
   String _dropdownPriceValue = "IQ";
-
-  final List<String> _dropdownCityDrop = ["Erbil", "Sulaymany", "Duhok"];
-  String _dropdownCityValue = "Erbil";
-
-  final List<String> _dropdownDistrictDrop = ["Nawand", "Golden"];
-  String _dropdownDistrictValue = "Nawand";
 
   final List<SubCategoryDrop> _dropdownSubCategoriesDrop = [
     SubCategoryDrop("-1", "Select")
@@ -48,13 +47,18 @@ class _PostScreenState extends State<PostScreen>
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<CategoryObj> categories;
   late ApiResponse<SubCategoryObj> subCategories;
+  late ApiResponse<CityObj> cities;
+  late ApiResponse<DistrictObj> districts;
   late ApiResponse<ItemRespond> postItem;
   bool isLoading = false;
   bool isSubLoading = false;
   bool isSubLoaded = false;
-
   bool isTokenLoading = false;
   bool isLogin = false;
+  bool isCityLoading = false;
+  bool isCityLoaded = false;
+  bool isDistrictLoading = false;
+  bool isDistrictLoaded = false;
   String token = "";
 
   File? image;
@@ -84,6 +88,7 @@ class _PostScreenState extends State<PostScreen>
         isLogin = true;
       });
       getCategories();
+      getCity();
     }
     setState(() {
       isTokenLoading = false;
@@ -128,6 +133,49 @@ class _PostScreenState extends State<PostScreen>
     setState(() {
       isSubLoading = false;
       isSubLoaded = true;
+    });
+  }
+
+  getCity() async {
+    setState(() {
+      isCityLoading = true;
+      isCityLoaded = false;
+    });
+
+    cities = await service.getCities();
+
+    _dropdownCitiesDrop.clear();
+    for (var i in cities.data!.data) {
+      _dropdownCitiesDrop.add(CityDrop(i.id, i.name));
+    }
+    _dropdownCityValue = _dropdownCitiesDrop.first;
+    getDistrict(_dropdownCityValue.id);
+
+    setState(() {
+      isCityLoading = false;
+      isCityLoaded = true;
+    });
+  }
+
+  void getDistrict(String cityId) async {
+    setState(() {
+      isDistrictLoading = true;
+      isDistrictLoaded = false;
+    });
+
+    districts = await service.getDistricts(cityId);
+    setState(() {
+      isDistrictLoading = false;
+    });
+    _dropdownDistrictsDrop.clear();
+    for (var i in districts.data!.data) {
+      _dropdownDistrictsDrop.add(DistrictDrop(i.id, i.name));
+    }
+    _dropdownDistrictValue = _dropdownDistrictsDrop.first;
+
+    setState(() {
+      isDistrictLoading = false;
+      isDistrictLoaded = true;
     });
   }
 
@@ -496,35 +544,46 @@ class _PostScreenState extends State<PostScreen>
                               EdgeInsetsDirectional.only(top: 12, bottom: 4),
                           child: Text("City"),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.0),
-                            border: Border.all(
-                                color: Colors.black,
-                                style: BorderStyle.solid,
-                                width: 1),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.only(
-                                start: 8, end: 8),
-                            child: DropdownButton(
-                                underline: const SizedBox(),
-                                items: _dropdownCityDrop
-                                    .map((value) => DropdownMenuItem(
-                                          value: value,
-                                          child: Text(value),
-                                        ))
-                                    .toList(),
-                                value: _dropdownCityValue,
-                                onChanged: (i) {
-                                  setState(() {
-                                    _dropdownCityValue = i!;
-                                  });
-
-                                  print(_dropdownCityValue);
-                                }),
-                          ),
-                        ),
+                        isCityLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : isCityLoaded
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      border: Border.all(
+                                          color: Colors.black,
+                                          style: BorderStyle.solid,
+                                          width: 1),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsetsDirectional.only(
+                                          start: 8, end: 8),
+                                      child: DropdownButton(
+                                          underline: const SizedBox(),
+                                          items: _dropdownCitiesDrop
+                                              .map((CityDrop user) {
+                                            return DropdownMenuItem<CityDrop>(
+                                              value: user,
+                                              child: Text(
+                                                user.title,
+                                                style: const TextStyle(
+                                                    color: Colors.black),
+                                              ),
+                                            );
+                                          }).toList(),
+                                          value: _dropdownCityValue,
+                                          onChanged: (i) {
+                                            setState(() {
+                                              _dropdownCityValue = i!;
+                                            });
+                                            getDistrict(_dropdownCityValue.id);
+                                          }),
+                                    ),
+                                  )
+                                : Container(
+                                    child: const Text(
+                                        "Please Select another category"),
+                                  ),
                       ],
                     ),
                     Column(
@@ -535,35 +594,46 @@ class _PostScreenState extends State<PostScreen>
                               EdgeInsetsDirectional.only(top: 12, bottom: 4),
                           child: Text("District"),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.0),
-                            border: Border.all(
-                                color: Colors.black,
-                                style: BorderStyle.solid,
-                                width: 1),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.only(
-                                start: 8, end: 8),
-                            child: DropdownButton(
-                                underline: const SizedBox(),
-                                items: _dropdownDistrictDrop
-                                    .map((value) => DropdownMenuItem(
-                                          value: value,
-                                          child: Text(value),
-                                        ))
-                                    .toList(),
-                                value: _dropdownDistrictValue,
-                                onChanged: (i) {
-                                  setState(() {
-                                    _dropdownDistrictValue = i!;
-                                  });
-
-                                  print(_dropdownDistrictValue);
-                                }),
-                          ),
-                        ),
+                        isDistrictLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : isDistrictLoaded
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      border: Border.all(
+                                          color: Colors.black,
+                                          style: BorderStyle.solid,
+                                          width: 1),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsetsDirectional.only(
+                                          start: 8, end: 8),
+                                      child: DropdownButton(
+                                          underline: const SizedBox(),
+                                          items: _dropdownDistrictsDrop
+                                              .map((DistrictDrop user) {
+                                            return DropdownMenuItem<
+                                                DistrictDrop>(
+                                              value: user,
+                                              child: Text(
+                                                user.title,
+                                                style: const TextStyle(
+                                                    color: Colors.black),
+                                              ),
+                                            );
+                                          }).toList(),
+                                          value: _dropdownDistrictValue,
+                                          onChanged: (i) {
+                                            setState(() {
+                                              _dropdownDistrictValue = i!;
+                                            });
+                                          }),
+                                    ),
+                                  )
+                                : Container(
+                                    child: const Text(
+                                        "Please Select another category"),
+                                  ),
                       ],
                     ),
                   ],
@@ -603,18 +673,4 @@ class _PostScreenState extends State<PostScreen>
       uploadedPhotos.removeAt(index);
     });
   }
-}
-
-class CategoryDrop {
-  String id;
-  String title;
-
-  CategoryDrop(this.id, this.title);
-}
-
-class SubCategoryDrop {
-  String id;
-  String title;
-
-  SubCategoryDrop(this.id, this.title);
 }
