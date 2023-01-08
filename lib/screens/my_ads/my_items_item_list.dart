@@ -38,7 +38,9 @@ class MyItemsItemList extends StatelessWidget {
                 child: AspectRatio(
                   aspectRatio: 1 / 1,
                   child: Image.network(
-                    imageLoader(data.itemPhotos[0].filePath),
+                    imageLoader(data.itemPhotos.isEmpty
+                        ? ""
+                        : data.itemPhotos[0].filePath),
                     fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) => const Image(
                       image: AssetImage(noInternet),
