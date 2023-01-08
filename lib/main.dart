@@ -113,7 +113,7 @@ class _MainPageState extends State<MainPage> with HomeDrawerListener {
                     color: currentIndex == 0 ? appColor : null,
                   ),
                   Text(
-                    "Home",
+                    AppLocalizations.of(context)!.main_bottom_navigation_home,
                     style:
                         TextStyle(color: currentIndex == 0 ? appColor : null),
                   ),
@@ -131,7 +131,7 @@ class _MainPageState extends State<MainPage> with HomeDrawerListener {
                   color: currentIndex == 1 ? appColor : null,
                 ),
                 Text(
-                  "Category",
+                  AppLocalizations.of(context)!.main_bottom_navigation_category,
                   style: TextStyle(color: currentIndex == 1 ? appColor : null),
                 ),
               ],
@@ -156,7 +156,7 @@ class _MainPageState extends State<MainPage> with HomeDrawerListener {
                   color: currentIndex == 3 ? appColor : null,
                 ),
                 Text(
-                  "Favorite",
+                  AppLocalizations.of(context)!.main_bottom_navigation_favorite,
                   style: TextStyle(color: currentIndex == 3 ? appColor : null),
                 ),
               ],
@@ -174,7 +174,7 @@ class _MainPageState extends State<MainPage> with HomeDrawerListener {
                   color: currentIndex == 4 ? appColor : null,
                 ),
                 Text(
-                  "Profile",
+                  AppLocalizations.of(context)!.main_bottom_navigation_profile,
                   style: TextStyle(color: currentIndex == 4 ? appColor : null),
                 ),
               ],

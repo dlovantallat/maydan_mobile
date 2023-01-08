@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -32,18 +33,20 @@ class HomeItem extends StatelessWidget {
             children: [
               Text(
                 index == 0
-                    ? "Categories"
+                    ? AppLocalizations.of(context)!.home_categories
                     : index == 1
-                        ? "Profile"
+                        ? AppLocalizations.of(context)!.home_company_profile
                         : index == 2
-                            ? "hot"
-                            : "items",
+                            ? AppLocalizations.of(context)!.home_hot_items
+                            : AppLocalizations.of(context)!.home_latest_items,
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
                 ),
               ),
-              TextButton(onPressed: () {}, child: const Text("View All")),
+              TextButton(
+                  onPressed: () {},
+                  child: Text(AppLocalizations.of(context)!.home_view_all)),
             ],
           ),
           cases(index, homeObj),

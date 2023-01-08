@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -111,16 +112,16 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
             Container(
               margin:
                   const EdgeInsetsDirectional.only(start: 8, end: 8, top: 8),
-              child: const TextField(
+              child: TextField(
                 decoration: InputDecoration(
-                  hintText: "What are you looking for?",
-                  focusedBorder: OutlineInputBorder(
+                  hintText: AppLocalizations.of(context)!.home_search_caption,
+                  focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: appColor, width: 2),
                     borderRadius: BorderRadius.all(
                       Radius.circular(16.0),
                     ),
                   ),
-                  enabledBorder: OutlineInputBorder(
+                  enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black, width: 1),
                     borderRadius: BorderRadius.all(
                       Radius.circular(16.0),
@@ -195,9 +196,10 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                               width: 40,
                               color: const Color(0x49000000),
                             ),
-                            const Text(
-                              'My Profile',
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!
+                                  .home_drawer_my_profile,
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 18),
@@ -229,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                                 }
                               : null,
                           child: Text(
-                            "Kurdish",
+                            AppLocalizations.of(context)!.home_drawer_kurdish,
                             style: TextStyle(
                                 color: !isKurdish ? appColor : Colors.white),
                           ),
@@ -254,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                                 }
                               : null,
                           child: Text(
-                            "Arabic",
+                            AppLocalizations.of(context)!.home_drawer_arabic,
                             style: TextStyle(
                                 color: !isArabic ? appColor : Colors.white),
                           ),
@@ -279,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                                 }
                               : null,
                           child: Text(
-                            "English",
+                            AppLocalizations.of(context)!.home_drawer_english,
                             style: TextStyle(
                                 color: !isEnglish ? appColor : Colors.white),
                           ),
@@ -300,9 +302,10 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                     ),
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text('About Us'),
-                        Icon(Icons.arrow_forward_ios_outlined)
+                      children: [
+                        Text(
+                            AppLocalizations.of(context)!.home_drawer_about_us),
+                        const Icon(Icons.arrow_forward_ios_outlined)
                       ],
                     ),
                     onTap: () {
@@ -316,9 +319,10 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                     ),
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text('Company accounts'),
-                        Icon(Icons.arrow_forward_ios_outlined)
+                      children: [
+                        Text(AppLocalizations.of(context)!
+                            .home_drawer_company_accounts),
+                        const Icon(Icons.arrow_forward_ios_outlined)
                       ],
                     ),
                     onTap: () {
@@ -334,9 +338,9 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                     ),
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text('My Ads'),
-                        Icon(Icons.arrow_forward_ios_outlined)
+                      children: [
+                        Text(AppLocalizations.of(context)!.home_drawer_my_ads),
+                        const Icon(Icons.arrow_forward_ios_outlined)
                       ],
                     ),
                     onTap: () {
@@ -352,9 +356,10 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                     ),
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text('My favourites'),
-                        Icon(Icons.arrow_forward_ios_outlined)
+                      children: [
+                        Text(AppLocalizations.of(context)!
+                            .home_drawer_my_favorites),
+                        const Icon(Icons.arrow_forward_ios_outlined)
                       ],
                     ),
                     onTap: () {
@@ -367,9 +372,9 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                     ),
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text('Help'),
-                        Icon(Icons.arrow_forward_ios_outlined)
+                      children: [
+                        Text(AppLocalizations.of(context)!.home_drawer_help),
+                        const Icon(Icons.arrow_forward_ios_outlined)
                       ],
                     ),
                     onTap: () {
@@ -383,9 +388,9 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                     ),
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text('FAQ'),
-                        Icon(Icons.arrow_forward_ios_outlined)
+                      children: [
+                        Text(AppLocalizations.of(context)!.home_drawer_faq),
+                        const Icon(Icons.arrow_forward_ios_outlined)
                       ],
                     ),
                     onTap: () {
@@ -399,9 +404,9 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                     ),
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text('Logout'),
-                        Icon(Icons.arrow_forward_ios_outlined)
+                      children: [
+                        Text(AppLocalizations.of(context)!.home_drawer_logout),
+                        const Icon(Icons.arrow_forward_ios_outlined)
                       ],
                     ),
                     onTap: () async {
@@ -418,9 +423,10 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                     ),
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text('Term & Conditions'),
-                        Icon(Icons.arrow_forward_ios_outlined)
+                      children: [
+                        Text(AppLocalizations.of(context)!
+                            .home_drawer_terms_and_conditions),
+                        const Icon(Icons.arrow_forward_ios_outlined)
                       ],
                     ),
                     onTap: () {
@@ -431,9 +437,10 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                   ListTile(
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text('Privacy Policy'),
-                        Icon(Icons.arrow_forward_ios_outlined)
+                      children: [
+                        Text(AppLocalizations.of(context)!
+                            .home_drawer_privacy_policy),
+                        const Icon(Icons.arrow_forward_ios_outlined)
                       ],
                     ),
                     onTap: () {

@@ -1,3 +1,26 @@
 {
-  "helloWorld": "Hello World!"
+  "helloWorld": "Hello World!",
+  "main_bottom_navigation_home": "Home",
+  "main_bottom_navigation_category": "Category",
+  "main_bottom_navigation_favorite": "Favorite",
+  "main_bottom_navigation_profile": "Profile",
+  "home_view_all": "View All",
+  "home_categories": "Categories",
+  "home_company_profile": "Company Profile",
+  "home_hot_items": "hot Items",
+  "home_latest_items": "Latest Items",
+  "home_search_caption": "What are you looking for?",
+  "home_drawer_my_profile": "My Profile",
+  "home_drawer_about_us": "About Us",
+  "home_drawer_company_accounts": "Company accounts",
+  "home_drawer_my_ads": "My Ads",
+  "home_drawer_my_favorites": "My favourites",
+  "home_drawer_help": "Help",
+  "home_drawer_faq": "FAQ",
+  "home_drawer_logout": "Logout",
+  "home_drawer_terms_and_conditions": "Term & Conditions",
+  "home_drawer_privacy_policy": "Privacy Policy",
+  "home_drawer_kurdish": "Kurdish",
+  "home_drawer_arabic": "Arabic",
+  "home_drawer_english": "English"
 }
