@@ -17,9 +17,14 @@ import 'home.dart';
 class HomeItem extends StatelessWidget {
   final int index;
   final HomeObj homeObj;
+  final HomeViewAllListener listener;
 
-  const HomeItem({Key? key, required this.index, required this.homeObj})
-      : super(key: key);
+  const HomeItem({
+    Key? key,
+    required this.index,
+    required this.homeObj,
+    required this.listener,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -409,4 +414,8 @@ class HomeProfileItem extends StatelessWidget {
       ),
     );
   }
+}
+
+abstract class HomeViewAllListener {
+  void viewAll(int index);
 }
