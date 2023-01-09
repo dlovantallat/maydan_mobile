@@ -541,4 +541,31 @@ class MaydanServices {
               : "API Down we are working to get things back to normal. Please have a patient"),
     );
   }
+
+  Future<ApiResponse<ItemObj>> getRelatedCompanyItems(
+      String token, String companyId) {
+    return http
+        .get(Uri.parse("${baseURL}users/$companyId/items"),
+            headers: headers(token: token))
+        .timeout(timeOutDuration)
+        .then(
+      (data) {
+        if (data.statusCode == 200) {
+          final jsonData = json.decode(data.body);
+
+          final list = ItemObj.fromJson(jsonData);
+
+          return ApiResponse<ItemObj>(data: list);
+        }
+        return ApiResponse<ItemObj>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<ItemObj>(
+          requestStatus: true,
+          errorMessage: s.toString() == "Connection failed"
+              ? " No Internet, Please check your internet connection."
+              : "API Down we are working to get things back to normal. Please have a patient"),
+    );
+  }
 }
