@@ -6,7 +6,7 @@ import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:maydan/screens/post/post_obj.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -15,6 +15,7 @@ import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
 import '../profile/login_widget.dart';
 import 'image_row_item.dart';
+import 'post_obj.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({Key? key}) : super(key: key);
@@ -193,9 +194,6 @@ class _PostScreenState extends State<PostScreen>
         final imageTemp = File(image.path);
 
         this.image = imageTemp;
-        // setState(() {
-        //   this.image = imageTemp;
-        // });
       } on PlatformException catch (e) {
         if (kDebugMode) {
           print("an error occurred $e");
@@ -252,9 +250,9 @@ class _PostScreenState extends State<PostScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
-          "Post",
-          style: TextStyle(color: Colors.black),
+        title: Text(
+          AppLocalizations.of(context)!.post_title,
+          style: const TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.transparent,
       ),
@@ -288,9 +286,9 @@ class _PostScreenState extends State<PostScreen>
             margin: const EdgeInsetsDirectional.only(start: 16, end: 16),
             child: ListView(
               children: [
-                const Padding(
-                  padding: EdgeInsetsDirectional.only(bottom: 4),
-                  child: Text("Category"),
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(bottom: 4),
+                  child: Text(AppLocalizations.of(context)!.post_category),
                 ),
                 Container(
                   width: double.infinity,
@@ -321,13 +319,12 @@ class _PostScreenState extends State<PostScreen>
                             _dropdownCategoryValue = i!;
                           });
                           getSub(_dropdownCategoryValue.id);
-                          print(_dropdownCategoryValue.title);
                         }),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsetsDirectional.only(top: 12, bottom: 4),
-                  child: Text("Sub Category"),
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(top: 12, bottom: 4),
+                  child: Text(AppLocalizations.of(context)!.post_sub_category),
                 ),
                 isSubLoading
                     ? const Center(child: CircularProgressIndicator())
@@ -365,17 +362,13 @@ class _PostScreenState extends State<PostScreen>
                                           setState(() {
                                             _dropdownSubCategoryValue = i!;
                                           });
-
-                                          print(_dropdownCategoryValue.title);
                                         }),
                             ),
                           )
-                        : Container(
-                            child: const Text("Please Select another category"),
-                          ),
-                const Padding(
-                  padding: EdgeInsetsDirectional.only(top: 12, bottom: 4),
-                  child: Text("Ad photos"),
+                        : const Text("Please Select another category"),
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(top: 12, bottom: 4),
+                  child: Text(AppLocalizations.of(context)!.post_add_images),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -414,9 +407,9 @@ class _PostScreenState extends State<PostScreen>
                     )
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsetsDirectional.only(bottom: 8, top: 20),
-                  child: Text("Title"),
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(bottom: 8, top: 20),
+                  child: Text(AppLocalizations.of(context)!.post_title_caption),
                 ),
                 const TextField(
                   decoration: InputDecoration(
@@ -445,9 +438,10 @@ class _PostScreenState extends State<PostScreen>
                     borderRadius: BorderRadius.circular(10),
                   ),
                   height: 70,
-                  child: const Padding(
-                    padding: EdgeInsetsDirectional.all(8),
-                    child: Text("Description"),
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.all(8),
+                    child: Text(
+                        AppLocalizations.of(context)!.post_description_caption),
                   ),
                 ),
                 Row(
@@ -456,10 +450,11 @@ class _PostScreenState extends State<PostScreen>
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding:
-                              EdgeInsetsDirectional.only(top: 12, bottom: 4),
-                          child: Text("Price"),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                              top: 12, bottom: 4),
+                          child: Text(
+                              AppLocalizations.of(context)!.post_price_caption),
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -485,8 +480,6 @@ class _PostScreenState extends State<PostScreen>
                                   setState(() {
                                     _dropdownPriceValue = i!;
                                   });
-
-                                  print(_dropdownPriceValue);
                                 }),
                           ),
                         ),
@@ -495,10 +488,11 @@ class _PostScreenState extends State<PostScreen>
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding:
-                              EdgeInsetsDirectional.only(top: 12, bottom: 4),
-                          child: Text("Duration"),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                              top: 12, bottom: 4),
+                          child: Text(AppLocalizations.of(context)!
+                              .post_duration_caption),
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -524,8 +518,6 @@ class _PostScreenState extends State<PostScreen>
                                   setState(() {
                                     _dropdownDurationValue = i!;
                                   });
-
-                                  print(_dropdownDurationValue);
                                 }),
                           ),
                         ),
@@ -539,10 +531,11 @@ class _PostScreenState extends State<PostScreen>
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding:
-                              EdgeInsetsDirectional.only(top: 12, bottom: 4),
-                          child: Text("City"),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                              top: 12, bottom: 4),
+                          child: Text(
+                              AppLocalizations.of(context)!.post_city_caption),
                         ),
                         isCityLoading
                             ? const Center(child: CircularProgressIndicator())
@@ -580,19 +573,17 @@ class _PostScreenState extends State<PostScreen>
                                           }),
                                     ),
                                   )
-                                : Container(
-                                    child: const Text(
-                                        "Please Select another category"),
-                                  ),
+                                : const Text("Please Select another category"),
                       ],
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding:
-                              EdgeInsetsDirectional.only(top: 12, bottom: 4),
-                          child: Text("District"),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                              top: 12, bottom: 4),
+                          child: Text(AppLocalizations.of(context)!
+                              .post_district_caption),
                         ),
                         isDistrictLoading
                             ? const Center(child: CircularProgressIndicator())
@@ -630,10 +621,7 @@ class _PostScreenState extends State<PostScreen>
                                           }),
                                     ),
                                   )
-                                : Container(
-                                    child: const Text(
-                                        "Please Select another category"),
-                                  ),
+                                : const Text("Please Select another category"),
                       ],
                     ),
                   ],
@@ -644,9 +632,13 @@ class _PostScreenState extends State<PostScreen>
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       OutlinedButton(
-                          onPressed: () {}, child: const Text("clear")),
+                          onPressed: () {},
+                          child: Text(
+                              AppLocalizations.of(context)!.post_clear_button)),
                       ElevatedButton(
-                          onPressed: save, child: const Text("Confirm")),
+                          onPressed: save,
+                          child: Text(
+                              AppLocalizations.of(context)!.post_save_button)),
                     ],
                   ),
                 ),

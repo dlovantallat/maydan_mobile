@@ -44,5 +44,17 @@
         "type": "String"
       }
     }
-  }
+  },
+  "post_title": "Post",
+  "post_category": "Category",
+  "post_sub_category": "SubCategory",
+  "post_add_images": "Add Photos",
+  "post_description_caption": "Description",
+  "post_price_caption": "Price",
+  "post_duration_caption": "Duration",
+  "post_city_caption": "City",
+  "post_district_caption": "District",
+  "post_clear_button": "Clear",
+  "post_save_button": "Save",
+  "post_title_caption": "Title"
 }
