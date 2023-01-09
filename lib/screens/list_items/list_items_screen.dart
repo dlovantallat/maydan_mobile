@@ -47,9 +47,9 @@ class _ListItemsScreenState extends State<ListItemsScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
-          "title",
-          style: TextStyle(color: Colors.black),
+        title: Text(
+          widget.subCategory.title,
+          style: const TextStyle(color: Colors.black),
         ),
         iconTheme: const IconThemeData(
           color: Colors.black,

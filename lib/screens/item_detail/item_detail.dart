@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
+import '../home/home_slider.dart';
 import '../list_items/items_item.dart';
-import 'detail_item_meta_data.dart';
 
 class ItemDetail extends StatefulWidget {
-  const ItemDetail({Key? key}) : super(key: key);
+  final ItemData item;
+
+  const ItemDetail({Key? key, required this.item}) : super(key: key);
 
   @override
   State<ItemDetail> createState() => _ItemDetailState();
@@ -34,16 +37,18 @@ class _ItemDetailState extends State<ItemDetail> {
                       children: [
                         Padding(
                           padding: const EdgeInsetsDirectional.only(bottom: 20),
-                          child: Image.network(
-                            height: 300,
-                            width: double.infinity,
-                            'https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1988&q=80',
-                            fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => const Image(
-                              image: AssetImage(mainProfileBottomNavigationSvg),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                          child: widget.item.itemPhotos.isEmpty
+                              ? const Image(
+                                  height: 220,
+                                  width: double.infinity,
+                                  image: AssetImage(imageHolder),
+                                  fit: BoxFit.cover,
+                                )
+                              : SizedBox(
+                                  height: 220,
+                                  child: homeSlider(context,
+                                      itemPhotos: widget.item.itemPhotos),
+                                ),
                         ),
                         PositionedDirectional(
                           end: 0,
@@ -106,16 +111,110 @@ class _ItemDetailState extends State<ItemDetail> {
                                   topEnd: Radius.circular(10)),
                               color: appColor,
                             ),
-                            child: const Center(
-                              child: Text("Cow"),
+                            child: Center(
+                              child: Text(widget.item.title),
                             ),
                           ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) =>
-                                const DetailItemMetaData(),
-                            itemCount: 4,
-                          )
+                          Container(
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                top: BorderSide(color: Colors.black),
+                              ),
+                            ),
+                            height: 40,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                      border: BorderDirectional(
+                                        end: BorderSide(color: Colors.black),
+                                      ),
+                                    ),
+                                    height: 40,
+                                    child: const Padding(
+                                      padding: EdgeInsetsDirectional.only(
+                                          start: 8, top: 8),
+                                      child: Text(
+                                        "Price",
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: SizedBox(
+                                    height: 40,
+                                    child: Padding(
+                                      padding: const EdgeInsetsDirectional.only(
+                                          start: 16, top: 8),
+                                      child: Text(
+                                        widget.item.priceAnnounced,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                top: BorderSide(color: Colors.black),
+                              ),
+                            ),
+                            height: 40,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                      border: BorderDirectional(
+                                        end: BorderSide(color: Colors.black),
+                                      ),
+                                    ),
+                                    height: 40,
+                                    child: const Padding(
+                                      padding: EdgeInsetsDirectional.only(
+                                          start: 8, top: 8),
+                                      child: Text(
+                                        "date",
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: SizedBox(
+                                    height: 40,
+                                    child: Padding(
+                                      padding: const EdgeInsetsDirectional.only(
+                                          start: 16, top: 8),
+                                      child: Text(
+                                        dateFormat(widget.item.statusDate),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -129,9 +228,9 @@ class _ItemDetailState extends State<ItemDetail> {
                       margin: const EdgeInsetsDirectional.only(
                           bottom: 8, start: 8, end: 8),
                       height: 70,
-                      child: const Padding(
-                        padding: EdgeInsetsDirectional.all(8),
-                        child: Text("Description"),
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.all(8),
+                        child: Text(widget.item.description),
                       ),
                     ),
                     Container(
@@ -156,20 +255,21 @@ class _ItemDetailState extends State<ItemDetail> {
                                   ),
                                   height: 40,
                                   child: const Padding(
-                                    padding: EdgeInsetsDirectional.only(
-                                        start: 8, top: 8),
-                                    child: Text(
-                                      "Duration",
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.white),
+                                    padding: EdgeInsetsDirectional.all(8),
+                                    child: Center(
+                                      child: Text(
+                                        "Owner Information",
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                            fontSize: 16, color: Colors.white),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                               Expanded(
-                                flex: 2,
+                                flex: 1,
                                 child: Container(
                                   decoration: const BoxDecoration(
                                     border: BorderDirectional(
@@ -193,10 +293,11 @@ class _ItemDetailState extends State<ItemDetail> {
                             ],
                           ),
                           const Center(
-                              child: Padding(
-                            padding: EdgeInsetsDirectional.all(16),
-                            child: Text("data"),
-                          )),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.all(16),
+                              child: Text("data"),
+                            ),
+                          ),
                         ],
                       ),
                     ),

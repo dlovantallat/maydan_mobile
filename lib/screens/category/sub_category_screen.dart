@@ -44,7 +44,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          widget.category.id,
+          widget.category.title,
           style: const TextStyle(color: Colors.black),
         ),
         iconTheme: const IconThemeData(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 
+import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
 import 'home.dart';
 
-Swiper homeSlider(context, List<HomeBanner> images) {
+Swiper homeSlider(context,
+    {List<HomeBanner>? images, List<ItemPhotos>? itemPhotos}) {
   return Swiper(
     autoplay: true,
     itemBuilder: (BuildContext context, int index) {
@@ -20,7 +22,9 @@ Swiper homeSlider(context, List<HomeBanner> images) {
           ),
         ),
         child: Image.network(
-          imageLoader(images[index].urlImg),
+          imageLoader(images != null
+              ? images[index].urlImg
+              : itemPhotos![index].filePath),
           fit: BoxFit.cover,
           errorBuilder: (_, __, ___) => const Image(
             image: AssetImage(imageHolder),
@@ -29,7 +33,7 @@ Swiper homeSlider(context, List<HomeBanner> images) {
         ),
       );
     },
-    itemCount: images.length,
+    itemCount: images != null ? images.length : itemPhotos!.length,
     scale: 0.9,
     pagination: const SwiperPagination(
       builder: DotSwiperPaginationBuilder(

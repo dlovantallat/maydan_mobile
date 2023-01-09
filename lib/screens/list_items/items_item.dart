@@ -70,8 +70,8 @@ class _ItemsItemState extends State<ItemsItem> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (_) => const ItemDetail()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (_) => ItemDetail(item: widget.item!)));
       },
       child: Card(
         elevation: 4,
@@ -137,34 +137,37 @@ class _ItemsItemState extends State<ItemsItem> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(start: 8, top: 8),
-                      child: Text(
-                        "jsonDecode(item?.title ?? " ")['en'] ?? check name",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400, color: Colors.black),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.only(start: 8, top: 8),
+                        child: Text(
+                          widget.item!.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w400, color: Colors.black),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(start: 8, bottom: 4),
-                      child: Text(
-                        "25/12/2022",
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400, color: Colors.black),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(
+                            start: 8, bottom: 4),
+                        child: Text(
+                          dateFormat(widget.item!.statusDate),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w400, color: Colors.black),
+                        ),
                       ),
-                    ),
-                  ],
-                )),
-                const Padding(
-                  padding: EdgeInsetsDirectional.only(start: 8, end: 8),
-                  child: Text("10\$"),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
+                  child: Text("${widget.item!.priceAnnounced}\$"),
                 ),
               ],
             ),

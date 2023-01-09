@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
               ),
               child: AspectRatio(
                 aspectRatio: 16 / 9,
-                child: homeSlider(context, home.data!.bannerList),
+                child: homeSlider(context, images: home.data!.bannerList),
               ),
             ),
             ListView.builder(
@@ -411,7 +411,7 @@ class _HomeScreenState extends State<HomeScreen> with LogoutListener {
                     ),
                     onTap: () async {
                       String token = await getToken();
-
+                      if (!mounted) return;
                       if (token != "") {
                         logout(context, this);
                       }

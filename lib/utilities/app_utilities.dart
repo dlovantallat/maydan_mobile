@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// imageLoader is a helper method for loading image from API
@@ -99,7 +100,7 @@ logout(BuildContext context, LogoutListener listener) {
       context: context,
       builder: (_) {
         return AlertDialog(
-          title: Text(""),
+          title: const Text(""),
           content: Wrap(
             alignment: WrapAlignment.center,
             children: [
@@ -164,6 +165,10 @@ logout(BuildContext context, LogoutListener listener) {
         );
       },
       barrierDismissible: true);
+}
+
+dateFormat(String date) {
+  return DateFormat("d MMM yyyy").format(DateTime.parse(date));
 }
 
 abstract class LogoutListener {

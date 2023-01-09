@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
@@ -222,7 +221,11 @@ class _HomeSubItemState extends State<HomeSubItem> {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (_) => const ItemDetail()));
+            context,
+            MaterialPageRoute(
+                builder: (_) => ItemDetail(
+                      item: widget.data,
+                    )));
       },
       child: Card(
         elevation: 4,
@@ -253,8 +256,8 @@ class _HomeSubItemState extends State<HomeSubItem> {
                             : widget.data.itemPhotos[0].filePath),
                         fit: BoxFit.cover,
                         errorBuilder: (_, __, ___) => const Image(
-                          image: AssetImage(noInternet),
-                          fit: BoxFit.fitWidth,
+                          image: AssetImage(imageHolder),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
@@ -312,8 +315,7 @@ class _HomeSubItemState extends State<HomeSubItem> {
                             padding: const EdgeInsetsDirectional.only(
                                 start: 8, bottom: 4),
                             child: Text(
-                              DateFormat("d MMM yyyy").format(
-                                  DateTime.parse(widget.data.statusDate)),
+                              dateFormat(widget.data.statusDate),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
