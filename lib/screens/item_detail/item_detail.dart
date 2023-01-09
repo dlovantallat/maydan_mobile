@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:maydan/common/meta_data_widget.dart';
 
+import '../../cloud_functions/api_response.dart';
+import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
 import '../home/home_slider.dart';
@@ -17,6 +20,30 @@ class ItemDetail extends StatefulWidget {
 }
 
 class _ItemDetailState extends State<ItemDetail> {
+  MaydanServices get service => GetIt.I<MaydanServices>();
+  late ApiResponse<ItemObj> items;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    getRelatedItem();
+    super.initState();
+  }
+
+  getRelatedItem() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    String token = await getToken();
+
+    items = await service.getRelatedItems(token, widget.item.id);
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -208,18 +235,39 @@ class _ItemDetailState extends State<ItemDetail> {
                       padding: EdgeInsetsDirectional.all(8.0),
                       child: Text("Similar Products"),
                     ),
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2, mainAxisExtent: 220),
-                      itemBuilder: (BuildContext context, int index) =>
-                          const ItemsItem(
-                        isFav: false,
-                      ),
-                      itemCount: 0,
-                    ),
+                    Builder(builder: (context) {
+                      if (isLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      if (items.requestStatus) {
+                        return Center(
+                          child: Text(items.errorMessage),
+                        );
+                      }
+
+                      if (items.data!.list.isEmpty) {
+                        return const Center(
+                          child: Text("Empty"),
+                        );
+                      }
+
+                      return GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2, mainAxisExtent: 220),
+                        itemBuilder: (BuildContext context, int index) =>
+                            ItemsItem(
+                          item: items.data!.list[index],
+                          isFav: items.data!.list[index].favorite,
+                        ),
+                        itemCount: items.data!.list.length,
+                      );
+                    }),
                   ],
                 ),
               ),
