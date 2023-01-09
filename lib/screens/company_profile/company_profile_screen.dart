@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../common/meta_data_widget.dart';
 import '../../utilities/app_utilities.dart';
-import '../item_detail/detail_item_meta_data.dart';
 import '../list_items/items_item.dart';
+import 'company_obj.dart';
 
 class CompanyProfileScreen extends StatefulWidget {
-  const CompanyProfileScreen({Key? key}) : super(key: key);
+  final CompanyData data;
+
+  const CompanyProfileScreen({Key? key, required this.data}) : super(key: key);
 
   @override
   State<CompanyProfileScreen> createState() => _CompanyProfileScreenState();
@@ -23,53 +27,6 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
           color: Colors.black,
         ),
         backgroundColor: Colors.transparent,
-        actions: [
-          const Chip(
-            shape: StadiumBorder(
-                side: BorderSide(
-              width: 1,
-              color: Colors.black,
-            )),
-            backgroundColor: Colors.white,
-            label: Text("Place an Ad"),
-          ),
-          const Padding(
-            padding: EdgeInsetsDirectional.only(start: 8),
-            child: Chip(
-              shape: StadiumBorder(
-                  side: BorderSide(
-                width: 1,
-                color: Colors.black,
-              )),
-              backgroundColor: Colors.white,
-              label: Text("Edit"),
-            ),
-          ),
-          // This button presents popup menu items.
-          PopupMenuButton<Menu>(
-              icon: const Icon(Icons.more_vert),
-              onSelected: (Menu item) {
-                setState(() {});
-              },
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
-                    const PopupMenuItem<Menu>(
-                      value: Menu.itemOne,
-                      child: Text('Item 1'),
-                    ),
-                    const PopupMenuItem<Menu>(
-                      value: Menu.itemTwo,
-                      child: Text('Item 2'),
-                    ),
-                    const PopupMenuItem<Menu>(
-                      value: Menu.itemThree,
-                      child: Text('Item 3'),
-                    ),
-                    const PopupMenuItem<Menu>(
-                      value: Menu.itemFour,
-                      child: Text('Item 4'),
-                    ),
-                  ]),
-        ],
       ),
       body: ListView(
         children: [
@@ -108,21 +65,27 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                         topEnd: Radius.circular(10)),
                     color: appColor,
                   ),
-                  child: const Center(
-                    child: Text("Cow"),
+                  child: Center(
+                    child: Text(widget.data.name),
                   ),
                 ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => const DetailItemMetaData(),
-                  itemCount: 3,
-                )
+                meteData(AppLocalizations.of(context)!.company_phone_number,
+                    "widget.data.duration widget"),
+                meteData(AppLocalizations.of(context)!.company_email,
+                    "widget.data.duration widget"),
+                meteData(AppLocalizations.of(context)!.company_location,
+                    "widget.data.duration widget"),
+                meteData(AppLocalizations.of(context)!.company_service_type,
+                    "widget.data.duration widget"),
+                meteData(AppLocalizations.of(context)!.company_code,
+                    "widget.data.duration widget"),
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text("Products related to X company"),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(AppLocalizations.of(context)!
+                .company_related(widget.data.name)),
           ),
           Padding(
             padding: const EdgeInsetsDirectional.only(start: 4, end: 4),

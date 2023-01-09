@@ -4,8 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
+import '../../common/meta_data_widget.dart';
 import '../../utilities/app_utilities.dart';
-import '../item_detail/detail_item_meta_data.dart';
 import '../list_items/items_item.dart';
 import 'login_widget.dart';
 import 'profile.dart';
@@ -306,12 +306,18 @@ class _ProfileScreenState extends State<ProfileScreen>
                           child: Text("Cow"),
                         ),
                       ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) =>
-                            const DetailItemMetaData(),
-                        itemCount: 3,
-                      )
+                      meteData(
+                          AppLocalizations.of(context)!.company_phone_number,
+                          "widget.data.duration widget"),
+                      meteData(AppLocalizations.of(context)!.company_email,
+                          "widget.data.duration widget"),
+                      meteData(AppLocalizations.of(context)!.company_location,
+                          "widget.data.duration widget"),
+                      meteData(
+                          AppLocalizations.of(context)!.company_service_type,
+                          "widget.data.duration widget"),
+                      meteData(AppLocalizations.of(context)!.company_code,
+                          "widget.data.duration widget"),
                     ],
                   ),
                 ),

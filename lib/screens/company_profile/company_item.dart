@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:maydan/screens/company_profile/company_obj.dart';
 
 import '../../utilities/app_utilities.dart';
+import 'company_obj.dart';
 import 'company_profile_screen.dart';
 
 class CompanyItem extends StatelessWidget {
@@ -13,8 +13,10 @@ class CompanyItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (_) => const CompanyProfileScreen()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => CompanyProfileScreen(data: data)));
       },
       child: Card(
         elevation: 4,

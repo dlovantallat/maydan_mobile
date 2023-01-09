@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:maydan/screens/company_profile/company_item.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
+import 'company_item.dart';
 import 'company_obj.dart';
 
 class CompanyListScreen extends StatefulWidget {
@@ -40,7 +41,7 @@ class _CompanyListScreenState extends State<CompanyListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("hhh"),
+        title: Text(AppLocalizations.of(context)!.company_list_title),
       ),
       body: Builder(builder: (context) {
         if (isLoading) {

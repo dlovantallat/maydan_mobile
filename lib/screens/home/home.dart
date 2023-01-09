@@ -1,10 +1,11 @@
 import '../../common/model/category.dart';
 import '../../common/model/item.dart';
+import '../company_profile/company_obj.dart';
 
 class HomeObj {
   List<HomeBanner> bannerList;
   List<CategoryData> categoryList;
-  List<CompanyProfile> profile;
+  List<CompanyData> profile;
   ItemSection itemSection;
 
   HomeObj(
@@ -24,9 +25,9 @@ class HomeObj {
       cList.add(CategoryData.fromJson(i));
     }
 
-    List<CompanyProfile> pList = [];
+    List<CompanyData> pList = [];
     for (var i in item['companyProfilelist']) {
-      pList.add(CompanyProfile.fromJson(i));
+      pList.add(CompanyData.fromJson(i));
     }
 
     return HomeObj(
@@ -61,29 +62,6 @@ class HomeBanner {
   }
 }
 
-class CompanyProfile {
-  String id;
-  String msisdn;
-  String name;
-  String urlPhoto;
-
-  CompanyProfile({
-    required this.id,
-    required this.msisdn,
-    required this.name,
-    required this.urlPhoto,
-  });
-
-  factory CompanyProfile.fromJson(Map<String, dynamic> item) {
-    return CompanyProfile(
-      id: item['id'] ?? "",
-      msisdn: item['msisdn'] ?? "",
-      name: item['name'] ?? "",
-      urlPhoto: item['url_photo'] ?? "",
-    );
-  }
-}
-
 class ItemSection {
   List<ItemData> hotDeals;
   List<ItemData> latest;
@@ -104,5 +82,3 @@ class ItemSection {
     return ItemSection(hotDeals: list, latest: list1);
   }
 }
-
-

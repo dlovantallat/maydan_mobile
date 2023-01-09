@@ -8,6 +8,7 @@ import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/category.dart';
 import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
+import '../company_profile/company_obj.dart';
 import '../company_profile/company_profile_screen.dart';
 import '../favorite/favorite_obj.dart';
 import '../item_detail/item_detail.dart';
@@ -342,7 +343,7 @@ class _HomeSubItemState extends State<HomeSubItem> {
 }
 
 class HomeProfileItem extends StatelessWidget {
-  final CompanyProfile profile;
+  final CompanyData profile;
 
   const HomeProfileItem({Key? key, required this.profile}) : super(key: key);
 
@@ -350,8 +351,10 @@ class HomeProfileItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (_) => const CompanyProfileScreen()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => CompanyProfileScreen(data: profile)));
       },
       child: Card(
         elevation: 4,

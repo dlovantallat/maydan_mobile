@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:maydan/common/meta_data_widget.dart';
 
 import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
@@ -115,106 +116,8 @@ class _ItemDetailState extends State<ItemDetail> {
                               child: Text(widget.item.title),
                             ),
                           ),
-                          Container(
-                            decoration: const BoxDecoration(
-                              border: Border(
-                                top: BorderSide(color: Colors.black),
-                              ),
-                            ),
-                            height: 40,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      border: BorderDirectional(
-                                        end: BorderSide(color: Colors.black),
-                                      ),
-                                    ),
-                                    height: 40,
-                                    child: const Padding(
-                                      padding: EdgeInsetsDirectional.only(
-                                          start: 8, top: 8),
-                                      child: Text(
-                                        "Price",
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: SizedBox(
-                                    height: 40,
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.only(
-                                          start: 16, top: 8),
-                                      child: Text(
-                                        widget.item.priceAnnounced,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                        style: const TextStyle(fontSize: 14),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            decoration: const BoxDecoration(
-                              border: Border(
-                                top: BorderSide(color: Colors.black),
-                              ),
-                            ),
-                            height: 40,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      border: BorderDirectional(
-                                        end: BorderSide(color: Colors.black),
-                                      ),
-                                    ),
-                                    height: 40,
-                                    child: const Padding(
-                                      padding: EdgeInsetsDirectional.only(
-                                          start: 8, top: 8),
-                                      child: Text(
-                                        "date",
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: SizedBox(
-                                    height: 40,
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.only(
-                                          start: 16, top: 8),
-                                      child: Text(
-                                        dateFormat(widget.item.statusDate),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                        style: const TextStyle(fontSize: 14),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          meteData("Price", widget.item.priceAnnounced),
+                          meteData("Date", dateFormat(widget.item.statusDate)),
                         ],
                       ),
                     ),

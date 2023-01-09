@@ -1,3 +1,4 @@
 {
-  "helloWorld": "مرحبا بالعالم!"
+  "helloWorld": "مرحبا بالعالم!",
+  "company_related": "products that {name}"
 }

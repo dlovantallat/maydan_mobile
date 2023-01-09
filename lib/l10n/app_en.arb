@@ -30,5 +30,19 @@
   "profile_setting": "Setting",
   "profile_about_us": "About Maydan",
   "profile_help_center": "Help Center",
-  "profile_edit": "Edit"
+  "profile_edit": "Edit",
+  "company_list_title": "Companies",
+  "company_phone_number": "Phone Number",
+  "company_email": "Email",
+  "company_location": "Location",
+  "company_service_type": "Service Type",
+  "company_code": "Code",
+  "company_related": "Products related to {name}",
+  "@company_related": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }
