@@ -38,6 +38,10 @@
     <string>User need update there profile picture</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>User need update there profile picture</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>tel</string>
+    </array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

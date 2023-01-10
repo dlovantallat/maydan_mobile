@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -66,6 +67,17 @@ class _ItemDetailState extends State<ItemDetail> {
 
     setState(() {
       isTokenLoaded = true;
+    });
+  }
+
+  void callingFunctionality() {
+    final uri = Uri(scheme: 'tel', path: '+9647503231905');
+    canLaunchUrl(uri).then((bool result) async {
+      if (result) {
+        await launchUrl(uri);
+      } else {
+        setSnackBar(context, "Can't call right know");
+      }
     });
   }
 
@@ -265,7 +277,7 @@ class _ItemDetailState extends State<ItemDetail> {
                                           ),
                                         )
                                       : TextButton(
-                                          onPressed: () {},
+                                          onPressed: callingFunctionality,
                                           child: Text(
                                             widget.item.user.msisdn,
                                             style: const TextStyle(
