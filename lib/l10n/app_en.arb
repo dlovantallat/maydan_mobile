@@ -56,5 +56,18 @@
   "post_district_caption": "District",
   "post_clear_button": "Clear",
   "post_save_button": "Save",
-  "post_title_caption": "Title"
+  "post_title_caption": "Title",
+  "login_title": "Login",
+  "item_detail_price": "Price",
+  "item_detail_date": "Date",
+  "item_detail_owner_information": "Owner Information",
+  "item_detail_login_please": "Please login to see contact information",
+  "item_detail_similar_": "Similar product like {name}",
+  "@item_detail_similar_": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -20,6 +20,7 @@ class ItemData {
   String statusDate;
   bool favorite;
   String priceAnnounced;
+  UserObj user;
   List<ItemPhotos> itemPhotos;
 
   ItemData({
@@ -30,6 +31,7 @@ class ItemData {
     required this.statusDate,
     required this.favorite,
     required this.priceAnnounced,
+    required this.user,
     required this.itemPhotos,
   });
 
@@ -47,6 +49,7 @@ class ItemData {
       statusDate: item['status_date'] ?? "",
       favorite: item['favorite'] ?? false,
       priceAnnounced: item['price_announced'] ?? "",
+      user: UserObj.fromJson(item['user']),
       itemPhotos: list,
     );
   }
@@ -74,6 +77,32 @@ class ItemPhotos {
     return ItemPhotos(
       id: item['id'],
       filePath: item['file_path'],
+    );
+  }
+}
+
+class UserObj {
+  String id;
+  String msisdn;
+  String name;
+  String email;
+  String usertype;
+
+  UserObj({
+    required this.id,
+    required this.msisdn,
+    required this.name,
+    required this.email,
+    required this.usertype,
+  });
+
+  factory UserObj.fromJson(Map<String, dynamic> item) {
+    return UserObj(
+      id: item['id'],
+      msisdn: item['msisdn'],
+      name: item['name'],
+      email: item['email'],
+      usertype: item['usertype'],
     );
   }
 }

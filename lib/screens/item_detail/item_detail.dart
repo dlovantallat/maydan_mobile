@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:maydan/common/meta_data_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
+import '../../common/meta_data_widget.dart';
 import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
 import '../home/home_slider.dart';
 import '../list_items/items_item.dart';
+import 'login_screen.dart';
 
 class ItemDetail extends StatefulWidget {
   final ItemData item;
@@ -23,6 +25,8 @@ class _ItemDetailState extends State<ItemDetail> {
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<ItemObj> items;
   bool isLoading = false;
+  bool isTokenLoaded = false;
+  String token = "";
 
   @override
   void initState() {
@@ -35,12 +39,33 @@ class _ItemDetailState extends State<ItemDetail> {
       isLoading = true;
     });
 
-    String token = await getToken();
+    tokenLocal();
 
     items = await service.getRelatedItems(token, widget.item.id);
 
     setState(() {
       isLoading = false;
+    });
+  }
+
+  void sendLogin() async {
+    final dd = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => const LoginScreen()));
+
+    if (dd == "token") {
+      tokenLocal();
+    }
+  }
+
+  void tokenLocal() async {
+    setState(() {
+      isTokenLoaded = false;
+    });
+
+    token = await getToken();
+
+    setState(() {
+      isTokenLoaded = true;
     });
   }
 
@@ -143,8 +168,12 @@ class _ItemDetailState extends State<ItemDetail> {
                               child: Text(widget.item.title),
                             ),
                           ),
-                          meteData("Price", widget.item.priceAnnounced),
-                          meteData("Date", dateFormat(widget.item.statusDate)),
+                          meteData(
+                              AppLocalizations.of(context)!.item_detail_price,
+                              widget.item.priceAnnounced),
+                          meteData(
+                              AppLocalizations.of(context)!.item_detail_date,
+                              dateFormat(widget.item.statusDate)),
                         ],
                       ),
                     ),
@@ -184,14 +213,15 @@ class _ItemDetailState extends State<ItemDetail> {
                                     ),
                                   ),
                                   height: 40,
-                                  child: const Padding(
-                                    padding: EdgeInsetsDirectional.all(8),
+                                  child: Padding(
+                                    padding: const EdgeInsetsDirectional.all(8),
                                     child: Center(
                                       child: Text(
-                                        "Owner Information",
+                                        AppLocalizations.of(context)!
+                                            .item_detail_owner_information,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 16, color: Colors.white),
                                       ),
                                     ),
@@ -207,14 +237,14 @@ class _ItemDetailState extends State<ItemDetail> {
                                     ),
                                   ),
                                   height: 40,
-                                  child: const Padding(
-                                    padding: EdgeInsetsDirectional.only(
+                                  child: Padding(
+                                    padding: const EdgeInsetsDirectional.only(
                                         start: 16, top: 8),
                                     child: Text(
-                                      "widget.data.duration widget",
+                                      widget.item.user.name,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 14, color: Colors.white),
                                     ),
                                   ),
@@ -222,18 +252,34 @@ class _ItemDetailState extends State<ItemDetail> {
                               ),
                             ],
                           ),
-                          const Center(
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.all(16),
-                              child: Text("data"),
-                            ),
-                          ),
+                          isTokenLoaded
+                              ? Center(
+                                  child: token == ""
+                                      ? TextButton(
+                                          onPressed: sendLogin,
+                                          child: Text(
+                                            AppLocalizations.of(context)!
+                                                .item_detail_login_please,
+                                            style: const TextStyle(
+                                                color: Colors.white),
+                                          ),
+                                        )
+                                      : TextButton(
+                                          onPressed: () {},
+                                          child: Text(
+                                            widget.item.user.msisdn,
+                                            style: const TextStyle(
+                                                color: Colors.white),
+                                          )),
+                                )
+                              : Container(),
                         ],
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsetsDirectional.all(8.0),
-                      child: Text("Similar Products"),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.all(8.0),
+                      child: Text(AppLocalizations.of(context)!
+                          .item_detail_similar_(widget.item.title)),
                     ),
                     Builder(builder: (context) {
                       if (isLoading) {
