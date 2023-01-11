@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maydan/screens/my_ads/edit_item.dart';
 
 import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
@@ -148,6 +149,10 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                         setState(() {
                           isPop = false;
                         });
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => EditItem(item: widget.data)));
                       },
                       child: Row(
                         children: const [
