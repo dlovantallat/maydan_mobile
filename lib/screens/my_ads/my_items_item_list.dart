@@ -65,11 +65,11 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
-                        padding:
-                            EdgeInsetsDirectional.only(bottom: 16, end: 16),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(
+                            bottom: 16, end: 16),
                         child: Text(
-                          "data data data data  \n",
+                          "${widget.data.title}\n",
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.start,
