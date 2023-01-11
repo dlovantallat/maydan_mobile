@@ -124,6 +124,6 @@ class _MyAdsScreenState extends State<MyAdsScreen>
 
   @override
   void onFavRemove(String id) {
-    // TODO: implement onFavRemove
+    getMyItems();
   }
 }

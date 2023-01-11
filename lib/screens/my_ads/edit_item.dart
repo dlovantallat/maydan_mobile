@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_it/get_it.dart';
+import 'package:maydan/utilities/app_utilities.dart';
 
+import '../../cloud_functions/api_response.dart';
+import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/item.dart';
 
 class EditItem extends StatefulWidget {
@@ -13,6 +17,8 @@ class EditItem extends StatefulWidget {
 }
 
 class _EditItemState extends State<EditItem> {
+  MaydanServices get service => GetIt.I<MaydanServices>();
+  late ApiResponse<ItemRespond> updateItemRequest;
   final List<String> _dropdownDurationDrop = ["7", "15", "30"];
   String _dropdownDurationValue = "7";
 
@@ -31,7 +37,52 @@ class _EditItemState extends State<EditItem> {
     super.initState();
   }
 
-  updateItem() async {}
+  updateItem() async {
+    String title = titleController.text.trim();
+    String description = descriptionController.text.trim();
+    String price = priceController.text.trim();
+
+    if (title.isEmpty) {
+      setSnackBar(context, "title can't be empty");
+      return;
+    }
+
+    if (description.isEmpty) {
+      setSnackBar(context, "title can't be empty");
+      return;
+    }
+
+    if (price.isEmpty) {
+      setSnackBar(context, "title can't be empty");
+      return;
+    }
+
+    String token = await getToken();
+    print("token:$token");
+
+    updateItemRequest = await service.updateItem(
+        token: token,
+        itemId: widget.item.id,
+        districtId: widget.item.districtId,
+        title: title,
+        description: description,
+        price: "price",
+        duration: "duration");
+    if (!mounted) return;
+
+    if (!updateItemRequest.requestStatus) {
+      if (updateItemRequest.statusCode == 200) {
+        print("updated");
+        Navigator.pop(context, "refresh_update");
+      } else {
+        print(updateItemRequest.errorMessage);
+        print(updateItemRequest.statusCode);
+        print("no");
+      }
+    } else {
+      print(updateItemRequest.errorMessage);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

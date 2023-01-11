@@ -201,6 +201,44 @@ class MaydanServices {
     );
   }
 
+  Future<ApiResponse<ItemRespond>> updateItem({
+    required String token,
+    required String itemId,
+    required String districtId,
+    required String title,
+    required String description,
+    required String price,
+    required String duration,
+  }) async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse("${baseURL}items/$itemId?_method=PUT"));
+    request.fields['title'] = jsonEncode({"en": title});
+    request.fields['description'] = jsonEncode({"en": description});
+    request.fields['district_id'] = districtId;
+
+    request.headers.addAll(headers(token: token));
+
+    return request.send().then(
+      (data) async {
+        if (data.statusCode == 200) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = ItemRespond.json(jsonDecode(respStr));
+
+          return ApiResponse<ItemRespond>(data: register, statusCode: 200);
+        } else if (data.statusCode == 422) {
+          return ApiResponse<ItemRespond>(statusCode: 422);
+        }
+
+        return ApiResponse<ItemRespond>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<ItemRespond>(
+          requestStatus: true, errorMessage: s.toString()),
+    );
+  }
+
   Future<ApiResponse<LoginData>> login(String phoneNumber, String password) {
     var request = http.MultipartRequest('POST', Uri.parse("${baseURL}login"));
 

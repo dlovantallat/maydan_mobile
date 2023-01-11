@@ -14,17 +14,20 @@ class ItemObj {
 
 class ItemData {
   String id;
+  String districtId;
   String status;
   String title;
   String description;
   String statusDate;
   bool favorite;
+
   String priceAnnounced;
   UserObj user;
   List<ItemPhotos> itemPhotos;
 
   ItemData({
     required this.id,
+    required this.districtId,
     required this.status,
     required this.title,
     required this.description,
@@ -43,6 +46,7 @@ class ItemData {
     }
     return ItemData(
       id: item['id'] ?? "",
+      districtId: item['district_id'] ?? "",
       status: item['status'] ?? "",
       title: item['title'] ?? "",
       description: item['description'] ?? "",

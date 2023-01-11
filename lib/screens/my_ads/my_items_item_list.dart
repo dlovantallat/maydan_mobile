@@ -23,6 +23,15 @@ class MyItemsItemList extends StatefulWidget {
 class _MyItemsItemListState extends State<MyItemsItemList> {
   bool isPop = false;
 
+  void dd() async {
+    final dd = await Navigator.push(context,
+        MaterialPageRoute(builder: (_) => EditItem(item: widget.data)));
+
+    if (dd == "refresh_update") {
+      widget.listener.onFavRemove("id");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -95,7 +104,6 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                           IconButton(
                               onPressed: () {
                                 setState(() {
-                                  print("sss");
                                   isPop = true;
                                 });
                               },
@@ -149,10 +157,8 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                         setState(() {
                           isPop = false;
                         });
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => EditItem(item: widget.data)));
+                        //todo
+                        dd();
                       },
                       child: Row(
                         children: const [
