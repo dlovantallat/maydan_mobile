@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:maydan/screens/my_ads/edit_item.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../cloud_functions/api_response.dart';
+import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
+import 'edit_item.dart';
 
 class MyItemsItemList extends StatefulWidget {
   final ItemData data;
@@ -22,14 +24,38 @@ class MyItemsItemList extends StatefulWidget {
 }
 
 class _MyItemsItemListState extends State<MyItemsItemList> {
+  MaydanServices get service => GetIt.I<MaydanServices>();
+  late ApiResponse<ItemRespond> updateItemRequest;
   bool isPop = false;
 
-  void dd() async {
+  void openEditItem() async {
     final dd = await Navigator.push(context,
         MaterialPageRoute(builder: (_) => EditItem(item: widget.data)));
 
     if (dd == "refresh_update") {
       widget.listener.onFavRemove("id");
+    }
+  }
+
+  soldOut() async {
+    String token = await getToken();
+
+    updateItemRequest = await service.soldOutItem(
+      token: token,
+      itemId: widget.data.id,
+      title: widget.data.title,
+      description: widget.data.title,
+    );
+    if (!mounted) return;
+
+    if (!updateItemRequest.requestStatus) {
+      if (updateItemRequest.statusCode == 200) {
+        widget.listener.onFavRemove("id");
+      } else {
+        setSnackBar(context, "item can't be sold out there is an error");
+      }
+    } else {
+      setSnackBar(context, updateItemRequest.errorMessage);
     }
   }
 
@@ -67,7 +93,7 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                               : widget.data.itemPhotos[0].filePath),
                           fit: BoxFit.cover,
                           errorBuilder: (_, __, ___) => const Image(
-                            image: AssetImage(noInternet),
+                            image: AssetImage(imageHolder),
                             fit: BoxFit.fitWidth,
                           ),
                         ),
@@ -169,8 +195,7 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                         setState(() {
                           isPop = false;
                         });
-                        //todo
-                        dd();
+                        openEditItem();
                       },
                       child: Row(
                         children: const [
@@ -199,6 +224,11 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                         setState(() {
                           isPop = false;
                         });
+                        if (widget.data.currentAmount == 0) {
+                          return;
+                        }
+
+                        soldOut();
                       },
                       child: Row(
                         children: const [
