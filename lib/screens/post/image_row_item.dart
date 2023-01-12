@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:maydan/utilities/app_utilities.dart';
 
 class TestImage extends StatelessWidget {
   final int index;
@@ -17,23 +19,38 @@ class TestImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 8,
-      child: SizedBox(
-        width: 100,
-        child: Column(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Container(
+        clipBehavior: Clip.hardEdge,
+        decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(8))),
+        width: 112,
+        child: Stack(
+          alignment: AlignmentDirectional.topEnd,
           children: [
             SizedBox(
-              height: 70,
+              height: 130,
               width: double.infinity,
               child: Image.file(
                 image,
                 fit: BoxFit.cover,
               ),
             ),
-            IconButton(
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 listener.onDelete(index);
               },
-              icon: const Icon(Icons.delete),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: SvgPicture.asset(
+                  removeImageSvg,
+                  semanticsLabel: "",
+                  height: 24,
+                  width: 24,
+                ),
+              ),
             ),
           ],
         ),

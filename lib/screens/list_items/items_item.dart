@@ -109,7 +109,7 @@ class _ItemsItemState extends State<ItemsItem> {
                       ),
                       widget.item!.currentAmount == 0
                           ? Image.asset(
-                              soldOutSvg,
+                              soldOutPng,
                             )
                           : Container(),
                     ],

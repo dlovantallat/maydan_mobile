@@ -272,7 +272,7 @@ class _HomeSubItemState extends State<HomeSubItem> {
                         ),
                         widget.data.currentAmount == 0
                             ? Image.asset(
-                                soldOutSvg,
+                                soldOutPng,
                               )
                             : Container(),
                       ],
