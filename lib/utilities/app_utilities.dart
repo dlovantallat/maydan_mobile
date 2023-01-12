@@ -41,6 +41,7 @@ const String favBoarderSvg = 'assets/fav_border.svg';
 const String shareSvg = 'assets/share.svg';
 const String editProfileSvg = 'assets/edit_profile.svg';
 const String maydanLogoSvg = 'assets/maydan_logo.svg';
+const String soldOutSvg = 'assets/sold_out.png';
 
 /// Static Strings for static values
 const String appToken = "app-token";

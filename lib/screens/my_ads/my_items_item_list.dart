@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maydan/screens/my_ads/edit_item.dart';
 
 import '../../common/model/item.dart';
@@ -52,23 +53,34 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
           Row(
             children: [
               Expanded(
-                  flex: 1,
-                  child: Container(
-                    margin: const EdgeInsetsDirectional.all(8),
-                    child: AspectRatio(
-                      aspectRatio: 1 / 1,
-                      child: Image.network(
-                        imageLoader(widget.data.itemPhotos.isEmpty
-                            ? ""
-                            : widget.data.itemPhotos[0].filePath),
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => const Image(
-                          image: AssetImage(noInternet),
-                          fit: BoxFit.fitWidth,
+                flex: 1,
+                child: Container(
+                  margin: const EdgeInsetsDirectional.all(8),
+                  child: Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      AspectRatio(
+                        aspectRatio: 1 / 1,
+                        child: Image.network(
+                          imageLoader(widget.data.itemPhotos.isEmpty
+                              ? ""
+                              : widget.data.itemPhotos[0].filePath),
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => const Image(
+                            image: AssetImage(noInternet),
+                            fit: BoxFit.fitWidth,
+                          ),
                         ),
                       ),
-                    ),
-                  )),
+                      widget.data.currentAmount == 0
+                          ? Image.asset(
+                              soldOutSvg,
+                            )
+                          : Container(),
+                    ],
+                  ),
+                ),
+              ),
               Expanded(
                   flex: 2,
                   child: Column(

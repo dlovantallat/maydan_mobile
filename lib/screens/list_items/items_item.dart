@@ -90,19 +90,29 @@ class _ItemsItemState extends State<ItemsItem> {
               ),
               child: Stack(
                 children: [
-                  SizedBox(
-                    width: double.infinity,
-                    height: 155,
-                    child: Image.network(
-                      imageLoader(widget.item!.itemPhotos.isEmpty
-                          ? ""
-                          : widget.item!.itemPhotos[0].filePath),
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => const Image(
-                        image: AssetImage(imageHolder),
-                        fit: BoxFit.fitWidth,
+                  Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        height: 155,
+                        child: Image.network(
+                          imageLoader(widget.item!.itemPhotos.isEmpty
+                              ? ""
+                              : widget.item!.itemPhotos[0].filePath),
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => const Image(
+                            image: AssetImage(imageHolder),
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
                       ),
-                    ),
+                      widget.item!.currentAmount == 0
+                          ? Image.asset(
+                              soldOutSvg,
+                            )
+                          : Container(),
+                    ],
                   ),
                   Align(
                     alignment: AlignmentDirectional.topEnd,
