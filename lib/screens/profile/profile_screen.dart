@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/screens/profile/edit_profile.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -187,9 +188,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                       Expanded(
                         flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                              start: 16, top: 8),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        EditProfile(profile: profile.data!)));
+                          },
                           child: Text(
                             AppLocalizations.of(context)!.profile_edit,
                             overflow: TextOverflow.ellipsis,
