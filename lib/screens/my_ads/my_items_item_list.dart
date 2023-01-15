@@ -26,6 +26,7 @@ class MyItemsItemList extends StatefulWidget {
 class _MyItemsItemListState extends State<MyItemsItemList> {
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<ItemRespond> updateItemRequest;
+  late ApiResponse<ItemDeleteRespond> deleteItemRequest;
   bool isPop = false;
 
   void openEditItem() async {
@@ -57,6 +58,99 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
     } else {
       setSnackBar(context, updateItemRequest.errorMessage);
     }
+  }
+
+  deleteItem() async {
+    String token = await getToken();
+
+    deleteItemRequest = await service.deleteItem(token, widget.data.id);
+
+    if (!deleteItemRequest.requestStatus) {
+      if (deleteItemRequest.statusCode == 200) {
+        widget.listener.onFavRemove("");
+      } else {
+        print("ddd");
+      }
+    } else {
+      print(deleteItemRequest.errorMessage);
+    }
+  }
+
+  deletePopup() {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: const Text(""),
+            content: Wrap(
+              alignment: WrapAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsetsDirectional.only(top: 8, bottom: 16),
+                      child: Text(
+                        "Are you sure you want to delete this post",
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.only(
+                                start: 8, end: 8),
+                            child: OutlinedButton(
+                              style: ButtonStyle(
+                                minimumSize:
+                                    MaterialStateProperty.resolveWith<Size>(
+                                  (Set<MaterialState> states) {
+                                    return const Size(
+                                      double.infinity,
+                                      40,
+                                    );
+                                  },
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text("No, keep it".toUpperCase()),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              deleteItem();
+                              Navigator.pop(context);
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                appColor,
+                              ),
+                              minimumSize:
+                                  MaterialStateProperty.resolveWith<Size>(
+                                (Set<MaterialState> states) {
+                                  return const Size(
+                                    double.infinity,
+                                    40,
+                                  );
+                                },
+                              ),
+                            ),
+                            child: Text("Yes, Deleted".toUpperCase()),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+        barrierDismissible: true);
   }
 
   @override
@@ -151,7 +245,7 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                             thickness: 1,
                           ),
                           IconButton(
-                              onPressed: () {},
+                              onPressed: deletePopup,
                               icon: const Icon(Icons.delete_outline)),
                         ],
                       ),

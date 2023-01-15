@@ -164,6 +164,7 @@ class MaydanServices {
     request.fields['title'] = jsonEncode({"en": title});
     request.fields['subcategory_id'] = subCategory;
     request.fields['description'] = jsonEncode({"en": description});
+    request.fields['duration'] = "2";
 
     List<http.MultipartFile> newList = <http.MultipartFile>[];
 
@@ -447,6 +448,34 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<ProfileData>(
+          requestStatus: true,
+          errorMessage: s.toString() == "Connection failed"
+              ? " No Internet, Please check your internet connection."
+              : "API Down we are working to get things back to normal. Please have a patient"),
+    );
+  }
+
+  Future<ApiResponse<ItemDeleteRespond>> deleteItem(String token, String id) {
+    return http
+        .delete(Uri.parse("${baseURL}items/$id"),
+            headers: headers(token: token))
+        .timeout(timeOutDuration)
+        .then(
+      (data) {
+        if (data.statusCode == 200) {
+          final jsonData = json.decode(data.body);
+
+          final fav = ItemDeleteRespond.fromJson(jsonData);
+
+          return ApiResponse<ItemDeleteRespond>(data: fav, statusCode: 200);
+        } else if (data.statusCode == 401) {
+          return ApiResponse<ItemDeleteRespond>(statusCode: 401);
+        }
+        return ApiResponse<ItemDeleteRespond>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<ItemDeleteRespond>(
           requestStatus: true,
           errorMessage: s.toString() == "Connection failed"
               ? " No Internet, Please check your internet connection."

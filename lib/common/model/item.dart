@@ -73,6 +73,16 @@ class ItemRespond {
   }
 }
 
+class ItemDeleteRespond {
+  String message;
+
+  ItemDeleteRespond({required this.message});
+
+  factory ItemDeleteRespond.fromJson(Map<String, dynamic> item) {
+    return ItemDeleteRespond(message: item['message']);
+  }
+}
+
 class ItemPhotos {
   String id;
   String filePath;

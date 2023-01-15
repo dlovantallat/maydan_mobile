@@ -22,7 +22,7 @@ class ProfileData {
       email: item['email'],
       msisdn: item['msisdn'],
       userType: item['usertype'],
-      categoryId: item['category_id'],
+      categoryId: item['category_id'] ?? "",
     );
   }
 }

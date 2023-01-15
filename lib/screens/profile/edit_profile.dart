@@ -76,7 +76,6 @@ class _EditProfileState extends State<EditProfile> {
         for (var i in _dropdownCategoriesDrop) {
           if (i.id == widget.profile.categoryId) {
             _dropdownCategoryValue = i;
-            print("yes");
             break;
           }
         }
@@ -387,7 +386,10 @@ class _EditProfileState extends State<EditProfile> {
                               value: user,
                               child: Text(
                                 user.title,
-                                style: const TextStyle(color: Colors.black),
+                                style: TextStyle(
+                                    color: user == _dropdownCategoryValue
+                                        ? appColor
+                                        : Colors.black),
                               ),
                             );
                           }).toList(),
