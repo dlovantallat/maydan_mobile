@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
@@ -210,12 +209,6 @@ class _PostScreenState extends State<PostScreen>
       setSnackBar(
           context, "you have reached the limit: ${uploadedPhotos.length}");
     }
-  }
-
-  Future<File> customCompress(File image) async {
-    var path = FlutterNativeImage.compressImage(image.absolute.path,
-        quality: 30, percentage: 50);
-    return path;
   }
 
   void save() async {
@@ -435,7 +428,7 @@ class _PostScreenState extends State<PostScreen>
                                   ),
                                 ),
                               )
-                            : TestImage(
+                            : PostImageItem(
                                 index: index - 1,
                                 image: uploadedPhotos[index - 1].image,
                                 listener: this,

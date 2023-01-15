@@ -1,14 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:maydan/utilities/app_utilities.dart';
 
-class TestImage extends StatelessWidget {
+import '../../utilities/app_utilities.dart';
+
+class PostImageItem extends StatelessWidget {
   final int index;
   final File image;
   final DeleteListener listener;
 
-  const TestImage(
+  const PostImageItem(
       {Key? key,
       required this.index,
       required this.image,

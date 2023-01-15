@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -171,6 +174,12 @@ logout(BuildContext context, LogoutListener listener) {
 
 dateFormat(String date) {
   return DateFormat("d MMM yyyy").format(DateTime.parse(date));
+}
+
+Future<File> customCompress(File image) async {
+  var path = FlutterNativeImage.compressImage(image.absolute.path,
+      quality: 30, percentage: 50);
+  return path;
 }
 
 abstract class LogoutListener {
