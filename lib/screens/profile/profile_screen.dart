@@ -110,16 +110,25 @@ class _ProfileScreenState extends State<ProfileScreen>
                   backgroundColor: Colors.white,
                   label: Text(AppLocalizations.of(context)!.profile_place_ads),
                 ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(start: 8, end: 16),
-                  child: Chip(
-                    shape: const StadiumBorder(
-                        side: BorderSide(
-                      width: 1,
-                      color: Colors.black,
-                    )),
-                    backgroundColor: Colors.white,
-                    label: Text(AppLocalizations.of(context)!.profile_edit),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) =>
+                                EditProfile(profile: profile.data!)));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.only(start: 8, end: 16),
+                    child: Chip(
+                      shape: const StadiumBorder(
+                          side: BorderSide(
+                        width: 1,
+                        color: Colors.black,
+                      )),
+                      backgroundColor: Colors.white,
+                      label: Text(AppLocalizations.of(context)!.profile_edit),
+                    ),
                   ),
                 ),
               ],

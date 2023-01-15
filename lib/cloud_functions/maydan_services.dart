@@ -62,7 +62,7 @@ class MaydanServices {
 
           final list = CategoryObj.fromJson(jsonData);
 
-          return ApiResponse<CategoryObj>(data: list);
+          return ApiResponse<CategoryObj>(data: list, statusCode: 200);
         }
         return ApiResponse<CategoryObj>(
             requestStatus: true, errorMessage: "API Communication Down");

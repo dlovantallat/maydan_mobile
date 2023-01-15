@@ -4,6 +4,7 @@ class ProfileData {
   String email;
   String msisdn;
   String userType;
+  String categoryId;
 
   ProfileData({
     required this.id,
@@ -11,6 +12,7 @@ class ProfileData {
     required this.email,
     required this.msisdn,
     required this.userType,
+    required this.categoryId,
   });
 
   factory ProfileData.fromJson(Map<String, dynamic> item) {
@@ -20,6 +22,7 @@ class ProfileData {
       email: item['email'],
       msisdn: item['msisdn'],
       userType: item['usertype'],
+      categoryId: item['category_id'],
     );
   }
 }
