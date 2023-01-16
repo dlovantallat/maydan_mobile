@@ -50,7 +50,9 @@ class HomeItem extends StatelessWidget {
                 ),
               ),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    listener.viewAll(index);
+                  },
                   child: Text(AppLocalizations.of(context)!.home_view_all)),
             ],
           ),

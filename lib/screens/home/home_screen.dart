@@ -7,6 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../utilities/app_utilities.dart';
+import '../company_profile/company_item.dart';
+import '../company_profile/company_obj.dart';
 import 'home.dart';
 import 'home_drawer.dart';
 import 'home_item.dart';
@@ -25,8 +27,11 @@ class _HomeScreenState extends State<HomeScreen>
     with HomeViewAllListener, DrawerCallBack {
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<HomeObj> home;
+  late ApiResponse<CompanyObj> companies;
   bool isLoading = false;
   String key = "";
+
+  bool isViewAll = false;
 
   @override
   void initState() {
@@ -47,6 +52,18 @@ class _HomeScreenState extends State<HomeScreen>
 
     String token = await getToken();
     home = await service.getHome(token);
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  getActiveCompanies() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    companies = await service.getActiveCompanies();
 
     setState(() {
       isLoading = false;
@@ -108,32 +125,60 @@ class _HomeScreenState extends State<HomeScreen>
           );
         }
 
-        return ListView(
-          children: [
-            Container(
-              margin: const EdgeInsetsDirectional.only(
-                start: 12,
-                end: 12,
-                top: 16,
-                bottom: 16,
-              ),
-              child: AspectRatio(
-                aspectRatio: 16 / 9,
-                child: homeSlider(context, images: home.data!.bannerList),
-              ),
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) => HomeItem(
-                index: index,
-                homeObj: home.data!,
-                listener: this,
-              ),
-              itemCount: 4,
-            )
-          ],
-        );
+        return !isViewAll
+            ? ListView(
+                children: [
+                  Container(
+                    margin: const EdgeInsetsDirectional.only(
+                      start: 12,
+                      end: 12,
+                      top: 16,
+                      bottom: 16,
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: homeSlider(context, images: home.data!.bannerList),
+                    ),
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => HomeItem(
+                      index: index,
+                      homeObj: home.data!,
+                      listener: this,
+                    ),
+                    itemCount: 4,
+                  )
+                ],
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        setState(() {
+                          isViewAll = !isViewAll;
+                        });
+                      },
+                      child: const Text("view less")),
+                  Expanded(
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2, mainAxisExtent: 230),
+                      itemBuilder: (BuildContext context, int index) => Padding(
+                        padding: const EdgeInsetsDirectional.only(
+                            top: 8, start: 8, end: 8),
+                        child: CompanyItem(
+                          data: companies.data!.data[index],
+                        ),
+                      ),
+                      itemCount: companies.data!.data.length,
+                    ),
+                  ),
+                ],
+              );
       }),
       drawer: HomeDrawer(
         listener: widget.listener,
@@ -146,6 +191,18 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void viewAll(int index) {
     // TODO: implement viewAll
+    if (index == 0) {
+      //Category
+    } else if (index == 1) {
+      setState(() {
+        isViewAll = !isViewAll;
+      });
+      getActiveCompanies();
+    } else if (index == 2) {
+      //hot
+    } else if (index == 3) {
+      //latest
+    }
   }
 
   @override
