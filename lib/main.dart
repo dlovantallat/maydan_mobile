@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'cloud_functions/maydan_services.dart';
+import 'firebase_options.dart';
 import 'l10n/l10n.dart';
 import 'utilities/locale_provider.dart';
 import 'screens/category/category_screen.dart';
@@ -17,6 +19,12 @@ import 'utilities/app_utilities.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final fire = await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  print("project: ${fire.options.projectId}");
+
   servicesLocator();
 
   String key = await getLanguageKey();

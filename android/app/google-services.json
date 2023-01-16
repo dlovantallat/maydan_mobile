@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "989304214578",
+    "project_id": "maydan-60737",
+    "storage_bucket": "maydan-60737.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989304214578:android:77923b2fdfa19b30f0d82b",
+        "android_client_info": {
+          "package_name": "co.tornet.maydan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "989304214578-bhdes6b7kfribihrvgtrqut3pj127tgn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAW40-Jokur3ogsaoM70yrd-M0pRhf_pQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "989304214578-bhdes6b7kfribihrvgtrqut3pj127tgn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -55,6 +55,9 @@ dependencies:
 
   url_launcher: ^6.1.7
 
+  # Firebase
+  firebase_core: ^2.4.0
+
   # Multi-Languages
   flutter_localizations:
     sdk: flutter
