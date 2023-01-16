@@ -28,24 +28,32 @@ class _PostScreenState extends State<PostScreen>
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final priceController = TextEditingController();
+
+  /// Category DropDown
   final List<CategoryDrop> _dropdownCategoriesDrop = [];
-  late CategoryDrop _dropdownCategoryValue;
+  CategoryDrop? _dropdownCategoryValue;
 
-  final List<CityDrop> _dropdownCitiesDrop = [];
-  late CityDrop _dropdownCityValue;
-  final List<DistrictDrop> _dropdownDistrictsDrop = [];
-  late DistrictDrop _dropdownDistrictValue;
-
-  final List<String> _dropdownDurationDrop = ["7", "15", "30"];
-  String _dropdownDurationValue = "7";
-
-  final List<String> _dropdownPriceDrop = ["IQ", "USD"];
-  String _dropdownPriceValue = "IQ";
-
+  /// SubCategory DropDown
   final List<SubCategoryDrop> _dropdownSubCategoriesDrop = [
     SubCategoryDrop("-1", "Select")
   ];
-  SubCategoryDrop _dropdownSubCategoryValue = SubCategoryDrop("-1", "Select");
+  SubCategoryDrop? _dropdownSubCategoryValue;
+
+  /// City DropDown
+  final List<CityDrop> _dropdownCitiesDrop = [];
+  CityDrop? _dropdownCityValue;
+
+  /// District DropDown
+  final List<DistrictDrop> _dropdownDistrictsDrop = [];
+  DistrictDrop? _dropdownDistrictValue;
+
+  /// Duration DropDown
+  final List<String> _dropdownDurationDrop = ["7", "15", "30"];
+  String _dropdownDurationValue = "7";
+
+  /// City DropDown
+  final List<String> _dropdownPriceDrop = ["IQ", "USD"];
+  String _dropdownPriceValue = "IQ";
 
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<CategoryObj> categories;
@@ -106,11 +114,16 @@ class _PostScreenState extends State<PostScreen>
     categories = await service.getCategories();
 
     _dropdownCategoriesDrop.clear();
-    for (var i in categories.data!.data) {
-      _dropdownCategoriesDrop.add(CategoryDrop(i.id, i.title));
+    _dropdownCategoryValue = null;
+    if (!categories.requestStatus) {
+      if (categories.statusCode == 200) {
+        for (var i in categories.data!.data) {
+          _dropdownCategoriesDrop.add(CategoryDrop(i.id, i.title));
+        }
+        _dropdownCategoryValue = _dropdownCategoriesDrop.first;
+        getSub(_dropdownCategoryValue!.id);
+      }
     }
-    _dropdownCategoryValue = _dropdownCategoriesDrop.first;
-    getSub(_dropdownCategoryValue.id);
 
     setState(() {
       isLoading = false;
@@ -128,10 +141,16 @@ class _PostScreenState extends State<PostScreen>
       isSubLoading = false;
     });
     _dropdownSubCategoriesDrop.clear();
-    for (var i in subCategories.data!.data) {
-      _dropdownSubCategoriesDrop.add(SubCategoryDrop(i.id, i.title));
+    _dropdownSubCategoryValue = null;
+    if (!subCategories.requestStatus) {
+      if (subCategories.statusCode == 200) {
+        _dropdownSubCategoriesDrop.clear();
+        for (var i in subCategories.data!.data) {
+          _dropdownSubCategoriesDrop.add(SubCategoryDrop(i.id, i.title));
+        }
+        _dropdownSubCategoryValue = _dropdownSubCategoriesDrop.first;
+      }
     }
-    _dropdownSubCategoryValue = _dropdownSubCategoriesDrop.first;
 
     setState(() {
       isSubLoading = false;
@@ -148,11 +167,17 @@ class _PostScreenState extends State<PostScreen>
     cities = await service.getCities();
 
     _dropdownCitiesDrop.clear();
-    for (var i in cities.data!.data) {
-      _dropdownCitiesDrop.add(CityDrop(i.id, i.name));
+    _dropdownCityValue = null;
+
+    if (!cities.requestStatus) {
+      if (cities.statusCode == 200) {
+        for (var i in cities.data!.data) {
+          _dropdownCitiesDrop.add(CityDrop(i.id, i.name));
+        }
+        _dropdownCityValue = _dropdownCitiesDrop.first;
+        getDistrict(_dropdownCityValue!.id);
+      }
     }
-    _dropdownCityValue = _dropdownCitiesDrop.first;
-    getDistrict(_dropdownCityValue.id);
 
     setState(() {
       isCityLoading = false;
@@ -171,10 +196,16 @@ class _PostScreenState extends State<PostScreen>
       isDistrictLoading = false;
     });
     _dropdownDistrictsDrop.clear();
-    for (var i in districts.data!.data) {
-      _dropdownDistrictsDrop.add(DistrictDrop(i.id, i.name));
+    _dropdownDistrictValue = null;
+
+    if (!districts.requestStatus) {
+      if (districts.statusCode == 200) {
+        for (var i in districts.data!.data) {
+          _dropdownDistrictsDrop.add(DistrictDrop(i.id, i.name));
+        }
+        _dropdownDistrictValue = _dropdownDistrictsDrop.first;
+      }
     }
-    _dropdownDistrictValue = _dropdownDistrictsDrop.first;
 
     setState(() {
       isDistrictLoading = false;
@@ -216,6 +247,12 @@ class _PostScreenState extends State<PostScreen>
     String description = descriptionController.text.trim();
     String price = priceController.text.trim();
 
+    if (_dropdownSubCategoryValue == null) {
+      setSnackBar(context,
+          "Please choose a subCategory or choose another category which has subCategory");
+      return;
+    }
+
     if (title.isEmpty) {
       setSnackBar(context, "title can't be empty");
       return;
@@ -231,13 +268,25 @@ class _PostScreenState extends State<PostScreen>
       return;
     }
 
+    if (_dropdownCityValue == null) {
+      setSnackBar(context, "Please choose at least one city");
+      return;
+    }
+
+    if (_dropdownDistrictValue == null) {
+      setSnackBar(context,
+          "Please choose a District or choose another City which has District");
+      return;
+    }
+
     String token = await getToken();
 
     postItem = await service.postItem(
       token: token,
       title: title,
       description: description,
-      subCategory: "982473a3-f9e2-4ce9-b66a-e943753de38d",
+      subCategory: _dropdownSubCategoryValue!.id,
+      duration: _dropdownDurationValue,
       uploadedPhotos: uploadedPhotos,
     );
     if (!mounted) return;
@@ -324,7 +373,10 @@ class _PostScreenState extends State<PostScreen>
                             value: user,
                             child: Text(
                               user.title,
-                              style: const TextStyle(color: Colors.black),
+                              style: TextStyle(
+                                  color: user == _dropdownCategoryValue
+                                      ? appColor
+                                      : Colors.black),
                             ),
                           );
                         }).toList(),
@@ -333,7 +385,7 @@ class _PostScreenState extends State<PostScreen>
                           setState(() {
                             _dropdownCategoryValue = i!;
                           });
-                          getSub(_dropdownCategoryValue.id);
+                          getSub(_dropdownCategoryValue!.id);
                         }),
                   ),
                 ),
@@ -365,8 +417,11 @@ class _PostScreenState extends State<PostScreen>
                                       value: user,
                                       child: Text(
                                         user.title,
-                                        style: const TextStyle(
-                                            color: Colors.black),
+                                        style: TextStyle(
+                                            color: user ==
+                                                    _dropdownSubCategoryValue
+                                                ? appColor
+                                                : Colors.black),
                                       ),
                                     );
                                   }).toList(),
@@ -524,7 +579,14 @@ class _PostScreenState extends State<PostScreen>
                                     items: _dropdownPriceDrop
                                         .map((value) => DropdownMenuItem(
                                               value: value,
-                                              child: Text(value),
+                                              child: Text(
+                                                value,
+                                                style: TextStyle(
+                                                    color: value ==
+                                                            _dropdownPriceValue
+                                                        ? appColor
+                                                        : Colors.black),
+                                              ),
                                             ))
                                         .toList(),
                                     value: _dropdownPriceValue,
@@ -564,7 +626,14 @@ class _PostScreenState extends State<PostScreen>
                                 items: _dropdownDurationDrop
                                     .map((value) => DropdownMenuItem(
                                           value: value,
-                                          child: Text(value),
+                                          child: Text(
+                                            value,
+                                            style: TextStyle(
+                                                color: value ==
+                                                        _dropdownDurationValue
+                                                    ? appColor
+                                                    : Colors.black),
+                                          ),
                                         ))
                                     .toList(),
                                 value: _dropdownDurationValue,
@@ -613,8 +682,11 @@ class _PostScreenState extends State<PostScreen>
                                               value: user,
                                               child: Text(
                                                 user.title,
-                                                style: const TextStyle(
-                                                    color: Colors.black),
+                                                style: TextStyle(
+                                                    color: user ==
+                                                            _dropdownCityValue
+                                                        ? appColor
+                                                        : Colors.black),
                                               ),
                                             );
                                           }).toList(),
@@ -623,7 +695,7 @@ class _PostScreenState extends State<PostScreen>
                                             setState(() {
                                               _dropdownCityValue = i!;
                                             });
-                                            getDistrict(_dropdownCityValue.id);
+                                            getDistrict(_dropdownCityValue!.id);
                                           }),
                                     ),
                                   )
@@ -662,8 +734,11 @@ class _PostScreenState extends State<PostScreen>
                                               value: user,
                                               child: Text(
                                                 user.title,
-                                                style: const TextStyle(
-                                                    color: Colors.black),
+                                                style: TextStyle(
+                                                    color: user ==
+                                                            _dropdownDistrictValue
+                                                        ? appColor
+                                                        : Colors.black),
                                               ),
                                             );
                                           }).toList(),

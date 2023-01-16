@@ -88,7 +88,7 @@ class MaydanServices {
 
           final list = SubCategoryObj.fromJson(jsonData);
 
-          return ApiResponse<SubCategoryObj>(data: list);
+          return ApiResponse<SubCategoryObj>(data: list, statusCode: 200);
         }
         return ApiResponse<SubCategoryObj>(
             requestStatus: true, errorMessage: "API Communication Down");
@@ -158,13 +158,14 @@ class MaydanServices {
     required String title,
     required String description,
     required String subCategory,
+    required String duration,
     required List<UploadImage> uploadedPhotos,
   }) async {
     var request = http.MultipartRequest('POST', Uri.parse("${baseURL}items"));
     request.fields['title'] = jsonEncode({"en": title});
     request.fields['subcategory_id'] = subCategory;
     request.fields['description'] = jsonEncode({"en": description});
-    request.fields['duration'] = "2";
+    request.fields['duration'] = duration;
 
     List<http.MultipartFile> newList = <http.MultipartFile>[];
 
@@ -652,7 +653,7 @@ class MaydanServices {
 
           final city = CityObj.fromJson(jsonData);
 
-          return ApiResponse<CityObj>(data: city);
+          return ApiResponse<CityObj>(data: city, statusCode: 200);
         }
         return ApiResponse<CityObj>(
             requestStatus: true, errorMessage: "API Communication Down");
@@ -677,7 +678,7 @@ class MaydanServices {
 
           final districts = DistrictObj.fromJson(jsonData);
 
-          return ApiResponse<DistrictObj>(data: districts);
+          return ApiResponse<DistrictObj>(data: districts, statusCode: 200);
         }
         return ApiResponse<DistrictObj>(
             requestStatus: true, errorMessage: "API Communication Down");
