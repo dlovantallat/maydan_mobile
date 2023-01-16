@@ -12,6 +12,7 @@ import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/category.dart';
 import '../../utilities/app_utilities.dart';
 import '../post/post_obj.dart';
+import '../register/register.dart';
 import 'profile.dart';
 
 class EditProfile extends StatefulWidget {
@@ -26,6 +27,7 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<CategoryObj> categories;
+  late ApiResponse<UpdateUser> updateProfile;
   bool isLoading = false;
 
   final List<CategoryDrop> _dropdownCategoriesDrop = [];
@@ -87,6 +89,46 @@ class _EditProfileState extends State<EditProfile> {
     });
   }
 
+  editProfileFun() async {
+    String name = nameController.text.trim().toString();
+    String email = emailController.text.trim().toString();
+
+    if (name.isEmpty) {
+      setSnackBar(context, "You have to set name");
+    }
+
+    if (email.isEmpty) {
+      setSnackBar(context, "Please enter a email");
+      return;
+    }
+
+    bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email);
+    if (!emailValid) {
+      setSnackBar(context, "Please enter a correct email");
+      return;
+    }
+
+    String token = await getToken();
+
+    updateProfile =
+        await service.updateMe(name, "imagePath", token, isPersonal);
+
+    if (!mounted) return;
+
+    if (!updateProfile.requestStatus) {
+      if (updateProfile.statusCode == 200) {
+        setSnackBar(context, "yes profile has been updated");
+      }else{
+        print("eee ${updateProfile.errorMessage}");
+        print("eee ${"updateProfile.data!.message"}");
+      }
+    }else{
+      print("rrr ${updateProfile.errorMessage}");
+    }
+  }
+
   openGallery() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -111,6 +153,7 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(color: Colors.black),
@@ -233,35 +276,17 @@ class _EditProfileState extends State<EditProfile> {
           child: TextField(
             keyboardType: TextInputType.text,
             controller: nameController,
-            decoration: InputDecoration(
-              fillColor: Colors.white,
+            decoration: const InputDecoration(
+              fillColor: Color(0xFFF1F1F1),
               filled: true,
-              prefixIcon: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Row(
-                  children: const [
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(start: 16),
-                      child: Icon(
-                        Icons.account_circle,
-                        color: appColor,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(start: 8),
-                      child: Text(""),
-                    ),
-                  ],
-                ),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white, width: 2),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFFF1F1F1), width: 2),
                 borderRadius: BorderRadius.all(
                   Radius.circular(16.0),
                 ),
               ),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white, width: 2),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFFF1F1F1), width: 2),
                 borderRadius: BorderRadius.all(
                   Radius.circular(16.0),
                 ),
@@ -275,35 +300,17 @@ class _EditProfileState extends State<EditProfile> {
           child: TextField(
             keyboardType: TextInputType.text,
             controller: emailController,
-            decoration: InputDecoration(
-              fillColor: Colors.white,
+            decoration: const InputDecoration(
+              fillColor: Color(0xFFF1F1F1),
               filled: true,
-              prefixIcon: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Row(
-                  children: const [
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(start: 16),
-                      child: Icon(
-                        Icons.account_circle,
-                        color: appColor,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(start: 8),
-                      child: Text(""),
-                    ),
-                  ],
-                ),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white, width: 2),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFFF1F1F1), width: 2),
                 borderRadius: BorderRadius.all(
                   Radius.circular(16.0),
                 ),
               ),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white, width: 2),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFFF1F1F1), width: 2),
                 borderRadius: BorderRadius.all(
                   Radius.circular(16.0),
                 ),
@@ -315,37 +322,14 @@ class _EditProfileState extends State<EditProfile> {
           padding:
               const EdgeInsetsDirectional.only(start: 16, end: 16, top: 16),
           child: TextField(
+            enabled: false,
             keyboardType: TextInputType.text,
             controller: phoneNumberController,
-            decoration: InputDecoration(
-              fillColor: Colors.white,
+            decoration: const InputDecoration(
+              fillColor: Color(0xFFF1F1F1),
               filled: true,
-              prefixIcon: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Row(
-                  children: const [
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(start: 16),
-                      child: Icon(
-                        Icons.account_circle,
-                        color: appColor,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(start: 8),
-                      child: Text(""),
-                    ),
-                  ],
-                ),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white, width: 2),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(16.0),
-                ),
-              ),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white, width: 2),
+              disabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFFF1F1F1), width: 2),
                 borderRadius: BorderRadius.all(
                   Radius.circular(16.0),
                 ),
@@ -418,7 +402,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
               ),
             ),
-            onPressed: () {},
+            onPressed: editProfileFun,
             child: const Text("Save"),
           ),
         )

@@ -170,7 +170,6 @@ class MaydanServices {
 
     // --- Start uploading photos ---
     for (int i = 0; i < uploadedPhotos.length; i++) {
-      print("Ddd");
       newList.add(await http.MultipartFile.fromPath(
           'photos[$i]', uploadedPhotos[i].path,
           contentType: MediaType("image", "jpeg")));
@@ -191,8 +190,6 @@ class MaydanServices {
         } else if (data.statusCode == 422) {
           return ApiResponse<ItemRespond>(statusCode: 422);
         }
-
-        print("code: ${data.statusCode}");
         return ApiResponse<ItemRespond>(
             requestStatus: true, errorMessage: "API Communication Down");
       },
@@ -424,6 +421,56 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<RegisterModel>(
+          requestStatus: true, errorMessage: s.toString()),
+    );
+  }
+
+  Future<ApiResponse<UpdateUser>> updateMe(
+      String name, String imagePath, String token, bool isPersonal) {
+    var request =
+        http.MultipartRequest('POST', Uri.parse("${baseURL}users?_method=PUT"));
+
+    request.fields['name'] = name;
+    // request.fields['email'] = email;
+    if (!isPersonal) {
+      request.fields['category_id'] = "9808a274-5aba-4f93-9ecd-29ef2c66d60e";
+    }
+
+    request.headers.addAll(headers(token: token));
+
+    return request.send().then(
+      (data) async {
+        if (data.statusCode == 200) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = UpdateUser.json(jsonDecode(respStr));
+
+          return ApiResponse<UpdateUser>(data: register, statusCode: 200);
+        } else if (data.statusCode == 422) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = UpdateUser.json(jsonDecode(respStr));
+          return ApiResponse<UpdateUser>(
+              statusCode: 422, errorMessage: register.message);
+        } else if (data.statusCode == 403) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = UpdateUser.json(jsonDecode(respStr));
+          return ApiResponse<UpdateUser>(
+              statusCode: 403, errorMessage: register.message);
+        } else if (data.statusCode == 401) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = UpdateUser.json(jsonDecode(respStr));
+          return ApiResponse<UpdateUser>(
+              statusCode: 401, errorMessage: register.message);
+        }
+
+        return ApiResponse<UpdateUser>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<UpdateUser>(
           requestStatus: true, errorMessage: s.toString()),
     );
   }

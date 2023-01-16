@@ -49,3 +49,17 @@ class OtpRespond {
     );
   }
 }
+
+class UpdateUser {
+  String id;
+  String message;
+
+  UpdateUser({required this.id, required this.message});
+
+  factory UpdateUser.json(dynamic it) {
+    return UpdateUser(
+      id: it['id'] == null ? "" : it['id'] as String,
+      message: it['message'] == null ? "" : it['message'] as String,
+    );
+  }
+}
