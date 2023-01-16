@@ -309,6 +309,16 @@ class _PostScreenState extends State<PostScreen>
     }
   }
 
+  resetScreen() {
+    titleController.clear();
+    descriptionController.clear();
+    priceController.clear();
+
+    setState(() {
+      uploadedPhotos.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -761,7 +771,7 @@ class _PostScreenState extends State<PostScreen>
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       OutlinedButton(
-                          onPressed: () {},
+                          onPressed: resetScreen,
                           child: Text(
                               AppLocalizations.of(context)!.post_clear_button)),
                       ElevatedButton(
