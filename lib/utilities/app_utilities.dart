@@ -46,10 +46,14 @@ const String editProfileSvg = 'assets/edit_profile.svg';
 const String maydanLogoSvg = 'assets/maydan_logo.svg';
 const String removeImageSvg = 'assets/remove_image.svg';
 const String soldOutPng = 'assets/sold_out.png';
+const String oneOnBoardPng = 'assets/one.png';
+const String twoOnBoardPng = 'assets/two.png';
+const String threeOnBoardPng = 'assets/three.png';
 
 /// Static Strings for static values
 const String appToken = "app-token";
 const String languageKey = "languageKey";
+const String onBoardKey = "onBoard";
 
 /// Static functions
 

@@ -5,10 +5,12 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'cloud_functions/maydan_services.dart';
 import 'firebase_options.dart';
 import 'l10n/l10n.dart';
+import 'screens/on_boarding/on_boarding_screen.dart';
 import 'utilities/locale_provider.dart';
 import 'screens/category/category_screen.dart';
 import 'screens/favorite/favorite_screen.dart';
@@ -28,6 +30,7 @@ Future<void> main() async {
   servicesLocator();
 
   String key = await getLanguageKey();
+  bool isOnBoard = await getOnBoard();
   Locale locale = Locale(key);
   runApp(
     MultiProvider(
@@ -36,6 +39,7 @@ Future<void> main() async {
       ],
       child: MyApp(
         locale: locale,
+        isOnboard: isOnBoard,
       ),
     ),
   );
@@ -45,11 +49,18 @@ void servicesLocator() {
   GetIt.I.registerLazySingleton(() => MaydanServices());
 }
 
+Future<bool> getOnBoard() async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  bool isOnBoard = preferences.getBool(onBoardKey) ?? false;
+  return isOnBoard;
+}
+
 class MyApp extends StatelessWidget {
   bool isFirst = true;
   Locale? locale;
+  bool isOnboard;
 
-  MyApp({super.key, this.locale});
+  MyApp({super.key, this.locale, this.isOnboard = false});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +84,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: L10n.all,
-      home: const MainPage(),
+      home: isOnboard ? const MainPage() : const OnBoardingScreen(),
     );
   }
 }
