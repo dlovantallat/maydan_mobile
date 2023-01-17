@@ -17,7 +17,7 @@ import 'screens/post/post_screen.dart';
 import 'screens/profile/profile_screen.dart';
 import 'utilities/app_utilities.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final fire = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -29,10 +29,16 @@ void main() async {
 
   String key = await getLanguageKey();
   Locale locale = Locale(key);
-
-  runApp(MyApp(
-    locale: locale,
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LocaleProvider()),
+      ],
+      child: MyApp(
+        locale: locale,
+      ),
+    ),
+  );
 }
 
 void servicesLocator() {
@@ -46,34 +52,30 @@ class MyApp extends StatelessWidget {
   MyApp({super.key, this.locale});
 
   @override
-  Widget build(BuildContext context) => ChangeNotifierProvider(
-        create: (context) => LocaleProvider(),
-        builder: (context, child) {
-          final provider = Provider.of<LocaleProvider>(context);
+  Widget build(BuildContext context) {
+    final provider = Provider.of<LocaleProvider>(context);
 
-          if (isFirst) {
-            provider.setLocale(locale!);
-            isFirst = false;
-          }
-
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              primarySwatch: appTheme,
-              appBarTheme: const AppBarTheme(elevation: 0),
-            ),
-            locale: provider.local,
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: L10n.all,
-            home: const MainPage(),
-          );
-        },
-      );
+    if (isFirst) {
+      provider.setLocale(locale!);
+      isFirst = false;
+    }
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: appTheme,
+        appBarTheme: const AppBarTheme(elevation: 0),
+      ),
+      locale: provider.local,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: L10n.all,
+      home: const MainPage(),
+    );
+  }
 }
 
 class MainPage extends StatefulWidget {
