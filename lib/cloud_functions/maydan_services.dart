@@ -164,6 +164,7 @@ class MaydanServices {
     required String description,
     required String subCategory,
     required String duration,
+    required String districtId,
     required List<UploadImage> uploadedPhotos,
   }) async {
     var request = http.MultipartRequest('POST', Uri.parse("${baseURL}items"));
@@ -171,6 +172,7 @@ class MaydanServices {
     request.fields['subcategory_id'] = subCategory;
     request.fields['description'] = jsonEncode({"en": description});
     request.fields['duration'] = duration;
+    request.fields['district_id'] = districtId;
 
     List<http.MultipartFile> newList = <http.MultipartFile>[];
 

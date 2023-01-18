@@ -40,7 +40,7 @@ class CompanyItem extends StatelessWidget {
                   imageLoader(data.urlPhoto),
                   fit: BoxFit.cover,
                   errorBuilder: (_, __, ___) => const Image(
-                    image: AssetImage(noInternet),
+                    image: AssetImage(imageHolder),
                     fit: BoxFit.fitWidth,
                   ),
                 ),

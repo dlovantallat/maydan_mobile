@@ -287,6 +287,7 @@ class _PostScreenState extends State<PostScreen>
       description: description,
       subCategory: _dropdownSubCategoryValue!.id,
       duration: _dropdownDurationValue,
+      districtId: _dropdownDistrictValue!.id,
       uploadedPhotos: uploadedPhotos,
     );
     if (!mounted) return;
