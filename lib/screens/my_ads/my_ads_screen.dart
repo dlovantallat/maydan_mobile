@@ -31,7 +31,7 @@ class _MyAdsScreenState extends State<MyAdsScreen>
   List<ItemData> data = [];
   int currentPage = 1;
   int totalPage = 0;
-  bool che = true;
+  bool noMoreLoad = true;
 
   @override
   void initState() {
@@ -84,7 +84,7 @@ class _MyAdsScreenState extends State<MyAdsScreen>
     if (currentPage > totalPage) {
       refreshController.loadComplete();
       setState(() {
-        che = false;
+        noMoreLoad = false;
       });
 
       return;
@@ -136,7 +136,7 @@ class _MyAdsScreenState extends State<MyAdsScreen>
 
           return SmartRefresher(
             controller: refreshController,
-            enablePullUp: che,
+            enablePullUp: noMoreLoad,
             enablePullDown: false,
             onLoading: () async {
               await _secondGetMyItems();
