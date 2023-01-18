@@ -129,9 +129,12 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<ItemObj>> getItems(String token, String subCategoryId) {
+  Future<ApiResponse<ItemObj>> getItems(
+      String token, String subCategoryId, int currentPage) {
     return http
-        .get(Uri.parse("${baseURL}subcategories/$subCategoryId/items"),
+        .get(
+            Uri.parse(
+                "${baseURL}subcategories/$subCategoryId/items?per_page=$perPage&page=$currentPage"),
             headers: headers(token: token))
         .timeout(timeOutDuration)
         .then(
@@ -141,7 +144,7 @@ class MaydanServices {
 
           final list = ItemObj.fromJson(jsonData);
 
-          return ApiResponse<ItemObj>(data: list);
+          return ApiResponse<ItemObj>(data: list, statusCode: 200);
         }
         return ApiResponse<ItemObj>(
             requestStatus: true, errorMessage: "API Communication Down");

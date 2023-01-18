@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -22,6 +23,15 @@ class _ListItemsScreenState extends State<ListItemsScreen> {
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<ItemObj> items;
   bool isLoading = false;
+  String token = "";
+
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+
+  List<ItemData> data = [];
+  int currentPage = 1;
+  int totalPage = 0;
+  bool noMoreLoad = true;
 
   @override
   void initState() {
@@ -34,12 +44,37 @@ class _ListItemsScreenState extends State<ListItemsScreen> {
       isLoading = true;
     });
 
-    String token = await getToken();
-    items = await service.getItems(token, widget.subCategory.id);
+    token = await getToken();
+    items = await service.getItems(token, widget.subCategory.id, currentPage);
+
+    if (!items.requestStatus) {
+      if (items.statusCode == 200) {
+        data.addAll(items.data!.list);
+        currentPage++;
+        totalPage = items.data!.lastPage;
+      }
+    }
 
     setState(() {
       isLoading = false;
     });
+  }
+
+  _secondGetItems() async {
+    if (currentPage > totalPage) {
+      refreshController.loadComplete();
+      setState(() {
+        noMoreLoad = false;
+      });
+
+      return;
+    }
+
+    items = await service.getItems(token, widget.subCategory.id, currentPage);
+    data.addAll(items.data!.list);
+    currentPage++;
+
+    setState(() {});
   }
 
   @override
@@ -69,7 +104,7 @@ class _ListItemsScreenState extends State<ListItemsScreen> {
           );
         }
 
-        if (items.data!.list.isEmpty) {
+        if (data.isEmpty) {
           return const Center(
             child: Text("Empty"),
           );
@@ -77,14 +112,28 @@ class _ListItemsScreenState extends State<ListItemsScreen> {
 
         return Padding(
           padding: const EdgeInsetsDirectional.only(start: 4, end: 4),
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, mainAxisExtent: 220),
-            itemBuilder: (BuildContext context, int index) => ItemsItem(
-              item: items.data!.list[index],
-              isFav: items.data!.list[index].favorite,
+          child: SmartRefresher(
+            controller: refreshController,
+            enablePullUp: noMoreLoad,
+            enablePullDown: false,
+            onLoading: () async {
+              await _secondGetItems();
+
+              if (items.requestStatus) {
+                refreshController.loadFailed();
+              } else {
+                refreshController.loadComplete();
+              }
+            },
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, mainAxisExtent: 220),
+              itemBuilder: (BuildContext context, int index) => ItemsItem(
+                item: data[index],
+                isFav: data[index].favorite,
+              ),
+              itemCount: data.length,
             ),
-            itemCount: items.data!.list.length,
           ),
         );
       }),
