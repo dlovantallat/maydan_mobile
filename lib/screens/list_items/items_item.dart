@@ -10,10 +10,11 @@ import '../favorite/favorite_obj.dart';
 import '../item_detail/item_detail.dart';
 
 class ItemsItem extends StatefulWidget {
-  final ItemData? item;
+  final ItemData item;
   final bool isFav;
 
-  const ItemsItem({Key? key, this.item, required this.isFav}) : super(key: key);
+  const ItemsItem({Key? key, required this.item, required this.isFav})
+      : super(key: key);
 
   @override
   State<ItemsItem> createState() => _ItemsItemState();
@@ -34,7 +35,7 @@ class _ItemsItemState extends State<ItemsItem> {
 
   void fav() async {
     String token = await getToken();
-    favReq = await service.postFavorite(token, widget.item!.id);
+    favReq = await service.postFavorite(token, widget.item.id);
 
     if (!mounted) return;
     if (!favReq.requestStatus) {
@@ -51,7 +52,7 @@ class _ItemsItemState extends State<ItemsItem> {
   void removeFav() async {
     String token = await getToken();
 
-    removeFavo = await service.deleteFavorite(token, widget.item!.id);
+    removeFavo = await service.deleteFavorite(token, widget.item.id);
 
     if (!mounted) return;
 
@@ -71,7 +72,7 @@ class _ItemsItemState extends State<ItemsItem> {
     return InkWell(
       onTap: () {
         Navigator.push(context,
-            MaterialPageRoute(builder: (_) => ItemDetail(item: widget.item!)));
+            MaterialPageRoute(builder: (_) => ItemDetail(item: widget.item)));
       },
       child: Card(
         elevation: 4,
@@ -97,9 +98,9 @@ class _ItemsItemState extends State<ItemsItem> {
                         width: double.infinity,
                         height: 155,
                         child: Image.network(
-                          imageLoader(widget.item!.itemPhotos.isEmpty
+                          imageLoader(widget.item.itemPhotos.isEmpty
                               ? ""
-                              : widget.item!.itemPhotos[0].filePath),
+                              : widget.item.itemPhotos[0].filePath),
                           fit: BoxFit.cover,
                           errorBuilder: (_, __, ___) => const Image(
                             image: AssetImage(imageHolder),
@@ -107,7 +108,7 @@ class _ItemsItemState extends State<ItemsItem> {
                           ),
                         ),
                       ),
-                      widget.item!.currentAmount == 0
+                      widget.item.currentAmount == 0
                           ? Image.asset(
                               soldOutPng,
                             )
@@ -154,7 +155,7 @@ class _ItemsItemState extends State<ItemsItem> {
                         padding:
                             const EdgeInsetsDirectional.only(start: 8, top: 8),
                         child: Text(
-                          widget.item!.title,
+                          widget.item.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -165,7 +166,7 @@ class _ItemsItemState extends State<ItemsItem> {
                         padding: const EdgeInsetsDirectional.only(
                             start: 8, bottom: 4),
                         child: Text(
-                          dateFormat(widget.item!.statusDate),
+                          dateFormat(widget.item.statusDate),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -177,7 +178,7 @@ class _ItemsItemState extends State<ItemsItem> {
                 ),
                 Padding(
                   padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
-                  child: Text("${widget.item!.priceAnnounced}\$"),
+                  child: Text("${widget.item.priceAnnounced}\$"),
                 ),
               ],
             ),
