@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/src/media_type.dart';
+import 'package:maydan/screens/static_content/static_content_obj.dart';
 
 import '../common/model/category.dart';
 import '../common/model/item.dart';
@@ -738,6 +739,38 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<ItemObj>(
+          requestStatus: true,
+          errorMessage: s.toString() == "Connection failed"
+              ? " No Internet, Please check your internet connection."
+              : "API Down we are working to get things back to normal. Please have a patient"),
+    );
+  }
+
+  Future<ApiResponse<StaticContentObj>> getStaticContent(String name) {
+    return http
+        .get(Uri.parse("${baseURL}staticContents?name=$name"),
+            headers: headers())
+        .timeout(timeOutDuration)
+        .then(
+      (data) {
+        if (data.statusCode == 200) {
+          final jsonData = json.decode(data.body);
+
+          final obj = StaticContentObj.fromJson(jsonData);
+
+          return ApiResponse<StaticContentObj>(data: obj, statusCode: 200);
+        } else if (data.statusCode == 500) {
+          final jsonData = json.decode(data.body);
+
+          final obj = StaticContentObj.fromJson(jsonData);
+
+          return ApiResponse<StaticContentObj>(data: obj, statusCode: 200);
+        }
+        return ApiResponse<StaticContentObj>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<StaticContentObj>(
           requestStatus: true,
           errorMessage: s.toString() == "Connection failed"
               ? " No Internet, Please check your internet connection."

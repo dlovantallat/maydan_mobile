@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/screens/static_content/static_content_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -207,8 +208,11 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                     ],
                   ),
                   onTap: () {
-                    // Update the state of the app.
-                    // ...
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) =>
+                                const StaticContentScreen(name: "about_us")));
                   },
                 ),
                 ListTile(
@@ -290,8 +294,11 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                     ],
                   ),
                   onTap: () {
-                    // Update the state of the app.
-                    // ...
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) =>
+                                const StaticContentScreen(name: "faq")));
                   },
                 ),
                 ListTile(
@@ -326,8 +333,11 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                     ],
                   ),
                   onTap: () {
-                    // Update the state of the app.
-                    // ...
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const StaticContentScreen(
+                                name: "terms and conditions")));
                   },
                 ),
                 ListTile(
@@ -340,8 +350,11 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                     ],
                   ),
                   onTap: () {
-                    // Update the state of the app.
-                    // ...
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const StaticContentScreen(
+                                name: "privacy policy")));
                   },
                 ),
               ],
