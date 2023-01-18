@@ -8,10 +8,10 @@ import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/category.dart';
 import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
-import '../company_profile/company_obj.dart';
 import '../company_profile/company_profile_screen.dart';
 import '../favorite/favorite_obj.dart';
 import '../item_detail/item_detail.dart';
+import '../profile/profile.dart';
 import 'home.dart';
 
 class HomeItem extends StatelessWidget {
@@ -360,7 +360,7 @@ class _HomeSubItemState extends State<HomeSubItem> {
 }
 
 class HomeProfileItem extends StatelessWidget {
-  final CompanyData profile;
+  final ProfileData profile;
 
   const HomeProfileItem({Key? key, required this.profile}) : super(key: key);
 

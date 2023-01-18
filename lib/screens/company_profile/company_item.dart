@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../utilities/app_utilities.dart';
-import 'company_obj.dart';
+import '../profile/profile.dart';
 import 'company_profile_screen.dart';
 
 class CompanyItem extends StatelessWidget {
-  final CompanyData data;
+  final ProfileData data;
 
   const CompanyItem({Key? key, required this.data}) : super(key: key);
 

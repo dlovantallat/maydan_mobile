@@ -120,11 +120,11 @@ class _EditProfileState extends State<EditProfile> {
     if (!updateProfile.requestStatus) {
       if (updateProfile.statusCode == 200) {
         setSnackBar(context, "yes profile has been updated");
-      }else{
+      } else {
         print("eee ${updateProfile.errorMessage}");
         print("eee ${"updateProfile.data!.message"}");
       }
-    }else{
+    } else {
       print("rrr ${updateProfile.errorMessage}");
     }
   }

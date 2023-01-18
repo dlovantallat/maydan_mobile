@@ -1,11 +1,11 @@
 import '../../common/model/category.dart';
 import '../../common/model/item.dart';
-import '../company_profile/company_obj.dart';
+import '../profile/profile.dart';
 
 class HomeObj {
   List<HomeBanner> bannerList;
   List<CategoryData> categoryList;
-  List<CompanyData> profile;
+  List<ProfileData> profile;
   ItemSection itemSection;
 
   HomeObj(
@@ -25,9 +25,9 @@ class HomeObj {
       cList.add(CategoryData.fromJson(i));
     }
 
-    List<CompanyData> pList = [];
+    List<ProfileData> pList = [];
     for (var i in item['companyProfilelist']) {
-      pList.add(CompanyData.fromJson(i));
+      pList.add(ProfileData.fromJson(i));
     }
 
     return HomeObj(
