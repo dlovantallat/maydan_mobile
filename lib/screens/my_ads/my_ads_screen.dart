@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -23,6 +24,14 @@ class _MyAdsScreenState extends State<MyAdsScreen>
   bool isTokenLoading = false;
   bool isLogin = false;
   String token = "";
+
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+
+  List<ItemData> data = [];
+  int currentPage = 1;
+  int totalPage = 0;
+  bool che = true;
 
   @override
   void initState() {
@@ -56,11 +65,36 @@ class _MyAdsScreenState extends State<MyAdsScreen>
       isLoading = true;
     });
 
-    myItems = await service.getMyItems(token);
+    myItems = await service.getMyItems(token, currentPage);
+
+    if (!myItems.requestStatus) {
+      if (myItems.statusCode == 200) {
+        data.addAll(myItems.data!.list);
+        currentPage++;
+        totalPage = myItems.data!.lastPage;
+      }
+    }
 
     setState(() {
       isLoading = false;
     });
+  }
+
+  _secondGetMyItems() async {
+    if (currentPage > totalPage) {
+      refreshController.loadComplete();
+      setState(() {
+        che = false;
+      });
+
+      return;
+    }
+
+    myItems = await service.getMyItems(token, currentPage);
+    data.addAll(myItems.data!.list);
+    currentPage++;
+
+    setState(() {});
   }
 
   @override
@@ -94,19 +128,33 @@ class _MyAdsScreenState extends State<MyAdsScreen>
             );
           }
 
-          if (myItems.data!.list.isEmpty) {
+          if (data.isEmpty) {
             return const Center(
               child: Text("Empty"),
             );
           }
 
-          return ListView.builder(
-            itemBuilder: (context, index) => MyItemsItemList(
-              data: myItems.data!.list[index],
-              listener: this,
-              isFav: false,
+          return SmartRefresher(
+            controller: refreshController,
+            enablePullUp: che,
+            enablePullDown: false,
+            onLoading: () async {
+              await _secondGetMyItems();
+
+              if (myItems.requestStatus) {
+                refreshController.loadFailed();
+              } else {
+                refreshController.loadComplete();
+              }
+            },
+            child: ListView.builder(
+              itemBuilder: (context, index) => MyItemsItemList(
+                data: data[index],
+                listener: this,
+                isFav: false,
+              ),
+              itemCount: data.length,
             ),
-            itemCount: myItems.data!.list.length,
           );
         } else {
           return LoginWidget(

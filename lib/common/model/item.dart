@@ -1,14 +1,15 @@
 class ItemObj {
   List<ItemData> list;
+  int lastPage;
 
-  ItemObj({required this.list});
+  ItemObj({required this.list, required this.lastPage});
 
   factory ItemObj.fromJson(Map<String, dynamic> item) {
     List<ItemData> l = [];
     for (var i in item['data']) {
       l.add(ItemData.fromJson(i));
     }
-    return ItemObj(list: l);
+    return ItemObj(list: l, lastPage: item['last_page']);
   }
 }
 

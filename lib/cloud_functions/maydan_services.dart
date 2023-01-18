@@ -18,6 +18,7 @@ class MaydanServices {
   final String baseURL = "https://apimaydan.tornet.co/api/mobile/";
 
   static const Duration timeOutDuration = Duration(seconds: 15);
+  static const int perPage = 10;
 
   Map<String, String> headers({String token = ''}) {
     return {
@@ -532,9 +533,11 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<ItemObj>> getMyItems(String token) {
+  Future<ApiResponse<ItemObj>> getMyItems(String token, int currentPage) {
     return http
-        .get(Uri.parse("${baseURL}items/myItems"),
+        .get(
+            Uri.parse(
+                "${baseURL}items/myItems?per_page=$perPage&page=$currentPage"),
             headers: headers(token: token))
         .timeout(timeOutDuration)
         .then(
@@ -544,7 +547,7 @@ class MaydanServices {
 
           final myItems = ItemObj.fromJson(jsonData);
 
-          return ApiResponse<ItemObj>(data: myItems);
+          return ApiResponse<ItemObj>(data: myItems, statusCode: 200);
         } else if (data.statusCode == 401) {
           return ApiResponse<ItemObj>(statusCode: 401);
         }
