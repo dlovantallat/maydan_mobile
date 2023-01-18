@@ -563,9 +563,12 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<ItemObj>> getMyFavorite(String token) {
+  Future<ApiResponse<ItemObj>> getMyFavorite(String token, int currentPage) {
     return http
-        .get(Uri.parse("${baseURL}favorites"), headers: headers(token: token))
+        .get(
+            Uri.parse(
+                "${baseURL}favorites?per_page=$perPage&page=$currentPage"),
+            headers: headers(token: token))
         .timeout(timeOutDuration)
         .then(
       (data) {
@@ -574,7 +577,7 @@ class MaydanServices {
 
           final fav = ItemObj.fromJson(jsonData);
 
-          return ApiResponse<ItemObj>(data: fav);
+          return ApiResponse<ItemObj>(data: fav, statusCode: 200);
         } else if (data.statusCode == 401) {
           return ApiResponse<ItemObj>(statusCode: 401);
         }
