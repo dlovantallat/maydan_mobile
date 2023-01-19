@@ -109,7 +109,11 @@ class _FavoriteScreenState extends State<FavoriteScreen>
     if (!removeFav.requestStatus) {
       if (removeFav.statusCode == 200) {
         Navigator.pop(context);
+        data.clear();
+        currentPage = 1;
         getMyFavorite();
+      }else{
+        setSnackBar(context, "Cannot remove favorite");
       }
     } else {
       Navigator.pop(context);
