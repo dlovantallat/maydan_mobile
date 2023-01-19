@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -23,6 +24,17 @@ class _CompanyWidgetState extends State<CompanyWidget> {
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<ItemObj> items;
   bool isLoading = false;
+  bool isLoading2 = false;
+
+  String token = "";
+
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+
+  List<ItemData> data = [];
+  int currentPage = 1;
+  int totalPage = 0;
+  bool noMoreLoad = true;
 
   @override
   void initState() {
@@ -35,13 +47,47 @@ class _CompanyWidgetState extends State<CompanyWidget> {
       isLoading = true;
     });
 
-    String token = await getToken();
+    token = await getToken();
 
-    items = await service.getRelatedCompanyItems(token, widget.data.id);
+    items = await service.getMyItems(token, currentPage);
+
+    if (!items.requestStatus) {
+      if (items.statusCode == 200) {
+        data.addAll(items.data!.list);
+        currentPage++;
+        totalPage = items.data!.lastPage;
+
+        if (currentPage > totalPage) {
+          setState(() {
+            noMoreLoad = false;
+          });
+        }
+      }
+    }
 
     setState(() {
       isLoading = false;
     });
+  }
+
+  _secondGetMyItems() async {
+    setState(() {
+      isLoading2 = true;
+    });
+    items = await service.getMyItems(token, currentPage);
+    data.addAll(items.data!.list);
+    currentPage++;
+
+    if (currentPage > totalPage) {
+      setState(() {
+        noMoreLoad = false;
+        isLoading2 = false;
+      });
+    } else {
+      setState(() {
+        isLoading2 = false;
+      });
+    }
   }
 
   @override
@@ -58,10 +104,10 @@ class _CompanyWidgetState extends State<CompanyWidget> {
             aspectRatio: 16 / 9,
             child: Image.network(
               width: double.infinity,
-              'https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1988&q=80',
+              imageLoader(widget.data.urlPhoto),
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => const Image(
-                image: AssetImage(mainProfileBottomNavigationSvg),
+                image: AssetImage(imageHolder),
                 fit: BoxFit.cover,
               ),
             ),
@@ -118,7 +164,7 @@ class _CompanyWidgetState extends State<CompanyWidget> {
             );
           }
 
-          if (items.data!.list.isEmpty) {
+          if (data.isEmpty) {
             return const Center(
               child: Text("Empty"),
             );
@@ -132,13 +178,29 @@ class _CompanyWidgetState extends State<CompanyWidget> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, mainAxisExtent: 220),
               itemBuilder: (BuildContext context, int index) => ItemsItem(
-                item: items.data!.list[index],
-                isFav: items.data!.list[index].favorite,
+                item: data[index],
+                isFav: data[index].favorite,
               ),
-              itemCount: items.data!.list.length,
+              itemCount: data.length,
             ),
           );
         }),
+        noMoreLoad
+            ? isLoading2
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(start: 60, end: 60),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _secondGetMyItems();
+                      },
+                      child: const Text("load more"),
+                    ),
+                  )
+            : Container(),
       ],
     );
   }

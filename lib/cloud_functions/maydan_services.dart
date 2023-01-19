@@ -554,7 +554,7 @@ class MaydanServices {
 
           return ApiResponse<ItemObj>(data: myItems, statusCode: 200);
         } else if (data.statusCode == 401) {
-          return ApiResponse<ItemObj>(statusCode: 401);
+          return ApiResponse<ItemObj>(requestStatus: true, statusCode: 401);
         }
         return ApiResponse<ItemObj>(
             requestStatus: true, errorMessage: "API Communication Down");
