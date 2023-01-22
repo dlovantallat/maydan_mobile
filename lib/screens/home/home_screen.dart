@@ -67,7 +67,9 @@ class _HomeScreenState extends State<HomeScreen>
     profile = await service.getMe(token);
 
     if (!profile.requestStatus) {
-      if (profile.statusCode == 200) {}
+      if (profile.statusCode == 401) {
+        setToken("");
+      }
     }
 
     setState(() {
