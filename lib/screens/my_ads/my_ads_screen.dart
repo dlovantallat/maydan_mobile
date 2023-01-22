@@ -172,6 +172,8 @@ class _MyAdsScreenState extends State<MyAdsScreen>
 
   @override
   void onFavRemove(String id) {
+    currentPage = 1;
+    data.clear();
     getMyItems();
   }
 }

@@ -207,16 +207,22 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsetsDirectional.only(
-                            bottom: 16, end: 16),
+                        padding: EdgeInsetsDirectional.only(
+                            bottom: !widget.isFav ? 0 : 16, end: 16),
                         child: Text(
                           "${widget.data.title}\n",
-                          maxLines: 2,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.start,
                         ),
                       ),
+                      if (!widget.isFav) customDivider() else const SizedBox(),
                       Text("${widget.data.priceAnnounced} \$"),
+                      if (!widget.isFav) customDivider() else const SizedBox(),
+                      !widget.isFav
+                          ? Text(
+                              "Status: ${widget.data.currentAmount == 0 ? "Sold out" : widget.data.status == "I" ? "in review" : "published"}")
+                          : const SizedBox(),
                     ],
                   )),
               if (!widget.isFav)
@@ -352,6 +358,13 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
       ),
     );
   }
+}
+
+Widget customDivider() {
+  return const Divider(
+    thickness: 1,
+    color: Colors.black,
+  );
 }
 
 abstract class ItemListener {
