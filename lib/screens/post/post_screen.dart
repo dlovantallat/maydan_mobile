@@ -117,11 +117,12 @@ class _PostScreenState extends State<PostScreen>
     _dropdownCategoryValue = null;
     if (!categories.requestStatus) {
       if (categories.statusCode == 200) {
+        _dropdownCategoriesDrop.add(CategoryDrop("-1", "Select"));
         for (var i in categories.data!.data) {
           _dropdownCategoriesDrop.add(CategoryDrop(i.id, i.title));
         }
         _dropdownCategoryValue = _dropdownCategoriesDrop.first;
-        getSub(_dropdownCategoryValue!.id);
+        // getSub(_dropdownCategoryValue!.id);
       }
     }
 
@@ -145,6 +146,7 @@ class _PostScreenState extends State<PostScreen>
     if (!subCategories.requestStatus) {
       if (subCategories.statusCode == 200) {
         _dropdownSubCategoriesDrop.clear();
+        _dropdownSubCategoriesDrop.add(SubCategoryDrop("-1", "Select"));
         for (var i in subCategories.data!.data) {
           _dropdownSubCategoriesDrop.add(SubCategoryDrop(i.id, i.title));
         }
@@ -171,11 +173,12 @@ class _PostScreenState extends State<PostScreen>
 
     if (!cities.requestStatus) {
       if (cities.statusCode == 200) {
+        _dropdownCitiesDrop.add(CityDrop("-1", "Select"));
         for (var i in cities.data!.data) {
           _dropdownCitiesDrop.add(CityDrop(i.id, i.name));
         }
         _dropdownCityValue = _dropdownCitiesDrop.first;
-        getDistrict(_dropdownCityValue!.id);
+        // getDistrict(_dropdownCityValue!.id);
       }
     }
 
@@ -200,6 +203,7 @@ class _PostScreenState extends State<PostScreen>
 
     if (!districts.requestStatus) {
       if (districts.statusCode == 200) {
+        _dropdownDistrictsDrop.add(DistrictDrop("-1", "Select"));
         for (var i in districts.data!.data) {
           _dropdownDistrictsDrop.add(DistrictDrop(i.id, i.name));
         }
@@ -247,9 +251,15 @@ class _PostScreenState extends State<PostScreen>
     String description = descriptionController.text.trim();
     String price = priceController.text.trim();
 
-    if (_dropdownSubCategoryValue == null) {
+    if (_dropdownSubCategoryValue == null ||
+        _dropdownSubCategoryValue == _dropdownSubCategoriesDrop.first) {
       setSnackBar(context,
           "Please choose a subCategory or choose another category which has subCategory");
+      return;
+    }
+
+    if (uploadedPhotos.isEmpty) {
+      setSnackBar(context, "Please upload at least one image");
       return;
     }
 
@@ -273,7 +283,8 @@ class _PostScreenState extends State<PostScreen>
       return;
     }
 
-    if (_dropdownDistrictValue == null) {
+    if (_dropdownDistrictValue == null ||
+        _dropdownDistrictValue == _dropdownDistrictsDrop.first) {
       setSnackBar(context,
           "Please choose a District or choose another City which has District");
       return;
@@ -396,7 +407,12 @@ class _PostScreenState extends State<PostScreen>
                           setState(() {
                             _dropdownCategoryValue = i!;
                           });
-                          getSub(_dropdownCategoryValue!.id);
+
+                          if (i != _dropdownCategoriesDrop.first) {
+                            getSub(_dropdownCategoryValue!.id);
+                          } else {
+                            isSubLoaded = false;
+                          }
                         }),
                   ),
                 ),
@@ -660,109 +676,133 @@ class _PostScreenState extends State<PostScreen>
                   ],
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                              top: 12, bottom: 4),
-                          child: Text(
-                              AppLocalizations.of(context)!.post_city_caption),
-                        ),
-                        isCityLoading
-                            ? const Center(child: CircularProgressIndicator())
-                            : isCityLoaded
-                                ? Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      border: Border.all(
-                                          color: Colors.black,
-                                          style: BorderStyle.solid,
-                                          width: 1),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.only(
-                                          start: 8, end: 8),
-                                      child: DropdownButton(
-                                          underline: const SizedBox(),
-                                          items: _dropdownCitiesDrop
-                                              .map((CityDrop user) {
-                                            return DropdownMenuItem<CityDrop>(
-                                              value: user,
-                                              child: Text(
-                                                user.title,
-                                                style: TextStyle(
-                                                    color: user ==
-                                                            _dropdownCityValue
-                                                        ? appColor
-                                                        : Colors.black),
-                                              ),
-                                            );
-                                          }).toList(),
-                                          value: _dropdownCityValue,
-                                          onChanged: (i) {
-                                            setState(() {
-                                              _dropdownCityValue = i!;
-                                            });
-                                            getDistrict(_dropdownCityValue!.id);
-                                          }),
-                                    ),
-                                  )
-                                : const Text("Please Select another category"),
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.only(
+                                top: 12, bottom: 4),
+                            child: Text(AppLocalizations.of(context)!
+                                .post_city_caption),
+                          ),
+                          isCityLoading
+                              ? const Center(child: CircularProgressIndicator())
+                              : isCityLoaded
+                                  ? Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        border: Border.all(
+                                            color: Colors.black,
+                                            style: BorderStyle.solid,
+                                            width: 1),
+                                      ),
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsetsDirectional.only(
+                                                start: 8, end: 8),
+                                        child: DropdownButton(
+                                            underline: const SizedBox(),
+                                            items: _dropdownCitiesDrop
+                                                .map((CityDrop user) {
+                                              return DropdownMenuItem<CityDrop>(
+                                                value: user,
+                                                child: Text(
+                                                  user.title,
+                                                  style: TextStyle(
+                                                      color: user ==
+                                                              _dropdownCityValue
+                                                          ? appColor
+                                                          : Colors.black),
+                                                ),
+                                              );
+                                            }).toList(),
+                                            value: _dropdownCityValue,
+                                            onChanged: (i) {
+                                              setState(() {
+                                                _dropdownCityValue = i!;
+                                              });
+
+                                              if (i !=
+                                                  _dropdownCitiesDrop.first) {
+                                                getDistrict(
+                                                    _dropdownCityValue!.id);
+                                              } else {
+                                                isDistrictLoaded = false;
+                                              }
+                                            }),
+                                      ),
+                                    )
+                                  : const Text(
+                                      "Please Select another category"),
+                        ],
+                      ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                              top: 12, bottom: 4),
-                          child: Text(AppLocalizations.of(context)!
-                              .post_district_caption),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.only(
+                                  top: 12, bottom: 4),
+                              child: Text(AppLocalizations.of(context)!
+                                  .post_district_caption),
+                            ),
+                            isDistrictLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator())
+                                : isDistrictLoaded
+                                    ? Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                          border: Border.all(
+                                              color: Colors.black,
+                                              style: BorderStyle.solid,
+                                              width: 1),
+                                        ),
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.only(
+                                                  start: 8, end: 8),
+                                          child: DropdownButton(
+                                              underline: const SizedBox(),
+                                              items: _dropdownDistrictsDrop
+                                                  .map((DistrictDrop user) {
+                                                return DropdownMenuItem<
+                                                    DistrictDrop>(
+                                                  value: user,
+                                                  child: Text(
+                                                    user.title,
+                                                    style: TextStyle(
+                                                        color: user ==
+                                                                _dropdownDistrictValue
+                                                            ? appColor
+                                                            : Colors.black),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                              value: _dropdownDistrictValue,
+                                              onChanged: (i) {
+                                                setState(() {
+                                                  _dropdownDistrictValue = i!;
+                                                });
+                                              }),
+                                        ),
+                                      )
+                                    : const Text(
+                                        "Please Select another City",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                          ],
                         ),
-                        isDistrictLoading
-                            ? const Center(child: CircularProgressIndicator())
-                            : isDistrictLoaded
-                                ? Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      border: Border.all(
-                                          color: Colors.black,
-                                          style: BorderStyle.solid,
-                                          width: 1),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.only(
-                                          start: 8, end: 8),
-                                      child: DropdownButton(
-                                          underline: const SizedBox(),
-                                          items: _dropdownDistrictsDrop
-                                              .map((DistrictDrop user) {
-                                            return DropdownMenuItem<
-                                                DistrictDrop>(
-                                              value: user,
-                                              child: Text(
-                                                user.title,
-                                                style: TextStyle(
-                                                    color: user ==
-                                                            _dropdownDistrictValue
-                                                        ? appColor
-                                                        : Colors.black),
-                                              ),
-                                            );
-                                          }).toList(),
-                                          value: _dropdownDistrictValue,
-                                          onChanged: (i) {
-                                            setState(() {
-                                              _dropdownDistrictValue = i!;
-                                            });
-                                          }),
-                                    ),
-                                  )
-                                : const Text("Please Select another category"),
-                      ],
+                      ),
                     ),
                   ],
                 ),
