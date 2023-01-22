@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:maydan/screens/item_detail/image_view_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
@@ -18,6 +19,8 @@ Swiper homeSlider(context,
                 context,
                 MaterialPageRoute(
                     builder: (_) => ImageViewScreen(itemPhotos: itemPhotos)));
+          } else {
+            _launchUrl(images![index].url);
           }
         },
         child: Container(
@@ -53,4 +56,12 @@ Swiper homeSlider(context,
     ),
     loop: true,
   );
+}
+
+Future<void> _launchUrl(String adsUrl) async {
+  final Uri url = Uri.parse(adsUrl);
+
+  if (!await launchUrl(url)) {
+    throw Exception('Could not launch $url');
+  }
 }
