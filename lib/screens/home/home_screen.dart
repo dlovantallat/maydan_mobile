@@ -9,6 +9,7 @@ import '../../cloud_functions/maydan_services.dart';
 import '../../utilities/app_utilities.dart';
 import '../company_profile/company_item.dart';
 import '../company_profile/company_obj.dart';
+import '../profile/profile.dart';
 import 'home.dart';
 import 'home_drawer.dart';
 import 'home_item.dart';
@@ -28,21 +29,18 @@ class _HomeScreenState extends State<HomeScreen>
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<HomeObj> home;
   late ApiResponse<CompanyObj> companies;
+  late ApiResponse<ProfileData> profile;
   bool isLoading = false;
   String key = "";
+  bool isDrawer = false;
 
   bool isViewAll = false;
 
   @override
   void initState() {
-    getLanguage();
+    getMe();
     getHome();
     super.initState();
-  }
-
-  void getLanguage() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    key = preferences.getString(languageKey) ?? "en";
   }
 
   void getHome() async {
@@ -55,6 +53,25 @@ class _HomeScreenState extends State<HomeScreen>
 
     setState(() {
       isLoading = false;
+    });
+  }
+
+  getMe() async {
+    setState(() {
+      isDrawer = false;
+    });
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    key = preferences.getString(languageKey) ?? "en";
+
+    String token = await getToken();
+    profile = await service.getMe(token);
+
+    if (!profile.requestStatus) {
+      if (profile.statusCode == 200) {}
+    }
+
+    setState(() {
+      isDrawer = true;
     });
   }
 
@@ -180,11 +197,14 @@ class _HomeScreenState extends State<HomeScreen>
                 ],
               );
       }),
-      drawer: HomeDrawer(
-        listener: widget.listener,
-        callBack: this,
-        languageKey: key,
-      ),
+      drawer: isDrawer
+          ? HomeDrawer(
+              listener: widget.listener,
+              callBack: this,
+              languageKey: key,
+              profileData: profile.data,
+            )
+          : null,
     );
   }
 

@@ -176,20 +176,35 @@ class _ProfileScreenState extends State<ProfileScreen>
                           ),
                           child: Row(
                             children: [
-                              Container(
-                                margin: const EdgeInsetsDirectional.only(
-                                    start: 8, end: 8),
-                                height: 50,
-                                width: 50,
-                                color: const Color(0xFFCACACA),
+                              const Padding(
+                                padding: EdgeInsetsDirectional.only(start: 8.0),
+                                child: SizedBox(),
                               ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(profile.data!.name),
-                                  Text(profile.data!.email),
-                                ],
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(30),
+                                child: Container(
+                                  height: 50,
+                                  width: 50,
+                                  color: const Color(0xFFFFFFFF),
+                                  child: Image.network(
+                                    imageLoader(profile.data!.urlPhoto),
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (_, __, ___) =>
+                                        const Icon(Icons.account_circle),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.only(
+                                    start: 8.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(profile.data!.name),
+                                    Text(profile.data!.email),
+                                  ],
+                                ),
                               )
                             ],
                           ),

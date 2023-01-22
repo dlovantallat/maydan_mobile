@@ -8,19 +8,22 @@ import '../../utilities/app_utilities.dart';
 import '../../utilities/locale_provider.dart';
 import '../company_profile/company_list_screen.dart';
 import '../my_ads/my_ads_screen.dart';
+import '../profile/profile.dart';
 import 'home_screen.dart';
 
 class HomeDrawer extends StatefulWidget {
   final HomeDrawerListener listener;
   final DrawerCallBack callBack;
   final String languageKey;
+  final ProfileData? profileData;
 
-  const HomeDrawer(
-      {Key? key,
-      required this.listener,
-      required this.callBack,
-      required this.languageKey})
-      : super(key: key);
+  const HomeDrawer({
+    Key? key,
+    required this.listener,
+    required this.callBack,
+    required this.languageKey,
+    this.profileData,
+  }) : super(key: key);
 
   @override
   State<HomeDrawer> createState() => _HomeDrawerState();
@@ -90,19 +93,34 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                       },
                       child: Row(
                         children: [
-                          Container(
-                            margin: const EdgeInsetsDirectional.only(end: 16),
-                            height: 40,
-                            width: 40,
-                            color: const Color(0x49000000),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              color: const Color(0x49000000),
+                              child: Image.network(
+                                imageLoader(widget.profileData?.urlPhoto ?? ""),
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) => const Image(
+                                  image: AssetImage(imageHolder),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
                           ),
-                          Text(
-                            AppLocalizations.of(context)!
-                                .home_drawer_my_profile,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18),
+                          Padding(
+                            padding:
+                                const EdgeInsetsDirectional.only(start: 8.0),
+                            child: Text(
+                              widget.profileData?.name ??
+                                  AppLocalizations.of(context)!
+                                      .home_drawer_my_profile,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18),
+                            ),
                           ),
                         ],
                       ),
