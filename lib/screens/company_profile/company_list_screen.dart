@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
+import '../profile/profile.dart';
 import 'company_item.dart';
 import 'company_obj.dart';
 
@@ -19,6 +21,16 @@ class _CompanyListScreenState extends State<CompanyListScreen> {
   late ApiResponse<CompanyObj> companies;
   bool isLoading = false;
 
+  String token = "";
+
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+
+  List<ProfileData> data = [];
+  int currentPage = 1;
+  int totalPage = 0;
+  bool noMoreLoad = true;
+
   @override
   void initState() {
     getActiveCompanies();
@@ -30,11 +42,36 @@ class _CompanyListScreenState extends State<CompanyListScreen> {
       isLoading = true;
     });
 
-    companies = await service.getActiveCompanies();
+    companies = await service.getActiveCompanies(currentPage);
+
+    if (!companies.requestStatus) {
+      if (companies.statusCode == 200) {
+        data.addAll(companies.data!.data);
+        currentPage++;
+        totalPage = companies.data!.lastPage;
+      }
+    }
 
     setState(() {
       isLoading = false;
     });
+  }
+
+  _secondGetMyItems() async {
+    if (currentPage > totalPage) {
+      refreshController.loadComplete();
+      setState(() {
+        noMoreLoad = false;
+      });
+
+      return;
+    }
+
+    companies = await service.getActiveCompanies(currentPage);
+    data.addAll(companies.data!.data);
+    currentPage++;
+
+    setState(() {});
   }
 
   @override
@@ -56,22 +93,37 @@ class _CompanyListScreenState extends State<CompanyListScreen> {
           );
         }
 
-        if (companies.data!.data.isEmpty) {
+        if (data.isEmpty) {
           return const Center(
             child: Text("Empty"),
           );
         }
 
-        return GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, mainAxisExtent: 230),
-          itemBuilder: (BuildContext context, int index) => Padding(
-            padding: const EdgeInsetsDirectional.only(top: 8, start: 8, end: 8),
-            child: CompanyItem(
-              data: companies.data!.data[index],
+        return SmartRefresher(
+          controller: refreshController,
+          enablePullUp: noMoreLoad,
+          enablePullDown: false,
+          onLoading: () async {
+            await _secondGetMyItems();
+
+            if (companies.requestStatus) {
+              refreshController.loadFailed();
+            } else {
+              refreshController.loadComplete();
+            }
+          },
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, mainAxisExtent: 230),
+            itemBuilder: (BuildContext context, int index) => Padding(
+              padding:
+                  const EdgeInsetsDirectional.only(top: 8, start: 8, end: 8),
+              child: CompanyItem(
+                data: data[index],
+              ),
             ),
+            itemCount: data.length,
           ),
-          itemCount: companies.data!.data.length,
         );
       }),
     );

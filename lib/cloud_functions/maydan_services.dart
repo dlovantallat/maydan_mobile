@@ -104,9 +104,12 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<CompanyObj>> getActiveCompanies() {
+  Future<ApiResponse<CompanyObj>> getActiveCompanies(int currentPage) {
     return http
-        .get(Uri.parse("${baseURL}users/activesCompanies"), headers: headers())
+        .get(
+            Uri.parse(
+                "${baseURL}users/activesCompanies?per_page=$perPage&page=$currentPage"),
+            headers: headers())
         .timeout(timeOutDuration)
         .then(
       (data) {
@@ -115,7 +118,7 @@ class MaydanServices {
 
           final list = CompanyObj.fromJson(jsonData);
 
-          return ApiResponse<CompanyObj>(data: list);
+          return ApiResponse<CompanyObj>(data: list, statusCode: 200);
         }
         return ApiResponse<CompanyObj>(
             requestStatus: true, errorMessage: "API Communication Down");
@@ -782,6 +785,32 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<StaticContentObj>(
+          requestStatus: true,
+          errorMessage: s.toString() == "Connection failed"
+              ? " No Internet, Please check your internet connection."
+              : "API Down we are working to get things back to normal. Please have a patient"),
+    );
+  }
+
+  Future<ApiResponse<ItemObj>> getHotDeals(String token, int currentPage) {
+    return http
+        .get(Uri.parse("${baseURL}deals?per_page=$perPage&page=$currentPage"),
+            headers: headers(token: token))
+        .timeout(timeOutDuration)
+        .then(
+      (data) {
+        if (data.statusCode == 200) {
+          final jsonData = json.decode(data.body);
+
+          final list = ItemObj.fromJson(jsonData);
+
+          return ApiResponse<ItemObj>(data: list, statusCode: 200);
+        }
+        return ApiResponse<ItemObj>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<ItemObj>(
           requestStatus: true,
           errorMessage: s.toString() == "Connection failed"
               ? " No Internet, Please check your internet connection."
