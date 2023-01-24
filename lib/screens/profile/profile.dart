@@ -7,7 +7,7 @@ class ProfileData {
   String urlPhoto;
   String categoryId;
   String address;
-  CompanyCat cat;
+  CompanyCat? cat;
 
   ProfileData({
     required this.id,
@@ -23,16 +23,17 @@ class ProfileData {
 
   factory ProfileData.fromJson(Map<String, dynamic> item) {
     return ProfileData(
-      id: item['id'] ?? "",
-      name: item['name'] ?? "",
-      email: item['email'] ?? "",
-      msisdn: item['msisdn'] ?? "",
-      userType: item['usertype'] ?? "",
-      urlPhoto: item['url_photo'] ?? "",
-      categoryId: item['category_id'] ?? "",
-      address: item['address'] ?? "",
-      cat: CompanyCat.fromJson(item['category'])
-    );
+        id: item['id'] ?? "",
+        name: item['name'] ?? "",
+        email: item['email'] ?? "",
+        msisdn: item['msisdn'] ?? "",
+        userType: item['usertype'] ?? "",
+        urlPhoto: item['url_photo'] ?? "",
+        categoryId: item['category_id'] ?? "",
+        address: item['address'] ?? "",
+        cat: item['category'] != null
+            ? CompanyCat.fromJson(item['category'])
+            : null);
   }
 }
 
