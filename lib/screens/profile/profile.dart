@@ -6,6 +6,8 @@ class ProfileData {
   String userType;
   String urlPhoto;
   String categoryId;
+  String address;
+  CompanyCat cat;
 
   ProfileData({
     required this.id,
@@ -15,6 +17,8 @@ class ProfileData {
     required this.userType,
     required this.urlPhoto,
     required this.categoryId,
+    required this.address,
+    required this.cat,
   });
 
   factory ProfileData.fromJson(Map<String, dynamic> item) {
@@ -26,6 +30,20 @@ class ProfileData {
       userType: item['usertype'] ?? "",
       urlPhoto: item['url_photo'] ?? "",
       categoryId: item['category_id'] ?? "",
+      address: item['address'] ?? "",
+      cat: CompanyCat.fromJson(item['category'])
+    );
+  }
+}
+
+class CompanyCat {
+  String id;
+
+  CompanyCat({required this.id});
+
+  factory CompanyCat.fromJson(Map<String, dynamic> item) {
+    return CompanyCat(
+      id: item['id'] ?? "",
     );
   }
 }

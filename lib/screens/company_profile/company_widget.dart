@@ -139,6 +139,8 @@ class _CompanyWidgetState extends State<CompanyWidget> {
                   widget.data.email),
               meteData(AppLocalizations.of(context)!.company_service_type,
                   "widget.data.duration widget"),
+              meteData(AppLocalizations.of(context)!.company_location,
+                  widget.data.address),
               meteData(
                   AppLocalizations.of(context)!.company_code, widget.data.id),
             ],
