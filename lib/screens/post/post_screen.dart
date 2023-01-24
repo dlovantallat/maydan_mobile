@@ -11,6 +11,7 @@ import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/category.dart';
 import '../../common/model/item.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import '../profile/login_widget.dart';
 import 'image_row_item.dart';
@@ -292,6 +293,7 @@ class _PostScreenState extends State<PostScreen>
 
     String token = await getToken();
 
+    loading(context);
     postItem = await service.postItem(
       token: token,
       title: title,
@@ -305,8 +307,17 @@ class _PostScreenState extends State<PostScreen>
 
     if (!postItem.requestStatus) {
       if (postItem.statusCode == 201) {
+        Navigator.pop(context);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (_) {
+          return const MainPage(
+            index: 0,
+          );
+        }), (route) => false);
+
         setSnackBar(context, "post added: ${postItem.data!.id}");
       } else {
+        Navigator.pop(context);
         if (kDebugMode) {
           print("code ${postItem.statusCode} d");
           print("code ${postItem.errorMessage} e");
@@ -315,6 +326,7 @@ class _PostScreenState extends State<PostScreen>
         setSnackBar(context, "post added: error ${postItem.errorMessage}");
       }
     } else {
+      Navigator.pop(context);
       if (kDebugMode) {
         print("code ${postItem.errorMessage} e");
       }
