@@ -409,7 +409,7 @@ class MaydanServices {
     if (isPersonal) {
       request.fields['category_id'] = categoryId;
       if (path != null) {
-        request.files.add(await http.MultipartFile.fromPath('image', path,
+        request.files.add(await http.MultipartFile.fromPath('photo', path,
             contentType: MediaType("image", "jpeg")));
       }
     }
@@ -447,15 +447,20 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<UpdateUser>> updateMe(
-      String name, String imagePath, String token, bool isPersonal) {
+  Future<ApiResponse<UpdateUser>> updateMe(String name, String email,
+      String? path, String token, String catId, bool isPersonal) async {
     var request =
         http.MultipartRequest('POST', Uri.parse("${baseURL}users?_method=PUT"));
 
     request.fields['name'] = name;
-    // request.fields['email'] = email;
+    request.fields['email'] = email;
     if (!isPersonal) {
-      request.fields['category_id'] = "9808a274-5aba-4f93-9ecd-29ef2c66d60e";
+      if (path != null) {
+        request.files.add(await http.MultipartFile.fromPath('photo', path,
+            contentType: MediaType("image", "jpeg")));
+      }
+
+      request.fields['category_id'] = catId;
     }
 
     request.headers.addAll(headers(token: token));
