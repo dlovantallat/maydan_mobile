@@ -116,146 +116,149 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.only(start: 16, end: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "+964 750 XXX XXXX",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsetsDirectional.only(bottom: 8, top: 20),
-              child: Text(
-                "First and last name",
+      body: SingleChildScrollView(
+        reverse: true,
+        child: Padding(
+          padding: const EdgeInsetsDirectional.only(start: 16, end: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "+964 750 XXX XXXX",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-            ),
-            TextField(
-              controller: nameController,
-              decoration: const InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
+              const Padding(
+                padding: EdgeInsetsDirectional.only(bottom: 8, top: 20),
+                child: Text(
+                  "First and last name",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
-              child: Text(
-                "Email",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
-              child: Text(
-                "Password",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            TextField(
-              controller: passwordController,
-              keyboardType: TextInputType.text,
-              obscureText: true,
-              decoration: const InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
-              child: Text(
-                "Password Confirmed",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            TextField(
-              controller: passwordConfirmationController,
-              keyboardType: TextInputType.text,
-              obscureText: true,
-              decoration: const InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.only(top: 32),
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.resolveWith<Size>(
-                      (Set<MaterialState> states) {
-                        return const Size(double.infinity, 40);
-                      },
+              TextField(
+                controller: nameController,
+                decoration: const InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16.0),
                     ),
                   ),
-                  onPressed: () {
-                    registerRequest();
-                  },
-                  child: const Text("Register")),
-            )
-          ],
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16.0),
+                    ),
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
+                child: Text(
+                  "Email",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              TextField(
+                controller: emailController,
+                decoration: const InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16.0),
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16.0),
+                    ),
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
+                child: Text(
+                  "Password",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              TextField(
+                controller: passwordController,
+                keyboardType: TextInputType.text,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16.0),
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16.0),
+                    ),
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
+                child: Text(
+                  "Password Confirmed",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              TextField(
+                controller: passwordConfirmationController,
+                keyboardType: TextInputType.text,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16.0),
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16.0),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.only(top: 32),
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.resolveWith<Size>(
+                        (Set<MaterialState> states) {
+                          return const Size(double.infinity, 40);
+                        },
+                      ),
+                    ),
+                    onPressed: () {
+                      registerRequest();
+                    },
+                    child: const Text("Register")),
+              )
+            ],
+          ),
         ),
       ),
     );
