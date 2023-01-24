@@ -90,7 +90,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  final int index;
+
+  const MainPage({super.key, this.index = 0});
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -98,6 +100,12 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> with HomeDrawerListener {
   int currentIndex = 0;
+
+  @override
+  void initState() {
+    currentIndex = widget.index;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

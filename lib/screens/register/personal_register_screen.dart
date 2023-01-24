@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import 'register.dart';
 
@@ -71,7 +72,7 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
     loading(context);
 
     register = await service.register(name, email, widget.tempToken,
-        "964${widget.phoneNumber}", password, widget.isPersonal);
+        "964${widget.phoneNumber}", password, "", null, widget.isPersonal);
     if (!mounted) return;
 
     Navigator.pop(context);
@@ -83,7 +84,14 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
       } else if (register.statusCode == 403) {
         setSnackBar(context, register.data!.message);
       } else {
-        setSnackBar(context, register.data!.user!.name);
+        setToken(register.data!.token);
+
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (_) {
+          return const MainPage(
+            index: 4,
+          );
+        }), (route) => false);
       }
     }
   }

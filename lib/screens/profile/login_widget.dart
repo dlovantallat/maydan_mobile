@@ -51,154 +51,157 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsetsDirectional.only(bottom: 64, top: 32),
-          child: SvgPicture.asset(
-            maydanLogoSvg,
-            semanticsLabel: '',
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsetsDirectional.all(8.0),
-          child: TextField(
-            maxLength: 10,
-            keyboardType: TextInputType.number,
-            controller: phoneNumberController,
-            onChanged: (v) {
-              setState(() {
-                phoneCounter = v.trim().length;
-              });
-            },
-            decoration: InputDecoration(
-              fillColor: Colors.white,
-              filled: true,
-              prefixIcon: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Row(
-                  children: const [
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(start: 16),
-                      child: Icon(Icons.phone_android_rounded),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(start: 8),
-                      child: Text("+964 (0)"),
-                    ),
-                  ],
-                ),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black, width: 1),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(16.0),
-                ),
-              ),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black, width: 1),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(16.0),
-                ),
-              ),
+    return SingleChildScrollView(
+      reverse: true,
+      child: Column(
+        children: [
+          Container(
+            margin: const EdgeInsetsDirectional.only(bottom: 64, top: 32),
+            child: SvgPicture.asset(
+              maydanLogoSvg,
+              semanticsLabel: '',
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
-          child: TextField(
-            keyboardType: TextInputType.visiblePassword,
-            obscureText: true,
-            controller: passwordController,
-            onChanged: (v) {
-              setState(() {
-                passwordCounter = v.trim().length;
-              });
-            },
-            decoration: InputDecoration(
-              fillColor: Colors.white,
-              filled: true,
-              prefixIcon: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Row(
-                  children: const [
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(start: 16),
-                      child: Icon(
-                        Icons.password,
-                        color: appColor,
+          Padding(
+            padding: const EdgeInsetsDirectional.all(8.0),
+            child: TextField(
+              maxLength: 10,
+              keyboardType: TextInputType.number,
+              controller: phoneNumberController,
+              onChanged: (v) {
+                setState(() {
+                  phoneCounter = v.trim().length;
+                });
+              },
+              decoration: InputDecoration(
+                fillColor: Colors.white,
+                filled: true,
+                prefixIcon: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    children: const [
+                      Padding(
+                        padding: EdgeInsetsDirectional.only(start: 16),
+                        child: Icon(Icons.phone_android_rounded),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(start: 8),
-                      child: Text(""),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsetsDirectional.only(start: 8),
+                        child: Text("+964 (0)"),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black, width: 1),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(16.0),
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(16.0),
+                  ),
                 ),
-              ),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black, width: 1),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(16.0),
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(16.0),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsetsDirectional.only(
-              start: 16, end: 16, top: 16, bottom: 16),
-          child: ElevatedButton(
-            style: ButtonStyle(
-              minimumSize: MaterialStateProperty.resolveWith<Size>(
-                (Set<MaterialState> states) {
-                  return const Size(double.infinity, 60);
-                },
-              ),
-              backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-                (Set<MaterialState> states) {
-                  if (states.contains(MaterialState.disabled)) {
-                    return const Color(0x8179a207);
-                  }
-                  return null; // Use the component's default.
-                },
-              ),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
+            child: TextField(
+              keyboardType: TextInputType.visiblePassword,
+              obscureText: true,
+              controller: passwordController,
+              onChanged: (v) {
+                setState(() {
+                  passwordCounter = v.trim().length;
+                });
+              },
+              decoration: InputDecoration(
+                fillColor: Colors.white,
+                filled: true,
+                prefixIcon: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    children: const [
+                      Padding(
+                        padding: EdgeInsetsDirectional.only(start: 16),
+                        child: Icon(
+                          Icons.password,
+                          color: appColor,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.only(start: 8),
+                        child: Text(""),
+                      ),
+                    ],
+                  ),
+                ),
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(16.0),
+                  ),
+                ),
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(16.0),
+                  ),
                 ),
               ),
             ),
-            onPressed: phoneCounter >= 10 && passwordCounter >= 1
-                ? loginRequest
-                : null,
-            child: const Text("Login"),
           ),
-        ),
-        TextButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const RegisterScreen()));
-            },
-            child: const Text(
-              "Sign Up",
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
-            )),
-        TextButton(
-            onPressed: () {},
-            child: const Text(
-              "Forget Password",
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
-            )),
-      ],
+          Padding(
+            padding: const EdgeInsetsDirectional.only(
+                start: 16, end: 16, top: 16, bottom: 16),
+            child: ElevatedButton(
+              style: ButtonStyle(
+                minimumSize: MaterialStateProperty.resolveWith<Size>(
+                  (Set<MaterialState> states) {
+                    return const Size(double.infinity, 60);
+                  },
+                ),
+                backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+                  (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.disabled)) {
+                      return const Color(0x8179a207);
+                    }
+                    return null; // Use the component's default.
+                  },
+                ),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+              onPressed: phoneCounter >= 10 && passwordCounter >= 1
+                  ? loginRequest
+                  : null,
+              child: const Text("Login"),
+            ),
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const RegisterScreen()));
+              },
+              child: const Text(
+                "Sign Up",
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
+              )),
+          TextButton(
+              onPressed: () {},
+              child: const Text(
+                "Forget Password",
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
+              )),
+        ],
+      ),
     );
   }
 }

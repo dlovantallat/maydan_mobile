@@ -49,7 +49,11 @@ class _OtpScreenState extends State<OtpScreen> {
                       tempToken: otpService.data!.token,
                       isPersonal: widget.isPersonal,
                     )
-                  : CompanyRegisterScreen(tempToken: otpService.data!.token),
+                  : CompanyRegisterScreen(
+                      phoneNumber: widget.phoneNumber,
+                      tempToken: otpService.data!.token,
+                      isPersonal: widget.isPersonal,
+                    ),
             ));
       }
     }

@@ -387,8 +387,15 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<RegisterModel>> register(String name, String email,
-      String token, String phoneNumber, String password, bool isPersonal) {
+  Future<ApiResponse<RegisterModel>> register(
+      String name,
+      String email,
+      String token,
+      String phoneNumber,
+      String password,
+      String categoryId,
+      String? path,
+      bool isPersonal) async {
     var request =
         http.MultipartRequest('POST', Uri.parse("${baseURL}register"));
 
@@ -400,7 +407,11 @@ class MaydanServices {
     request.fields['msisdn'] = phoneNumber;
 
     if (isPersonal) {
-      request.fields['category_id'] = "9808a274-5aba-4f93-9ecd-29ef2c66d60e";
+      request.fields['category_id'] = categoryId;
+      if (path != null) {
+        request.files.add(await http.MultipartFile.fromPath('image', path,
+            contentType: MediaType("image", "jpeg")));
+      }
     }
 
     request.headers.addAll(headers());

@@ -1,12 +1,15 @@
 class RegisterModel {
   RegisterData? user;
+  String token;
   String message;
 
-  RegisterModel({required this.user, required this.message});
+  RegisterModel(
+      {required this.user, required this.token, required this.message});
 
   factory RegisterModel.json(dynamic it) {
     return RegisterModel(
       user: it['user'] == null ? null : RegisterData.json(it['user']),
+      token: it['token'] == null ? "" : it['token'] as String,
       message: it['message'] == null ? "" : it['message'] as String,
     );
   }
