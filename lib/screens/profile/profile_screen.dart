@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import '../company_profile/company_widget.dart';
 import 'edit_profile.dart';
@@ -100,14 +101,25 @@ class _ProfileScreenState extends State<ProfileScreen>
               ),
               backgroundColor: Colors.transparent,
               actions: [
-                Chip(
-                  shape: const StadiumBorder(
-                      side: BorderSide(
-                    width: 1,
-                    color: Colors.black,
-                  )),
-                  backgroundColor: Colors.white,
-                  label: Text(AppLocalizations.of(context)!.profile_place_ads),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (_) {
+                      return const MainPage(
+                        index: 2,
+                      );
+                    }), (route) => false);
+                  },
+                  child: Chip(
+                    shape: const StadiumBorder(
+                        side: BorderSide(
+                      width: 1,
+                      color: Colors.black,
+                    )),
+                    backgroundColor: Colors.white,
+                    label:
+                        Text(AppLocalizations.of(context)!.profile_place_ads),
+                  ),
                 ),
                 InkWell(
                   onTap: () {
