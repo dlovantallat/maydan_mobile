@@ -297,6 +297,7 @@ class _PostScreenState extends State<PostScreen>
     postItem = await service.postItem(
       token: token,
       title: title,
+      price: price,
       description: description,
       subCategory: _dropdownSubCategoryValue!.id,
       duration: _dropdownDurationValue,

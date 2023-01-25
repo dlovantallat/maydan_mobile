@@ -164,6 +164,7 @@ class MaydanServices {
   Future<ApiResponse<ItemRespond>> postItem({
     required String token,
     required String title,
+    required String price,
     required String description,
     required String subCategory,
     required String duration,
@@ -176,6 +177,7 @@ class MaydanServices {
     request.fields['description'] = jsonEncode({"en": description});
     request.fields['duration'] = duration;
     request.fields['district_id'] = districtId;
+    request.fields['price_announced'] = price;
 
     List<http.MultipartFile> newList = <http.MultipartFile>[];
 
