@@ -353,7 +353,37 @@ class _HomeScreenState extends State<HomeScreen>
                             });
                           },
                           child: const Text("view less")),
-                      const Text("latest"),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 4, end: 4),
+                          child: SmartRefresher(
+                            controller: refreshController,
+                            enablePullUp: noMoreLoad,
+                            enablePullDown: false,
+                            onLoading: () async {
+                              await _secondGetHotDeals();
+
+                              if (items.requestStatus) {
+                                refreshController.loadFailed();
+                              } else {
+                                refreshController.loadComplete();
+                              }
+                            },
+                            child: GridView.builder(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2, mainAxisExtent: 220),
+                              itemBuilder: (BuildContext context, int index) =>
+                                  ItemsItem(
+                                item: data[index],
+                                isFav: data[index].favorite,
+                              ),
+                              itemCount: data.length,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   );
                 } else {

@@ -224,6 +224,7 @@ class MaydanServices {
     request.fields['title'] = jsonEncode({"en": title});
     request.fields['description'] = jsonEncode({"en": description});
     request.fields['district_id'] = districtId;
+    request.fields['price'] = price;
 
     request.headers.addAll(headers(token: token));
 

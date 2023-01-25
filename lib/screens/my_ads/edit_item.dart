@@ -66,7 +66,7 @@ class _EditItemState extends State<EditItem> {
         districtId: widget.item.districtId,
         title: title,
         description: description,
-        price: "price",
+        price: price,
         duration: "duration");
     if (!mounted) return;
 
