@@ -146,7 +146,6 @@ class _EditProfileState extends State<EditProfile> {
     } else {
       Navigator.pop(context);
       setSnackBar(context, updateProfile.errorMessage);
-      print("rrr ${updateProfile.errorMessage}");
     }
   }
 
@@ -216,83 +215,79 @@ class _EditProfileState extends State<EditProfile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          isPersonal
-              ? Container()
-              : Padding(
-                  padding: const EdgeInsetsDirectional.only(end: 8),
-                  child: image == null
-                      ? InkWell(
-                          onTap: openGallery,
-                          child: Card(
-                            elevation: 8,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(end: 8),
+            child: image == null
+                ? InkWell(
+                    onTap: openGallery,
+                    child: Card(
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Container(
+                        height: 100,
+                        width: 112,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8))),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              editProfileSvg,
+                              height: 50,
+                              width: 30,
                             ),
-                            child: Container(
-                              height: 100,
-                              width: 112,
-                              clipBehavior: Clip.hardEdge,
-                              decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8))),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    editProfileSvg,
-                                    height: 50,
-                                    width: 30,
-                                  ),
-                                  const Padding(
-                                    padding: EdgeInsetsDirectional.only(top: 8),
-                                    child: Text("Add new Photo"),
-                                  )
-                                ],
+                            const Padding(
+                              padding: EdgeInsetsDirectional.only(top: 8),
+                              child: Text("Add new Photo"),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                : Card(
+                    elevation: 8,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Container(
+                      height: 100,
+                      width: 112,
+                      clipBehavior: Clip.hardEdge,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8))),
+                      child: Stack(
+                        alignment: AlignmentDirectional.topEnd,
+                        children: [
+                          Image.file(
+                            image!,
+                            fit: BoxFit.cover,
+                            height: 100,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                image = null;
+                              });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: SvgPicture.asset(
+                                removeImageSvg,
+                                semanticsLabel: "",
+                                height: 24,
+                                width: 24,
                               ),
                             ),
                           ),
-                        )
-                      : Card(
-                          elevation: 8,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Container(
-                            height: 100,
-                            width: 112,
-                            clipBehavior: Clip.hardEdge,
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8))),
-                            child: Stack(
-                              alignment: AlignmentDirectional.topEnd,
-                              children: [
-                                Image.file(
-                                  image!,
-                                  fit: BoxFit.cover,
-                                  height: 100,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      image = null;
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8),
-                                    child: SvgPicture.asset(
-                                      removeImageSvg,
-                                      semanticsLabel: "",
-                                      height: 24,
-                                      width: 24,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                ),
+                        ],
+                      ),
+                    ),
+                  ),
+          ),
           Padding(
             padding:
                 const EdgeInsetsDirectional.only(start: 16, end: 16, top: 16),
