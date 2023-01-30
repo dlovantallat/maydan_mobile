@@ -403,7 +403,10 @@ class MaydanServices {
         http.MultipartRequest('POST', Uri.parse("${baseURL}register"));
 
     request.fields['name'] = name;
-    request.fields['email'] = email;
+    if (email.isNotEmpty) {
+      request.fields['email'] = email;
+    }
+
     request.fields['token'] = token;
     request.fields['password'] = password;
     request.fields['password_confirmation'] = password;
@@ -411,10 +414,11 @@ class MaydanServices {
 
     if (isPersonal) {
       request.fields['category_id'] = categoryId;
-      if (path != null) {
-        request.files.add(await http.MultipartFile.fromPath('photo', path,
-            contentType: MediaType("image", "jpeg")));
-      }
+    }
+
+    if (path != null) {
+      request.files.add(await http.MultipartFile.fromPath('photo', path,
+          contentType: MediaType("image", "jpeg")));
     }
 
     request.headers.addAll(headers());
@@ -456,7 +460,9 @@ class MaydanServices {
         http.MultipartRequest('POST', Uri.parse("${baseURL}users?_method=PUT"));
 
     request.fields['name'] = name;
-    request.fields['email'] = email;
+    if (email.isNotEmpty) {
+      request.fields['email'] = email;
+    }
     if (!isPersonal) {
       if (path != null) {
         request.files.add(await http.MultipartFile.fromPath('photo', path,

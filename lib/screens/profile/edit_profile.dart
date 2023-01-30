@@ -95,22 +95,24 @@ class _EditProfileState extends State<EditProfile> {
     String name = nameController.text.trim().toString();
     String email = emailController.text.trim().toString();
 
+    if (email == widget.profile.email) {
+      email = "";
+    }
+
     if (name.isEmpty) {
       setSnackBar(context, "You have to set name");
     }
 
-    if (email.isEmpty) {
-      setSnackBar(context, "Please enter a email");
-      return;
+    if (email.isNotEmpty) {
+      bool emailValid = RegExp(
+              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+          .hasMatch(email);
+      if (!emailValid) {
+        setSnackBar(context, "Please enter a correct email");
+        return;
+      }
     }
 
-    bool emailValid = RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(email);
-    if (!emailValid) {
-      setSnackBar(context, "Please enter a correct email");
-      return;
-    }
     if (widget.profile.userType != "P") {
       if (_dropdownCategoryValue == _dropdownCategoriesDrop.first) {
         setSnackBar(context, "Please select a category");

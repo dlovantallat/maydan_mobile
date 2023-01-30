@@ -92,16 +92,14 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
       return;
     }
 
-    if (email.isEmpty) {
-      setSnackBar(context, "Please enter a email");
-      return;
-    }
-
-    bool emailValid = RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(email);
-    if (!emailValid) {
-      setSnackBar(context, "Please enter a correct email");
+    if (email.isNotEmpty) {
+      bool emailValid = RegExp(
+              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+          .hasMatch(email);
+      if (!emailValid) {
+        setSnackBar(context, "Please enter a correct email");
+        return;
+      }
       return;
     }
 
@@ -212,11 +210,9 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
                           child: Stack(
                             alignment: AlignmentDirectional.topEnd,
                             children: [
-                              Container(
-                                height: 50,
-                                width: 30,
-                                margin: const EdgeInsetsDirectional.only(
-                                    start: 40, end: 40, top: 30, bottom: 30),
+                              SizedBox(
+                                height: 110,
+                                width: 110,
                                 child: Image.file(
                                   image!,
                                   fit: BoxFit.cover,
@@ -288,7 +284,7 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
                   const Padding(
                     padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
                     child: Text(
-                      "Email",
+                      "Email (Optional)",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,

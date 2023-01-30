@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -33,6 +37,28 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
   final passwordController = TextEditingController();
   final passwordConfirmationController = TextEditingController();
 
+  File? image;
+
+  String path = "";
+
+  void openImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) {
+        return;
+      }
+
+      File tempCompressedImage = await customCompress(File(image.path));
+      path = tempCompressedImage.path;
+      final imageTemp = File(image.path);
+      setState(() {
+        this.image = imageTemp;
+      });
+    } on PlatformException catch (e) {
+      print("an error occurred $e");
+    }
+  }
+
   registerRequest() async {
     String name = nameController.text.trim().toString();
     String email = emailController.text.trim().toString();
@@ -45,17 +71,14 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
       return;
     }
 
-    if (email.isEmpty) {
-      setSnackBar(context, "Please enter a email");
-      return;
-    }
-
-    bool emailValid = RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(email);
-    if (!emailValid) {
-      setSnackBar(context, "Please enter a correct email");
-      return;
+    if (email.isNotEmpty) {
+      bool emailValid = RegExp(
+              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+          .hasMatch(email);
+      if (!emailValid) {
+        setSnackBar(context, "Please enter a correct email");
+        return;
+      }
     }
 
     if (password.isEmpty) {
@@ -71,8 +94,15 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
 
     loading(context);
 
-    register = await service.register(name, email, widget.tempToken,
-        "964${widget.phoneNumber}", password, "", null, widget.isPersonal);
+    register = await service.register(
+        name,
+        email,
+        widget.tempToken,
+        "964${widget.phoneNumber}",
+        password,
+        "",
+        path == "" ? null : path,
+        widget.isPersonal);
     if (!mounted) return;
 
     Navigator.pop(context);
@@ -121,141 +151,188 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
         child: Padding(
           padding: const EdgeInsetsDirectional.only(start: 16, end: 16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Text(
-                "+964 750 XXX XXXX",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  image != null
+                      ? Card(
+                          child: Stack(
+                            alignment: AlignmentDirectional.topEnd,
+                            children: [
+                              SizedBox(
+                                height: 110,
+                                width: 110,
+                                child: Image.file(
+                                  image!,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      image = null;
+                                    });
+                                  },
+                                  icon: const Icon(Icons.delete))
+                            ],
+                          ),
+                        )
+                      : InkWell(
+                          onTap: openImage,
+                          child: Card(
+                            elevation: 8,
+                            child: Container(
+                                margin: const EdgeInsetsDirectional.only(
+                                    start: 40, end: 40, top: 30, bottom: 30),
+                                child: SvgPicture.asset(
+                                  editProfileSvg,
+                                  height: 50,
+                                  width: 30,
+                                )),
+                          ),
+                        ),
+                ],
               ),
-              const Padding(
-                padding: EdgeInsetsDirectional.only(bottom: 8, top: 20),
-                child: Text(
-                  "First and last name",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              TextField(
-                controller: nameController,
-                decoration: const InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 1),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(16.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "+964 ${widget.phoneNumber}",
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 1),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(16.0),
-                    ),
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
-                child: Text(
-                  "Email",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              TextField(
-                controller: emailController,
-                decoration: const InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 1),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(16.0),
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 1),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(16.0),
-                    ),
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
-                child: Text(
-                  "Password",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              TextField(
-                controller: passwordController,
-                keyboardType: TextInputType.text,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 1),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(16.0),
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 1),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(16.0),
-                    ),
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
-                child: Text(
-                  "Password Confirmed",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              TextField(
-                controller: passwordConfirmationController,
-                keyboardType: TextInputType.text,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 1),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(16.0),
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 1),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(16.0),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.only(top: 32),
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.resolveWith<Size>(
-                        (Set<MaterialState> states) {
-                          return const Size(double.infinity, 40);
-                        },
+                  const Padding(
+                    padding: EdgeInsetsDirectional.only(bottom: 8, top: 20),
+                    child: Text(
+                      "First and last name",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
-                    onPressed: () {
-                      registerRequest();
-                    },
-                    child: const Text("Register")),
+                  ),
+                  TextField(
+                    controller: nameController,
+                    decoration: const InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 1),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(16.0),
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 1),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(16.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
+                    child: Text(
+                      "Email (Optional)",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    controller: emailController,
+                    decoration: const InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 1),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(16.0),
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 1),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(16.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
+                    child: Text(
+                      "Password",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    controller: passwordController,
+                    keyboardType: TextInputType.text,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 1),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(16.0),
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 1),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(16.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
+                    child: Text(
+                      "Password Confirmed",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    controller: passwordConfirmationController,
+                    keyboardType: TextInputType.text,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 1),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(16.0),
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 1),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(16.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(top: 32),
+                    child: ElevatedButton(
+                        style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.resolveWith<Size>(
+                            (Set<MaterialState> states) {
+                              return const Size(double.infinity, 40);
+                            },
+                          ),
+                        ),
+                        onPressed: () {
+                          registerRequest();
+                        },
+                        child: const Text("Register")),
+                  )
+                ],
               )
             ],
           ),
