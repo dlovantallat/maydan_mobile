@@ -77,6 +77,10 @@ class _PostScreenState extends State<PostScreen>
 
   String path = "";
 
+  List<File> images = [];
+
+  List<String> paths = [];
+
   List<UploadImage> uploadedPhotos = [];
 
   @override
@@ -247,6 +251,32 @@ class _PostScreenState extends State<PostScreen>
     }
   }
 
+  void multiImage() async {
+    try {
+      final image = await ImagePicker().pickMultiImage(
+          maxHeight: 200000, maxWidth: 200000, imageQuality: 30);
+
+      List<UploadImage> arr = [];
+      for (var i in image) {
+        File tempCompressedImage = await customCompress(File(i.path));
+        paths.add(tempCompressedImage.path);
+        final imageTemp = File(i.path);
+
+        images.add(imageTemp);
+
+        arr.add(UploadImage(tempCompressedImage.path, imageTemp));
+      }
+
+      setState(() {
+        uploadedPhotos.addAll(arr);
+      });
+    } on PlatformException catch (e) {
+      if (kDebugMode) {
+        print("an error occurred $e");
+      }
+    }
+  }
+
   void save() async {
     String title = titleController.text.trim();
     String description = descriptionController.text.trim();
@@ -256,6 +286,11 @@ class _PostScreenState extends State<PostScreen>
         _dropdownSubCategoryValue == _dropdownSubCategoriesDrop.first) {
       setSnackBar(context,
           "Please choose a subCategory or choose another category which has subCategory");
+      return;
+    }
+
+    if (uploadedPhotos.length > 5) {
+      setSnackBar(context, "Please upload no more than five image");
       return;
     }
 
@@ -491,7 +526,7 @@ class _PostScreenState extends State<PostScreen>
                         itemCount: uploadedPhotos.length + 1,
                         itemBuilder: (context, index) => index == 0
                             ? InkWell(
-                                onTap: openGallery,
+                                onTap: multiImage,
                                 child: Card(
                                   elevation: 8,
                                   shape: RoundedRectangleBorder(
