@@ -60,6 +60,7 @@
   "login_title": "Login",
   "item_detail_price": "Price",
   "item_detail_date": "Date",
+  "item_detail_location": "Location",
   "item_detail_owner_information": "Owner Information",
   "item_detail_login_please": "Please login to see contact information",
   "item_detail_similar_": "Similar product like {name}",

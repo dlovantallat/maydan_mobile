@@ -168,6 +168,7 @@ class MaydanServices {
     required String description,
     required String subCategory,
     required String duration,
+    required String currencyType,
     required String districtId,
     required List<UploadImage> uploadedPhotos,
   }) async {
@@ -176,6 +177,7 @@ class MaydanServices {
     request.fields['subcategory_id'] = subCategory;
     request.fields['description'] = jsonEncode({"en": description});
     request.fields['duration'] = duration;
+    request.fields['currency_type'] = "U";
     request.fields['district_id'] = districtId;
     request.fields['price_announced'] = price;
 
@@ -201,7 +203,10 @@ class MaydanServices {
 
           return ApiResponse<ItemRespond>(data: register, statusCode: 201);
         } else if (data.statusCode == 422) {
-          return ApiResponse<ItemRespond>(statusCode: 422);
+          final respStr = await data.stream.bytesToString();
+          final register = ItemRespond.json(jsonDecode(respStr));
+          return ApiResponse<ItemRespond>(
+              statusCode: 422, errorMessage: register.message);
         }
         return ApiResponse<ItemRespond>(
             requestStatus: true, errorMessage: "API Communication Down");

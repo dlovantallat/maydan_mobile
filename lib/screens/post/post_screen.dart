@@ -49,8 +49,8 @@ class _PostScreenState extends State<PostScreen>
   DistrictDrop? _dropdownDistrictValue;
 
   /// Duration DropDown
-  final List<String> _dropdownDurationDrop = ["7", "15", "30"];
-  String _dropdownDurationValue = "7";
+  final List<String> _dropdownDurationDrop = ["1", "2", "3"];
+  String _dropdownDurationValue = "1";
 
   /// City DropDown
   final List<String> _dropdownPriceDrop = ["IQ", "USD"];
@@ -336,6 +336,7 @@ class _PostScreenState extends State<PostScreen>
       description: description,
       subCategory: _dropdownSubCategoryValue!.id,
       duration: _dropdownDurationValue,
+      currencyType: _dropdownPriceValue,
       districtId: _dropdownDistrictValue!.id,
       uploadedPhotos: uploadedPhotos,
     );
@@ -693,30 +694,42 @@ class _PostScreenState extends State<PostScreen>
                                 style: BorderStyle.solid,
                                 width: 1),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.only(
-                                start: 8, end: 8),
-                            child: DropdownButton(
-                                underline: const SizedBox(),
-                                items: _dropdownDurationDrop
-                                    .map((value) => DropdownMenuItem(
-                                          value: value,
-                                          child: Text(
-                                            value,
-                                            style: TextStyle(
-                                                color: value ==
-                                                        _dropdownDurationValue
-                                                    ? appColor
-                                                    : Colors.black),
-                                          ),
-                                        ))
-                                    .toList(),
-                                value: _dropdownDurationValue,
-                                onChanged: (i) {
-                                  setState(() {
-                                    _dropdownDurationValue = i!;
-                                  });
-                                }),
+                          child: Row(
+                            children: [
+                              const Padding(
+                                padding: EdgeInsetsDirectional.only(
+                                    start: 8, end: 8),
+                                child: Text(
+                                  "Week",
+                                  style: TextStyle(color: appColor),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsetsDirectional.only(end: 8),
+                                child: DropdownButton(
+                                    underline: const SizedBox(),
+                                    items: _dropdownDurationDrop
+                                        .map((value) => DropdownMenuItem(
+                                              value: value,
+                                              child: Text(
+                                                value,
+                                                style: TextStyle(
+                                                    color: value ==
+                                                            _dropdownDurationValue
+                                                        ? appColor
+                                                        : Colors.black),
+                                              ),
+                                            ))
+                                        .toList(),
+                                    value: _dropdownDurationValue,
+                                    onChanged: (i) {
+                                      setState(() {
+                                        _dropdownDurationValue = i!;
+                                      });
+                                    }),
+                              ),
+                            ],
                           ),
                         ),
                       ],

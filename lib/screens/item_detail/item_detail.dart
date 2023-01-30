@@ -186,6 +186,10 @@ class _ItemDetailState extends State<ItemDetail> {
                           meteData(
                               AppLocalizations.of(context)!.item_detail_date,
                               dateFormat(widget.item.statusDate)),
+                          meteData(
+                              AppLocalizations.of(context)!
+                                  .item_detail_location,
+                              widget.item.description),
                         ],
                       ),
                     ),

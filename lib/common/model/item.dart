@@ -64,12 +64,14 @@ class ItemData {
 
 class ItemRespond {
   String id;
+  String message;
 
-  ItemRespond({required this.id});
+  ItemRespond({required this.id, required this.message});
 
   factory ItemRespond.json(dynamic it) {
     return ItemRespond(
-      id: it['id'] as String,
+      id: it['id'] == null ? "" : it['id'] as String,
+      message: it['message'] == null ? "" : it['message'] as String,
     );
   }
 }
