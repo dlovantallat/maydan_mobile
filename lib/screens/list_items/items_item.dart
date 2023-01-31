@@ -71,8 +71,13 @@ class _ItemsItemState extends State<ItemsItem> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (_) => ItemDetail(item: widget.item)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => ItemDetail(
+                      item: widget.item,
+                      isFav: isFav,
+                    )));
       },
       child: Card(
         elevation: 4,

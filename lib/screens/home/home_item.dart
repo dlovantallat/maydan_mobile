@@ -244,6 +244,7 @@ class _HomeSubItemState extends State<HomeSubItem> {
             MaterialPageRoute(
                 builder: (_) => ItemDetail(
                       item: widget.data,
+                      isFav: isFav,
                     )));
       },
       child: Card(

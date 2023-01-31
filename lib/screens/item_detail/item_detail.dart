@@ -9,14 +9,17 @@ import '../../cloud_functions/maydan_services.dart';
 import '../../common/meta_data_widget.dart';
 import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
+import '../favorite/favorite_obj.dart';
 import '../home/home_slider.dart';
 import '../list_items/items_item.dart';
 import 'login_screen.dart';
 
 class ItemDetail extends StatefulWidget {
   final ItemData item;
+  final bool isFav;
 
-  const ItemDetail({Key? key, required this.item}) : super(key: key);
+  const ItemDetail({Key? key, required this.item, required this.isFav})
+      : super(key: key);
 
   @override
   State<ItemDetail> createState() => _ItemDetailState();
@@ -24,13 +27,19 @@ class ItemDetail extends StatefulWidget {
 
 class _ItemDetailState extends State<ItemDetail> {
   MaydanServices get service => GetIt.I<MaydanServices>();
+  late ApiResponse<FavoriteRequest> favReq;
+  late ApiResponse<FavoriteRemove> removeFavo;
+
   late ApiResponse<ItemObj> items;
   bool isLoading = false;
   bool isTokenLoaded = false;
   String token = "";
 
+  bool isFav = false;
+
   @override
   void initState() {
+    isFav = widget.isFav;
     getRelatedItem();
     super.initState();
   }
@@ -71,7 +80,7 @@ class _ItemDetailState extends State<ItemDetail> {
   }
 
   void callingFunctionality() {
-    final uri = Uri(scheme: 'tel', path: '+9647503231905');
+    final uri = Uri(scheme: 'tel', path: '+${widget.item.user.msisdn}');
     canLaunchUrl(uri).then((bool result) async {
       if (result) {
         await launchUrl(uri);
@@ -79,6 +88,40 @@ class _ItemDetailState extends State<ItemDetail> {
         setSnackBar(context, "Can't call right know");
       }
     });
+  }
+
+  void fav() async {
+    String token = await getToken();
+    favReq = await service.postFavorite(token, widget.item.id);
+
+    if (!mounted) return;
+    if (!favReq.requestStatus) {
+      if (favReq.statusCode == 201) {
+        setState(() {
+          isFav = !isFav;
+        });
+      }
+    } else {
+      setSnackBar(context, removeFavo.errorMessage);
+    }
+  }
+
+  void removeFav() async {
+    String token = await getToken();
+
+    removeFavo = await service.deleteFavorite(token, widget.item.id);
+
+    if (!mounted) return;
+
+    if (!removeFavo.requestStatus) {
+      if (removeFavo.statusCode == 200) {
+        setState(() {
+          isFav = !isFav;
+        });
+      }
+    } else {
+      setSnackBar(context, removeFavo.errorMessage);
+    }
   }
 
   @override
@@ -135,23 +178,28 @@ class _ItemDetailState extends State<ItemDetail> {
                                   ),
                                 ],
                               ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.only(
-                                    start: 8, end: 8),
-                                child: Stack(
-                                  alignment: AlignmentDirectional.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      height: 50,
-                                      favBoarderSvg,
-                                      semanticsLabel: '',
-                                    ),
-                                    SvgPicture.asset(
-                                      height: 24,
-                                      mainFullFavoriteBottomNavigationSvg,
-                                      semanticsLabel: '',
-                                    ),
-                                  ],
+                              InkWell(
+                                onTap: isFav ? removeFav : fav,
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                      start: 8, end: 8),
+                                  child: Stack(
+                                    alignment: AlignmentDirectional.center,
+                                    children: [
+                                      SvgPicture.asset(
+                                        height: 50,
+                                        favBoarderSvg,
+                                        semanticsLabel: '',
+                                      ),
+                                      SvgPicture.asset(
+                                        isFav
+                                            ? mainFullFavoriteBottomNavigationSvg
+                                            : mainFavoriteBottomNavigationSvg,
+                                        color: appColor,
+                                        semanticsLabel: '',
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               )
                             ],
