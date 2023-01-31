@@ -8,6 +8,7 @@ import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/category.dart';
 import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
+import '../category/sub_category_screen.dart';
 import '../company_profile/company_profile_screen.dart';
 import '../favorite/favorite_obj.dart';
 import '../item_detail/item_detail.dart';
@@ -120,58 +121,70 @@ class HomeCategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.hardEdge,
-      margin: const EdgeInsetsDirectional.only(end: 12, bottom: 12),
-      decoration: BoxDecoration(
-          color: const Color(0xffffffff),
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: [
-            BoxShadow(
-                blurRadius: 8,
-                offset: const Offset(12, 12),
-                color: const Color(0x06b4b0b0).withOpacity(.8),
-                spreadRadius: -9)
-          ]),
-      width: 120,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 65,
-            width: double.infinity,
-            child: Image.network(
-              imageLoader(data.urlImg),
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => const Image(
-                image: AssetImage(imageHolder),
-                fit: BoxFit.fitWidth,
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SubCategoryScreen(
+              category: data,
+            ),
+          ),
+        );
+      },
+      child: Container(
+        clipBehavior: Clip.hardEdge,
+        margin: const EdgeInsetsDirectional.only(end: 12, bottom: 12),
+        decoration: BoxDecoration(
+            color: const Color(0xffffffff),
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                  blurRadius: 8,
+                  offset: const Offset(12, 12),
+                  color: const Color(0x06b4b0b0).withOpacity(.8),
+                  spreadRadius: -9)
+            ]),
+        width: 120,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 65,
+              width: double.infinity,
+              child: Image.network(
+                imageLoader(data.urlImg),
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => const Image(
+                  image: AssetImage(imageHolder),
+                  fit: BoxFit.fitWidth,
+                ),
+              )
+
+              // SvgPicture.network(
+              //   imageLoader(data.urlImg),
+              //   semanticsLabel: 'SVG From Network',
+              //   placeholderBuilder: (BuildContext context) =>
+              //       const Center(child: CircularProgressIndicator()),
+              // )
+
+              ,
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.only(
+                top: 8,
+                start: 8,
+                end: 8,
+                bottom: 8,
               ),
-            )
-
-            // SvgPicture.network(
-            //   imageLoader(data.urlImg),
-            //   semanticsLabel: 'SVG From Network',
-            //   placeholderBuilder: (BuildContext context) =>
-            //       const Center(child: CircularProgressIndicator()),
-            // )
-
-            ,
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.only(
-              top: 8,
-              start: 8,
-              end: 8,
-              bottom: 8,
+              child: Text(
+                "${data.title}\n",
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+              ),
             ),
-            child: Text(
-              "${data.title}\n",
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
