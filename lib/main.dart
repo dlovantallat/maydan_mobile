@@ -1,4 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
@@ -25,7 +27,41 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  print("project: ${fire.options.projectId}");
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
+  if (kDebugMode) {
+    print('User granted permission: ${settings.authorizationStatus}');
+  }
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    if (kDebugMode) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.notification!.title}');
+    }
+
+    if (message.notification != null) {
+      if (kDebugMode) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+    }
+  });
+
+  if (kDebugMode) {
+    print("firebase: ${fire.name}");
+    print("firebase: ${fire.options.projectId}");
+  }
+
+  getDeviceToken();
 
   servicesLocator();
 
@@ -43,6 +79,12 @@ Future<void> main() async {
       ),
     ),
   );
+}
+
+void getDeviceToken() async {
+  await FirebaseMessaging.instance
+      .getToken()
+      .then((token) => print("token: $token"));
 }
 
 void servicesLocator() {
