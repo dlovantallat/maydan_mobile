@@ -82,6 +82,7 @@ class _PostScreenState extends State<PostScreen>
   List<String> paths = [];
 
   List<UploadImage> uploadedPhotos = [];
+  String localLang = "";
 
   @override
   void initState() {
@@ -116,7 +117,8 @@ class _PostScreenState extends State<PostScreen>
       isLoading = true;
     });
 
-    categories = await service.getCategories();
+    localLang = await getLanguageKeyForApi();
+    categories = await service.getCategories(localLang);
 
     _dropdownCategoriesDrop.clear();
     _dropdownCategoryValue = null;
@@ -142,7 +144,7 @@ class _PostScreenState extends State<PostScreen>
       isSubLoaded = false;
     });
 
-    subCategories = await service.getSubCategories(categoryId);
+    subCategories = await service.getSubCategories(categoryId, localLang);
     setState(() {
       isSubLoading = false;
     });

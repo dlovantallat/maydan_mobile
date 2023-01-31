@@ -81,6 +81,14 @@ Future<String> getLanguageKey() async {
   return key;
 }
 
+Future<String> getLanguageKeyForApi() async {
+  String key = await getLanguageKey();
+  if (key == 'ps') {
+    key = 'ckb';
+  }
+  return key;
+}
+
 void setSnackBar(BuildContext context, String text) {
   final snackBar = SnackBar(
     content: Text(text),

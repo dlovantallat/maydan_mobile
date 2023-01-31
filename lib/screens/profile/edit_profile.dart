@@ -67,7 +67,8 @@ class _EditProfileState extends State<EditProfile> {
       isLoading = true;
     });
 
-    categories = await service.getCategories();
+    String localLang = await getLanguageKeyForApi();
+    categories = await service.getCategories(localLang);
 
     if (!categories.requestStatus) {
       if (categories.statusCode == 200) {

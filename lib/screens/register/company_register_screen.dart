@@ -61,7 +61,8 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
       isLoading = true;
     });
 
-    categories = await service.getCategories();
+    String localLang = await getLanguageKeyForApi();
+    categories = await service.getCategories(localLang);
 
     _dropdownCategoriesDrop.clear();
     _dropdownCategoryValue = null;

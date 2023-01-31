@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/category.dart';
+import '../../utilities/app_utilities.dart';
 import 'sub_category_item.dart';
 
 class SubCategoryScreen extends StatefulWidget {
@@ -31,7 +32,9 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
       isLoading = true;
     });
 
-    subCategories = await service.getSubCategories(widget.category.id);
+    String localLang = await getLanguageKeyForApi();
+    subCategories =
+        await service.getSubCategories(widget.category.id, localLang);
 
     setState(() {
       isLoading = false;

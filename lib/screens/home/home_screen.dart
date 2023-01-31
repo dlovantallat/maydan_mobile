@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -66,7 +65,8 @@ class _HomeScreenState extends State<HomeScreen>
     });
 
     String token = await getToken();
-    home = await service.getHome(token);
+    String localLang = await getLanguageKeyForApi();
+    home = await service.getHome(token, localLang);
 
     setState(() {
       isLoading = false;
@@ -77,8 +77,8 @@ class _HomeScreenState extends State<HomeScreen>
     setState(() {
       isDrawer = false;
     });
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    key = preferences.getString(languageKey) ?? "en";
+
+    key = await getLanguageKey();
 
     String token = await getToken();
     profile = await service.getMe(token);
@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen>
     });
   }
 
-  _secondGetMyItems() async {
+  _secondGetCompanies() async {
     if (currentPage > totalPage) {
       refreshController.loadComplete();
       setState(() {
@@ -137,7 +137,8 @@ class _HomeScreenState extends State<HomeScreen>
     });
 
     token = await getToken();
-    items = await service.getHotDeals(token, currentPage);
+    String localLang = await getLanguageKeyForApi();
+    items = await service.getHotDeals(token, currentPage, localLang);
 
     if (!items.requestStatus) {
       if (items.statusCode == 200) {
@@ -161,8 +162,8 @@ class _HomeScreenState extends State<HomeScreen>
 
       return;
     }
-
-    items = await service.getHotDeals(token, currentPage);
+    String localLang = await getLanguageKeyForApi();
+    items = await service.getHotDeals(token, currentPage, localLang);
     data.addAll(items.data!.list);
     currentPage++;
 
@@ -270,7 +271,7 @@ class _HomeScreenState extends State<HomeScreen>
                           enablePullUp: noMoreLoad,
                           enablePullDown: false,
                           onLoading: () async {
-                            await _secondGetMyItems();
+                            await _secondGetCompanies();
 
                             if (companies.requestStatus) {
                               refreshController.loadFailed();
@@ -449,7 +450,9 @@ class _HomeScreenState extends State<HomeScreen>
   void returnKey(String key) {
     setState(() {
       this.key = key;
+      isViewAll = false;
     });
+    getHome();
   }
 }
 

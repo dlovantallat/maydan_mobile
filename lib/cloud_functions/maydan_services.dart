@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/src/media_type.dart';
 import 'package:maydan/screens/static_content/static_content_obj.dart';
+import 'package:maydan/utilities/app_utilities.dart';
 
 import '../common/model/category.dart';
 import '../common/model/item.dart';
@@ -20,17 +21,18 @@ class MaydanServices {
   static const Duration timeOutDuration = Duration(seconds: 15);
   static const int perPage = 10;
 
-  Map<String, String> headers({String token = ''}) {
+  Map<String, String> headers({String token = '', String languageKey = 'en'}) {
     return {
       'Authorization': 'Bearer $token',
       'Accept': 'application/json',
-      'app-language': 'en',
+      'app-language': languageKey,
     };
   }
 
-  Future<ApiResponse<HomeObj>> getHome(String token) {
+  Future<ApiResponse<HomeObj>> getHome(String token, String localLang) {
     return http
-        .get(Uri.parse("${baseURL}home"), headers: headers(token: token))
+        .get(Uri.parse("${baseURL}home"),
+            headers: headers(token: token, languageKey: localLang))
         .timeout(timeOutDuration)
         .then(
       (data) {
@@ -53,9 +55,10 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<CategoryObj>> getCategories() {
+  Future<ApiResponse<CategoryObj>> getCategories(String localLang) {
     return http
-        .get(Uri.parse("${baseURL}categories"), headers: headers())
+        .get(Uri.parse("${baseURL}categories"),
+            headers: headers(languageKey: localLang))
         .timeout(timeOutDuration)
         .then(
       (data) {
@@ -78,10 +81,11 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<SubCategoryObj>> getSubCategories(String categoryId) {
+  Future<ApiResponse<SubCategoryObj>> getSubCategories(
+      String categoryId, String localLang) {
     return http
         .get(Uri.parse("${baseURL}categories/$categoryId/subcategories"),
-            headers: headers())
+            headers: headers(languageKey: localLang))
         .timeout(timeOutDuration)
         .then(
       (data) {
@@ -870,10 +874,11 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<ItemObj>> getHotDeals(String token, int currentPage) {
+  Future<ApiResponse<ItemObj>> getHotDeals(
+      String token, int currentPage, String localLang) {
     return http
         .get(Uri.parse("${baseURL}deals?per_page=$perPage&page=$currentPage"),
-            headers: headers(token: token))
+            headers: headers(token: token, languageKey: localLang))
         .timeout(timeOutDuration)
         .then(
       (data) {

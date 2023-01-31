@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/category.dart';
+import '../../utilities/app_utilities.dart';
 import 'category_item.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -30,7 +31,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
       isLoading = true;
     });
 
-    categories = await service.getCategories();
+    String localLang = await getLanguageKeyForApi();
+    categories = await service.getCategories(localLang);
 
     setState(() {
       isLoading = false;
