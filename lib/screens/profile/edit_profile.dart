@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/screens/profile/manage_social_media_screen.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -365,7 +366,11 @@ class _EditProfileState extends State<EditProfile> {
                     Padding(
                       padding: const EdgeInsetsDirectional.only(
                           bottom: 4, start: 16, end: 16, top: 16),
-                      child: Text(AppLocalizations.of(context)!.post_category),
+                      child: Text(
+                        AppLocalizations.of(context)!.post_category,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w700),
+                      ),
                     ),
                     Container(
                       margin: const EdgeInsetsDirectional.only(
@@ -403,6 +408,22 @@ class _EditProfileState extends State<EditProfile> {
                                 _dropdownCategoryValue = i!;
                               });
                             }),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.only(start: 16, end: 16),
+                      child: ElevatedButton(
+                        child: const Text(
+                          "Manage Social Media",
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => ManageSocialMediaScreen(
+                                      profile: widget.profile)));
+                        },
                       ),
                     ),
                   ],

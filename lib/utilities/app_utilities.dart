@@ -49,6 +49,10 @@ const String soldOutPng = 'assets/sold_out.png';
 const String oneOnBoardPng = 'assets/one.png';
 const String twoOnBoardPng = 'assets/two.png';
 const String threeOnBoardPng = 'assets/three.png';
+const String fbSvg = 'assets/fb.svg';
+const String instagramSvg = 'assets/instagram.svg';
+const String ytSvg = 'assets/youtube.svg';
+const String waSvg = 'assets/whatsapp.svg';
 
 /// Static Strings for static values
 const String appToken = "app-token";

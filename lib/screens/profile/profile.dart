@@ -7,6 +7,11 @@ class ProfileData {
   String urlPhoto;
   String categoryId;
   String address;
+  String? facebook;
+  String? instagram;
+  String? youtube;
+  String? whatsapp;
+  String? viber;
   CompanyCat? cat;
 
   ProfileData({
@@ -18,6 +23,11 @@ class ProfileData {
     required this.urlPhoto,
     required this.categoryId,
     required this.address,
+    required this.facebook,
+    required this.instagram,
+    required this.youtube,
+    required this.whatsapp,
+    required this.viber,
     required this.cat,
   });
 
@@ -31,6 +41,11 @@ class ProfileData {
         urlPhoto: item['url_photo'] ?? "",
         categoryId: item['category_id'] ?? "",
         address: item['address'] ?? "",
+        facebook: item['url_facebook'] ?? "",
+        instagram: item['url_instagram'] ?? "",
+        youtube: item['url_youtube'] ?? "",
+        whatsapp: item['whatsapp'] ?? "",
+        viber: item['viber'] ?? "",
         cat: item['category'] != null
             ? CompanyCat.fromJson(item['category'])
             : null);

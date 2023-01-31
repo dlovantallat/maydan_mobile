@@ -516,6 +516,54 @@ class MaydanServices {
     );
   }
 
+  Future<ApiResponse<UpdateUser>> updateSocialMedia(
+      String fb, String instagram, String youtube, String token) async {
+    var request =
+        http.MultipartRequest('POST', Uri.parse("${baseURL}users?_method=PUT"));
+
+    request.fields['url_facebook'] = fb;
+    request.fields['url_instagram'] = instagram;
+    request.fields['url_youtube'] = youtube;
+
+    request.headers.addAll(headers(token: token));
+
+    return request.send().then(
+      (data) async {
+        if (data.statusCode == 200) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = UpdateUser.json(jsonDecode(respStr));
+
+          return ApiResponse<UpdateUser>(data: register, statusCode: 200);
+        } else if (data.statusCode == 422) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = UpdateUser.json(jsonDecode(respStr));
+          return ApiResponse<UpdateUser>(
+              statusCode: 422, errorMessage: register.message);
+        } else if (data.statusCode == 403) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = UpdateUser.json(jsonDecode(respStr));
+          return ApiResponse<UpdateUser>(
+              statusCode: 403, errorMessage: register.message);
+        } else if (data.statusCode == 401) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = UpdateUser.json(jsonDecode(respStr));
+          return ApiResponse<UpdateUser>(
+              statusCode: 401, errorMessage: register.message);
+        }
+
+        return ApiResponse<UpdateUser>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<UpdateUser>(
+          requestStatus: true, errorMessage: s.toString()),
+    );
+  }
+
   Future<ApiResponse<ProfileData>> getMe(String token) {
     return http
         .get(Uri.parse("${baseURL}users"), headers: headers(token: token))
