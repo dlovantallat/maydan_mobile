@@ -532,14 +532,16 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<UpdateUser>> updateSocialMedia(
-      String fb, String instagram, String youtube, String token) async {
+  Future<ApiResponse<UpdateUser>> updateSocialMedia(String fb, String instagram,
+      String youtube, String whatsapp, String viber, String token) async {
     var request =
         http.MultipartRequest('POST', Uri.parse("${baseURL}users?_method=PUT"));
 
     request.fields['url_facebook'] = fb;
     request.fields['url_instagram'] = instagram;
     request.fields['url_youtube'] = youtube;
+    request.fields['whatsapp'] = whatsapp;
+    request.fields['viber'] = viber;
 
     request.headers.addAll(headers(token: token));
 

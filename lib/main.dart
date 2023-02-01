@@ -61,7 +61,7 @@ Future<void> main() async {
     print("firebase: ${fire.options.projectId}");
   }
 
-  getDeviceToken();
+  // getDeviceToken();
 
   servicesLocator();
 

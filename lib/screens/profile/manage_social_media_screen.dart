@@ -45,6 +45,8 @@ class _ManageSocialMediaScreenState extends State<ManageSocialMediaScreen> {
     String fb = fbController.text.trim().toString();
     String instagram = iController.text.trim().toString();
     String youtube = ytController.text.trim().toString();
+    String whatsapp = waController.text.trim().toString();
+    String viber = vController.text.trim().toString();
 
     if (fb.isNotEmpty) {
       if (!Uri.parse(fb).isAbsolute) {
@@ -67,10 +69,25 @@ class _ManageSocialMediaScreenState extends State<ManageSocialMediaScreen> {
       }
     }
 
+    if (whatsapp.isNotEmpty) {
+      if (whatsapp.length < 13) {
+        setSnackBar(
+            context, "please write down correct number ${whatsapp.length}");
+        return;
+      }
+    }
+
+    if (viber.isNotEmpty) {
+      if (viber.length < 13) {
+        setSnackBar(context, "please write down correct number of viber");
+        return;
+      }
+    }
+
     String token = await getToken();
     loading(context);
-    updateProfile =
-        await service.updateSocialMedia(fb, instagram, youtube, token);
+    updateProfile = await service.updateSocialMedia(
+        fb, instagram, youtube, whatsapp, viber, token);
 
     if (!mounted) return;
 
@@ -105,8 +122,15 @@ class _ManageSocialMediaScreenState extends State<ManageSocialMediaScreen> {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      body: Column(
+      body: ListView(
         children: [
+          const Padding(
+            padding: EdgeInsetsDirectional.only(start: 16, end: 16),
+            child: Text(
+              "Facebook",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+            ),
+          ),
           Padding(
             padding:
                 const EdgeInsetsDirectional.only(start: 16, end: 16, top: 8),
@@ -142,6 +166,13 @@ class _ManageSocialMediaScreenState extends State<ManageSocialMediaScreen> {
                   ),
                 ),
               ),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsetsDirectional.only(start: 16, end: 16, top: 16),
+            child: Text(
+              "Instagram",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
             ),
           ),
           Padding(
@@ -181,6 +212,13 @@ class _ManageSocialMediaScreenState extends State<ManageSocialMediaScreen> {
               ),
             ),
           ),
+          const Padding(
+            padding: EdgeInsetsDirectional.only(start: 16, end: 16, top: 16),
+            child: Text(
+              "Youtube",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+            ),
+          ),
           Padding(
             padding:
                 const EdgeInsetsDirectional.only(start: 16, end: 16, top: 8),
@@ -218,10 +256,19 @@ class _ManageSocialMediaScreenState extends State<ManageSocialMediaScreen> {
               ),
             ),
           ),
+          const Padding(
+            padding: EdgeInsetsDirectional.only(start: 16, end: 16, top: 16),
+            child: Text(
+              "Whatsapp",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+            ),
+          ),
           Padding(
             padding: const EdgeInsetsDirectional.only(
                 start: 16, end: 16, top: 8, bottom: 8),
             child: TextField(
+              maxLength: 13,
+              keyboardType: TextInputType.number,
               controller: waController,
               decoration: InputDecoration(
                 fillColor: Colors.white,
@@ -255,10 +302,19 @@ class _ManageSocialMediaScreenState extends State<ManageSocialMediaScreen> {
               ),
             ),
           ),
+          const Padding(
+            padding: EdgeInsetsDirectional.only(start: 16, end: 16),
+            child: Text(
+              "Viber",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+            ),
+          ),
           Padding(
             padding: const EdgeInsetsDirectional.only(
                 start: 16, end: 16, top: 8, bottom: 8),
             child: TextField(
+              maxLength: 13,
+              keyboardType: TextInputType.number,
               controller: vController,
               decoration: InputDecoration(
                 fillColor: Colors.white,
@@ -270,7 +326,7 @@ class _ManageSocialMediaScreenState extends State<ManageSocialMediaScreen> {
                       Padding(
                         padding: const EdgeInsetsDirectional.only(start: 16),
                         child: SvgPicture.asset(
-                          waSvg,
+                          vSvg,
                           semanticsLabel: '',
                         ),
                       ),
