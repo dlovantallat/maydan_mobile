@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maydan/utilities/app_utilities.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../widgets/whatsapp_unilink.dart';
 import '../profile/profile.dart';
 import 'company_widget.dart';
 
@@ -24,6 +25,14 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
     }
   }
 
+  launchWhatsAppUri() async {
+    final link = WhatsAppUnilink(
+      phoneNumber: '+${widget.data.msisdn}',
+      text: "hi how are you?",
+    );
+    await launchUrl(link.asUri());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +43,33 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
         ),
         backgroundColor: Colors.transparent,
         actions: [
+          if (widget.data.whatsapp != "")
+            Padding(
+              padding: const EdgeInsetsDirectional.only(end: 16),
+              child: InkWell(
+                onTap: () {
+                  launchWhatsAppUri();
+                },
+                child: SvgPicture.asset(
+                  waSvg,
+                  semanticsLabel: '',
+                ),
+              ),
+            ),
+          if (widget.data.viber != "")
+            Padding(
+              padding: const EdgeInsetsDirectional.only(end: 16),
+              child: InkWell(
+                onTap: () {
+                  _launchUrl(
+                      "viber://chat/?number=+${widget.data.msisdn}&draft=hi how are you?");
+                },
+                child: SvgPicture.asset(
+                  vSvg,
+                  semanticsLabel: '',
+                ),
+              ),
+            ),
           if (widget.data.facebook != "")
             Padding(
               padding: const EdgeInsetsDirectional.only(end: 16),
@@ -60,7 +96,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                 ),
               ),
             ),
-          if (widget.data.whatsapp != "")
+          if (widget.data.instagram != "")
             Padding(
               padding: const EdgeInsetsDirectional.only(end: 16),
               child: InkWell(

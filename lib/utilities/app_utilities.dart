@@ -53,6 +53,7 @@ const String fbSvg = 'assets/fb.svg';
 const String instagramSvg = 'assets/instagram.svg';
 const String ytSvg = 'assets/youtube.svg';
 const String waSvg = 'assets/whatsapp.svg';
+const String vSvg = 'assets/viber.svg';
 
 /// Static Strings for static values
 const String appToken = "app-token";
