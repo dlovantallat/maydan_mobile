@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../cloud_functions/api_response.dart';
@@ -124,6 +125,12 @@ class _ItemDetailState extends State<ItemDetail> {
     }
   }
 
+  void shareUrl() {
+    Share.share(
+        'https://maydanwebsite-production.up.railway.app/item/${widget.item.id}',
+        subject: 'share this item');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,19 +171,22 @@ class _ItemDetailState extends State<ItemDetail> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Stack(
-                                alignment: AlignmentDirectional.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    height: 50,
-                                    favBoarderSvg,
-                                    semanticsLabel: '',
-                                  ),
-                                  SvgPicture.asset(
-                                    shareSvg,
-                                    semanticsLabel: '',
-                                  ),
-                                ],
+                              InkWell(
+                                onTap: shareUrl,
+                                child: Stack(
+                                  alignment: AlignmentDirectional.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      height: 50,
+                                      favBoarderSvg,
+                                      semanticsLabel: '',
+                                    ),
+                                    SvgPicture.asset(
+                                      shareSvg,
+                                      semanticsLabel: '',
+                                    ),
+                                  ],
+                                ),
                               ),
                               InkWell(
                                 onTap: isFav ? removeFav : fav,
