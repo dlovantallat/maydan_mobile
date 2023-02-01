@@ -240,14 +240,14 @@ class _ItemDetailState extends State<ItemDetail> {
                           ),
                           meteData(
                               AppLocalizations.of(context)!.item_detail_price,
-                              widget.item.priceAnnounced),
+                              "${widget.item.priceAnnounced} ${widget.item.currencyType == "U" ? "\$" : "IQD"}"),
                           meteData(
                               AppLocalizations.of(context)!.item_detail_date,
                               dateFormat(widget.item.statusDate)),
                           meteData(
                               AppLocalizations.of(context)!
                                   .item_detail_location,
-                              widget.item.description),
+                              "${widget.item.cityName} - ${widget.item.districtName}"),
                         ],
                       ),
                     ),

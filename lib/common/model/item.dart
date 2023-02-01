@@ -20,6 +20,9 @@ class ItemData {
   String title;
   String description;
   String statusDate;
+  String currencyType;
+  String districtName;
+  String cityName;
   bool favorite;
   int currentAmount;
   String priceAnnounced;
@@ -33,6 +36,9 @@ class ItemData {
     required this.title,
     required this.description,
     required this.statusDate,
+    required this.currencyType,
+    required this.districtName,
+    required this.cityName,
     required this.favorite,
     required this.currentAmount,
     required this.priceAnnounced,
@@ -53,6 +59,9 @@ class ItemData {
       title: item['title'] ?? "",
       description: item['description'] ?? "",
       statusDate: item['status_date'] ?? "",
+      currencyType: item['currency_type'] ?? "",
+      districtName: item['district_name'] ?? "",
+      cityName: item['city_name'] ?? "",
       favorite: item['favorite'] ?? false,
       currentAmount: item['current_amount'] ?? -1,
       priceAnnounced: item['price_announced'] ?? "",

@@ -372,7 +372,8 @@ class _HomeSubItemState extends State<HomeSubItem> {
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
-                    child: Text("${widget.data.priceAnnounced}\$"),
+                    child: Text(
+                        "${widget.data.priceAnnounced} ${widget.data.currencyType == "U" ? "\$" : "IQD"}"),
                   ),
                 ],
               ),

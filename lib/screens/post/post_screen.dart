@@ -53,8 +53,8 @@ class _PostScreenState extends State<PostScreen>
   String _dropdownDurationValue = "1";
 
   /// City DropDown
-  final List<String> _dropdownPriceDrop = ["IQ", "USD"];
-  String _dropdownPriceValue = "IQ";
+  final List<String> _dropdownPriceDrop = ["IQD", "USD"];
+  String _dropdownPriceValue = "IQD";
 
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<CategoryObj> categories;

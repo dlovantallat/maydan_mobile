@@ -183,7 +183,7 @@ class _ItemsItemState extends State<ItemsItem> {
                 ),
                 Padding(
                   padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
-                  child: Text("${widget.item.priceAnnounced}\$"),
+                  child: Text("${widget.item.priceAnnounced} ${widget.item.currencyType == "U" ? "\$" : "IQD"}"),
                 ),
               ],
             ),

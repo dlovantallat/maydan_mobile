@@ -181,7 +181,7 @@ class MaydanServices {
     request.fields['subcategory_id'] = subCategory;
     request.fields['description'] = jsonEncode({"en": description});
     request.fields['duration'] = duration;
-    request.fields['currency_type'] = "U";
+    request.fields['currency_type'] = currencyType == "USD" ? "U" : "I";
     request.fields['district_id'] = districtId;
     request.fields['price_announced'] = price;
 
