@@ -347,14 +347,7 @@ class _PostScreenState extends State<PostScreen>
     if (!postItem.requestStatus) {
       if (postItem.statusCode == 201) {
         Navigator.pop(context);
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (_) {
-          return const MainPage(
-            index: 0,
-          );
-        }), (route) => false);
-
-        setSnackBar(context, "post added: ${postItem.data!.id}");
+        postSucceed();
       } else {
         Navigator.pop(context);
         if (kDebugMode) {
@@ -380,6 +373,61 @@ class _PostScreenState extends State<PostScreen>
     setState(() {
       uploadedPhotos.clear();
     });
+  }
+
+  postSucceed() {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: const Text("Post Succeed"),
+            content: Wrap(
+              alignment: WrapAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsetsDirectional.only(top: 8, bottom: 16),
+                      child: Text("We are reviewing your item please wait"),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(builder: (_) {
+                                return const MainPage(
+                                  index: 0,
+                                );
+                              }), (route) => false);
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                appColor,
+                              ),
+                              minimumSize:
+                                  MaterialStateProperty.resolveWith<Size>(
+                                (Set<MaterialState> states) {
+                                  return const Size(
+                                    double.infinity,
+                                    40,
+                                  );
+                                },
+                              ),
+                            ),
+                            child: Text("Close".toUpperCase()),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+        barrierDismissible: true);
   }
 
   @override
