@@ -463,8 +463,14 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<UpdateUser>> updateMe(String name, String email,
-      String? path, String token, String catId, bool isPersonal) async {
+  Future<ApiResponse<UpdateUser>> updateMe(
+      String name,
+      String email,
+      String? path,
+      String? pathBanner,
+      String token,
+      String catId,
+      bool isPersonal) async {
     var request =
         http.MultipartRequest('POST', Uri.parse("${baseURL}users?_method=PUT"));
 
@@ -475,6 +481,12 @@ class MaydanServices {
     if (!isPersonal) {
       if (path != null) {
         request.files.add(await http.MultipartFile.fromPath('photo', path,
+            contentType: MediaType("image", "jpeg")));
+      }
+
+      if (pathBanner != null) {
+        request.files.add(await http.MultipartFile.fromPath(
+            'banner', pathBanner,
             contentType: MediaType("image", "jpeg")));
       }
 

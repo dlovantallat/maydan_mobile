@@ -104,7 +104,7 @@ class _CompanyWidgetState extends State<CompanyWidget> {
             aspectRatio: 16 / 9,
             child: Image.network(
               width: double.infinity,
-              imageLoader(widget.data.urlPhoto),
+              imageLoader(widget.data.urlBanner),
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => const Image(
                 image: AssetImage(imageHolder),

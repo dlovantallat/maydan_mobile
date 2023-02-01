@@ -5,6 +5,7 @@ class ProfileData {
   String msisdn;
   String userType;
   String urlPhoto;
+  String urlBanner;
   String categoryId;
   String address;
   String? facebook;
@@ -21,6 +22,7 @@ class ProfileData {
     required this.msisdn,
     required this.userType,
     required this.urlPhoto,
+    required this.urlBanner,
     required this.categoryId,
     required this.address,
     required this.facebook,
@@ -39,6 +41,7 @@ class ProfileData {
         msisdn: item['msisdn'] ?? "",
         userType: item['usertype'] ?? "",
         urlPhoto: item['url_photo'] ?? "",
+        urlBanner: item['url_banner'] ?? "",
         categoryId: item['category_id'] ?? "",
         address: item['address'] ?? "",
         facebook: item['url_facebook'] ?? "",
