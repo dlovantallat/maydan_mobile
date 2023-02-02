@@ -71,9 +71,7 @@ Future<void> main() async {
   }
 
   // getDeviceToken();
-  if (Platform.isAndroid) {
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  }
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   servicesLocator();
 
