@@ -43,7 +43,14 @@ Future<void> main() async {
     print('User granted permission: ${settings.authorizationStatus}');
   }
 
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  // ios foreground notification
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
     if (kDebugMode) {
       print('Got a message whilst in the foreground!');
       print('Message data: ${message.notification!.title}');
