@@ -46,22 +46,24 @@ class CategoryItem extends StatelessWidget {
                   const EdgeInsetsDirectional.only(start: 8, end: 8, top: 8),
               height: 65,
               width: double.infinity,
-              child: Image.network(
-                imageLoader(category.urlImg),
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const Image(
-                  image: AssetImage(imageHolder),
-                  fit: BoxFit.fitWidth,
-                ),
-              )
-
-              // SvgPicture.network(
-              //   imageLoader(category.urlImg),
-              //   semanticsLabel: 'SVG From Network',
-              //   placeholderBuilder: (BuildContext context) =>
-              //       const Center(child: CircularProgressIndicator()),
-              // )
-              ,
+              child: category.urlImg
+                          .substring(category.urlImg.length - 3)
+                          .toLowerCase() !=
+                      "svg"
+                  ? Image.network(
+                      imageLoader(category.urlImg),
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => const Image(
+                        image: AssetImage(imageHolder),
+                        fit: BoxFit.fitWidth,
+                      ),
+                    )
+                  : SvgPicture.network(
+                      imageLoader(category.urlImg),
+                      semanticsLabel: 'SVG From Network',
+                      placeholderBuilder: (BuildContext context) =>
+                          const Center(child: CircularProgressIndicator()),
+                    ),
             ),
             Padding(
               padding: const EdgeInsetsDirectional.only(

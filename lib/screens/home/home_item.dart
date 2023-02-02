@@ -151,23 +151,23 @@ class HomeCategoryItem extends StatelessWidget {
             SizedBox(
               height: 65,
               width: double.infinity,
-              child: Image.network(
-                imageLoader(data.urlImg),
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const Image(
-                  image: AssetImage(imageHolder),
-                  fit: BoxFit.fitWidth,
-                ),
-              )
-
-              // SvgPicture.network(
-              //   imageLoader(data.urlImg),
-              //   semanticsLabel: 'SVG From Network',
-              //   placeholderBuilder: (BuildContext context) =>
-              //       const Center(child: CircularProgressIndicator()),
-              // )
-
-              ,
+              child:
+                  data.urlImg.substring(data.urlImg.length - 3).toLowerCase() !=
+                          "svg"
+                      ? Image.network(
+                          imageLoader(data.urlImg),
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => const Image(
+                            image: AssetImage(imageHolder),
+                            fit: BoxFit.fitWidth,
+                          ),
+                        )
+                      : SvgPicture.network(
+                          imageLoader(data.urlImg),
+                          semanticsLabel: 'SVG From Network',
+                          placeholderBuilder: (BuildContext context) =>
+                              const Center(child: CircularProgressIndicator()),
+                        ),
             ),
             Padding(
               padding: const EdgeInsetsDirectional.only(

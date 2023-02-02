@@ -14,7 +14,7 @@ import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import '../post/post_obj.dart';
 import '../register/register.dart';
-import '../static_content/dots_indicator/src/dots_indicator.dart';
+import '../../widgets/dots_indicator/src/dots_indicator.dart';
 import 'profile.dart';
 
 class EditProfile extends StatefulWidget {
