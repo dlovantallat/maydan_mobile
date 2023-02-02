@@ -229,8 +229,10 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) =>
-                                const StaticContentScreen(name: "about_us")));
+                            builder: (_) => StaticContentScreen(
+                                title: AppLocalizations.of(context)!
+                                    .home_drawer_about_us,
+                                name: "about_us")));
                   },
                 ),
                 ListTile(
@@ -284,41 +286,41 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                     widget.listener.indexListener(3);
                   },
                 ),
-                ListTile(
-                  shape: const Border(
-                    bottom: BorderSide(color: Color(0x5E000000)),
-                  ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(AppLocalizations.of(context)!.home_drawer_help),
-                      const Icon(Icons.arrow_forward_ios_outlined)
-                    ],
-                  ),
-                  onTap: () {
-                    // Update the state of the app.
-                    // ...
-                  },
-                ),
-                ListTile(
-                  shape: const Border(
-                    bottom: BorderSide(color: Color(0x5E000000)),
-                  ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(AppLocalizations.of(context)!.home_drawer_faq),
-                      const Icon(Icons.arrow_forward_ios_outlined)
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) =>
-                                const StaticContentScreen(name: "faq")));
-                  },
-                ),
+                // ListTile(
+                //   shape: const Border(
+                //     bottom: BorderSide(color: Color(0x5E000000)),
+                //   ),
+                //   title: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Text(AppLocalizations.of(context)!.home_drawer_help),
+                //       const Icon(Icons.arrow_forward_ios_outlined)
+                //     ],
+                //   ),
+                //   onTap: () {
+                //     // Update the state of the app.
+                //     // ...
+                //   },
+                // ),
+                // ListTile(
+                //   shape: const Border(
+                //     bottom: BorderSide(color: Color(0x5E000000)),
+                //   ),
+                //   title: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Text(AppLocalizations.of(context)!.home_drawer_faq),
+                //       const Icon(Icons.arrow_forward_ios_outlined)
+                //     ],
+                //   ),
+                //   onTap: () {
+                //     Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //             builder: (_) =>
+                //                 const StaticContentScreen(name: "faq")));
+                //   },
+                // ),
                 ListTile(
                   shape: const Border(
                     bottom: BorderSide(color: Color(0x5E000000)),
@@ -354,8 +356,10 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => const StaticContentScreen(
-                                name: "terms and conditions")));
+                            builder: (_) => StaticContentScreen(
+                                title: AppLocalizations.of(context)!
+                                    .home_drawer_terms_and_conditions,
+                                name: "terms_and_condition")));
                   },
                 ),
                 ListTile(
@@ -371,8 +375,10 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => const StaticContentScreen(
-                                name: "privacy policy")));
+                            builder: (_) => StaticContentScreen(
+                                title: AppLocalizations.of(context)!
+                                    .home_drawer_privacy_policy,
+                                name: "privacy_and_policy")));
                   },
                 ),
               ],

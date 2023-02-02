@@ -7,8 +7,10 @@ import 'static_content_obj.dart';
 
 class StaticContentScreen extends StatefulWidget {
   final String name;
+  final String title;
 
-  const StaticContentScreen({Key? key, required this.name}) : super(key: key);
+  const StaticContentScreen({Key? key, required this.title, required this.name})
+      : super(key: key);
 
   @override
   State<StaticContentScreen> createState() => _StaticContentScreenState();
@@ -41,7 +43,7 @@ class _StaticContentScreenState extends State<StaticContentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.name),
+        title: Text(widget.title),
       ),
       body: Builder(builder: (context) {
         if (isLoading) {
@@ -62,8 +64,12 @@ class _StaticContentScreenState extends State<StaticContentScreen> {
           );
         }
 
-        return Center(
-          child: Text(staticContent.data!.name),
+        return Container(
+          margin: const EdgeInsetsDirectional.all(16),
+          child: Text(
+            staticContent.data!.text,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+          ),
         );
       }),
     );
