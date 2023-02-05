@@ -57,7 +57,7 @@ class MaydanServices {
 
   Future<ApiResponse<CategoryObj>> getCategories(String localLang) {
     return http
-        .get(Uri.parse("${baseURL}categories"),
+        .get(Uri.parse("${baseURL}categories?per_page=60"),
             headers: headers(languageKey: localLang))
         .timeout(timeOutDuration)
         .then(
@@ -84,7 +84,9 @@ class MaydanServices {
   Future<ApiResponse<SubCategoryObj>> getSubCategories(
       String categoryId, String localLang) {
     return http
-        .get(Uri.parse("${baseURL}categories/$categoryId/subcategories"),
+        .get(
+            Uri.parse(
+                "${baseURL}categories/$categoryId/subcategories?per_page=60"),
             headers: headers(languageKey: localLang))
         .timeout(timeOutDuration)
         .then(
