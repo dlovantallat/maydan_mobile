@@ -174,6 +174,7 @@ class MaydanServices {
     required String duration,
     required String currencyType,
     required String districtId,
+    required String firebaseToken,
     required List<UploadImage> uploadedPhotos,
   }) async {
     var request = http.MultipartRequest('POST', Uri.parse("${baseURL}items"));
@@ -184,6 +185,7 @@ class MaydanServices {
     request.fields['currency_type'] = currencyType == "USD" ? "U" : "I";
     request.fields['district_id'] = districtId;
     request.fields['price_announced'] = price;
+    request.fields['firebase_token'] = firebaseToken;
 
     List<http.MultipartFile> newList = <http.MultipartFile>[];
 

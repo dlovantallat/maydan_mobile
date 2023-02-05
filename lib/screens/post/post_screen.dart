@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -329,6 +330,7 @@ class _PostScreenState extends State<PostScreen>
     }
 
     String token = await getToken();
+    String firebaseToken = await FirebaseMessaging.instance.getToken() ?? "";
 
     loading(context);
     postItem = await service.postItem(
@@ -340,6 +342,7 @@ class _PostScreenState extends State<PostScreen>
       duration: _dropdownDurationValue,
       currencyType: _dropdownPriceValue,
       districtId: _dropdownDistrictValue!.id,
+      firebaseToken: firebaseToken,
       uploadedPhotos: uploadedPhotos,
     );
     if (!mounted) return;
@@ -363,6 +366,12 @@ class _PostScreenState extends State<PostScreen>
         print("code ${postItem.errorMessage} e");
       }
     }
+  }
+
+  void getDeviceToken() async {
+    await FirebaseMessaging.instance
+        .getToken()
+        .then((token) => print("token: $token"));
   }
 
   resetScreen() {
