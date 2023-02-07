@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -53,7 +54,7 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
       if (updateItemRequest.statusCode == 200) {
         widget.listener.onFavRemove("id");
       } else {
-        setSnackBar(context, "item can't be sold out there is an error");
+        setSnackBar(context, AppLocalizations.of(context)!.item_sold_out_error);
       }
     } else {
       setSnackBar(context, updateItemRequest.errorMessage);
@@ -64,15 +65,16 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
     String token = await getToken();
 
     deleteItemRequest = await service.deleteItem(token, widget.data.id);
+    if (!mounted) return;
 
     if (!deleteItemRequest.requestStatus) {
       if (deleteItemRequest.statusCode == 200) {
         widget.listener.onFavRemove("");
       } else {
-        print("ddd");
+        setSnackBar(context, deleteItemRequest.errorMessage);
       }
     } else {
-      print(deleteItemRequest.errorMessage);
+      setSnackBar(context, deleteItemRequest.errorMessage);
     }
   }
 
@@ -87,10 +89,11 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
               children: [
                 Column(
                   children: [
-                    const Padding(
-                      padding: EdgeInsetsDirectional.only(top: 8, bottom: 16),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.only(top: 8, bottom: 16),
                       child: Text(
-                        "Are you sure you want to delete this post",
+                        AppLocalizations.of(context)!.delete_post_description,
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -115,7 +118,9 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                               onPressed: () {
                                 Navigator.pop(context);
                               },
-                              child: Text("No, keep it".toUpperCase()),
+                              child: Text(AppLocalizations.of(context)!
+                                  .delete_post_no
+                                  .toUpperCase()),
                             ),
                           ),
                         ),
@@ -139,7 +144,9 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                                 },
                               ),
                             ),
-                            child: Text("Yes, Deleted".toUpperCase()),
+                            child: Text(AppLocalizations.of(context)!
+                                .delete_post_yes
+                                .toUpperCase()),
                           ),
                         ),
                       ],
@@ -222,7 +229,7 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                       if (!widget.isFav) customDivider() else const SizedBox(),
                       !widget.isFav
                           ? Text(
-                              "Status: ${widget.data.currentAmount == 0 ? "Sold out" : widget.data.status == "I" ? "in review" : "published"}")
+                              "${AppLocalizations.of(context)!.post_status} ${widget.data.currentAmount == 0 ? AppLocalizations.of(context)!.post_sold_out : widget.data.status == "I" ? AppLocalizations.of(context)!.post_in_review : AppLocalizations.of(context)!.post_published}")
                           : const SizedBox(),
                     ],
                   )),
@@ -299,8 +306,8 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                         openEditItem();
                       },
                       child: Row(
-                        children: const [
-                          Padding(
+                        children: [
+                          const Padding(
                             padding: EdgeInsetsDirectional.only(
                                 start: 8, end: 8, top: 4, bottom: 4),
                             child: Icon(
@@ -309,8 +316,9 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                             ),
                           ),
                           Text(
-                            "Edit",
-                            style: TextStyle(color: Colors.white, fontSize: 16),
+                            AppLocalizations.of(context)!.profile_edit,
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 16),
                           ),
                         ],
                       ),
@@ -332,8 +340,8 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                         soldOut();
                       },
                       child: Row(
-                        children: const [
-                          Padding(
+                        children: [
+                          const Padding(
                             padding: EdgeInsetsDirectional.only(
                                 start: 8, end: 8, top: 4, bottom: 4),
                             child: Icon(
@@ -342,8 +350,9 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                             ),
                           ),
                           Text(
-                            "Sold Out",
-                            style: TextStyle(color: Colors.white, fontSize: 16),
+                            AppLocalizations.of(context)!.post_sold_out,
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 16),
                           ),
                         ],
                       ),

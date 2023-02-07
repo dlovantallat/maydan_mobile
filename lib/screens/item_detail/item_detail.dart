@@ -86,7 +86,7 @@ class _ItemDetailState extends State<ItemDetail> {
       if (result) {
         await launchUrl(uri);
       } else {
-        setSnackBar(context, "Can't call right know");
+        setSnackBar(context, AppLocalizations.of(context)!.call_not_available);
       }
     });
   }
@@ -128,7 +128,7 @@ class _ItemDetailState extends State<ItemDetail> {
   void shareUrl() {
     Share.share(
         'https://maydanwebsite-production.up.railway.app/item/${widget.item.id}',
-        subject: 'share this item');
+        subject: AppLocalizations.of(context)!.share_item);
   }
 
   @override

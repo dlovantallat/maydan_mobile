@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -55,7 +55,7 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
         this.image = imageTemp;
       });
     } on PlatformException catch (e) {
-      print("an error occurred $e");
+      setSnackBar(context, "an error occurred $e");
     }
   }
 
@@ -67,7 +67,7 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
         passwordConfirmationController.text.trim().toString();
 
     if (name.isEmpty) {
-      setSnackBar(context, "Please enter a name");
+      setSnackBar(context, AppLocalizations.of(context)!.profile_name_val);
       return;
     }
 
@@ -76,19 +76,19 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
           .hasMatch(email);
       if (!emailValid) {
-        setSnackBar(context, "Please enter a correct email");
+        setSnackBar(context, AppLocalizations.of(context)!.profile_email_val);
         return;
       }
     }
 
     if (password.isEmpty) {
-      setSnackBar(context, "Please enter a password");
+      setSnackBar(context, AppLocalizations.of(context)!.profile_password_val);
       return;
     }
 
     if (password != passwordConfirmation) {
       setSnackBar(
-          context, "Confirmed Password must be exactly the same as password");
+          context, AppLocalizations.of(context)!.profile_password_con_val);
       return;
     }
 
@@ -205,11 +205,12 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsetsDirectional.only(bottom: 8, top: 20),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(bottom: 8, top: 20),
                     child: Text(
-                      "First and last name",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.profile_fl_name_caption,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -232,11 +233,12 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(bottom: 8, top: 16),
                     child: Text(
-                      "Email (Optional)",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.profile_email_caption,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -259,11 +261,12 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(bottom: 8, top: 16),
                     child: Text(
-                      "Password",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.profile_password_caption,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -288,11 +291,13 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(bottom: 8, top: 16),
                     child: Text(
-                      "Password Confirmed",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!
+                          .profile_password_con_caption,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -330,7 +335,8 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
                         onPressed: () {
                           registerRequest();
                         },
-                        child: const Text("Register")),
+                        child: Text(AppLocalizations.of(context)!
+                            .profile_register_btn)),
                   )
                 ],
               )

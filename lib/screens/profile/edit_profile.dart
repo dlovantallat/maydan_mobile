@@ -186,9 +186,7 @@ class _EditProfileState extends State<EditProfile> {
         this.image = imageTemp;
       });
     } on PlatformException catch (e) {
-      if (kDebugMode) {
-        print("an error occurred $e");
-      }
+      setSnackBar(context, "an error occurred $e");
     }
   }
 
@@ -207,9 +205,7 @@ class _EditProfileState extends State<EditProfile> {
         imageBanner = imageTemp;
       });
     } on PlatformException catch (e) {
-      if (kDebugMode) {
-        print("an error occurred $e");
-      }
+      setSnackBar(context, "an error occurred $e");
     }
   }
 

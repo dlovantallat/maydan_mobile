@@ -264,7 +264,8 @@ class _HomeScreenState extends State<HomeScreen>
                               isCompany = !isCompany;
                             });
                           },
-                          child: const Text("view less")),
+                          child: Text(
+                              AppLocalizations.of(context)!.home_view_less)),
                       Expanded(
                         child: SmartRefresher(
                           controller: refreshController,
@@ -308,7 +309,8 @@ class _HomeScreenState extends State<HomeScreen>
                               isHotDeals = !isHotDeals;
                             });
                           },
-                          child: const Text("view less")),
+                          child: Text(
+                              AppLocalizations.of(context)!.home_view_less)),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsetsDirectional.only(
@@ -353,7 +355,8 @@ class _HomeScreenState extends State<HomeScreen>
                               isLatest = !isLatest;
                             });
                           },
-                          child: const Text("view less")),
+                          child: Text(
+                              AppLocalizations.of(context)!.home_view_less)),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsetsDirectional.only(

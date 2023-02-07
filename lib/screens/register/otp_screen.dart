@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -73,11 +74,12 @@ class _OtpScreenState extends State<OtpScreen> {
         padding: const EdgeInsetsDirectional.only(start: 32, end: 32),
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsetsDirectional.only(top: 64),
+            Padding(
+              padding: const EdgeInsetsDirectional.only(top: 64),
               child: Text(
-                "Verification",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                AppLocalizations.of(context)!.otp_verification,
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
               ),
             ),
             OTPTextField(
@@ -114,7 +116,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     ),
                   ),
                   onPressed: otpNumberControllerCounter >= 6 ? otpSend : null,
-                  child: const Text("Verify")),
+                  child: Text(AppLocalizations.of(context)!.otp_verify)),
             ),
           ],
         ),

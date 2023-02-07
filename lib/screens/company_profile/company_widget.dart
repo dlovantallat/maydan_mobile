@@ -197,7 +197,7 @@ class _CompanyWidgetState extends State<CompanyWidget> {
                       onPressed: () {
                         _secondGetMyItems();
                       },
-                      child: const Text("load more"),
+                      child: Text(AppLocalizations.of(context)!.load_more),
                     ),
                   )
             : Container(),

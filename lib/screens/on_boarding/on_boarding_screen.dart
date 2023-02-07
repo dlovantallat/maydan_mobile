@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../main.dart';
@@ -55,7 +55,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               child: TextButton(
                   onPressed: skip,
                   child: Text(
-                    pos == 2 ? "Get Start" : "Skip",
+                    pos == 2
+                        ? AppLocalizations.of(context)!.on_board_get_start
+                        : AppLocalizations.of(context)!.on_board_skip,
                     style: const TextStyle(color: Colors.black),
                   )),
             ),

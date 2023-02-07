@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:maydan/screens/static_content/static_content_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,6 +8,7 @@ import '../../utilities/locale_provider.dart';
 import '../company_profile/company_list_screen.dart';
 import '../my_ads/my_ads_screen.dart';
 import '../profile/profile.dart';
+import '../static_content/static_content_screen.dart';
 import 'home_screen.dart';
 
 class HomeDrawer extends StatefulWidget {

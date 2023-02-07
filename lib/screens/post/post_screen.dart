@@ -125,7 +125,7 @@ class _PostScreenState extends State<PostScreen>
     _dropdownCategoryValue = null;
     if (!categories.requestStatus) {
       if (categories.statusCode == 200) {
-        _dropdownCategoriesDrop.add(CategoryDrop("-1", "Select"));
+        _dropdownCategoriesDrop.add(CategoryDrop("-1", ""));
         for (var i in categories.data!.data) {
           _dropdownCategoriesDrop.add(CategoryDrop(i.id, i.title));
         }
@@ -240,9 +240,7 @@ class _PostScreenState extends State<PostScreen>
 
         this.image = imageTemp;
       } on PlatformException catch (e) {
-        if (kDebugMode) {
-          print("an error occurred $e");
-        }
+        setSnackBar(context, "an error occurred $e");
       }
 
       setState(() {
@@ -250,7 +248,9 @@ class _PostScreenState extends State<PostScreen>
       });
     } else {
       setSnackBar(
-          context, "you have reached the limit: ${uploadedPhotos.length}");
+          context,
+          AppLocalizations.of(context)!
+              .post_limit_image(uploadedPhotos.length));
     }
   }
 
@@ -274,9 +274,7 @@ class _PostScreenState extends State<PostScreen>
         uploadedPhotos.addAll(arr);
       });
     } on PlatformException catch (e) {
-      if (kDebugMode) {
-        print("an error occurred $e");
-      }
+      setSnackBar(context, "an error occurred $e");
     }
   }
 
@@ -287,8 +285,7 @@ class _PostScreenState extends State<PostScreen>
 
     if (_dropdownSubCategoryValue == null ||
         _dropdownSubCategoryValue == _dropdownSubCategoriesDrop.first) {
-      setSnackBar(context,
-          "Please choose a subCategory or choose another category which has subCategory");
+      setSnackBar(context, AppLocalizations.of(context)!.post_sub_category_val);
       return;
     }
 
@@ -298,34 +295,33 @@ class _PostScreenState extends State<PostScreen>
     }
 
     if (uploadedPhotos.isEmpty) {
-      setSnackBar(context, "Please upload at least one image");
+      setSnackBar(context, AppLocalizations.of(context)!.post_no_image);
       return;
     }
 
     if (title.isEmpty) {
-      setSnackBar(context, "title can't be empty");
+      setSnackBar(context, AppLocalizations.of(context)!.post_title_val);
       return;
     }
 
     if (description.isEmpty) {
-      setSnackBar(context, "description can't be empty");
+      setSnackBar(context, AppLocalizations.of(context)!.post_description_val);
       return;
     }
 
     if (price.isEmpty) {
-      setSnackBar(context, "price can't be empty");
+      setSnackBar(context, AppLocalizations.of(context)!.post_price_val);
       return;
     }
 
     if (_dropdownCityValue == null) {
-      setSnackBar(context, "Please choose at least one city");
+      setSnackBar(context, AppLocalizations.of(context)!.post_city_val);
       return;
     }
 
     if (_dropdownDistrictValue == null ||
         _dropdownDistrictValue == _dropdownDistrictsDrop.first) {
-      setSnackBar(context,
-          "Please choose a District or choose another City which has District");
+      setSnackBar(context, AppLocalizations.of(context)!.post_district_val);
       return;
     }
 
@@ -353,25 +349,12 @@ class _PostScreenState extends State<PostScreen>
         postSucceed();
       } else {
         Navigator.pop(context);
-        if (kDebugMode) {
-          print("code ${postItem.statusCode} d");
-          print("code ${postItem.errorMessage} e");
-        }
-
         setSnackBar(context, "post added: error ${postItem.errorMessage}");
       }
     } else {
       Navigator.pop(context);
-      if (kDebugMode) {
-        print("code ${postItem.errorMessage} e");
-      }
+      setSnackBar(context, "post added: error ${postItem.errorMessage}");
     }
-  }
-
-  void getDeviceToken() async {
-    await FirebaseMessaging.instance
-        .getToken()
-        .then((token) => print("token: $token"));
   }
 
   resetScreen() {
@@ -389,15 +372,17 @@ class _PostScreenState extends State<PostScreen>
         context: context,
         builder: (_) {
           return AlertDialog(
-            title: const Text("Post Succeed"),
+            title: Text(AppLocalizations.of(context)!.post_success_title),
             content: Wrap(
               alignment: WrapAlignment.center,
               children: [
                 Column(
                   children: [
-                    const Padding(
-                      padding: EdgeInsetsDirectional.only(top: 8, bottom: 16),
-                      child: Text("We are reviewing your item please wait"),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.only(top: 8, bottom: 16),
+                      child:
+                          Text(AppLocalizations.of(context)!.post_success_body),
                     ),
                     Row(
                       children: [
@@ -425,7 +410,9 @@ class _PostScreenState extends State<PostScreen>
                                 },
                               ),
                             ),
-                            child: Text("Close".toUpperCase()),
+                            child: Text(AppLocalizations.of(context)!
+                                .post_success_close
+                                .toUpperCase()),
                           ),
                         ),
                       ],
@@ -570,7 +557,8 @@ class _PostScreenState extends State<PostScreen>
                                         }),
                             ),
                           )
-                        : const Text("Please Select another category"),
+                        : Text(AppLocalizations.of(context)!
+                            .post_select_another_cat),
                 Padding(
                   padding: const EdgeInsetsDirectional.only(top: 12, bottom: 4),
                   child: Text(AppLocalizations.of(context)!.post_add_images),
@@ -608,10 +596,13 @@ class _PostScreenState extends State<PostScreen>
                                           height: 50,
                                           width: 30,
                                         ),
-                                        const Padding(
-                                          padding: EdgeInsetsDirectional.only(
-                                              top: 8),
-                                          child: Text("Add new Photo"),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.only(
+                                                  top: 8),
+                                          child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .post_add_new_photo),
                                         )
                                       ],
                                     ),
@@ -657,20 +648,20 @@ class _PostScreenState extends State<PostScreen>
                   controller: descriptionController,
                   maxLines: null,
                   minLines: 3,
-                  decoration: const InputDecoration(
-                      focusedBorder: OutlineInputBorder(
+                  decoration: InputDecoration(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 1),
                         borderRadius: BorderRadius.all(
                           Radius.circular(16.0),
                         ),
                       ),
-                      enabledBorder: OutlineInputBorder(
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 1),
                         borderRadius: BorderRadius.all(
                           Radius.circular(16.0),
                         ),
                       ),
-                      hintText: "Please write your description"),
+                      hintText: AppLocalizations.of(context)!.post_write_des),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -755,12 +746,12 @@ class _PostScreenState extends State<PostScreen>
                           ),
                           child: Row(
                             children: [
-                              const Padding(
-                                padding: EdgeInsetsDirectional.only(
+                              Padding(
+                                padding: const EdgeInsetsDirectional.only(
                                     start: 8, end: 8),
                                 child: Text(
-                                  "Week",
-                                  style: TextStyle(color: appColor),
+                                  AppLocalizations.of(context)!.post_week,
+                                  style: const TextStyle(color: appColor),
                                 ),
                               ),
                               Padding(
@@ -856,8 +847,8 @@ class _PostScreenState extends State<PostScreen>
                                             }),
                                       ),
                                     )
-                                  : const Text(
-                                      "Please Select another category"),
+                                  : Text(AppLocalizations.of(context)!
+                                      .post_select_another_city),
                         ],
                       ),
                     ),
@@ -915,8 +906,9 @@ class _PostScreenState extends State<PostScreen>
                                               }),
                                         ),
                                       )
-                                    : const Text(
-                                        "Please Select another City",
+                                    : Text(
+                                        AppLocalizations.of(context)!
+                                            .post_select_another_district,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),

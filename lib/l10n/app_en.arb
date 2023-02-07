@@ -70,5 +70,75 @@
         "type": "String"
       }
     }
-  }
+  },
+  "url_cannot_lunch": "Could not launch {url}",
+  "@url_cannot_lunch": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "viber_whatsapp_temp": "hi, What can i do for you",
+  "load_more": "load more",
+  "fav_remove_not": "Cannot remove favorite",
+  "home_view_less": "view less",
+  "call_not_available": "Can't call right know",
+  "share_item": "share this item",
+  "edit_update_btn": "Update",
+  "my_ads_title": "My Ads",
+  "item_sold_out_error": "item can't be sold out there is an error",
+  "delete_post_description": "Are you sure you want to delete this post",
+  "delete_post_no": "No, keep it",
+  "delete_post_yes": "Yes, Delete it",
+  "post_status": "Status:",
+  "post_sold_out": "Sold out",
+  "post_in_review": "in review",
+  "post_published": "published",
+  "on_board_get_start": "Get Start",
+  "on_board_skip": "Skip",
+  "post_limit_image": "you have reached the limit: {limit}",
+  "@post_limit_image": {
+    "placeholders": {
+      "limit": {
+        "type": "Integer"
+      }
+    }
+  },
+  "post_sub_category_val": "Please choose a subCategory or choose another category which has subCategory",
+  "post_no_image": "Please upload at least one image",
+  "post_title_val": "title can't be empty",
+  "post_description_val": "description can't be empty",
+  "post_price_val": "can't be empty",
+  "post_district_val": "Please choose a District or choose another City which has District",
+  "post_city_val": " Please choose at least one city",
+  "post_success_title": "Post Succeed",
+  "post_success_body": "We are reviewing your item please wait",
+  "post_success_close": "Close",
+  "post_select_another_cat": "Please Select another category",
+  "post_select_another_city": "Please Select another City",
+  "post_select_another_district": "Please Select another district",
+  "post_add_new_photo": "Add new Photo",
+  "post_write_des": "Please write your description",
+  "post_week": "Week",
+  "login_btn": "Login",
+  "signup_btn": "Sign Up",
+  "forget_password_btn": "Forget Password",
+  "profile_name_val": "Please enter a name",
+  "profile_email_val": "Please enter a correct email",
+  "profile_password_val": "Please enter a password",
+  "profile_password_con_val": "Confirmed Password must be exactly the same as password",
+  "profile_fl_name_caption": "First and last name",
+  "profile_email_caption": "Email (Optional)",
+  "profile_address_caption": "Address",
+  "profile_password_caption": "Password",
+  "profile_password_con_caption": "Password Confirmed",
+  "profile_service_caption": "Service type",
+  "profile_register_btn": "Register",
+  "otp_verification": "Verification",
+  "otp_verify": "Verify",
+  "register_p": "Personal account",
+  "register_c": "Company account",
+  "register_pn": "Phone number",
+  "register_continue": "Continue"
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -180,7 +181,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               onPressed: phoneCounter >= 10 && passwordCounter >= 1
                   ? loginRequest
                   : null,
-              child: const Text("Login"),
+              child: Text(AppLocalizations.of(context)!.login_btn),
             ),
           ),
           TextButton(
@@ -188,17 +189,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (_) => const RegisterScreen()));
               },
-              child: const Text(
-                "Sign Up",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
+              child: Text(
+                AppLocalizations.of(context)!.signup_btn,
+                style: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.w700),
               )),
           TextButton(
               onPressed: () {},
-              child: const Text(
-                "Forget Password",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
+              child: Text(
+                AppLocalizations.of(context)!.forget_password_btn,
+                style: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.w700),
               )),
         ],
       ),

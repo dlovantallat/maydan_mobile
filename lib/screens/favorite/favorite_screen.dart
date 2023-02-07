@@ -112,8 +112,8 @@ class _FavoriteScreenState extends State<FavoriteScreen>
         data.clear();
         currentPage = 1;
         getMyFavorite();
-      }else{
-        setSnackBar(context, "Cannot remove favorite");
+      } else {
+        setSnackBar(context, AppLocalizations.of(context)!.fav_remove_not);
       }
     } else {
       Navigator.pop(context);

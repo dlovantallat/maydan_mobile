@@ -63,8 +63,8 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
         }
 
         if (subCategories.requestStatus) {
-          return const Center(
-            child: Text("Failed"),
+          return Center(
+            child: Text(subCategories.errorMessage),
           );
         }
 

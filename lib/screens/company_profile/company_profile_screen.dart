@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:maydan/utilities/app_utilities.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../utilities/app_utilities.dart';
 import '../../widgets/whatsapp_unilink.dart';
 import '../profile/profile.dart';
 import 'company_widget.dart';
@@ -21,14 +22,15 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
     final Uri url = Uri.parse(adsUrl);
 
     if (!await launchUrl(url)) {
-      setSnackBar(context, 'Could not launch $url');
+      setSnackBar(context,
+          AppLocalizations.of(context)!.url_cannot_lunch(url.toString()));
     }
   }
 
   launchWhatsAppUri() async {
     final link = WhatsAppUnilink(
       phoneNumber: '+${widget.data.msisdn}',
-      text: "hi how are you?",
+      text: AppLocalizations.of(context)!.viber_whatsapp_temp,
     );
     await launchUrl(link.asUri());
   }
@@ -62,7 +64,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
               child: InkWell(
                 onTap: () {
                   _launchUrl(
-                      "viber://chat/?number=+${widget.data.msisdn}&draft=hi how are you?");
+                      "viber://chat/?number=+${widget.data.msisdn}&draft=${AppLocalizations.of(context)!.viber_whatsapp_temp}");
                 },
                 child: SvgPicture.asset(
                   vSvg,

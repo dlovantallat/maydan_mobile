@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
-import 'package:maydan/utilities/app_utilities.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/item.dart';
+import '../../utilities/app_utilities.dart';
 
 class EditItem extends StatefulWidget {
   final ItemData item;
@@ -58,7 +58,6 @@ class _EditItemState extends State<EditItem> {
     }
 
     String token = await getToken();
-    print("token:$token");
 
     updateItemRequest = await service.updateItem(
         token: token,
@@ -72,15 +71,12 @@ class _EditItemState extends State<EditItem> {
 
     if (!updateItemRequest.requestStatus) {
       if (updateItemRequest.statusCode == 200) {
-        print("updated");
         Navigator.pop(context, "refresh_update");
       } else {
-        print(updateItemRequest.errorMessage);
-        print(updateItemRequest.statusCode);
-        print("no");
+        setSnackBar(context, updateItemRequest.errorMessage);
       }
     } else {
-      print(updateItemRequest.errorMessage);
+      setSnackBar(context, updateItemRequest.errorMessage);
     }
   }
 
@@ -237,7 +233,8 @@ class _EditItemState extends State<EditItem> {
             Padding(
               padding: const EdgeInsetsDirectional.only(top: 80),
               child: ElevatedButton(
-                  onPressed: updateItem, child: const Text("Update")),
+                  onPressed: updateItem,
+                  child: Text(AppLocalizations.of(context)!.edit_update_btn)),
             )
           ],
         ),

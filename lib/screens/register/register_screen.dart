@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -33,7 +34,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         setSnackBar(context, otp.data!.message);
       } else {
         setSnackBar(context, "200: ${otp.data!.message}");
-        print("200: ${otp.data!.message}");
         nextScreen(phoneNumber);
       }
     }
@@ -99,7 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       isPersonal = !isPersonal;
                     });
                   },
-                  child: const Text("Personal account")),
+                  child: Text(AppLocalizations.of(context)!.register_p)),
               ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.resolveWith<Color?>(
@@ -121,12 +121,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       isPersonal = !isPersonal;
                     });
                   },
-                  child: const Text("Company account")),
+                  child: Text(AppLocalizations.of(context)!.register_c)),
             ],
           ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text("Phone number"),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(AppLocalizations.of(context)!.register_pn),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -204,7 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 onPressed: phoneCounter >= 10 ? otpRequest : null,
-                child: const Text("Continue")),
+                child: Text(AppLocalizations.of(context)!.register_continue)),
           ),
         ],
       ),

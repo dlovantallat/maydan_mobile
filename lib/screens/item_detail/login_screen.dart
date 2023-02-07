@@ -17,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> with LoginCallBack {
         appBar: AppBar(
           title: Text(
             AppLocalizations.of(context)!.login_title,
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
           ),
           iconTheme: const IconThemeData(
             color: Colors.black,

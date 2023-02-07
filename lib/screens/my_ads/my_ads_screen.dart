@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
@@ -102,9 +103,9 @@ class _MyAdsScreenState extends State<MyAdsScreen>
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const Text(
-          "My Ads",
-          style: TextStyle(color: Colors.black),
+        title: Text(
+          AppLocalizations.of(context)!.my_ads_title,
+          style: const TextStyle(color: Colors.black),
         ),
         iconTheme: const IconThemeData(color: Colors.black),
       ),

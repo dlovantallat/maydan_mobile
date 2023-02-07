@@ -1,18 +1,18 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:maydan/main.dart';
-import 'package:maydan/screens/register/register.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/category.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import '../post/post_obj.dart';
+import 'register.dart';
 
 class CompanyRegisterScreen extends StatefulWidget {
   final String phoneNumber;
@@ -89,7 +89,7 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
         passwordConfirmationController.text.trim().toString();
 
     if (name.isEmpty) {
-      setSnackBar(context, "Please enter a name");
+      setSnackBar(context, AppLocalizations.of(context)!.profile_name_val);
       return;
     }
 
@@ -98,25 +98,26 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
           .hasMatch(email);
       if (!emailValid) {
-        setSnackBar(context, "Please enter a correct email");
+        setSnackBar(context, AppLocalizations.of(context)!.profile_email_val);
         return;
       }
       return;
     }
 
     if (password.isEmpty) {
-      setSnackBar(context, "Please enter a password");
+      setSnackBar(context, AppLocalizations.of(context)!.profile_password_val);
       return;
     }
 
     if (password != passwordConfirmation) {
       setSnackBar(
-          context, "Confirmed Password must be exactly the same as password");
+          context, AppLocalizations.of(context)!.profile_password_con_val);
       return;
     }
 
     if (_dropdownCategoryValue == _dropdownCategoriesDrop.first) {
-      setSnackBar(context, "Select a category");
+      setSnackBar(
+          context, AppLocalizations.of(context)!.post_select_another_cat);
       return;
     }
 
@@ -166,7 +167,7 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
         this.image = imageTemp;
       });
     } on PlatformException catch (e) {
-      print("an error occurred $e");
+      setSnackBar(context, "an error occurred $e");
     }
   }
 
@@ -255,11 +256,12 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsetsDirectional.only(bottom: 8, top: 20),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(bottom: 8, top: 20),
                     child: Text(
-                      "First and last name",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.profile_fl_name_caption,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -282,11 +284,12 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(bottom: 8, top: 16),
                     child: Text(
-                      "Email (Optional)",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.profile_email_caption,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -309,11 +312,12 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(bottom: 8, top: 16),
                     child: Text(
-                      "Address",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.profile_address_caption,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -336,11 +340,12 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(bottom: 8, top: 16),
                     child: Text(
-                      "Password",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.profile_password_caption,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -365,11 +370,13 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(bottom: 8, top: 16),
                     child: Text(
-                      "Password Confirmed",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!
+                          .profile_password_con_caption,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -394,11 +401,12 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsetsDirectional.only(bottom: 8, top: 16),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(bottom: 8, top: 16),
                     child: Text(
-                      "Service type",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.profile_service_caption,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -457,7 +465,8 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
                           ),
                         ),
                         onPressed: registerRequest,
-                        child: const Text("Register")),
+                        child: Text(AppLocalizations.of(context)!
+                            .profile_register_btn)),
                   )
                 ],
               )
