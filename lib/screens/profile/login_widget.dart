@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/screens/profile/forget_password_screen.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -195,7 +196,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                     color: Colors.black, fontWeight: FontWeight.w700),
               )),
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const ForgetPasswordScreen()));
+              },
               child: Text(
                 AppLocalizations.of(context)!.forget_password_btn,
                 style: const TextStyle(

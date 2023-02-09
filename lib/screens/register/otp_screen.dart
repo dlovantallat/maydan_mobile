@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/screens/profile/reset_password_screen.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -13,12 +14,14 @@ import 'register.dart';
 
 class OtpScreen extends StatefulWidget {
   final bool isPersonal;
+  final bool isRest;
   final String phoneNumber;
 
   const OtpScreen({
     Key? key,
     required this.isPersonal,
     required this.phoneNumber,
+    this.isRest = false,
   }) : super(key: key);
 
   @override
@@ -28,6 +31,7 @@ class OtpScreen extends StatefulWidget {
 class _OtpScreenState extends State<OtpScreen> {
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<OtpRespond> otpService;
+  late ApiResponse<OtpRespond> otpServiceRest;
 
   String otp = "";
   int otpNumberControllerCounter = 0;
@@ -36,26 +40,48 @@ class _OtpScreenState extends State<OtpScreen> {
   void otpSend() async {
     loading(context);
 
-    otpService = await service.verifyPinCode(widget.phoneNumber, otp);
-    if (!mounted) return;
+    if (widget.isRest) {
+      otpServiceRest = await service.verifyChangePass(widget.phoneNumber, otp);
+      if (!mounted) return;
+      if (!otpServiceRest.requestStatus) {
+        if (otpServiceRest.statusCode == 200) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => ResetPasswordScreen(
+                        phoneNumber: widget.phoneNumber,
+                        tempToken: otpServiceRest.data!.token,
+                      )));
+        }else{
+          Navigator.pop(context);
+          setSnackBar(context, "eeer");
+        }
+      }else{
+        Navigator.pop(context);
+        setSnackBar(context, "errr");
+      }
+    } else {
+      otpService = await service.verifyPinCode(widget.phoneNumber, otp);
+      if (!mounted) return;
 
-    if (!otpService.requestStatus) {
-      if (otpService.statusCode == 200) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => !widget.isPersonal
-                  ? PersonalRegisterScreen(
-                      phoneNumber: widget.phoneNumber,
-                      tempToken: otpService.data!.token,
-                      isPersonal: widget.isPersonal,
-                    )
-                  : CompanyRegisterScreen(
-                      phoneNumber: widget.phoneNumber,
-                      tempToken: otpService.data!.token,
-                      isPersonal: widget.isPersonal,
-                    ),
-            ));
+      if (!otpService.requestStatus) {
+        if (otpService.statusCode == 200) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => !widget.isPersonal
+                    ? PersonalRegisterScreen(
+                        phoneNumber: widget.phoneNumber,
+                        tempToken: otpService.data!.token,
+                        isPersonal: widget.isPersonal,
+                      )
+                    : CompanyRegisterScreen(
+                        phoneNumber: widget.phoneNumber,
+                        tempToken: otpService.data!.token,
+                        isPersonal: widget.isPersonal,
+                      ),
+              ));
+        }
       }
     }
   }

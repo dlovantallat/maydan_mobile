@@ -66,3 +66,17 @@ class UpdateUser {
     );
   }
 }
+
+class ChangePassword {
+  String id;
+  String message;
+
+  ChangePassword({required this.id, required this.message});
+
+  factory ChangePassword.json(dynamic it) {
+    return ChangePassword(
+      id: it['id'] == null ? "" : it['id'] as String,
+      message: it['message'] == null ? "" : it['message'] as String,
+    );
+  }
+}

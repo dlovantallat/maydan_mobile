@@ -366,6 +366,39 @@ class MaydanServices {
     );
   }
 
+  Future<ApiResponse<RequestOtpRespond>> requestChangePass(String phoneNumber) {
+    var request =
+        http.MultipartRequest('POST', Uri.parse("${baseURL}requestChangePass"));
+
+    request.fields['msisdn'] = "964$phoneNumber";
+
+    request.headers.addAll(headers());
+
+    return request.send().then(
+      (data) async {
+        if (data.statusCode == 200) {
+          final respStr = await data.stream.bytesToString();
+
+          final login = RequestOtpRespond.json(jsonDecode(respStr));
+
+          return ApiResponse<RequestOtpRespond>(data: login);
+        } else if (data.statusCode == 403) {
+          final respStr = await data.stream.bytesToString();
+
+          final login = RequestOtpRespond.json(jsonDecode(respStr));
+
+          return ApiResponse<RequestOtpRespond>(data: login, statusCode: 403);
+        }
+
+        return ApiResponse<RequestOtpRespond>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<RequestOtpRespond>(
+          requestStatus: true, errorMessage: s.toString()),
+    );
+  }
+
   Future<ApiResponse<OtpRespond>> verifyPinCode(
       String phoneNumber, String otp) {
     var request =
@@ -400,6 +433,89 @@ class MaydanServices {
     ).catchError(
       (s) => ApiResponse<OtpRespond>(
           requestStatus: true, errorMessage: s.toString(), statusCode: 0),
+    );
+  }
+
+  Future<ApiResponse<OtpRespond>> verifyChangePass(
+      String phoneNumber, String otp) {
+    var request =
+        http.MultipartRequest('POST', Uri.parse("${baseURL}verifyChangePass"));
+
+    request.fields['msisdn'] = "964$phoneNumber";
+    request.fields['pincode'] = otp;
+
+    request.headers.addAll(headers());
+
+    return request.send().then(
+      (data) async {
+        if (data.statusCode == 200) {
+          final respStr = await data.stream.bytesToString();
+
+          final login = OtpRespond.json(jsonDecode(respStr));
+
+          return ApiResponse<OtpRespond>(data: login, statusCode: 200);
+        } else if (data.statusCode == 403) {
+          final respStr = await data.stream.bytesToString();
+
+          final login = OtpRespond.json(jsonDecode(respStr));
+
+          return ApiResponse<OtpRespond>(data: login, statusCode: 403);
+        }
+
+        return ApiResponse<OtpRespond>(
+            requestStatus: true,
+            errorMessage: "API Communication Down",
+            statusCode: 0);
+      },
+    ).catchError(
+      (s) => ApiResponse<OtpRespond>(
+          requestStatus: true, errorMessage: s.toString(), statusCode: 0),
+    );
+  }
+
+  Future<ApiResponse<ChangePassword>> changePassword(
+    String token,
+    String phoneNumber,
+    String password,
+  ) async {
+    var request =
+        http.MultipartRequest('POST', Uri.parse("${baseURL}changePassword"));
+
+    request.fields['token'] = token;
+    request.fields['password'] = password;
+    request.fields['password_confirmation'] = password;
+    request.fields['msisdn'] = phoneNumber;
+
+    request.headers.addAll(headers());
+
+    return request.send().then(
+      (data) async {
+        if (data.statusCode == 200) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = ChangePassword.json(jsonDecode(respStr));
+
+          return ApiResponse<ChangePassword>(data: register);
+        } else if (data.statusCode == 422) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = ChangePassword.json(jsonDecode(respStr));
+          return ApiResponse<ChangePassword>(
+              statusCode: 422, errorMessage: register.message);
+        } else if (data.statusCode == 403) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = ChangePassword.json(jsonDecode(respStr));
+          return ApiResponse<ChangePassword>(
+              statusCode: 403, errorMessage: register.message);
+        }
+
+        return ApiResponse<ChangePassword>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<ChangePassword>(
+          requestStatus: true, errorMessage: s.toString()),
     );
   }
 
