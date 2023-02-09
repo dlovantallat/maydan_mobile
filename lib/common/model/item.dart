@@ -126,11 +126,11 @@ class UserObj {
 
   factory UserObj.fromJson(Map<String, dynamic> item) {
     return UserObj(
-      id: item['id'],
-      msisdn: item['msisdn'],
-      name: item['name'],
-      email: item['email'],
-      usertype: item['usertype'],
+      id: item['id'] ?? "",
+      msisdn: item['msisdn'] ?? "",
+      name: item['name'] ?? "",
+      email: item['email'] ?? "",
+      usertype: item['usertype'] ?? "",
     );
   }
 }

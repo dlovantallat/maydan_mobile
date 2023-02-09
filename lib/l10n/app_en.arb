@@ -101,7 +101,7 @@
   "@post_limit_image": {
     "placeholders": {
       "limit": {
-        "type": "Integer"
+        "type": "String"
       }
     }
   },

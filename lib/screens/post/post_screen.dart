@@ -250,7 +250,7 @@ class _PostScreenState extends State<PostScreen>
       setSnackBar(
           context,
           AppLocalizations.of(context)!
-              .post_limit_image(uploadedPhotos.length));
+              .post_limit_image("${uploadedPhotos.length}"));
     }
   }
 
