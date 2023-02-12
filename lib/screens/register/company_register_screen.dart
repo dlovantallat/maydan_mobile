@@ -143,12 +143,7 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
       } else if (register.statusCode == 403) {
         setSnackBar(context, register.data!.message);
       } else {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (_) {
-          return const MainPage(
-            index: 4,
-          );
-        }), (route) => false);
+        accountSucceed();
       }
     }
   }
@@ -169,6 +164,66 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
     } on PlatformException catch (e) {
       setSnackBar(context, "an error occurred $e");
     }
+  }
+
+  accountSucceed() {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: Text(
+                AppLocalizations.of(context)!.account_company_title_dialog),
+            content: Wrap(
+              alignment: WrapAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.only(top: 8, bottom: 16),
+                      child: Text(AppLocalizations.of(context)!
+                          .account_company_body_dialog),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(builder: (_) {
+                                return const MainPage(
+                                  index: 0,
+                                );
+                              }), (route) => false);
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                appColor,
+                              ),
+                              minimumSize:
+                                  MaterialStateProperty.resolveWith<Size>(
+                                (Set<MaterialState> states) {
+                                  return const Size(
+                                    double.infinity,
+                                    40,
+                                  );
+                                },
+                              ),
+                            ),
+                            child: Text(AppLocalizations.of(context)!
+                                .post_success_close
+                                .toUpperCase()),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+        barrierDismissible: true);
   }
 
   @override

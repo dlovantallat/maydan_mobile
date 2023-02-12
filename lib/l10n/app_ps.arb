@@ -112,5 +112,7 @@
   "register_p": "Personal account",
   "register_c": "Company account",
   "register_pn": "Phone number",
-  "register_continue": "Continue"
+  "register_continue": "Continue",
+  "account_company_title_dialog": "Account Creation",
+  "account_company_body_dialog": "You have successfully created your account. please wait until we are going to review it."
 }
