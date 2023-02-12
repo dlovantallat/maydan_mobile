@@ -41,10 +41,11 @@ class HomeItem extends StatelessWidget {
                 index == 0
                     ? AppLocalizations.of(context)!.home_categories
                     : index == 1
-                        ? AppLocalizations.of(context)!.home_company_profile
+                        ? AppLocalizations.of(context)!.home_hot_items
                         : index == 2
-                            ? AppLocalizations.of(context)!.home_hot_items
-                            : AppLocalizations.of(context)!.home_latest_items,
+                            ? AppLocalizations.of(context)!.home_latest_items
+                            : AppLocalizations.of(context)!
+                                .home_company_profile,
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
@@ -68,11 +69,11 @@ Widget cases(int index, HomeObj homeObj) {
   if (index == 0) {
     return homeItemRow(homeObj.categoryList.length, index, homeObj);
   } else if (index == 1) {
-    return homeItemRow(homeObj.profile.length, index, homeObj);
-  } else if (index == 2) {
     return homeItemRow(homeObj.itemSection.hotDeals.length, index, homeObj);
-  } else {
+  } else if (index == 2) {
     return homeItemRow(homeObj.itemSection.latest.length, index, homeObj);
+  } else {
+    return homeItemRow(homeObj.profile.length, index, homeObj);
   }
 }
 

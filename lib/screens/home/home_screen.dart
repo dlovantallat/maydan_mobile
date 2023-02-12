@@ -412,17 +412,6 @@ class _HomeScreenState extends State<HomeScreen>
       //Category
       widget.listener.indexListener(1);
     } else if (index == 1) {
-      currentPage = 1;
-      totalPage = 0;
-      noMoreLoad = true;
-      companyData.clear();
-
-      setState(() {
-        isViewAll = !isViewAll;
-        isCompany = !isCompany;
-      });
-      getActiveCompanies();
-    } else if (index == 2) {
       //hot
       currentPage = 1;
       totalPage = 0;
@@ -434,7 +423,7 @@ class _HomeScreenState extends State<HomeScreen>
       });
 
       getHotDeals();
-    } else if (index == 3) {
+    } else if (index == 2) {
       //latest
       currentPage = 1;
       totalPage = 0;
@@ -446,6 +435,18 @@ class _HomeScreenState extends State<HomeScreen>
       });
 
       getHotDeals();
+    } else if (index == 3) {
+      // Company
+      currentPage = 1;
+      totalPage = 0;
+      noMoreLoad = true;
+      companyData.clear();
+
+      setState(() {
+        isViewAll = !isViewAll;
+        isCompany = !isCompany;
+      });
+      getActiveCompanies();
     }
   }
 
