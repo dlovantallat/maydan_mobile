@@ -73,6 +73,7 @@ class _PostScreenState extends State<PostScreen>
   bool isDistrictLoading = false;
   bool isDistrictLoaded = false;
   String token = "";
+  final _formKey = GlobalKey<FormState>();
 
   File? image;
 
@@ -84,6 +85,14 @@ class _PostScreenState extends State<PostScreen>
 
   List<UploadImage> uploadedPhotos = [];
   String localLang = "";
+  bool isPrice = false;
+
+  final oib = const OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.black, width: 1),
+    borderRadius: BorderRadius.all(
+      Radius.circular(16.0),
+    ),
+  );
 
   @override
   void initState() {
@@ -125,7 +134,7 @@ class _PostScreenState extends State<PostScreen>
     _dropdownCategoryValue = null;
     if (!categories.requestStatus) {
       if (categories.statusCode == 200) {
-        _dropdownCategoriesDrop.add(CategoryDrop("-1", ""));
+        _dropdownCategoriesDrop.add(CategoryDrop("-1", "Select"));
         for (var i in categories.data!.data) {
           _dropdownCategoriesDrop.add(CategoryDrop(i.id, i.title));
         }
@@ -279,81 +288,103 @@ class _PostScreenState extends State<PostScreen>
   }
 
   void save() async {
-    String title = titleController.text.trim();
-    String description = descriptionController.text.trim();
-    String price = priceController.text.trim();
-
-    if (_dropdownSubCategoryValue == null ||
-        _dropdownSubCategoryValue == _dropdownSubCategoriesDrop.first) {
-      setSnackBar(context, AppLocalizations.of(context)!.post_sub_category_val);
-      return;
+    if (priceController.text.trim().isEmpty) {
+      setState(() {
+        isPrice = true;
+      });
+    } else {
+      setState(() {
+        isPrice = false;
+      });
     }
 
-    if (uploadedPhotos.length > 5) {
-      setSnackBar(context, "Please upload no more than five image");
-      return;
-    }
+    if (_formKey.currentState!.validate()) {
+      String title = titleController.text.trim();
+      String description = descriptionController.text.trim();
+      String price = priceController.text.trim();
 
-    if (uploadedPhotos.isEmpty) {
-      setSnackBar(context, AppLocalizations.of(context)!.post_no_image);
-      return;
-    }
+      if (_dropdownSubCategoryValue == null ||
+          _dropdownSubCategoryValue == _dropdownSubCategoriesDrop.first) {
+        setSnackBar(
+            context, AppLocalizations.of(context)!.post_sub_category_val);
+        return;
+      }
 
-    if (title.isEmpty) {
-      setSnackBar(context, AppLocalizations.of(context)!.post_title_val);
-      return;
-    }
+      if (uploadedPhotos.length > 5) {
+        setSnackBar(context, "Please upload no more than five image");
+        return;
+      }
 
-    if (description.isEmpty) {
-      setSnackBar(context, AppLocalizations.of(context)!.post_description_val);
-      return;
-    }
+      if (uploadedPhotos.isEmpty) {
+        setSnackBar(context, AppLocalizations.of(context)!.post_no_image);
+        return;
+      }
 
-    if (price.isEmpty) {
-      setSnackBar(context, AppLocalizations.of(context)!.post_price_val);
-      return;
-    }
+      if (_dropdownCityValue == null) {
+        setSnackBar(context, AppLocalizations.of(context)!.post_city_val);
+        return;
+      }
 
-    if (_dropdownCityValue == null) {
-      setSnackBar(context, AppLocalizations.of(context)!.post_city_val);
-      return;
-    }
+      if (_dropdownDistrictValue == null ||
+          _dropdownDistrictValue == _dropdownDistrictsDrop.first) {
+        setSnackBar(context, AppLocalizations.of(context)!.post_district_val);
+        return;
+      }
 
-    if (_dropdownDistrictValue == null ||
-        _dropdownDistrictValue == _dropdownDistrictsDrop.first) {
-      setSnackBar(context, AppLocalizations.of(context)!.post_district_val);
-      return;
-    }
+      String token = await getToken();
+      String firebaseToken = await FirebaseMessaging.instance.getToken() ?? "";
 
-    String token = await getToken();
-    String firebaseToken = await FirebaseMessaging.instance.getToken() ?? "";
+      loading(context);
+      postItem = await service.postItem(
+        token: token,
+        title: title,
+        price: price,
+        description: description,
+        subCategory: _dropdownSubCategoryValue!.id,
+        duration: _dropdownDurationValue,
+        currencyType: _dropdownPriceValue,
+        districtId: _dropdownDistrictValue!.id,
+        firebaseToken: firebaseToken,
+        uploadedPhotos: uploadedPhotos,
+      );
+      if (!mounted) return;
 
-    loading(context);
-    postItem = await service.postItem(
-      token: token,
-      title: title,
-      price: price,
-      description: description,
-      subCategory: _dropdownSubCategoryValue!.id,
-      duration: _dropdownDurationValue,
-      currencyType: _dropdownPriceValue,
-      districtId: _dropdownDistrictValue!.id,
-      firebaseToken: firebaseToken,
-      uploadedPhotos: uploadedPhotos,
-    );
-    if (!mounted) return;
-
-    if (!postItem.requestStatus) {
-      if (postItem.statusCode == 201) {
-        Navigator.pop(context);
-        postSucceed();
+      if (!postItem.requestStatus) {
+        if (postItem.statusCode == 201) {
+          Navigator.pop(context);
+          postSucceed();
+        } else {
+          Navigator.pop(context);
+          setSnackBar(context, "post added: error ${postItem.errorMessage}");
+        }
       } else {
         Navigator.pop(context);
         setSnackBar(context, "post added: error ${postItem.errorMessage}");
       }
+    }
+  }
+
+  String? validateTitle(String? value) {
+    if (value!.isEmpty) {
+      return AppLocalizations.of(context)!.post_title_val;
     } else {
-      Navigator.pop(context);
-      setSnackBar(context, "post added: error ${postItem.errorMessage}");
+      return null;
+    }
+  }
+
+  String? validateDescription(String? value) {
+    if (value!.isEmpty) {
+      return AppLocalizations.of(context)!.post_description_val;
+    } else {
+      return null;
+    }
+  }
+
+  String? validatePrice(String? value) {
+    if (value!.isEmpty) {
+      return null;
+    } else {
+      return null;
     }
   }
 
@@ -465,61 +496,212 @@ class _PostScreenState extends State<PostScreen>
 
           return Container(
             margin: const EdgeInsetsDirectional.only(start: 16, end: 16),
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(bottom: 4),
-                  child: Text(AppLocalizations.of(context)!.post_category),
-                ),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    border: Border.all(
-                        color: Colors.black,
-                        style: BorderStyle.solid,
-                        width: 1),
+            child: Form(
+              key: _formKey,
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(bottom: 4),
+                    child: Text(AppLocalizations.of(context)!.post_category),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
-                    child: DropdownButton<CategoryDrop>(
-                        isExpanded: true,
-                        underline: const SizedBox(),
-                        items: _dropdownCategoriesDrop.map((CategoryDrop user) {
-                          return DropdownMenuItem<CategoryDrop>(
-                            value: user,
-                            child: Text(
-                              user.title,
-                              style: TextStyle(
-                                  color: user == _dropdownCategoryValue
-                                      ? appColor
-                                      : Colors.black),
-                            ),
-                          );
-                        }).toList(),
-                        value: _dropdownCategoryValue,
-                        onChanged: (i) {
-                          setState(() {
-                            _dropdownCategoryValue = i!;
-                          });
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                      border: Border.all(
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: 1),
+                    ),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.only(start: 8, end: 8),
+                      child: DropdownButton<CategoryDrop>(
+                          isExpanded: true,
+                          underline: const SizedBox(),
+                          items:
+                              _dropdownCategoriesDrop.map((CategoryDrop user) {
+                            return DropdownMenuItem<CategoryDrop>(
+                              value: user,
+                              child: Text(
+                                user.title,
+                                style: TextStyle(
+                                    color: user == _dropdownCategoryValue
+                                        ? appColor
+                                        : Colors.black),
+                              ),
+                            );
+                          }).toList(),
+                          value: _dropdownCategoryValue,
+                          onChanged: (i) {
+                            setState(() {
+                              _dropdownCategoryValue = i!;
+                            });
 
-                          if (i != _dropdownCategoriesDrop.first) {
-                            getSub(_dropdownCategoryValue!.id);
-                          } else {
-                            isSubLoaded = false;
-                          }
-                        }),
+                            if (i != _dropdownCategoriesDrop.first) {
+                              getSub(_dropdownCategoryValue!.id);
+                            } else {
+                              isSubLoaded = false;
+                            }
+                          }),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(top: 12, bottom: 4),
-                  child: Text(AppLocalizations.of(context)!.post_sub_category),
-                ),
-                isSubLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : isSubLoaded
-                        ? Container(
-                            width: double.infinity,
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(top: 12, bottom: 4),
+                    child:
+                        Text(AppLocalizations.of(context)!.post_sub_category),
+                  ),
+                  isSubLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : isSubLoaded
+                          ? Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                                border: Border.all(
+                                    color: Colors.black,
+                                    style: BorderStyle.solid,
+                                    width: 1),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.only(
+                                    start: 8, end: 8),
+                                child: DropdownButton<SubCategoryDrop>(
+                                    isExpanded: true,
+                                    underline: const SizedBox(),
+                                    items: _dropdownSubCategoriesDrop
+                                        .map((SubCategoryDrop user) {
+                                      return DropdownMenuItem<SubCategoryDrop>(
+                                        value: user,
+                                        child: Text(
+                                          user.title,
+                                          style: TextStyle(
+                                              color: user ==
+                                                      _dropdownSubCategoryValue
+                                                  ? appColor
+                                                  : Colors.black),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    value: _dropdownSubCategoryValue,
+                                    onChanged: !isSubLoaded
+                                        ? null
+                                        : (i) {
+                                            setState(() {
+                                              _dropdownSubCategoryValue = i!;
+                                            });
+                                          }),
+                              ),
+                            )
+                          : Text(AppLocalizations.of(context)!
+                              .post_select_another_cat),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(top: 12, bottom: 4),
+                    child: Text(AppLocalizations.of(context)!.post_add_images),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 130,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: uploadedPhotos.length + 1,
+                          itemBuilder: (context, index) => index == 0
+                              ? InkWell(
+                                  onTap: multiImage,
+                                  child: Card(
+                                    elevation: 8,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Container(
+                                      height: 100,
+                                      width: 112,
+                                      clipBehavior: Clip.hardEdge,
+                                      decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8))),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SvgPicture.asset(
+                                            editProfileSvg,
+                                            height: 50,
+                                            width: 30,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .only(top: 8),
+                                            child: Text(
+                                                AppLocalizations.of(context)!
+                                                    .post_add_new_photo),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : PostImageItem(
+                                  index: index - 1,
+                                  image: uploadedPhotos[index - 1].image,
+                                  listener: this,
+                                ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(bottom: 8, top: 20),
+                    child:
+                        Text(AppLocalizations.of(context)!.post_title_caption),
+                  ),
+                  TextFormField(
+                    controller: titleController,
+                    validator: validateTitle,
+                    decoration: InputDecoration(
+                      focusedBorder: oib,
+                      enabledBorder: oib,
+                      errorBorder: oib,
+                      focusedErrorBorder: oib,
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(bottom: 8, top: 20),
+                    child: Text(
+                        AppLocalizations.of(context)!.post_description_caption),
+                  ),
+                  TextFormField(
+                    controller: descriptionController,
+                    validator: validateDescription,
+                    maxLines: null,
+                    minLines: 3,
+                    decoration: InputDecoration(
+                        focusedBorder: oib,
+                        enabledBorder: oib,
+                        errorBorder: oib,
+                        focusedErrorBorder: oib,
+                        hintText: AppLocalizations.of(context)!.post_write_des),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.only(
+                                top: 12, bottom: 4),
+                            child: Text(AppLocalizations.of(context)!
+                                .post_price_caption),
+                          ),
+                          Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.0),
                               border: Border.all(
@@ -527,334 +709,126 @@ class _PostScreenState extends State<PostScreen>
                                   style: BorderStyle.solid,
                                   width: 1),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.only(
-                                  start: 8, end: 8),
-                              child: DropdownButton<SubCategoryDrop>(
-                                  isExpanded: true,
-                                  underline: const SizedBox(),
-                                  items: _dropdownSubCategoriesDrop
-                                      .map((SubCategoryDrop user) {
-                                    return DropdownMenuItem<SubCategoryDrop>(
-                                      value: user,
-                                      child: Text(
-                                        user.title,
-                                        style: TextStyle(
-                                            color: user ==
-                                                    _dropdownSubCategoryValue
-                                                ? appColor
-                                                : Colors.black),
-                                      ),
-                                    );
-                                  }).toList(),
-                                  value: _dropdownSubCategoryValue,
-                                  onChanged: !isSubLoaded
-                                      ? null
-                                      : (i) {
-                                          setState(() {
-                                            _dropdownSubCategoryValue = i!;
-                                          });
-                                        }),
-                            ),
-                          )
-                        : Text(AppLocalizations.of(context)!
-                            .post_select_another_cat),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(top: 12, bottom: 4),
-                  child: Text(AppLocalizations.of(context)!.post_add_images),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 130,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: uploadedPhotos.length + 1,
-                        itemBuilder: (context, index) => index == 0
-                            ? InkWell(
-                                onTap: multiImage,
-                                child: Card(
-                                  elevation: 8,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Container(
-                                    height: 100,
-                                    width: 112,
-                                    clipBehavior: Clip.hardEdge,
-                                    decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(8))),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SvgPicture.asset(
-                                          editProfileSvg,
-                                          height: 50,
-                                          width: 30,
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.only(
-                                                  top: 8),
-                                          child: Text(
-                                              AppLocalizations.of(context)!
-                                                  .post_add_new_photo),
-                                        )
-                                      ],
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 100,
+                                  child: TextFormField(
+                                    controller: priceController,
+                                    validator: validatePrice,
+                                    keyboardType: TextInputType.number,
+                                    textAlign: TextAlign.center,
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: '0',
                                     ),
                                   ),
                                 ),
-                              )
-                            : PostImageItem(
-                                index: index - 1,
-                                image: uploadedPhotos[index - 1].image,
-                                listener: this,
-                              ),
-                      ),
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(bottom: 8, top: 20),
-                  child: Text(AppLocalizations.of(context)!.post_title_caption),
-                ),
-                TextField(
-                  controller: titleController,
-                  decoration: const InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(16.0),
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(16.0),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(bottom: 8, top: 20),
-                  child: Text(
-                      AppLocalizations.of(context)!.post_description_caption),
-                ),
-                TextField(
-                  controller: descriptionController,
-                  maxLines: null,
-                  minLines: 3,
-                  decoration: InputDecoration(
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black, width: 1),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(16.0),
-                        ),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black, width: 1),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(16.0),
-                        ),
-                      ),
-                      hintText: AppLocalizations.of(context)!.post_write_des),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                              top: 12, bottom: 4),
-                          child: Text(
-                              AppLocalizations.of(context)!.post_price_caption),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.0),
-                            border: Border.all(
-                                color: Colors.black,
-                                style: BorderStyle.solid,
-                                width: 1),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                      start: 8, end: 8),
+                                  child: DropdownButton(
+                                      underline: const SizedBox(),
+                                      items: _dropdownPriceDrop
+                                          .map((value) => DropdownMenuItem(
+                                                value: value,
+                                                child: Text(
+                                                  value,
+                                                  style: TextStyle(
+                                                      color: value ==
+                                                              _dropdownPriceValue
+                                                          ? appColor
+                                                          : Colors.black),
+                                                ),
+                                              ))
+                                          .toList(),
+                                      value: _dropdownPriceValue,
+                                      onChanged: (i) {
+                                        setState(() {
+                                          _dropdownPriceValue = i!;
+                                        });
+                                      }),
+                                ),
+                              ],
+                            ),
                           ),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 100,
-                                child: TextField(
-                                  controller: priceController,
-                                  keyboardType: TextInputType.number,
-                                  textAlign: TextAlign.center,
-                                  decoration: const InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: '0',
+                          isPrice
+                              ? Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                      start: 8, top: 8),
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .post_price_val,
+                                    style: const TextStyle(
+                                        color: Colors.red, fontSize: 12),
                                   ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.only(
-                                    start: 8, end: 8),
-                                child: DropdownButton(
-                                    underline: const SizedBox(),
-                                    items: _dropdownPriceDrop
-                                        .map((value) => DropdownMenuItem(
-                                              value: value,
-                                              child: Text(
-                                                value,
-                                                style: TextStyle(
-                                                    color: value ==
-                                                            _dropdownPriceValue
-                                                        ? appColor
-                                                        : Colors.black),
-                                              ),
-                                            ))
-                                        .toList(),
-                                    value: _dropdownPriceValue,
-                                    onChanged: (i) {
-                                      setState(() {
-                                        _dropdownPriceValue = i!;
-                                      });
-                                    }),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                              top: 12, bottom: 4),
-                          child: Text(AppLocalizations.of(context)!
-                              .post_duration_caption),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.0),
-                            border: Border.all(
-                                color: Colors.black,
-                                style: BorderStyle.solid,
-                                width: 1),
-                          ),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.only(
-                                    start: 8, end: 8),
-                                child: Text(
-                                  AppLocalizations.of(context)!.post_week,
-                                  style: const TextStyle(color: appColor),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.only(end: 8),
-                                child: DropdownButton(
-                                    underline: const SizedBox(),
-                                    items: _dropdownDurationDrop
-                                        .map((value) => DropdownMenuItem(
-                                              value: value,
-                                              child: Text(
-                                                value,
-                                                style: TextStyle(
-                                                    color: value ==
-                                                            _dropdownDurationValue
-                                                        ? appColor
-                                                        : Colors.black),
-                                              ),
-                                            ))
-                                        .toList(),
-                                    value: _dropdownDurationValue,
-                                    onChanged: (i) {
-                                      setState(() {
-                                        _dropdownDurationValue = i!;
-                                      });
-                                    }),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Column(
+                                )
+                              : const SizedBox()
+                        ],
+                      ),
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.only(
                                 top: 12, bottom: 4),
                             child: Text(AppLocalizations.of(context)!
-                                .post_city_caption),
+                                .post_duration_caption),
                           ),
-                          isCityLoading
-                              ? const Center(child: CircularProgressIndicator())
-                              : isCityLoaded
-                                  ? Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        border: Border.all(
-                                            color: Colors.black,
-                                            style: BorderStyle.solid,
-                                            width: 1),
-                                      ),
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsetsDirectional.only(
-                                                start: 8, end: 8),
-                                        child: DropdownButton(
-                                            underline: const SizedBox(),
-                                            items: _dropdownCitiesDrop
-                                                .map((CityDrop user) {
-                                              return DropdownMenuItem<CityDrop>(
-                                                value: user,
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              border: Border.all(
+                                  color: Colors.black,
+                                  style: BorderStyle.solid,
+                                  width: 1),
+                            ),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                      start: 8, end: 8),
+                                  child: Text(
+                                    AppLocalizations.of(context)!.post_week,
+                                    style: const TextStyle(color: appColor),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsetsDirectional.only(end: 8),
+                                  child: DropdownButton(
+                                      underline: const SizedBox(),
+                                      items: _dropdownDurationDrop
+                                          .map((value) => DropdownMenuItem(
+                                                value: value,
                                                 child: Text(
-                                                  user.title,
+                                                  value,
                                                   style: TextStyle(
-                                                      color: user ==
-                                                              _dropdownCityValue
+                                                      color: value ==
+                                                              _dropdownDurationValue
                                                           ? appColor
                                                           : Colors.black),
                                                 ),
-                                              );
-                                            }).toList(),
-                                            value: _dropdownCityValue,
-                                            onChanged: (i) {
-                                              setState(() {
-                                                _dropdownCityValue = i!;
-                                              });
-
-                                              if (i !=
-                                                  _dropdownCitiesDrop.first) {
-                                                getDistrict(
-                                                    _dropdownCityValue!.id);
-                                              } else {
-                                                isDistrictLoaded = false;
-                                              }
-                                            }),
-                                      ),
-                                    )
-                                  : Text(AppLocalizations.of(context)!
-                                      .post_select_another_city),
+                                              ))
+                                          .toList(),
+                                      value: _dropdownDurationValue,
+                                      onChanged: (i) {
+                                        setState(() {
+                                          _dropdownDurationValue = i!;
+                                        });
+                                      }),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.only(start: 16),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -862,12 +836,12 @@ class _PostScreenState extends State<PostScreen>
                               padding: const EdgeInsetsDirectional.only(
                                   top: 12, bottom: 4),
                               child: Text(AppLocalizations.of(context)!
-                                  .post_district_caption),
+                                  .post_city_caption),
                             ),
-                            isDistrictLoading
+                            isCityLoading
                                 ? const Center(
                                     child: CircularProgressIndicator())
-                                : isDistrictLoaded
+                                : isCityLoaded
                                     ? Container(
                                         decoration: BoxDecoration(
                                           borderRadius:
@@ -883,58 +857,125 @@ class _PostScreenState extends State<PostScreen>
                                                   start: 8, end: 8),
                                           child: DropdownButton(
                                               underline: const SizedBox(),
-                                              items: _dropdownDistrictsDrop
-                                                  .map((DistrictDrop user) {
+                                              items: _dropdownCitiesDrop
+                                                  .map((CityDrop user) {
                                                 return DropdownMenuItem<
-                                                    DistrictDrop>(
+                                                    CityDrop>(
                                                   value: user,
                                                   child: Text(
                                                     user.title,
                                                     style: TextStyle(
                                                         color: user ==
-                                                                _dropdownDistrictValue
+                                                                _dropdownCityValue
                                                             ? appColor
                                                             : Colors.black),
                                                   ),
                                                 );
                                               }).toList(),
-                                              value: _dropdownDistrictValue,
+                                              value: _dropdownCityValue,
                                               onChanged: (i) {
                                                 setState(() {
-                                                  _dropdownDistrictValue = i!;
+                                                  _dropdownCityValue = i!;
                                                 });
+
+                                                if (i !=
+                                                    _dropdownCitiesDrop.first) {
+                                                  getDistrict(
+                                                      _dropdownCityValue!.id);
+                                                } else {
+                                                  isDistrictLoaded = false;
+                                                }
                                               }),
                                         ),
                                       )
-                                    : Text(
-                                        AppLocalizations.of(context)!
-                                            .post_select_another_district,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                                    : Text(AppLocalizations.of(context)!
+                                        .post_select_another_city),
                           ],
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(top: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      OutlinedButton(
-                          onPressed: resetScreen,
-                          child: Text(
-                              AppLocalizations.of(context)!.post_clear_button)),
-                      ElevatedButton(
-                          onPressed: save,
-                          child: Text(
-                              AppLocalizations.of(context)!.post_save_button)),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.only(start: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.only(
+                                    top: 12, bottom: 4),
+                                child: Text(AppLocalizations.of(context)!
+                                    .post_district_caption),
+                              ),
+                              isDistrictLoading
+                                  ? const Center(
+                                      child: CircularProgressIndicator())
+                                  : isDistrictLoaded
+                                      ? Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                            border: Border.all(
+                                                color: Colors.black,
+                                                style: BorderStyle.solid,
+                                                width: 1),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .only(start: 8, end: 8),
+                                            child: DropdownButton(
+                                                underline: const SizedBox(),
+                                                items: _dropdownDistrictsDrop
+                                                    .map((DistrictDrop user) {
+                                                  return DropdownMenuItem<
+                                                      DistrictDrop>(
+                                                    value: user,
+                                                    child: Text(
+                                                      user.title,
+                                                      style: TextStyle(
+                                                          color: user ==
+                                                                  _dropdownDistrictValue
+                                                              ? appColor
+                                                              : Colors.black),
+                                                    ),
+                                                  );
+                                                }).toList(),
+                                                value: _dropdownDistrictValue,
+                                                onChanged: (i) {
+                                                  setState(() {
+                                                    _dropdownDistrictValue = i!;
+                                                  });
+                                                }),
+                                          ),
+                                        )
+                                      : Text(
+                                          AppLocalizations.of(context)!
+                                              .post_select_another_district,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(top: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        OutlinedButton(
+                            onPressed: resetScreen,
+                            child: Text(AppLocalizations.of(context)!
+                                .post_clear_button)),
+                        ElevatedButton(
+                            onPressed: save,
+                            child: Text(AppLocalizations.of(context)!
+                                .post_save_button)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         } else {
