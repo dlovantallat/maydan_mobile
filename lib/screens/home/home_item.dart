@@ -154,7 +154,7 @@ class HomeCategoryItem extends StatelessWidget {
       },
       child: Container(
         clipBehavior: Clip.hardEdge,
-        margin: const EdgeInsetsDirectional.only(end: 12, bottom: 12),
+        margin: const EdgeInsetsDirectional.only(end: 8, bottom: 12),
         decoration: BoxDecoration(
             color: const Color(0xffffffff),
             borderRadius: BorderRadius.circular(15),
@@ -165,11 +165,11 @@ class HomeCategoryItem extends StatelessWidget {
                   color: const Color(0x06b4b0b0).withOpacity(.8),
                   spreadRadius: -9)
             ]),
-        width: 120,
+        width: 87,
         child: Column(
           children: [
             SizedBox(
-              height: 65,
+              height: 52,
               width: double.infinity,
               child:
                   data.urlImg.substring(data.urlImg.length - 3).toLowerCase() !=

@@ -230,16 +230,14 @@ class _HomeScreenState extends State<HomeScreen>
             ? ListView(
                 children: [
                   Container(
+                    height: 156,
                     margin: const EdgeInsetsDirectional.only(
                       start: 12,
                       end: 12,
                       top: 16,
                       bottom: 16,
                     ),
-                    child: AspectRatio(
-                      aspectRatio: 16 / 9,
-                      child: homeSlider(context, images: home.data!.bannerList),
-                    ),
+                    child: homeSlider(context, images: home.data!.bannerList),
                   ),
                   ListView.builder(
                     shrinkWrap: true,
