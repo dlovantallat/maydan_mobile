@@ -29,7 +29,7 @@ class SubCategoryItem extends StatelessWidget {
     return InkWell(
       onTap: onSubItemClick,
       child: Container(
-        margin: const EdgeInsetsDirectional.only(start: 16, end: 16, bottom: 8),
+        margin: const EdgeInsetsDirectional.only(start: 16, end: 16, bottom: 0),
         child: Column(
           children: [
             Row(

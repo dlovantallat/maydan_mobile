@@ -74,12 +74,16 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
           );
         }
 
-        return ListView.builder(
-          itemBuilder: (context, index) => SubCategoryItem(
-            context: context,
-            subCategory: subCategories.data!.data[index],
+        return Padding(
+          padding:
+              const EdgeInsetsDirectional.only(start: 24, end: 24, top: 68),
+          child: ListView.builder(
+            itemBuilder: (context, index) => SubCategoryItem(
+              context: context,
+              subCategory: subCategories.data!.data[index],
+            ),
+            itemCount: subCategories.data!.data.length,
           ),
-          itemCount: subCategories.data!.data.length,
         );
       }),
     );
