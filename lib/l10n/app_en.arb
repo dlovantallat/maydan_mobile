@@ -143,5 +143,6 @@
   "register_continue": "Continue",
   "account_company_title_dialog": "Account Creation",
   "account_company_body_dialog": "You have successfully created your account. please wait until we are going to review it.",
-  "expiry_date_caption": "Expiry Date"
+  "expiry_date_caption": "Expiry Date",
+  "send_again_btn": "Send Again"
 }

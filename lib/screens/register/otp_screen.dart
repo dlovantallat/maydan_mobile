@@ -32,6 +32,7 @@ class _OtpScreenState extends State<OtpScreen> {
   MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<OtpRespond> otpService;
   late ApiResponse<OtpRespond> otpServiceRest;
+  late ApiResponse<RequestOtpRespond> otpRe;
 
   String otp = "";
   int otpNumberControllerCounter = 0;
@@ -86,6 +87,20 @@ class _OtpScreenState extends State<OtpScreen> {
     }
   }
 
+  otpRequest() async {
+    otpRe = await service.requestPinCode(widget.phoneNumber, widget.isPersonal);
+    if (!mounted) return;
+    if (otpRe.requestStatus) {
+      setSnackBar(context, otpRe.errorMessage);
+    } else {
+      if (otpRe.statusCode == 403) {
+        setSnackBar(context, otpRe.data!.message);
+      } else {
+        setSnackBar(context, "200: ${otpRe.data!.message}");
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,62 +114,72 @@ class _OtpScreenState extends State<OtpScreen> {
       body: Padding(
         padding: EdgeInsetsDirectional.only(
             start: 32, end: 32, top: (MediaQuery.of(context).size.height / 6)),
-        child: Card(
-          elevation: 8,
-          child: Wrap(
-            children: [
-              Column(
+        child: Column(
+          children: [
+            Card(
+              elevation: 8,
+              child: Wrap(
                 children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(top: 64),
-                    child: Text(
-                      AppLocalizations.of(context)!.otp_verification,
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  OTPTextField(
-                      controller: otpController,
-                      length: 6,
-                      width: MediaQuery.of(context).size.width,
-                      textFieldAlignment: MainAxisAlignment.spaceAround,
-                      fieldWidth: 45,
-                      fieldStyle: FieldStyle.underline,
-                      outlineBorderRadius: 8,
-                      style: const TextStyle(fontSize: 17),
-                      onChanged: (pin) {
-                        setState(() {
-                          otpNumberControllerCounter = pin.length;
-                        });
-                      },
-                      onCompleted: (pin) {
-                        otp = pin;
-                      }),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(
-                        top: 64, start: 8, end: 8, bottom: 16),
-                    child: ElevatedButton(
-                        style: ButtonStyle(
-                          minimumSize: MaterialStateProperty.resolveWith<Size>(
-                            (Set<MaterialState> states) {
-                              return const Size(double.infinity, 40);
-                            },
-                          ),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(top: 64),
+                        child: Text(
+                          AppLocalizations.of(context)!.otp_verification,
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w700),
                         ),
-                        onPressed:
-                            otpNumberControllerCounter >= 6 ? otpSend : null,
-                        child: Text(AppLocalizations.of(context)!.otp_verify)),
+                      ),
+                      OTPTextField(
+                          controller: otpController,
+                          length: 6,
+                          width: MediaQuery.of(context).size.width,
+                          textFieldAlignment: MainAxisAlignment.spaceAround,
+                          fieldWidth: 45,
+                          fieldStyle: FieldStyle.underline,
+                          outlineBorderRadius: 8,
+                          style: const TextStyle(fontSize: 17),
+                          onChanged: (pin) {
+                            setState(() {
+                              otpNumberControllerCounter = pin.length;
+                            });
+                          },
+                          onCompleted: (pin) {
+                            otp = pin;
+                          }),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(
+                            top: 64, start: 8, end: 8, bottom: 16),
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                              minimumSize:
+                                  MaterialStateProperty.resolveWith<Size>(
+                                (Set<MaterialState> states) {
+                                  return const Size(double.infinity, 40);
+                                },
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                            ),
+                            onPressed: otpNumberControllerCounter >= 6
+                                ? otpSend
+                                : null,
+                            child:
+                                Text(AppLocalizations.of(context)!.otp_verify)),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+            TextButton(
+                onPressed: otpRequest,
+                child: Text(AppLocalizations.of(context)!.send_again_btn))
+          ],
         ),
       ),
     );
