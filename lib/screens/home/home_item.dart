@@ -107,20 +107,20 @@ Widget homeItemRow(int length, int index, HomeObj homeObj, String key) {
         data: homeObj.categoryList[i],
       ));
     } else if (index == 1) {
-      list.add(HomeProfileItem(
-        profile: homeObj.profile[i],
-      ));
-    } else if (index == 2) {
       list.add(HomeSubItem(
         data: homeObj.itemSection.hotDeals[i],
         isFav: homeObj.itemSection.latest[i].favorite,
         keyLang: key,
       ));
-    } else {
+    } else if (index == 2) {
       list.add(HomeSubItem(
         data: homeObj.itemSection.latest[i],
         isFav: homeObj.itemSection.latest[i].favorite,
         keyLang: key,
+      ));
+    } else {
+      list.add(HomeProfileItem(
+        profile: homeObj.profile[i],
       ));
     }
   }
@@ -329,6 +329,8 @@ class _HomeSubItemState extends State<HomeSubItem> {
                                     : widget.keyLang == "ar"
                                         ? soldOutPngAr
                                         : soldOutPngCkb,
+                                height: 100,
+                                width: 100,
                               )
                             : Container(),
                       ],
@@ -387,7 +389,7 @@ class _HomeSubItemState extends State<HomeSubItem> {
                             padding: const EdgeInsetsDirectional.only(
                                 start: 8, bottom: 4),
                             child: Text(
-                              dateFormat(widget.data.statusDate),
+                              "${dateFormat(widget.data.statusDate)}\n",
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(

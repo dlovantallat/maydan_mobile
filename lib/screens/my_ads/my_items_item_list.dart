@@ -208,6 +208,8 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                                   : widget.keyLang == "ar"
                                       ? soldOutPngAr
                                       : soldOutPngCkb,
+                              height: 100,
+                              width: 100,
                             )
                           : Container(),
                     ],
