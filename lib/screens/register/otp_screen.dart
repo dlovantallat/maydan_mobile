@@ -52,11 +52,11 @@ class _OtpScreenState extends State<OtpScreen> {
                         phoneNumber: widget.phoneNumber,
                         tempToken: otpServiceRest.data!.token,
                       )));
-        }else{
+        } else {
           Navigator.pop(context);
           setSnackBar(context, "eeer");
         }
-      }else{
+      } else {
         Navigator.pop(context);
         setSnackBar(context, "errr");
       }
@@ -97,54 +97,64 @@ class _OtpScreenState extends State<OtpScreen> {
         backgroundColor: Colors.transparent,
       ),
       body: Padding(
-        padding: const EdgeInsetsDirectional.only(start: 32, end: 32),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.only(top: 64),
-              child: Text(
-                AppLocalizations.of(context)!.otp_verification,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-              ),
-            ),
-            OTPTextField(
-                controller: otpController,
-                length: 6,
-                width: MediaQuery.of(context).size.width,
-                textFieldAlignment: MainAxisAlignment.spaceAround,
-                fieldWidth: 45,
-                fieldStyle: FieldStyle.underline,
-                outlineBorderRadius: 8,
-                style: const TextStyle(fontSize: 17),
-                onChanged: (pin) {
-                  setState(() {
-                    otpNumberControllerCounter = pin.length;
-                  });
-                },
-                onCompleted: (pin) {
-                  otp = pin;
-                }),
-            Padding(
-              padding:
-                  const EdgeInsetsDirectional.only(top: 64, start: 8, end: 8),
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.resolveWith<Size>(
-                      (Set<MaterialState> states) {
-                        return const Size(double.infinity, 40);
-                      },
-                    ),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
+        padding: EdgeInsetsDirectional.only(
+            start: 32, end: 32, top: (MediaQuery.of(context).size.height / 6)),
+        child: Card(
+          elevation: 8,
+          child: Wrap(
+            children: [
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(top: 64),
+                    child: Text(
+                      AppLocalizations.of(context)!.otp_verification,
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w700),
                     ),
                   ),
-                  onPressed: otpNumberControllerCounter >= 6 ? otpSend : null,
-                  child: Text(AppLocalizations.of(context)!.otp_verify)),
-            ),
-          ],
+                  OTPTextField(
+                      controller: otpController,
+                      length: 6,
+                      width: MediaQuery.of(context).size.width,
+                      textFieldAlignment: MainAxisAlignment.spaceAround,
+                      fieldWidth: 45,
+                      fieldStyle: FieldStyle.underline,
+                      outlineBorderRadius: 8,
+                      style: const TextStyle(fontSize: 17),
+                      onChanged: (pin) {
+                        setState(() {
+                          otpNumberControllerCounter = pin.length;
+                        });
+                      },
+                      onCompleted: (pin) {
+                        otp = pin;
+                      }),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                        top: 64, start: 8, end: 8, bottom: 16),
+                    child: ElevatedButton(
+                        style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.resolveWith<Size>(
+                            (Set<MaterialState> states) {
+                              return const Size(double.infinity, 40);
+                            },
+                          ),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                        onPressed:
+                            otpNumberControllerCounter >= 6 ? otpSend : null,
+                        child: Text(AppLocalizations.of(context)!.otp_verify)),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
