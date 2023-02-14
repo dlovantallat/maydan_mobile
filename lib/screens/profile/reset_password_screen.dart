@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../cloud_functions/api_response.dart';
@@ -26,6 +27,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   MaydanServices get service => GetIt.I<MaydanServices>();
 
   late ApiResponse<ChangePassword> changePassword;
+  final oib = const OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.grey, width: 1),
+    borderRadius: BorderRadius.all(
+      Radius.circular(16.0),
+    ),
+  );
 
   void resetPassword() async {
     String password = passwordController.text.trim().toString();
@@ -72,70 +79,86 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Reset Password"),
+        backgroundColor: Colors.transparent,
+        iconTheme: const IconThemeData(
+          color: Colors.black,
+        ),
+        title: const Text(
+          "Reset Password",
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: Column(
         children: [
+          Container(
+            margin: const EdgeInsetsDirectional.only(bottom: 64, top: 32),
+            child: SvgPicture.asset(
+              maydanLogoSvg,
+              semanticsLabel: '',
+            ),
+          ),
           Padding(
-            padding: const EdgeInsetsDirectional.all(8.0),
+            padding: const EdgeInsetsDirectional.only(
+                bottom: 8, top: 8, start: 16, end: 16),
             child: TextField(
               controller: passwordController,
               keyboardType: TextInputType.text,
               obscureText: true,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 fillColor: Colors.white,
                 filled: true,
-                prefixIcon: Icon(
+                prefixIcon: const Icon(
                   Icons.password,
                   color: appColor,
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white, width: 2),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white, width: 2),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
-                ),
+                focusedBorder: oib,
+                enabledBorder: oib,
                 hintText: 'Password',
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsetsDirectional.all(8.0),
+            padding: const EdgeInsetsDirectional.only(
+                bottom: 8, top: 8, start: 16, end: 16),
             child: TextField(
               controller: passwordConfirmationController,
               keyboardType: TextInputType.text,
               obscureText: true,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 fillColor: Colors.white,
                 filled: true,
-                prefixIcon: Icon(
+                prefixIcon: const Icon(
                   Icons.password,
                   color: appColor,
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white, width: 2),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white, width: 2),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
-                ),
+                focusedBorder: oib,
+                enabledBorder: oib,
                 hintText: 'Password Confirmation',
               ),
             ),
           ),
-          ElevatedButton(onPressed: resetPassword, child: Text("Save"))
+          Padding(
+            padding:
+                const EdgeInsetsDirectional.only(start: 16, end: 16, top: 16),
+            child: ElevatedButton(
+              style: ButtonStyle(
+                minimumSize: MaterialStateProperty.resolveWith<Size>(
+                  (Set<MaterialState> states) {
+                    return const Size(double.infinity, 60);
+                  },
+                ),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+              onPressed: resetPassword,
+              child: const Text("Save"),
+            ),
+          )
         ],
       ),
     );

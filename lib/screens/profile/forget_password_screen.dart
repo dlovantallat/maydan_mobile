@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../cloud_functions/api_response.dart';
@@ -20,6 +21,12 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   int phoneNumberControllerCounter = 0;
 
   late ApiResponse<RequestOtpRespond> otp;
+  final oib = const OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.grey, width: 1),
+    borderRadius: BorderRadius.all(
+      Radius.circular(16.0),
+    ),
+  );
 
   void smsSend() async {
     loading(context);
@@ -56,11 +63,33 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Forget Password"),
+        backgroundColor: Colors.transparent,
+        iconTheme: const IconThemeData(
+          color: Colors.black,
+        ),
+        title: const Text(
+          "Forget Password",
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: Column(
         children: [
+          Container(
+            margin: const EdgeInsetsDirectional.only(bottom: 64, top: 32),
+            child: SvgPicture.asset(
+              maydanLogoSvg,
+              semanticsLabel: '',
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsetsDirectional.only(bottom: 16),
+            child: Text(
+              "Enter Your Phone Number",
+              style: TextStyle(fontSize: 14, color: Colors.black),
+            ),
+          ),
           Padding(
             padding: const EdgeInsetsDirectional.all(16),
             child: TextField(
@@ -90,24 +119,29 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     ],
                   ),
                 ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white, width: 2),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
-                ),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white, width: 2),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
-                ),
+                focusedBorder: oib,
+                enabledBorder: oib,
               ),
             ),
           ),
-          ElevatedButton(
-              onPressed: phoneNumberControllerCounter >= 10 ? smsSend : null,
-              child: const Text("Send"))
+          Padding(
+            padding: const EdgeInsetsDirectional.only(start: 16, end: 16),
+            child: ElevatedButton(
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.resolveWith<Size>(
+                    (Set<MaterialState> states) {
+                      return const Size(double.infinity, 60);
+                    },
+                  ),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+                onPressed: phoneNumberControllerCounter >= 10 ? smsSend : null,
+                child: const Text("Send")),
+          )
         ],
       ),
     );
