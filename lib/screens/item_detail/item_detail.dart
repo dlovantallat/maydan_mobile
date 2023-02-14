@@ -35,6 +35,7 @@ class _ItemDetailState extends State<ItemDetail> {
   bool isLoading = false;
   bool isTokenLoaded = false;
   String token = "";
+  String key = "";
 
   bool isFav = false;
 
@@ -51,6 +52,8 @@ class _ItemDetailState extends State<ItemDetail> {
     });
 
     tokenLocal();
+
+    key = await getLanguageKeyForApi();
 
     items = await service.getRelatedItems(token, widget.item.id);
 
@@ -384,6 +387,7 @@ class _ItemDetailState extends State<ItemDetail> {
                             ItemsItem(
                           item: items.data!.list[index],
                           isFav: items.data!.list[index].favorite,
+                          keyLang: key,
                         ),
                         itemCount: items.data!.list.length,
                       );

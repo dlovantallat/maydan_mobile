@@ -12,12 +12,14 @@ class MyItemsItemList extends StatefulWidget {
   final ItemData data;
   final bool isFav;
   final ItemListener listener;
+  final String keyLang;
 
   const MyItemsItemList({
     Key? key,
     required this.data,
     required this.listener,
     required this.isFav,
+    required this.keyLang,
   }) : super(key: key);
 
   @override
@@ -201,7 +203,11 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                       ),
                       widget.data.currentAmount == 0
                           ? Image.asset(
-                              soldOutPng,
+                              widget.keyLang == "en"
+                                  ? soldOutPngEn
+                                  : widget.keyLang == "ar"
+                                      ? soldOutPngAr
+                                      : soldOutPngCkb,
                             )
                           : Container(),
                     ],

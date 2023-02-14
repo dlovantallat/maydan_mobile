@@ -51,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen>
   int currentPage = 1;
   int totalPage = 0;
   bool noMoreLoad = true;
+  String localLang = "";
 
   @override
   void initState() {
@@ -65,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen>
     });
 
     String token = await getToken();
-    String localLang = await getLanguageKeyForApi();
+    localLang = await getLanguageKeyForApi();
     home = await service.getHome(token, localLang);
 
     setState(() {
@@ -247,6 +248,7 @@ class _HomeScreenState extends State<HomeScreen>
                       index: index,
                       homeObj: home.data!,
                       listener: this,
+                      keyLang: localLang,
                     ),
                     itemCount: 4,
                   )
@@ -336,6 +338,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   ItemsItem(
                                 item: data[index],
                                 isFav: data[index].favorite,
+                                keyLang: localLang,
                               ),
                               itemCount: data.length,
                             ),
@@ -382,6 +385,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   ItemsItem(
                                 item: data[index],
                                 isFav: data[index].favorite,
+                                keyLang: localLang,
                               ),
                               itemCount: data.length,
                             ),

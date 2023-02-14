@@ -18,12 +18,14 @@ import 'home.dart';
 class HomeItem extends StatelessWidget {
   final int index;
   final HomeObj homeObj;
+  final String keyLang;
   final HomeViewAllListener listener;
 
   const HomeItem({
     Key? key,
     required this.index,
     required this.homeObj,
+    required this.keyLang,
     required this.listener,
   }) : super(key: key);
 
@@ -58,26 +60,41 @@ class HomeItem extends StatelessWidget {
                   child: Text(AppLocalizations.of(context)!.home_view_all)),
             ],
           ),
-          cases(index, homeObj),
+          cases(index, homeObj, keyLang),
         ],
       ),
     );
   }
 }
 
-Widget cases(int index, HomeObj homeObj) {
+Widget cases(int index, HomeObj homeObj, String key) {
   if (index == 0) {
-    return homeItemRow(homeObj.categoryList.length, index, homeObj);
+    return homeItemRow(homeObj.categoryList.length, index, homeObj, "");
   } else if (index == 1) {
-    return homeItemRow(homeObj.itemSection.hotDeals.length, index, homeObj);
+    return homeItemRow(
+      homeObj.itemSection.hotDeals.length,
+      index,
+      homeObj,
+      key,
+    );
   } else if (index == 2) {
-    return homeItemRow(homeObj.itemSection.latest.length, index, homeObj);
+    return homeItemRow(
+      homeObj.itemSection.latest.length,
+      index,
+      homeObj,
+      key,
+    );
   } else {
-    return homeItemRow(homeObj.profile.length, index, homeObj);
+    return homeItemRow(
+      homeObj.profile.length,
+      index,
+      homeObj,
+      "",
+    );
   }
 }
 
-Widget homeItemRow(int length, int index, HomeObj homeObj) {
+Widget homeItemRow(int length, int index, HomeObj homeObj, String key) {
   var list = <Widget>[
     Container(
       width: 0,
@@ -97,11 +114,13 @@ Widget homeItemRow(int length, int index, HomeObj homeObj) {
       list.add(HomeSubItem(
         data: homeObj.itemSection.hotDeals[i],
         isFav: homeObj.itemSection.latest[i].favorite,
+        keyLang: key,
       ));
     } else {
       list.add(HomeSubItem(
         data: homeObj.itemSection.latest[i],
         isFav: homeObj.itemSection.latest[i].favorite,
+        keyLang: key,
       ));
     }
   }
@@ -194,8 +213,13 @@ class HomeCategoryItem extends StatelessWidget {
 class HomeSubItem extends StatefulWidget {
   final ItemData data;
   final bool isFav;
+  final String keyLang;
 
-  const HomeSubItem({Key? key, required this.data, required this.isFav})
+  const HomeSubItem(
+      {Key? key,
+      required this.data,
+      required this.isFav,
+      required this.keyLang})
       : super(key: key);
 
   @override
@@ -300,7 +324,11 @@ class _HomeSubItemState extends State<HomeSubItem> {
                         ),
                         widget.data.currentAmount == 0
                             ? Image.asset(
-                                soldOutPng,
+                                widget.keyLang == "en"
+                                    ? soldOutPngEn
+                                    : widget.keyLang == "ar"
+                                        ? soldOutPngAr
+                                        : soldOutPngCkb,
                               )
                             : Container(),
                       ],

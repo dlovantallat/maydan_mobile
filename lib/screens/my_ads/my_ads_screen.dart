@@ -25,6 +25,7 @@ class _MyAdsScreenState extends State<MyAdsScreen>
   bool isTokenLoading = false;
   bool isLogin = false;
   String token = "";
+  String key = "";
 
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
@@ -45,6 +46,7 @@ class _MyAdsScreenState extends State<MyAdsScreen>
       isTokenLoading = true;
     });
 
+    key = await getLanguageKeyForApi();
     token = await getToken();
     if (token == "") {
       setState(() {
@@ -153,6 +155,7 @@ class _MyAdsScreenState extends State<MyAdsScreen>
                 data: data[index],
                 listener: this,
                 isFav: false,
+                keyLang: key,
               ),
               itemCount: data.length,
             ),

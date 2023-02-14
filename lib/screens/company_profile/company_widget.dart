@@ -27,6 +27,7 @@ class _CompanyWidgetState extends State<CompanyWidget> {
   bool isLoading2 = false;
 
   String token = "";
+  String key = "";
 
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
@@ -180,6 +181,7 @@ class _CompanyWidgetState extends State<CompanyWidget> {
               itemBuilder: (BuildContext context, int index) => ItemsItem(
                 item: data[index],
                 isFav: data[index].favorite,
+                keyLang: key,
               ),
               itemCount: data.length,
             ),

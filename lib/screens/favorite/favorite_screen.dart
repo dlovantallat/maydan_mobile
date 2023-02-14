@@ -35,6 +35,7 @@ class _FavoriteScreenState extends State<FavoriteScreen>
   int currentPage = 1;
   int totalPage = 0;
   bool noMoreLoad = true;
+  String key = "";
 
   @override
   void initState() {
@@ -48,6 +49,7 @@ class _FavoriteScreenState extends State<FavoriteScreen>
     });
 
     token = await getToken();
+    key = await getLanguageKeyForApi();
     if (token == "") {
       setState(() {
         isLogin = false;
@@ -178,6 +180,7 @@ class _FavoriteScreenState extends State<FavoriteScreen>
                   data: data[index],
                   listener: this,
                   isFav: true,
+                  keyLang: key,
                 ),
                 itemCount: data.length,
               ),

@@ -32,6 +32,7 @@ class _ListItemsScreenState extends State<ListItemsScreen> {
   int currentPage = 1;
   int totalPage = 0;
   bool noMoreLoad = true;
+  String key = "";
 
   @override
   void initState() {
@@ -45,6 +46,7 @@ class _ListItemsScreenState extends State<ListItemsScreen> {
     });
 
     token = await getToken();
+    key = await getLanguageKeyForApi();
     items = await service.getItems(token, widget.subCategory.id, currentPage);
 
     if (!items.requestStatus) {
@@ -131,6 +133,7 @@ class _ListItemsScreenState extends State<ListItemsScreen> {
               itemBuilder: (BuildContext context, int index) => ItemsItem(
                 item: data[index],
                 isFav: data[index].favorite,
+                keyLang: key,
               ),
               itemCount: data.length,
             ),

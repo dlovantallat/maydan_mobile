@@ -12,9 +12,14 @@ import '../item_detail/item_detail.dart';
 class ItemsItem extends StatefulWidget {
   final ItemData item;
   final bool isFav;
+  final String keyLang;
 
-  const ItemsItem({Key? key, required this.item, required this.isFav})
-      : super(key: key);
+  const ItemsItem({
+    Key? key,
+    required this.item,
+    required this.isFav,
+    required this.keyLang,
+  }) : super(key: key);
 
   @override
   State<ItemsItem> createState() => _ItemsItemState();
@@ -115,7 +120,11 @@ class _ItemsItemState extends State<ItemsItem> {
                       ),
                       widget.item.currentAmount == 0
                           ? Image.asset(
-                              soldOutPng,
+                              widget.keyLang == "en"
+                                  ? soldOutPngEn
+                                  : widget.keyLang == "ar"
+                                      ? soldOutPngAr
+                                      : soldOutPngCkb,
                             )
                           : Container(),
                     ],
@@ -183,7 +192,8 @@ class _ItemsItemState extends State<ItemsItem> {
                 ),
                 Padding(
                   padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
-                  child: Text("${widget.item.priceAnnounced} ${widget.item.currencyType == "U" ? "\$" : "IQD"}"),
+                  child: Text(
+                      "${widget.item.priceAnnounced} ${widget.item.currencyType == "U" ? "\$" : "IQD"}"),
                 ),
               ],
             ),
