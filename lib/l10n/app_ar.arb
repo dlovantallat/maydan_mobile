@@ -114,5 +114,6 @@
   "register_pn": "رقم الهاتف",
   "register_continue": "استمر",
   "account_company_title_dialog": "انشاء الحساب",
-  "account_company_body_dialog": "تم انشاء الحساب بنجاح، يرجى الانتظار بينما نقوم بالمراجعة."
+  "account_company_body_dialog": "تم انشاء الحساب بنجاح، يرجى الانتظار بينما نقوم بالمراجعة.",
+  "expiry_date_caption": "تاريخ الانتهاء"
 }

@@ -38,10 +38,12 @@ class _ItemDetailState extends State<ItemDetail> {
   String key = "";
 
   bool isFav = false;
+  final descController = TextEditingController();
 
   @override
   void initState() {
     isFav = widget.isFav;
+    descController.text = widget.item.description;
     getRelatedItem();
     super.initState();
   }
@@ -251,22 +253,29 @@ class _ItemDetailState extends State<ItemDetail> {
                               AppLocalizations.of(context)!
                                   .item_detail_location,
                               "${widget.item.cityName} - ${widget.item.districtName}"),
+                          meteData(
+                              AppLocalizations.of(context)!.expiry_date_caption,
+                              dateFormat(widget.item.expirationDate)),
                         ],
                       ),
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      margin: const EdgeInsetsDirectional.only(
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(
                           bottom: 8, start: 8, end: 8),
-                      height: 70,
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.all(8),
-                        child: Text(widget.item.description),
+                      child: TextField(
+                        controller: descController,
+                        enabled: false,
+                        maxLines: null,
+                        minLines: 1,
+                        decoration: const InputDecoration(
+                          disabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(16.0),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     Container(

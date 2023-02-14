@@ -20,6 +20,7 @@ class ItemData {
   String title;
   String description;
   String statusDate;
+  String expirationDate;
   String currencyType;
   String districtName;
   String cityName;
@@ -36,6 +37,7 @@ class ItemData {
     required this.title,
     required this.description,
     required this.statusDate,
+    required this.expirationDate,
     required this.currencyType,
     required this.districtName,
     required this.cityName,
@@ -59,6 +61,7 @@ class ItemData {
       title: item['title'] ?? "",
       description: item['description'] ?? "",
       statusDate: item['status_date'] ?? "",
+      expirationDate: item['expiration_date'] ?? "",
       currencyType: item['currency_type'] ?? "",
       districtName: item['district_name'] ?? "",
       cityName: item['city_name'] ?? "",
