@@ -54,6 +54,13 @@ class _EditProfileState extends State<EditProfile> {
   bool isPersonal = false;
   double pos = 0;
 
+  final oib = const OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.grey, width: 1),
+    borderRadius: BorderRadius.all(
+      Radius.circular(16.0),
+    ),
+  );
+
   @override
   void initState() {
     nameController.text = widget.profile.name;
@@ -139,7 +146,6 @@ class _EditProfileState extends State<EditProfile> {
       }
     }
 
-    print("image path:$path");
     String token = await getToken();
     loading(context);
     updateProfile = await service.updateMe(
@@ -417,27 +423,35 @@ class _EditProfileState extends State<EditProfile> {
                   Padding(
                     padding: const EdgeInsetsDirectional.only(
                         start: 16, end: 16, top: 16),
+                    child: Text(
+                      AppLocalizations.of(context)!.profile_fl_name_caption,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF6F6F6F)),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                        start: 16, end: 16, top: 16),
                     child: TextField(
                       keyboardType: TextInputType.text,
                       controller: nameController,
-                      decoration: const InputDecoration(
-                        fillColor: Color(0xFFF1F1F1),
+                      decoration: InputDecoration(
+                        fillColor: const Color(0xFFF1F1F1),
                         filled: true,
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFFF1F1F1), width: 2),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(16.0),
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFFF1F1F1), width: 2),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(16.0),
-                          ),
-                        ),
+                        focusedBorder: oib,
+                        enabledBorder: oib,
                       ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                        start: 16, end: 16, top: 16),
+                    child: Text(
+                      AppLocalizations.of(context)!.profile_email_caption,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF6F6F6F)),
                     ),
                   ),
                   Padding(
@@ -446,24 +460,22 @@ class _EditProfileState extends State<EditProfile> {
                     child: TextField(
                       keyboardType: TextInputType.text,
                       controller: emailController,
-                      decoration: const InputDecoration(
-                        fillColor: Color(0xFFF1F1F1),
+                      decoration: InputDecoration(
+                        fillColor: const Color(0xFFF1F1F1),
                         filled: true,
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFFF1F1F1), width: 2),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(16.0),
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFFF1F1F1), width: 2),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(16.0),
-                          ),
-                        ),
+                        focusedBorder: oib,
+                        enabledBorder: oib,
                       ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                        start: 16, end: 16, top: 16),
+                    child: Text(
+                      AppLocalizations.of(context)!.register_pn,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF6F6F6F)),
                     ),
                   ),
                   Padding(
@@ -473,16 +485,10 @@ class _EditProfileState extends State<EditProfile> {
                       enabled: false,
                       keyboardType: TextInputType.text,
                       controller: phoneNumberController,
-                      decoration: const InputDecoration(
-                        fillColor: Color(0xFFF1F1F1),
+                      decoration: InputDecoration(
+                        fillColor: const Color(0xFFF1F1F1),
                         filled: true,
-                        disabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFFF1F1F1), width: 2),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(16.0),
-                          ),
-                        ),
+                        disabledBorder: oib,
                       ),
                     ),
                   ),
@@ -495,7 +501,8 @@ class _EditProfileState extends State<EditProfile> {
                               padding: const EdgeInsetsDirectional.only(
                                   bottom: 4, start: 16, end: 16, top: 16),
                               child: Text(
-                                AppLocalizations.of(context)!.post_category,
+                                AppLocalizations.of(context)!
+                                    .profile_service_caption,
                                 style: const TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w700),
                               ),
@@ -615,30 +622,27 @@ class _EditProfileState extends State<EditProfile> {
                                   )
                           ],
                         ),
-                  Row(
-                    mainAxisAlignment: isPersonal
-                        ? MainAxisAlignment.center
-                        : MainAxisAlignment.spaceAround,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsetsDirectional.only(
-                            start: 32, end: 32),
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                  !isPersonal
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.only(
+                                  start: 32, end: 32),
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: editProfileFun,
+                                child: const Text("Save"),
                               ),
                             ),
-                          ),
-                          onPressed: editProfileFun,
-                          child: const Text("Save"),
-                        ),
-                      ),
-                      isPersonal
-                          ? Container()
-                          : Padding(
+                            Padding(
                               padding: const EdgeInsetsDirectional.only(
                                   start: 32, end: 32),
                               child: ElevatedButton(
@@ -658,8 +662,24 @@ class _EditProfileState extends State<EditProfile> {
                                 child: const Text("Next"),
                               ),
                             ),
-                    ],
-                  )
+                          ],
+                        )
+                      : Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 16, end: 16, top: 16),
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                            ),
+                            onPressed: editProfileFun,
+                            child: const Text("Save"),
+                          ),
+                        ),
                 ],
               )
             : ListView(
