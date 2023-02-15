@@ -192,22 +192,19 @@ class _HomeScreenState extends State<HomeScreen>
             Container(
               margin:
                   const EdgeInsetsDirectional.only(start: 8, end: 8, top: 8),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)!.home_search_caption,
-                  focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: appColor, width: 2),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(16.0),
-                    ),
+              height: 50,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.grey)),
+              child: Row(
+                children: [
+                  Container(
+                    margin:
+                        const EdgeInsetsDirectional.only(start: 16, end: 16),
+                    child: const Icon(Icons.search),
                   ),
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 1),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(16.0),
-                    ),
-                  ),
-                ),
+                  Text(AppLocalizations.of(context)!.home_search_caption),
+                ],
               ),
             ),
           ],
