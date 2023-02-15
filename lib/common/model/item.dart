@@ -27,6 +27,7 @@ class ItemData {
   bool favorite;
   int currentAmount;
   String priceAnnounced;
+  int duration;
   UserObj user;
   List<ItemPhotos> itemPhotos;
 
@@ -44,6 +45,7 @@ class ItemData {
     required this.favorite,
     required this.currentAmount,
     required this.priceAnnounced,
+    required this.duration,
     required this.user,
     required this.itemPhotos,
   });
@@ -68,6 +70,7 @@ class ItemData {
       favorite: item['favorite'] ?? false,
       currentAmount: item['current_amount'] ?? -1,
       priceAnnounced: item['price_announced'] ?? "",
+      duration: item['duration'] ?? 0,
       user: UserObj.fromJson(item['user']),
       itemPhotos: list,
     );

@@ -232,6 +232,7 @@ class MaydanServices {
     required String title,
     required String description,
     required String price,
+    required String currencyType,
     required String duration,
   }) async {
     var request = http.MultipartRequest(
@@ -239,6 +240,8 @@ class MaydanServices {
     request.fields['title'] = jsonEncode({"en": title});
     request.fields['description'] = jsonEncode({"en": description});
     request.fields['district_id'] = districtId;
+    request.fields['currency_type'] = currencyType == "USD" ? "U" : "I";
+    request.fields['duration'] = duration;
     request.fields['price'] = price;
 
     request.headers.addAll(headers(token: token));
