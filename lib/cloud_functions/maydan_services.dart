@@ -598,12 +598,11 @@ class MaydanServices {
     if (email.isNotEmpty) {
       request.fields['email'] = email;
     }
+    if (path != null) {
+      request.files.add(await http.MultipartFile.fromPath('photo', path,
+          contentType: MediaType("image", "jpeg")));
+    }
     if (!isPersonal) {
-      if (path != null) {
-        request.files.add(await http.MultipartFile.fromPath('photo', path,
-            contentType: MediaType("image", "jpeg")));
-      }
-
       if (pathBanner != null) {
         request.files.add(await http.MultipartFile.fromPath(
             'banner', pathBanner,

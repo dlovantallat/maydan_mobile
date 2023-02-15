@@ -139,6 +139,7 @@ class _EditProfileState extends State<EditProfile> {
       }
     }
 
+    print("image path:$path");
     String token = await getToken();
     loading(context);
     updateProfile = await service.updateMe(
