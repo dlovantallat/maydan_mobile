@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/screens/setting/setting_screen.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../utilities/app_utilities.dart';
+import '../static_content/static_content_screen.dart';
 import 'edit_profile.dart';
 import 'login_widget.dart';
 import 'profile.dart';
@@ -183,26 +185,41 @@ class _ProfileScreenState extends State<ProfileScreen>
               Row(
                 children: [
                   Expanded(
-                    child: Container(
-                      margin: const EdgeInsetsDirectional.only(
-                          start: 16, end: 8, top: 16),
-                      height: 110,
-                      color: const Color(0xFFF1F1F1),
-                      child: Center(
-                        child:
-                            Text(AppLocalizations.of(context)!.profile_setting),
+                    child: InkWell(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const SettingScreen())),
+                      child: Container(
+                        margin: const EdgeInsetsDirectional.only(
+                            start: 16, end: 8, top: 16),
+                        height: 110,
+                        color: const Color(0xFFF1F1F1),
+                        child: Center(
+                          child: Text(
+                              AppLocalizations.of(context)!.profile_setting),
+                        ),
                       ),
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                      margin: const EdgeInsetsDirectional.only(
-                          start: 8, end: 16, top: 16),
-                      height: 110,
-                      color: const Color(0xFFF1F1F1),
-                      child: Center(
-                        child: Text(
-                            AppLocalizations.of(context)!.profile_about_us),
+                    child: InkWell(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => StaticContentScreen(
+                                  title: AppLocalizations.of(context)!
+                                      .home_drawer_about_us,
+                                  name: "about_us"))),
+                      child: Container(
+                        margin: const EdgeInsetsDirectional.only(
+                            start: 8, end: 16, top: 16),
+                        height: 110,
+                        color: const Color(0xFFF1F1F1),
+                        child: Center(
+                          child: Text(
+                              AppLocalizations.of(context)!.profile_about_us),
+                        ),
                       ),
                     ),
                   ),
@@ -211,25 +228,13 @@ class _ProfileScreenState extends State<ProfileScreen>
               Row(
                 children: [
                   Expanded(
-                    child: Container(
-                      margin: const EdgeInsetsDirectional.only(
-                          start: 16, end: 8, top: 16),
-                      height: 110,
-                      color: const Color(0xFFF1F1F1),
-                      child: Center(
-                        child: Text(
-                            AppLocalizations.of(context)!.profile_help_center),
-                      ),
-                    ),
-                  ),
-                  Expanded(
                     child: InkWell(
                       onTap: () {
                         logout(context, this);
                       },
                       child: Container(
                         margin: const EdgeInsetsDirectional.only(
-                            start: 8, end: 16, top: 16),
+                            start: 16, end: 8, top: 16),
                         height: 110,
                         color: const Color(0xFFF1F1F1),
                         child: Center(
@@ -237,6 +242,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                               AppLocalizations.of(context)!.home_drawer_logout),
                         ),
                       ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsetsDirectional.only(
+                          start: 8, end: 16, top: 16),
+                      height: 110,
+                      color: const Color(0xFFFFFFFF),
                     ),
                   ),
                 ],
