@@ -161,6 +161,8 @@ class _EditProfileState extends State<EditProfile> {
 
     if (!updateProfile.requestStatus) {
       if (updateProfile.statusCode == 200) {
+        setUserName(updateProfile.data!.name);
+        setUserPhone(updateProfile.data!.msisdn);
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (_) {
           return const MainPage(

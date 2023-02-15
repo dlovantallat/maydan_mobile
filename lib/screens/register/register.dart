@@ -55,13 +55,21 @@ class OtpRespond {
 
 class UpdateUser {
   String id;
+  String msisdn;
+  String name;
   String message;
 
-  UpdateUser({required this.id, required this.message});
+  UpdateUser(
+      {required this.id,
+      required this.msisdn,
+      required this.name,
+      required this.message});
 
   factory UpdateUser.json(dynamic it) {
     return UpdateUser(
       id: it['id'] == null ? "" : it['id'] as String,
+      msisdn: it['msisdn'] == null ? "" : it['msisdn'] as String,
+      name: it['name'] == null ? "" : it['name'] as String,
       message: it['message'] == null ? "" : it['message'] as String,
     );
   }

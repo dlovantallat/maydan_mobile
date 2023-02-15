@@ -46,6 +46,8 @@ class _LoginWidgetState extends State<LoginWidget> {
         setSnackBar(context, login.data!.message!);
       } else {
         setToken(login.data!.token!);
+        setUserName(login.data!.userData!.name!);
+        setUserPhone(login.data!.userData!.phone!);
         widget.callBack.onLogin();
       }
     }

@@ -59,6 +59,8 @@ const String vSvg = 'assets/viber.svg';
 
 /// Static Strings for static values
 const String appToken = "app-token";
+const String userName = "user-name";
+const String userPhone = "user-phone";
 const String languageKey = "languageKey";
 const String onBoardKey = "onBoard";
 
@@ -76,6 +78,34 @@ Future<String> getToken() async {
   final prefs = await SharedPreferences.getInstance();
   // Read value
   return prefs.getString(appToken) ?? "";
+}
+
+void setUserName(String name) async {
+  // Create storage
+  final prefs = await SharedPreferences.getInstance();
+  // Write value
+  prefs.setString(userName, name);
+}
+
+Future<String> getUserName() async {
+  // Create storage
+  final prefs = await SharedPreferences.getInstance();
+  // Read value
+  return prefs.getString(userName) ?? "";
+}
+
+void setUserPhone(String phone) async {
+  // Create storage
+  final prefs = await SharedPreferences.getInstance();
+  // Write value
+  prefs.setString(userPhone, phone);
+}
+
+Future<String> getUserPhone() async {
+  // Create storage
+  final prefs = await SharedPreferences.getInstance();
+  // Read value
+  return prefs.getString(userPhone) ?? "";
 }
 
 Future<String> getLanguageKey() async {

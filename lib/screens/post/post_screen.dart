@@ -28,6 +28,8 @@ class PostScreen extends StatefulWidget {
 class _PostScreenState extends State<PostScreen>
     with LoginCallBack, DeleteListener {
   final titleController = TextEditingController();
+  final sellerController = TextEditingController();
+  final sellerPhoneController = TextEditingController();
   final descriptionController = TextEditingController();
   final priceController = TextEditingController();
 
@@ -128,6 +130,8 @@ class _PostScreenState extends State<PostScreen>
     });
 
     localLang = await getLanguageKeyForApi();
+    sellerController.text = await getUserName();
+    sellerPhoneController.text = await getUserPhone();
     categories = await service.getCategories(localLang);
 
     _dropdownCategoriesDrop.clear();
@@ -367,6 +371,22 @@ class _PostScreenState extends State<PostScreen>
   String? validateTitle(String? value) {
     if (value!.isEmpty) {
       return AppLocalizations.of(context)!.post_title_val;
+    } else {
+      return null;
+    }
+  }
+
+  String? validateSellerName(String? value) {
+    if (value!.isEmpty) {
+      return "please dd";
+    } else {
+      return null;
+    }
+  }
+
+  String? validateSellerPhone(String? value) {
+    if (value!.isEmpty) {
+      return "please ss";
     } else {
       return null;
     }
@@ -824,6 +844,36 @@ class _PostScreenState extends State<PostScreen>
                         ],
                       ),
                     ],
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(bottom: 8, top: 20),
+                    child: Text("Seller"),
+                  ),
+                  TextFormField(
+                    controller: sellerController,
+                    validator: validateSellerName,
+                    decoration: InputDecoration(
+                      focusedBorder: oib,
+                      enabledBorder: oib,
+                      errorBorder: oib,
+                      focusedErrorBorder: oib,
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(bottom: 8, top: 20),
+                    child: Text("Seller Phone"),
+                  ),
+                  TextFormField(
+                    controller: sellerPhoneController,
+                    validator: validateSellerPhone,
+                    decoration: InputDecoration(
+                      focusedBorder: oib,
+                      enabledBorder: oib,
+                      errorBorder: oib,
+                      focusedErrorBorder: oib,
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
