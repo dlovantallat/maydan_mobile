@@ -211,181 +211,89 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
             ),
           ),
           Container(
-            margin: const EdgeInsetsDirectional.only(start: 16, end: 16),
+            margin: const EdgeInsetsDirectional.only(start: 24, end: 24),
             child: Column(
               children: [
-                ListTile(
-                  shape: const Border(
-                    bottom: BorderSide(color: Color(0x5E000000)),
-                  ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(AppLocalizations.of(context)!.home_drawer_about_us),
-                      const Icon(Icons.arrow_forward_ios_outlined)
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.push(
+                InkWell(
+                    onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (_) => StaticContentScreen(
                                 title: AppLocalizations.of(context)!
                                     .home_drawer_about_us,
-                                name: "about_us")));
-                  },
-                ),
-                ListTile(
-                  shape: const Border(
-                    bottom: BorderSide(color: Color(0x5E000000)),
-                  ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(AppLocalizations.of(context)!
-                          .home_drawer_company_accounts),
-                      const Icon(Icons.arrow_forward_ios_outlined)
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.push(
+                                name: "about_us"))),
+                    child: item(
+                        AppLocalizations.of(context)!.home_drawer_about_us)),
+                InkWell(
+                    onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => const CompanyListScreen()));
-                  },
-                ),
-                ListTile(
-                  shape: const Border(
-                    bottom: BorderSide(color: Color(0x5E000000)),
-                  ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(AppLocalizations.of(context)!.home_drawer_my_ads),
-                      const Icon(Icons.arrow_forward_ios_outlined)
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const MyAdsScreen()));
-                  },
-                ),
-                ListTile(
-                  shape: const Border(
-                    bottom: BorderSide(color: Color(0x5E000000)),
-                  ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(AppLocalizations.of(context)!
-                          .home_drawer_my_favorites),
-                      const Icon(Icons.arrow_forward_ios_outlined)
-                    ],
-                  ),
-                  onTap: () {
-                    widget.listener.indexListener(3);
-                  },
-                ),
-                // ListTile(
-                //   shape: const Border(
-                //     bottom: BorderSide(color: Color(0x5E000000)),
-                //   ),
-                //   title: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       Text(AppLocalizations.of(context)!.home_drawer_help),
-                //       const Icon(Icons.arrow_forward_ios_outlined)
-                //     ],
-                //   ),
-                //   onTap: () {
-                //     // Update the state of the app.
-                //     // ...
-                //   },
-                // ),
-                // ListTile(
-                //   shape: const Border(
-                //     bottom: BorderSide(color: Color(0x5E000000)),
-                //   ),
-                //   title: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       Text(AppLocalizations.of(context)!.home_drawer_faq),
-                //       const Icon(Icons.arrow_forward_ios_outlined)
-                //     ],
-                //   ),
-                //   onTap: () {
-                //     Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //             builder: (_) =>
-                //                 const StaticContentScreen(name: "faq")));
-                //   },
-                // ),
-                ListTile(
-                  shape: const Border(
-                    bottom: BorderSide(color: Color(0x5E000000)),
-                  ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(AppLocalizations.of(context)!.home_drawer_logout),
-                      const Icon(Icons.arrow_forward_ios_outlined)
-                    ],
-                  ),
-                  onTap: () async {
-                    String token = await getToken();
-                    if (!mounted) return;
-                    if (token != "") {
-                      logout(context, this);
-                    }
-                  },
-                ),
-                ListTile(
-                  shape: const Border(
-                    bottom: BorderSide(color: Color(0x5E000000)),
-                  ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(AppLocalizations.of(context)!
-                          .home_drawer_terms_and_conditions),
-                      const Icon(Icons.arrow_forward_ios_outlined)
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.push(
+                            builder: (_) => const CompanyListScreen())),
+                    child: item(AppLocalizations.of(context)!
+                        .home_drawer_company_accounts)),
+                InkWell(
+                    onTap: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => const MyAdsScreen())),
+                    child:
+                        item(AppLocalizations.of(context)!.home_drawer_my_ads)),
+                InkWell(
+                    onTap: () => widget.listener.indexListener(3),
+                    child: item(AppLocalizations.of(context)!
+                        .home_drawer_my_favorites)),
+                InkWell(
+                    onTap: () async {
+                      String token = await getToken();
+                      if (!mounted) return;
+                      if (token != "") {
+                        logout(context, this);
+                      }
+                    },
+                    child:
+                        item(AppLocalizations.of(context)!.home_drawer_logout)),
+                InkWell(
+                    onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (_) => StaticContentScreen(
                                 title: AppLocalizations.of(context)!
                                     .home_drawer_terms_and_conditions,
-                                name: "terms_and_condition")));
-                  },
-                ),
-                ListTile(
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(AppLocalizations.of(context)!
-                          .home_drawer_privacy_policy),
-                      const Icon(Icons.arrow_forward_ios_outlined)
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.push(
+                                name: "terms_and_condition"))),
+                    child: item(AppLocalizations.of(context)!
+                        .home_drawer_terms_and_conditions)),
+                InkWell(
+                    onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (_) => StaticContentScreen(
                                 title: AppLocalizations.of(context)!
                                     .home_drawer_privacy_policy,
-                                name: "privacy_and_policy")));
-                  },
-                ),
+                                name: "privacy_and_policy"))),
+                    child: item(AppLocalizations.of(context)!
+                        .home_drawer_privacy_policy)),
               ],
             ),
           )
         ],
       ),
+    );
+  }
+
+  Widget item(String title) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(title),
+            const Icon(Icons.arrow_forward_ios_outlined,
+                color: Color(0x5E000000))
+          ],
+        ),
+        const Divider(
+          thickness: 1,
+          color: Color(0x5E000000),
+        )
+      ],
     );
   }
 
