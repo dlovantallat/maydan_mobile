@@ -88,7 +88,7 @@ class _PostScreenState extends State<PostScreen>
   bool isPrice = false;
 
   final oib = const OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.black, width: 1),
+    borderSide: BorderSide(color: Colors.grey, width: 1),
     borderRadius: BorderRadius.all(
       Radius.circular(16.0),
     ),
@@ -509,7 +509,7 @@ class _PostScreenState extends State<PostScreen>
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15.0),
                       border: Border.all(
-                          color: Colors.black,
+                          color: Colors.grey,
                           style: BorderStyle.solid,
                           width: 1),
                     ),
@@ -560,7 +560,7 @@ class _PostScreenState extends State<PostScreen>
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15.0),
                                 border: Border.all(
-                                    color: Colors.black,
+                                    color: Colors.grey,
                                     style: BorderStyle.solid,
                                     width: 1),
                               ),
@@ -705,7 +705,7 @@ class _PostScreenState extends State<PostScreen>
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.0),
                               border: Border.all(
-                                  color: Colors.black,
+                                  color: Colors.grey,
                                   style: BorderStyle.solid,
                                   width: 1),
                             ),
@@ -779,7 +779,7 @@ class _PostScreenState extends State<PostScreen>
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.0),
                               border: Border.all(
-                                  color: Colors.black,
+                                  color: Colors.grey,
                                   style: BorderStyle.solid,
                                   width: 1),
                             ),
@@ -847,7 +847,7 @@ class _PostScreenState extends State<PostScreen>
                                           borderRadius:
                                               BorderRadius.circular(15.0),
                                           border: Border.all(
-                                              color: Colors.black,
+                                              color: Colors.grey,
                                               style: BorderStyle.solid,
                                               width: 1),
                                         ),
@@ -914,7 +914,7 @@ class _PostScreenState extends State<PostScreen>
                                             borderRadius:
                                                 BorderRadius.circular(15.0),
                                             border: Border.all(
-                                                color: Colors.black,
+                                                color: Colors.grey,
                                                 style: BorderStyle.solid,
                                                 width: 1),
                                           ),
