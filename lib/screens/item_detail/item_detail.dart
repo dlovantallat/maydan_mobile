@@ -256,6 +256,8 @@ class _ItemDetailState extends State<ItemDetail> {
                           meteData(
                               AppLocalizations.of(context)!.expiry_date_caption,
                               dateFormat(widget.item.expirationDate)),
+                          meteData(AppLocalizations.of(context)!.view_count,
+                              widget.item.viewCount),
                         ],
                       ),
                     ),
