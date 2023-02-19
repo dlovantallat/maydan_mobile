@@ -327,7 +327,7 @@ class _ItemDetailState extends State<ItemDetail> {
                                     padding: const EdgeInsetsDirectional.only(
                                         start: 16, top: 8),
                                     child: Text(
-                                      widget.item.user.name,
+                                      widget.item.sellerName,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                       style: const TextStyle(
@@ -353,7 +353,7 @@ class _ItemDetailState extends State<ItemDetail> {
                                       : TextButton(
                                           onPressed: callingFunctionality,
                                           child: Text(
-                                            widget.item.user.msisdn,
+                                            widget.item.phoneNumber,
                                             style: const TextStyle(
                                                 color: Colors.white),
                                           )),
@@ -391,7 +391,7 @@ class _ItemDetailState extends State<ItemDetail> {
                         physics: const NeverScrollableScrollPhysics(),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2, mainAxisExtent: 220),
+                                crossAxisCount: 2, mainAxisExtent: 225),
                         itemBuilder: (BuildContext context, int index) =>
                             ItemsItem(
                           item: items.data!.list[index],

@@ -170,6 +170,8 @@ class MaydanServices {
   Future<ApiResponse<ItemRespond>> postItem({
     required String token,
     required String title,
+    required String sellerName,
+    required String phoneNumber,
     required String price,
     required String description,
     required String subCategory,
@@ -184,6 +186,8 @@ class MaydanServices {
     request.fields['subcategory_id'] = subCategory;
     request.fields['description'] = jsonEncode({"en": description});
     request.fields['duration'] = duration;
+    request.fields['seller_name'] = sellerName;
+    request.fields['phone_number'] = phoneNumber;
     request.fields['currency_type'] = currencyType == "USD" ? "U" : "I";
     request.fields['district_id'] = districtId;
     request.fields['price_announced'] = price;

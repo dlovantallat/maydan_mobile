@@ -306,6 +306,8 @@ class _PostScreenState extends State<PostScreen>
       String title = titleController.text.trim();
       String description = descriptionController.text.trim();
       String price = priceController.text.trim();
+      String sellerName = sellerController.text.trim();
+      String phoneNumber = sellerPhoneController.text.trim();
 
       if (_dropdownSubCategoryValue == null ||
           _dropdownSubCategoryValue == _dropdownSubCategoriesDrop.first) {
@@ -342,6 +344,8 @@ class _PostScreenState extends State<PostScreen>
       postItem = await service.postItem(
         token: token,
         title: title,
+        sellerName: sellerName,
+        phoneNumber: phoneNumber,
         price: price,
         description: description,
         subCategory: _dropdownSubCategoryValue!.id,
