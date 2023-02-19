@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -69,9 +70,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         iconTheme: const IconThemeData(
           color: Colors.black,
         ),
-        title: const Text(
-          "Forget Password",
-          style: TextStyle(color: Colors.black),
+        title: Text(
+          AppLocalizations.of(context)!.forget_password_title_caption,
+          style: const TextStyle(color: Colors.black),
         ),
       ),
       body: Column(
@@ -83,11 +84,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
               semanticsLabel: '',
             ),
           ),
-          const Padding(
-            padding: EdgeInsetsDirectional.only(bottom: 16),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(bottom: 16),
             child: Text(
-              "Enter Your Phone Number",
-              style: TextStyle(fontSize: 14, color: Colors.black),
+              AppLocalizations.of(context)!.forget_password_txt_caption,
+              style: const TextStyle(fontSize: 14, color: Colors.black),
             ),
           ),
           Padding(
@@ -140,7 +141,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   ),
                 ),
                 onPressed: phoneNumberControllerCounter >= 10 ? smsSend : null,
-                child: const Text("Send")),
+                child: Text(
+                    AppLocalizations.of(context)!.forget_password_btn_caption)),
           )
         ],
       ),

@@ -382,7 +382,7 @@ class _PostScreenState extends State<PostScreen>
 
   String? validateSellerName(String? value) {
     if (value!.isEmpty) {
-      return "please dd";
+      return AppLocalizations.of(context)!.post_seller_error;
     } else {
       return null;
     }
@@ -390,7 +390,7 @@ class _PostScreenState extends State<PostScreen>
 
   String? validateSellerPhone(String? value) {
     if (value!.isEmpty) {
-      return "please ss";
+      return AppLocalizations.of(context)!.post_seller_phone_error;
     } else {
       return null;
     }

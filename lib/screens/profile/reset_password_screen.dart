@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -85,9 +86,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         iconTheme: const IconThemeData(
           color: Colors.black,
         ),
-        title: const Text(
-          "Reset Password",
-          style: TextStyle(color: Colors.black),
+        title: Text(
+          AppLocalizations.of(context)!.reset_password_title,
+          style: const TextStyle(color: Colors.black),
         ),
       ),
       body: Column(
@@ -115,7 +116,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 ),
                 focusedBorder: oib,
                 enabledBorder: oib,
-                hintText: 'Password',
+                hintText: AppLocalizations.of(context)!.reset_password_pass_htn,
               ),
             ),
           ),
@@ -135,7 +136,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 ),
                 focusedBorder: oib,
                 enabledBorder: oib,
-                hintText: 'Password Confirmation',
+                hintText:
+                    AppLocalizations.of(context)!.reset_password_pass_con_htn,
               ),
             ),
           ),
@@ -156,7 +158,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 ),
               ),
               onPressed: resetPassword,
-              child: const Text("Save"),
+              child: Text(AppLocalizations.of(context)!.reset_btn_save),
             ),
           )
         ],
