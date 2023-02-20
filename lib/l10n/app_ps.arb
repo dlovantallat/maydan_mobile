@@ -116,5 +116,15 @@
   "account_company_title_dialog": "دروستکردنی ئەکاونت",
   "account_company_body_dialog": "ئەکاونتەکە بە سەرکەوتوویی دروستکرا، تکایە چاوەڕێ بکە تا پێداچوونەوەی لەسەر دەکەین.",
   "expiry_date_caption": "بەرواری بەسەرچوون",
-  "send_again_btn": "دووباره\u200C بینێره\u200Cوه\u200C"
+  "send_again_btn": "دووباره\u200C بینێره\u200Cوه\u200C",
+  "view_count": "ژمارەی بینەران",
+  "forget_password_title_caption": "وشەی نهێنیت لەبیر کردووە",
+  "forget_password_txt_caption": "ژمارەی مۆبایلەکەت داخڵ بکە",
+  "forget_password_btn_caption": "بنێرە",
+  "reset_password_title": "وشەی نهێنی نوێ دروست بکە",
+  "reset_password_pass_htn": "وشەی نهێنی",
+  "reset_password_pass_con_htn": "پشتڕاستکردنەوەی وشەی نهێنی",
+  "reset_btn_save": "سەیڤ",
+  "post_seller_error": "تکایە ناوی فرۆشیار بنووسە",
+  "post_seller_phone_error": "تکایە ژمارەی تەلەفۆنی فرۆشیار بنووسە"
 }

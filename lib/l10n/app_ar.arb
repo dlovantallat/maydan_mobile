@@ -116,5 +116,15 @@
   "account_company_title_dialog": "انشاء الحساب",
   "account_company_body_dialog": "تم انشاء الحساب بنجاح، يرجى الانتظار بينما نقوم بالمراجعة.",
   "expiry_date_caption": "تاريخ الانتهاء",
-  "send_again_btn": "أعد الإرسال"
+  "send_again_btn": "أعد الإرسال",
+  "view_count": "عدد المشاهدين",
+  "forget_password_title_caption": "هل نسيت كلمة المرور",
+  "forget_password_txt_caption": "ادخل رقم هاتفك",
+  "forget_password_btn_caption": "ارسل",
+  "reset_password_title": "إعادة تعيين كلمة المرور",
+  "reset_password_pass_htn": "كلمة المرور",
+  "reset_password_pass_con_htn": "تأكيد كلمة المرور",
+  "reset_btn_save": "احفظ",
+  "post_seller_error": "الرجاء كتابة اسم البائع",
+  "post_seller_phone_error": "الرجاء كتابة رقم هاتف البائع"
 }
