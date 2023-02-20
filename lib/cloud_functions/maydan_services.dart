@@ -982,6 +982,32 @@ class MaydanServices {
     );
   }
 
+  Future<ApiResponse<ItemData>> getItemId(String token, String itemId) {
+    return http
+        .get(Uri.parse("${baseURL}items/$itemId"),
+            headers: headers(token: token))
+        .timeout(timeOutDuration)
+        .then(
+      (data) {
+        if (data.statusCode == 200) {
+          final jsonData = json.decode(data.body);
+
+          final list = ItemData.fromJson(jsonData);
+
+          return ApiResponse<ItemData>(data: list, statusCode: 200);
+        }
+        return ApiResponse<ItemData>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<ItemData>(
+          requestStatus: true,
+          errorMessage: s.toString() == "Connection failed"
+              ? " No Internet, Please check your internet connection."
+              : "API Down we are working to get things back to normal. Please have a patient"),
+    );
+  }
+
   Future<ApiResponse<StaticContentObj>> getStaticContent(String name) {
     return http
         .get(Uri.parse("${baseURL}staticContents?name=$name"),

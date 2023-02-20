@@ -15,7 +15,7 @@ class ItemObj {
 
 class ItemData {
   String id;
-  String viewCount;
+  int viewCount;
   String districtId;
   String status;
   String title;
@@ -64,7 +64,7 @@ class ItemData {
     }
     return ItemData(
       id: item['id'] ?? "",
-      viewCount: item['view_count'] ?? "0",
+      viewCount: item['current_views'] ?? 0,
       districtId: item['district_id'] ?? "",
       status: item['status'] ?? "",
       title: item['title'] ?? "",
