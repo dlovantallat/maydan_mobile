@@ -1008,10 +1008,11 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<StaticContentObj>> getStaticContent(String name) {
+  Future<ApiResponse<StaticContentObj>> getStaticContent(
+      String name, String local) {
     return http
         .get(Uri.parse("${baseURL}staticContents?name=$name"),
-            headers: headers())
+            headers: headers(languageKey: local))
         .timeout(timeOutDuration)
         .then(
       (data) {

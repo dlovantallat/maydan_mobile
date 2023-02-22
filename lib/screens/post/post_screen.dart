@@ -852,7 +852,7 @@ class _PostScreenState extends State<PostScreen>
                   Padding(
                     padding:
                         const EdgeInsetsDirectional.only(bottom: 8, top: 20),
-                    child: Text("Seller"),
+                    child: Text(AppLocalizations.of(context)!.seller_name),
                   ),
                   TextFormField(
                     controller: sellerController,
@@ -867,7 +867,8 @@ class _PostScreenState extends State<PostScreen>
                   Padding(
                     padding:
                         const EdgeInsetsDirectional.only(bottom: 8, top: 20),
-                    child: Text("Seller Phone"),
+                    child:
+                        Text(AppLocalizations.of(context)!.seller_phone_number),
                   ),
                   TextFormField(
                     controller: sellerPhoneController,

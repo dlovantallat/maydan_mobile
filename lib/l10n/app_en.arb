@@ -154,5 +154,7 @@
   "reset_password_pass_con_htn": "Password Confirmation",
   "reset_btn_save": "Save",
   "post_seller_error": "please write down seller name",
-  "post_seller_phone_error": "please write down seller phone number"
+  "post_seller_phone_error": "please write down seller phone number",
+  "seller_name": "Seller Name",
+  "seller_phone_number": "Seller Phone number"
 }

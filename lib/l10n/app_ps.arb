@@ -126,5 +126,7 @@
   "reset_password_pass_con_htn": "پشتڕاستکردنەوەی وشەی نهێنی",
   "reset_btn_save": "سەیڤ",
   "post_seller_error": "تکایە ناوی فرۆشیار بنووسە",
-  "post_seller_phone_error": "تکایە ژمارەی تەلەفۆنی فرۆشیار بنووسە"
+  "post_seller_phone_error": "تکایە ژمارەی تەلەفۆنی فرۆشیار بنووسە",
+  "seller_name": "ناوی فرۆشیار",
+  "seller_phone_number": "ژمارەی تەلەفۆنی فرۆشیار"
 }

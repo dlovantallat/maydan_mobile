@@ -126,5 +126,7 @@
   "reset_password_pass_con_htn": "تأكيد كلمة المرور",
   "reset_btn_save": "احفظ",
   "post_seller_error": "الرجاء كتابة اسم البائع",
-  "post_seller_phone_error": "الرجاء كتابة رقم هاتف البائع"
+  "post_seller_phone_error": "الرجاء كتابة رقم هاتف البائع",
+  "seller_name": "البائع اسم",
+  "seller_phone_number": "رقم هاتف البائع"
 }

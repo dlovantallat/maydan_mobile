@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
+import '../../utilities/app_utilities.dart';
 import 'static_content_obj.dart';
 
 class StaticContentScreen extends StatefulWidget {
@@ -32,7 +33,8 @@ class _StaticContentScreenState extends State<StaticContentScreen> {
       isLoading = true;
     });
 
-    staticContent = await service.getStaticContent(widget.name);
+    String localLang = await getLanguageKeyForApi();
+    staticContent = await service.getStaticContent(widget.name, localLang);
 
     setState(() {
       isLoading = false;
