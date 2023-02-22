@@ -151,7 +151,7 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                         child: Text(
                           AppLocalizations.of(context)!.home_drawer_kurdish,
                           style: TextStyle(
-                              color: !isKurdish ? appColor : Colors.white),
+                              color: isKurdish ? Colors.white : appColor),
                         ),
                       ),
                       ElevatedButton(
@@ -176,7 +176,7 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                         child: Text(
                           AppLocalizations.of(context)!.home_drawer_arabic,
                           style: TextStyle(
-                              color: !isArabic ? appColor : Colors.white),
+                              color: isArabic ? Colors.white : appColor),
                         ),
                       ),
                       ElevatedButton(
@@ -201,7 +201,7 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                         child: Text(
                           AppLocalizations.of(context)!.home_drawer_english,
                           style: TextStyle(
-                              color: !isEnglish ? appColor : Colors.white),
+                              color: isEnglish ? Colors.white : appColor),
                         ),
                       ),
                     ],

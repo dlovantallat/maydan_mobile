@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/screens/on_boarding/language_start_up_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -145,7 +146,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: L10n.all,
-      home: isOnboard ? const MainPage() : const OnBoardingScreen(),
+      home: isOnboard ? const MainPage() : const LanguageStartUpScreen(),
     );
   }
 }
