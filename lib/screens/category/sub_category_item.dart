@@ -43,9 +43,9 @@ class SubCategoryItem extends StatelessWidget {
                         fontSize: 14, fontWeight: FontWeight.w400),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.arrow_forward_ios_outlined),
+                const Padding(
+                  padding: EdgeInsetsDirectional.all(8.0),
+                  child: Icon(Icons.arrow_forward_ios_outlined),
                 )
               ],
             ),

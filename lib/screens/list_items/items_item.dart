@@ -161,7 +161,7 @@ class _ItemsItemState extends State<ItemsItem> {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
                   child: Column(
@@ -192,10 +192,14 @@ class _ItemsItemState extends State<ItemsItem> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
-                  child: Text(
-                      "${widget.item.priceAnnounced} ${widget.item.currencyType == "U" ? "\$" : "IQD"}"),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
+                    child: Text(
+                      "${widget.item.priceAnnounced} ${widget.item.currencyType == "U" ? "\$" : "IQD"}",
+                      maxLines: 2,
+                    ),
+                  ),
                 ),
               ],
             ),

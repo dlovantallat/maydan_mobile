@@ -83,15 +83,6 @@ class _ItemDetailState extends State<ItemDetail> {
     });
   }
 
-  void sendLogin() async {
-    final dd = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (_) => const LoginScreen()));
-
-    if (dd == "token") {
-      tokenLocal();
-    }
-  }
-
   void tokenLocal() async {
     setState(() {
       isTokenLoaded = false;
@@ -376,27 +367,14 @@ class _ItemDetailState extends State<ItemDetail> {
                                 ),
                               ],
                             ),
-                            isTokenLoaded
-                                ? Center(
-                                    child: token == ""
-                                        ? TextButton(
-                                            onPressed: sendLogin,
-                                            child: Text(
-                                              AppLocalizations.of(context)!
-                                                  .item_detail_login_please,
-                                              style: const TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          )
-                                        : TextButton(
-                                            onPressed: callingFunctionality,
-                                            child: Text(
-                                              item.data!.phoneNumber,
-                                              style: const TextStyle(
-                                                  color: Colors.white),
-                                            )),
-                                  )
-                                : Container(),
+                            Center(
+                              child: TextButton(
+                                  onPressed: callingFunctionality,
+                                  child: Text(
+                                    item.data!.phoneNumber,
+                                    style: const TextStyle(color: Colors.white),
+                                  )),
+                            ),
                           ],
                         ),
                       ),
