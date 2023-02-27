@@ -376,7 +376,7 @@ class _PostScreenState extends State<PostScreen>
   }
 
   String? validateTitle(String? value) {
-    if (value!.isEmpty) {
+    if (value!.trim().isEmpty) {
       return AppLocalizations.of(context)!.post_title_val;
     } else {
       return null;
@@ -384,7 +384,7 @@ class _PostScreenState extends State<PostScreen>
   }
 
   String? validateSellerName(String? value) {
-    if (value!.isEmpty) {
+    if (value!.trim().isEmpty) {
       return AppLocalizations.of(context)!.post_seller_error;
     } else {
       return null;
@@ -392,7 +392,7 @@ class _PostScreenState extends State<PostScreen>
   }
 
   String? validateSellerPhone(String? value) {
-    if (value!.isEmpty) {
+    if (value!.trim().isEmpty) {
       return AppLocalizations.of(context)!.post_seller_phone_error;
     } else {
       return null;
@@ -400,7 +400,7 @@ class _PostScreenState extends State<PostScreen>
   }
 
   String? validateDescription(String? value) {
-    if (value!.isEmpty) {
+    if (value!.trim().isEmpty) {
       return AppLocalizations.of(context)!.post_description_val;
     } else {
       return null;
@@ -408,7 +408,7 @@ class _PostScreenState extends State<PostScreen>
   }
 
   String? validatePrice(String? value) {
-    if (value!.isEmpty) {
+    if (value!.trim().isEmpty) {
       return null;
     } else {
       return null;
