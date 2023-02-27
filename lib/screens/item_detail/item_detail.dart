@@ -255,16 +255,28 @@ class _ItemDetailState extends State<ItemDetail> {
                         ),
                         child: Column(
                           children: [
-                            Container(
-                              height: 50,
-                              decoration: const BoxDecoration(
-                                borderRadius: BorderRadiusDirectional.only(
-                                    topStart: Radius.circular(10),
-                                    topEnd: Radius.circular(10)),
-                                color: appColor,
+                            ConstrainedBox(
+                              constraints: const BoxConstraints(
+                                minHeight: 50.0,
+                                maxHeight: 50.0,
                               ),
-                              child: Center(
-                                child: Text(item.data!.title),
+                              child: DecoratedBox(
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadiusDirectional.only(
+                                      topStart: Radius.circular(10),
+                                      topEnd: Radius.circular(10)),
+                                  color: appColor,
+                                ),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Expanded(
+                                      child: Text(
+                                        item.data!.title,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                             meteData(
