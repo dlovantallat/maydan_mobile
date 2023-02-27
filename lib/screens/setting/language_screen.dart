@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -66,13 +67,14 @@ class _LanguageScreenState extends State<LanguageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Languages"),
+        title: Text(AppLocalizations.of(context)!.setting_language_title),
       ),
       body: Column(
         children: [
           InkWell(
             onTap: () {
               setLanguage("en");
+              Get.updateLocale(const Locale("en"));
             },
             child: Container(
               margin:
@@ -91,6 +93,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
           InkWell(
             onTap: () {
               setLanguage("ps");
+              Get.updateLocale(const Locale("ps"));
             },
             child: Container(
               margin:
@@ -109,6 +112,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
           InkWell(
             onTap: () {
               setLanguage("ar");
+              Get.updateLocale(const Locale("ar"));
             },
             child: Container(
               margin:

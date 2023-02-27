@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:maydan/screens/on_boarding/on_boarding_screen.dart';
 
 import 'package:provider/provider.dart';
@@ -96,6 +97,7 @@ class _LanguageStartUpScreenState extends State<LanguageStartUpScreen> {
                       onPressed: !isKurdish
                           ? () {
                               setLanguage("ps");
+                              Get.updateLocale(const Locale("ps"));
                             }
                           : null,
                       child: Text(
@@ -119,6 +121,7 @@ class _LanguageStartUpScreenState extends State<LanguageStartUpScreen> {
                       onPressed: !isArabic
                           ? () {
                               setLanguage("ar");
+                              Get.updateLocale(const Locale("ar"));
                             }
                           : null,
                       child: Text(
@@ -142,6 +145,7 @@ class _LanguageStartUpScreenState extends State<LanguageStartUpScreen> {
                       onPressed: !isEnglish
                           ? () {
                               setLanguage("en");
+                              Get.updateLocale(const Locale("en"));
                             }
                           : null,
                       child: Text(

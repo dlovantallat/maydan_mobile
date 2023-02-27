@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -38,9 +39,7 @@ class _PostScreenState extends State<PostScreen>
   CategoryDrop? _dropdownCategoryValue;
 
   /// SubCategory DropDown
-  final List<SubCategoryDrop> _dropdownSubCategoriesDrop = [
-    SubCategoryDrop("-1", "Select")
-  ];
+  final List<SubCategoryDrop> _dropdownSubCategoriesDrop = [];
   SubCategoryDrop? _dropdownSubCategoryValue;
 
   /// City DropDown
@@ -138,7 +137,8 @@ class _PostScreenState extends State<PostScreen>
     _dropdownCategoryValue = null;
     if (!categories.requestStatus) {
       if (categories.statusCode == 200) {
-        _dropdownCategoriesDrop.add(CategoryDrop("-1", "Select"));
+        _dropdownCategoriesDrop.add(CategoryDrop(
+            "-1", AppLocalizations.of(Get.context!)!.select_title));
         for (var i in categories.data!.data) {
           _dropdownCategoriesDrop.add(CategoryDrop(i.id, i.title));
         }
@@ -167,7 +167,8 @@ class _PostScreenState extends State<PostScreen>
     if (!subCategories.requestStatus) {
       if (subCategories.statusCode == 200) {
         _dropdownSubCategoriesDrop.clear();
-        _dropdownSubCategoriesDrop.add(SubCategoryDrop("-1", "Select"));
+        _dropdownSubCategoriesDrop.add(SubCategoryDrop(
+            "-1", AppLocalizations.of(Get.context!)!.select_title));
         for (var i in subCategories.data!.data) {
           _dropdownSubCategoriesDrop.add(SubCategoryDrop(i.id, i.title));
         }
@@ -194,7 +195,8 @@ class _PostScreenState extends State<PostScreen>
 
     if (!cities.requestStatus) {
       if (cities.statusCode == 200) {
-        _dropdownCitiesDrop.add(CityDrop("-1", "Select"));
+        _dropdownCitiesDrop.add(
+            CityDrop("-1", AppLocalizations.of(Get.context!)!.select_title));
         for (var i in cities.data!.data) {
           _dropdownCitiesDrop.add(CityDrop(i.id, i.name));
         }
@@ -224,7 +226,8 @@ class _PostScreenState extends State<PostScreen>
 
     if (!districts.requestStatus) {
       if (districts.statusCode == 200) {
-        _dropdownDistrictsDrop.add(DistrictDrop("-1", "Select"));
+        _dropdownDistrictsDrop.add(DistrictDrop(
+            "-1", AppLocalizations.of(Get.context!)!.select_title));
         for (var i in districts.data!.data) {
           _dropdownDistrictsDrop.add(DistrictDrop(i.id, i.name));
         }

@@ -11,6 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:maydan/screens/on_boarding/language_start_up_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import 'cloud_functions/maydan_services.dart';
 import 'firebase_options.dart';
@@ -127,12 +128,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<LocaleProvider>(context);
-
+    print("GetMaterialApp");
     if (isFirst) {
       provider.setLocale(locale!);
       isFirst = false;
     }
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: appTheme,

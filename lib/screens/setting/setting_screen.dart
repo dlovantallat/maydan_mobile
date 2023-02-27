@@ -32,7 +32,8 @@ class _SettingScreenState extends State<SettingScreen> {
             InkWell(
                 onTap: () => Navigator.push(context,
                     MaterialPageRoute(builder: (_) => const LanguageScreen())),
-                child: item("Language")),
+                child:
+                    item(AppLocalizations.of(context)!.setting_language_title)),
             InkWell(
                 onTap: () => Navigator.push(
                     context,

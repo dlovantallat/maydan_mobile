@@ -128,5 +128,7 @@
   "post_seller_error": "تکایە ناوی فرۆشیار بنووسە",
   "post_seller_phone_error": "تکایە ژمارەی تەلەفۆنی فرۆشیار بنووسە",
   "seller_name": "ناوی فرۆشیار",
-  "seller_phone_number": "ژمارەی تەلەفۆنی فرۆشیار"
+  "seller_phone_number": "ژمارەی تەلەفۆنی فرۆشیار",
+  "select_title": "دەسنیاشنکردن",
+  "setting_language_title": "زمان"
 }

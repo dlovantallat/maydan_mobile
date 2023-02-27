@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -146,6 +147,7 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                             ? () {
                                 Navigator.pop(context);
                                 setLanguage("ps");
+                                Get.updateLocale(const Locale("ps"));
                               }
                             : null,
                         child: Text(
@@ -171,6 +173,7 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                             ? () {
                                 Navigator.pop(context);
                                 setLanguage("ar");
+                                Get.updateLocale(const Locale("ar"));
                               }
                             : null,
                         child: Text(
@@ -196,6 +199,7 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                             ? () {
                                 Navigator.pop(context);
                                 setLanguage("en");
+                                Get.updateLocale(const Locale("en"));
                               }
                             : null,
                         child: Text(

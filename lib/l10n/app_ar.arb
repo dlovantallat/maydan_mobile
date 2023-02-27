@@ -128,5 +128,7 @@
   "post_seller_error": "الرجاء كتابة اسم البائع",
   "post_seller_phone_error": "الرجاء كتابة رقم هاتف البائع",
   "seller_name": "البائع اسم",
-  "seller_phone_number": "رقم هاتف البائع"
+  "seller_phone_number": "رقم هاتف البائع",
+  "select_title": "يختار",
+  "setting_language_title": "لغة"
 }
