@@ -171,6 +171,45 @@ class _HomeScreenState extends State<HomeScreen>
     setState(() {});
   }
 
+  void getLatestDeals() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    token = await getToken();
+    String localLang = await getLanguageKeyForApi();
+    items = await service.getLatestDeals(token, currentPage, localLang);
+
+    if (!items.requestStatus) {
+      if (items.statusCode == 200) {
+        data.addAll(items.data!.list);
+        currentPage++;
+        totalPage = items.data!.lastPage;
+      }
+    }
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  _secondGetLatestDeals() async {
+    if (currentPage > totalPage) {
+      refreshController.loadComplete();
+      setState(() {
+        noMoreLoad = false;
+      });
+
+      return;
+    }
+    String localLang = await getLanguageKeyForApi();
+    items = await service.getLatestDeals(token, currentPage, localLang);
+    data.addAll(items.data!.list);
+    currentPage++;
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -364,7 +403,11 @@ class _HomeScreenState extends State<HomeScreen>
                             enablePullUp: noMoreLoad,
                             enablePullDown: false,
                             onLoading: () async {
-                              await _secondGetHotDeals();
+                              if (isHotDeals) {
+                                await _secondGetHotDeals();
+                              } else {
+                                await _secondGetLatestDeals();
+                              }
 
                               if (items.requestStatus) {
                                 refreshController.loadFailed();
@@ -433,7 +476,7 @@ class _HomeScreenState extends State<HomeScreen>
         isLatest = !isLatest;
       });
 
-      getHotDeals();
+      getLatestDeals();
     } else if (index == 3) {
       // Company
       currentPage = 1;
