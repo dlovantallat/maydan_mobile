@@ -116,7 +116,7 @@ Future<String> getLanguageKey() async {
 
 Future<String> getLanguageKeyForApi() async {
   String key = await getLanguageKey();
-  if (key == 'ps') {
+  if (key == 'fa') {
     key = 'ckb';
   }
   return key;

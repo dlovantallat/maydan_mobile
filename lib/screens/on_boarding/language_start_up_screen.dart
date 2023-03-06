@@ -52,7 +52,7 @@ class _LanguageStartUpScreenState extends State<LanguageStartUpScreen> {
         isKurdish = false;
         isArabic = true;
       });
-    } else if (key == "ps") {
+    } else if (key == "fa") {
       setState(() {
         isEnglish = false;
         isKurdish = true;
@@ -96,8 +96,8 @@ class _LanguageStartUpScreenState extends State<LanguageStartUpScreen> {
                       ),
                       onPressed: !isKurdish
                           ? () {
-                              setLanguage("ps");
-                              Get.updateLocale(const Locale("ps"));
+                              setLanguage("fa");
+                              Get.updateLocale(const Locale("fa"));
                             }
                           : null,
                       child: Text(

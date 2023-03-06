@@ -146,8 +146,8 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                         onPressed: !isKurdish
                             ? () {
                                 Navigator.pop(context);
-                                setLanguage("ps");
-                                Get.updateLocale(const Locale("ps"));
+                                setLanguage("fa");
+                                Get.updateLocale(const Locale("fa"));
                               }
                             : null,
                         child: Text(
