@@ -128,56 +128,59 @@ class _RegisterScreenState extends State<RegisterScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Text(AppLocalizations.of(context)!.register_pn),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  margin: const EdgeInsetsDirectional.only(start: 8),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius:
-                        const BorderRadiusDirectional.all(Radius.circular(10)),
+          Directionality(
+            textDirection: TextDirection.ltr,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    margin: const EdgeInsetsDirectional.only(start: 8),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius:
+                          const BorderRadiusDirectional.all(Radius.circular(10)),
+                    ),
+                    height: 40,
+                    width: 100,
+                    child: const Center(child: Text("+964 (0)")),
                   ),
-                  height: 40,
-                  width: 100,
-                  child: const Center(child: Text("+964 (0)")),
                 ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                  margin: const EdgeInsetsDirectional.only(start: 8, end: 8),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius:
-                        const BorderRadiusDirectional.all(Radius.circular(10)),
-                  ),
-                  height: 40,
-                  width: 100,
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 4, end: 4),
-                    child: Center(
-                      child: TextField(
-                        maxLength: 10,
-                        controller: phoneNumberController,
-                        onChanged: (v) {
-                          setState(() {
-                            phoneCounter = v.trim().length;
-                          });
-                        },
-                        decoration: const InputDecoration(
-                          counterText: "",
-                          border: InputBorder.none,
-                          hintText: '750 XXX XXXX',
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    margin: const EdgeInsetsDirectional.only(start: 8, end: 8),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius:
+                          const BorderRadiusDirectional.all(Radius.circular(10)),
+                    ),
+                    height: 40,
+                    width: 100,
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.only(start: 4, end: 4),
+                      child: Center(
+                        child: TextField(
+                          maxLength: 10,
+                          controller: phoneNumberController,
+                          onChanged: (v) {
+                            setState(() {
+                              phoneCounter = v.trim().length;
+                            });
+                          },
+                          decoration: const InputDecoration(
+                            counterText: "",
+                            border: InputBorder.none,
+                            hintText: '750 XXX XXXX',
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Padding(
             padding:

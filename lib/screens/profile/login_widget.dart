@@ -68,43 +68,46 @@ class _LoginWidgetState extends State<LoginWidget> {
           ),
           Padding(
             padding: const EdgeInsetsDirectional.all(8.0),
-            child: TextField(
-              maxLength: 10,
-              keyboardType: TextInputType.number,
-              controller: phoneNumberController,
-              onChanged: (v) {
-                setState(() {
-                  phoneCounter = v.trim().length;
-                });
-              },
-              decoration: InputDecoration(
-                fillColor: Colors.white,
-                filled: true,
-                prefixIcon: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Row(
-                    children: const [
-                      Padding(
-                        padding: EdgeInsetsDirectional.only(start: 16),
-                        child: Icon(Icons.phone_android_rounded),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.only(start: 8),
-                        child: Text("+964 (0)"),
-                      ),
-                    ],
+            child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: TextField(
+                maxLength: 10,
+                keyboardType: TextInputType.number,
+                controller: phoneNumberController,
+                onChanged: (v) {
+                  setState(() {
+                    phoneCounter = v.trim().length;
+                  });
+                },
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  prefixIcon: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(
+                      children: const [
+                        Padding(
+                          padding: EdgeInsetsDirectional.only(start: 16),
+                          child: Icon(Icons.phone_android_rounded),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.only(start: 8),
+                          child: Text("+964 (0)"),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16.0),
+                    ),
                   ),
-                ),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16.0),
+                    ),
                   ),
                 ),
               ),
@@ -112,46 +115,49 @@ class _LoginWidgetState extends State<LoginWidget> {
           ),
           Padding(
             padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
-            child: TextField(
-              keyboardType: TextInputType.visiblePassword,
-              obscureText: true,
-              controller: passwordController,
-              onChanged: (v) {
-                setState(() {
-                  passwordCounter = v.trim().length;
-                });
-              },
-              decoration: InputDecoration(
-                fillColor: Colors.white,
-                filled: true,
-                prefixIcon: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Row(
-                    children: const [
-                      Padding(
-                        padding: EdgeInsetsDirectional.only(start: 16),
-                        child: Icon(
-                          Icons.password,
-                          color: appColor,
+            child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: TextField(
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: true,
+                controller: passwordController,
+                onChanged: (v) {
+                  setState(() {
+                    passwordCounter = v.trim().length;
+                  });
+                },
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  prefixIcon: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(
+                      children: const [
+                        Padding(
+                          padding: EdgeInsetsDirectional.only(start: 16),
+                          child: Icon(
+                            Icons.password,
+                            color: appColor,
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.only(start: 8),
-                        child: Text(""),
-                      ),
-                    ],
+                        Padding(
+                          padding: EdgeInsetsDirectional.only(start: 8),
+                          child: Text(""),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16.0),
+                    ),
                   ),
-                ),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16.0),
+                    ),
                   ),
                 ),
               ),

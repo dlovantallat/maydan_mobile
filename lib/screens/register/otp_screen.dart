@@ -130,23 +130,26 @@ class _OtpScreenState extends State<OtpScreen> {
                               fontSize: 18, fontWeight: FontWeight.w700),
                         ),
                       ),
-                      OTPTextField(
-                          controller: otpController,
-                          length: 6,
-                          width: MediaQuery.of(context).size.width,
-                          textFieldAlignment: MainAxisAlignment.spaceAround,
-                          fieldWidth: 45,
-                          fieldStyle: FieldStyle.underline,
-                          outlineBorderRadius: 8,
-                          style: const TextStyle(fontSize: 17),
-                          onChanged: (pin) {
-                            setState(() {
-                              otpNumberControllerCounter = pin.length;
-                            });
-                          },
-                          onCompleted: (pin) {
-                            otp = pin;
-                          }),
+                      Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: OTPTextField(
+                            controller: otpController,
+                            length: 6,
+                            width: MediaQuery.of(context).size.width,
+                            textFieldAlignment: MainAxisAlignment.spaceAround,
+                            fieldWidth: 45,
+                            fieldStyle: FieldStyle.underline,
+                            outlineBorderRadius: 8,
+                            style: const TextStyle(fontSize: 17),
+                            onChanged: (pin) {
+                              setState(() {
+                                otpNumberControllerCounter = pin.length;
+                              });
+                            },
+                            onCompleted: (pin) {
+                              otp = pin;
+                            }),
+                      ),
                       Padding(
                         padding: const EdgeInsetsDirectional.only(
                             top: 64, start: 8, end: 8, bottom: 16),
