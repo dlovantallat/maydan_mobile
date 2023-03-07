@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/screens/search/search_screen.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
@@ -228,22 +229,28 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
             ),
-            Container(
-              margin:
-                  const EdgeInsetsDirectional.only(start: 8, end: 8, top: 8),
-              height: 50,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.grey)),
-              child: Row(
-                children: [
-                  Container(
-                    margin:
-                        const EdgeInsetsDirectional.only(start: 16, end: 16),
-                    child: const Icon(Icons.search),
-                  ),
-                  Text(AppLocalizations.of(context)!.home_search_caption),
-                ],
+            InkWell(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const SearchScreen()));
+              },
+              child: Container(
+                margin:
+                    const EdgeInsetsDirectional.only(start: 8, end: 8, top: 8),
+                height: 50,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey)),
+                child: Row(
+                  children: [
+                    Container(
+                      margin:
+                          const EdgeInsetsDirectional.only(start: 16, end: 16),
+                      child: const Icon(Icons.search),
+                    ),
+                    Text(AppLocalizations.of(context)!.home_search_caption),
+                  ],
+                ),
               ),
             ),
           ],

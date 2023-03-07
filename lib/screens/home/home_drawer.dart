@@ -65,7 +65,7 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
         isKurdish = false;
         isArabic = true;
       });
-    } else if (key == "ps") {
+    } else if (key == "fa") {
       setState(() {
         isEnglish = false;
         isKurdish = true;
