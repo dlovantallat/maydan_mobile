@@ -230,6 +230,7 @@ class _HomeSubItemState extends State<HomeSubItem> {
   @override
   void initState() {
     isFav = widget.isFav;
+    print("object $isFav");
     super.initState();
   }
 

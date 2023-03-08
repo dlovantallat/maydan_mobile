@@ -374,7 +374,7 @@ class _HomeScreenState extends State<HomeScreen>
                             child: GridView.builder(
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2, mainAxisExtent: 220),
+                                      crossAxisCount: 2, mainAxisExtent: 225),
                               itemBuilder: (BuildContext context, int index) =>
                                   ItemsItem(
                                 item: data[index],
@@ -425,7 +425,7 @@ class _HomeScreenState extends State<HomeScreen>
                             child: GridView.builder(
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2, mainAxisExtent: 220),
+                                      crossAxisCount: 2, mainAxisExtent: 225),
                               itemBuilder: (BuildContext context, int index) =>
                                   ItemsItem(
                                 item: data[index],
