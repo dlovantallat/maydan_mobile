@@ -254,26 +254,6 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
                     },
                     child:
                         item(AppLocalizations.of(context)!.home_drawer_logout)),
-                InkWell(
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => StaticContentScreen(
-                                title: AppLocalizations.of(context)!
-                                    .home_drawer_terms_and_conditions,
-                                name: "terms_and_condition"))),
-                    child: item(AppLocalizations.of(context)!
-                        .home_drawer_terms_and_conditions)),
-                InkWell(
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => StaticContentScreen(
-                                title: AppLocalizations.of(context)!
-                                    .home_drawer_privacy_policy,
-                                name: "privacy_and_policy"))),
-                    child: item(AppLocalizations.of(context)!
-                        .home_drawer_privacy_policy)),
               ],
             ),
           )
