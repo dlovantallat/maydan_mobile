@@ -192,7 +192,9 @@ class _MainPageState extends State<MainPage> with HomeDrawerListener {
                     semanticsLabel: '',
                     height: 24,
                     width: 24,
-                    color: currentIndex == 0 ? appColor : null,
+                    colorFilter: ColorFilter.mode(
+                        currentIndex == 0 ? appColor : Colors.grey,
+                        BlendMode.srcIn),
                   ),
                   Text(
                     AppLocalizations.of(context)!.main_bottom_navigation_home,
@@ -205,13 +207,13 @@ class _MainPageState extends State<MainPage> with HomeDrawerListener {
           BottomNavigationBarItem(
             icon: Column(
               children: [
-                SvgPicture.asset(
-                  mainCategoryBottomNavigationSvg,
-                  semanticsLabel: '',
-                  height: 24,
-                  width: 24,
-                  color: currentIndex == 1 ? appColor : null,
-                ),
+                SvgPicture.asset(mainCategoryBottomNavigationSvg,
+                    semanticsLabel: '',
+                    height: 24,
+                    width: 24,
+                    colorFilter: ColorFilter.mode(
+                        currentIndex == 1 ? appColor : Colors.grey,
+                        BlendMode.srcIn)),
                 Text(
                   AppLocalizations.of(context)!.main_bottom_navigation_category,
                   style: TextStyle(color: currentIndex == 1 ? appColor : null),
@@ -230,13 +232,13 @@ class _MainPageState extends State<MainPage> with HomeDrawerListener {
           BottomNavigationBarItem(
             icon: Column(
               children: [
-                SvgPicture.asset(
-                  mainFavoriteBottomNavigationSvg,
-                  semanticsLabel: '',
-                  height: 24,
-                  width: 24,
-                  color: currentIndex == 3 ? appColor : null,
-                ),
+                SvgPicture.asset(mainFavoriteBottomNavigationSvg,
+                    semanticsLabel: '',
+                    height: 24,
+                    width: 24,
+                    colorFilter: ColorFilter.mode(
+                        currentIndex == 3 ? appColor : Colors.grey,
+                        BlendMode.srcIn)),
                 Text(
                   AppLocalizations.of(context)!.main_bottom_navigation_favorite,
                   style: TextStyle(color: currentIndex == 3 ? appColor : null),
@@ -248,13 +250,13 @@ class _MainPageState extends State<MainPage> with HomeDrawerListener {
           BottomNavigationBarItem(
             icon: Column(
               children: [
-                SvgPicture.asset(
-                  mainProfileBottomNavigationSvg,
-                  semanticsLabel: '',
-                  height: 24,
-                  width: 24,
-                  color: currentIndex == 4 ? appColor : null,
-                ),
+                SvgPicture.asset(mainProfileBottomNavigationSvg,
+                    semanticsLabel: '',
+                    height: 24,
+                    width: 24,
+                    colorFilter: ColorFilter.mode(
+                        currentIndex == 4 ? appColor : Colors.grey,
+                        BlendMode.srcIn)),
                 Text(
                   AppLocalizations.of(context)!.main_bottom_navigation_profile,
                   style: TextStyle(color: currentIndex == 4 ? appColor : null),

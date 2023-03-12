@@ -70,7 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: SvgPicture.asset(
                 height: 90,
                 homeLogoSvg,
-                color: appColor,
+                colorFilter: const ColorFilter.mode(appColor, BlendMode.srcIn),
                 semanticsLabel: '',
               ),
             ),
@@ -139,8 +139,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     margin: const EdgeInsetsDirectional.only(start: 8),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),
-                      borderRadius:
-                          const BorderRadiusDirectional.all(Radius.circular(10)),
+                      borderRadius: const BorderRadiusDirectional.all(
+                          Radius.circular(10)),
                     ),
                     height: 40,
                     width: 100,
@@ -153,13 +153,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     margin: const EdgeInsetsDirectional.only(start: 8, end: 8),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),
-                      borderRadius:
-                          const BorderRadiusDirectional.all(Radius.circular(10)),
+                      borderRadius: const BorderRadiusDirectional.all(
+                          Radius.circular(10)),
                     ),
                     height: 40,
                     width: 100,
                     child: Padding(
-                      padding: const EdgeInsetsDirectional.only(start: 4, end: 4),
+                      padding:
+                          const EdgeInsetsDirectional.only(start: 4, end: 4),
                       child: Center(
                         child: TextField(
                           maxLength: 10,

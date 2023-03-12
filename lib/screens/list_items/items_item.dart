@@ -147,7 +147,8 @@ class _ItemsItemState extends State<ItemsItem> {
                                 isFav
                                     ? mainFullFavoriteBottomNavigationSvg
                                     : mainFavoriteBottomNavigationSvg,
-                                color: appColor,
+                                colorFilter: const ColorFilter.mode(
+                                    appColor, BlendMode.srcIn),
                                 semanticsLabel: '',
                               ),
                             ),

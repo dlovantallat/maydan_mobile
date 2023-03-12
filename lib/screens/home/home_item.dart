@@ -351,7 +351,8 @@ class _HomeSubItemState extends State<HomeSubItem> {
                                   isFav
                                       ? mainFullFavoriteBottomNavigationSvg
                                       : mainFavoriteBottomNavigationSvg,
-                                  color: appColor,
+                                  colorFilter: const ColorFilter.mode(
+                                      appColor, BlendMode.srcIn),
                                   semanticsLabel: '',
                                 ),
                               ),

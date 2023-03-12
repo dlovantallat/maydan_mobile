@@ -13,7 +13,6 @@ import '../../utilities/app_utilities.dart';
 import '../favorite/favorite_obj.dart';
 import '../home/home_slider.dart';
 import '../list_items/items_item.dart';
-import 'login_screen.dart';
 
 class ItemDetail extends StatefulWidget {
   final ItemData item;
@@ -238,7 +237,8 @@ class _ItemDetailState extends State<ItemDetail> {
                                           isFav
                                               ? mainFullFavoriteBottomNavigationSvg
                                               : mainFavoriteBottomNavigationSvg,
-                                          color: appColor,
+                                          colorFilter: const ColorFilter.mode(
+                                              appColor, BlendMode.srcIn),
                                           semanticsLabel: '',
                                         ),
                                       ],

@@ -140,7 +140,7 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
             padding: const EdgeInsetsDirectional.only(end: 8),
             child: SvgPicture.asset(
               homeLogoSvg,
-              color: appColor,
+              colorFilter: const ColorFilter.mode(appColor, BlendMode.srcIn),
               semanticsLabel: '',
             ),
           ),

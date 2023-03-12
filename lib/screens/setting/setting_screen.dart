@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../static_content/static_content_screen.dart';
 import 'language_screen.dart';
 
 class SettingScreen extends StatefulWidget {
