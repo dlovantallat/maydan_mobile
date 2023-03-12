@@ -270,10 +270,14 @@ class _ItemDetailState extends State<ItemDetail> {
                                 child: Center(
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Expanded(
-                                      child: Text(
-                                        item.data!.title,
-                                      ),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            item.data!.title,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
