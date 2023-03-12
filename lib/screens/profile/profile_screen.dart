@@ -256,7 +256,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => const DeleteProfileScreen()));
+                                builder: (_) => DeleteProfileScreen(
+                                      msisdn: profile.data!.msisdn,
+                                    )));
                       },
                       child: Container(
                         margin: const EdgeInsetsDirectional.only(

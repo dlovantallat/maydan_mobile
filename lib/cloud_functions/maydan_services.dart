@@ -1097,4 +1097,49 @@ class MaydanServices {
               : "API Down we are working to get things back to normal. Please have a patient"),
     );
   }
+
+  Future<ApiResponse<UpdateUser>> deleteMe(String phone, String token) async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse("${baseURL}users/requestDeleteAccount"));
+
+    request.fields['msisdn'] = phone;
+
+    request.headers.addAll(headers(token: token));
+
+    return request.send().then(
+      (data) async {
+        if (data.statusCode == 200) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = UpdateUser.json(jsonDecode(respStr));
+
+          return ApiResponse<UpdateUser>(data: register, statusCode: 200);
+        } else if (data.statusCode == 422) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = UpdateUser.json(jsonDecode(respStr));
+          return ApiResponse<UpdateUser>(
+              statusCode: 422, errorMessage: register.message);
+        } else if (data.statusCode == 403) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = UpdateUser.json(jsonDecode(respStr));
+          return ApiResponse<UpdateUser>(
+              statusCode: 403, errorMessage: register.message);
+        } else if (data.statusCode == 401) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = UpdateUser.json(jsonDecode(respStr));
+          return ApiResponse<UpdateUser>(
+              statusCode: 401, errorMessage: register.message);
+        }
+
+        return ApiResponse<UpdateUser>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<UpdateUser>(
+          requestStatus: true, errorMessage: s.toString()),
+    );
+  }
 }

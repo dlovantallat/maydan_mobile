@@ -1,16 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../cloud_functions/api_response.dart';
+import '../../cloud_functions/maydan_services.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
+import '../register/register.dart';
 
 class DeleteProfileScreen extends StatefulWidget {
-  const DeleteProfileScreen({Key? key}) : super(key: key);
+  final String msisdn;
+
+  const DeleteProfileScreen({Key? key, required this.msisdn}) : super(key: key);
 
   @override
   State<DeleteProfileScreen> createState() => _DeleteProfileScreenState();
 }
 
 class _DeleteProfileScreenState extends State<DeleteProfileScreen> {
+  MaydanServices get service => GetIt.I<MaydanServices>();
+  late ApiResponse<UpdateUser> deleteProfile;
+
+  delete() async {
+    Navigator.pop(context);
+    loading(context);
+    String token = await getToken();
+    deleteProfile = await service.deleteMe(widget.msisdn, token);
+
+    if (!deleteProfile.requestStatus) {
+      if (deleteProfile.statusCode == 200) {
+        setToken("");
+        Navigator.pop(context);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (_) {
+          return const MainPage(
+            index: 4,
+          );
+        }), (route) => false);
+      }
+    }
+  }
+
   deletePopup() {
     showDialog(
         context: context,
@@ -59,9 +89,7 @@ class _DeleteProfileScreenState extends State<DeleteProfileScreen> {
                         ),
                         Expanded(
                           child: ElevatedButton(
-                            onPressed: () {
-                              //TODO call api
-                            },
+                            onPressed: delete,
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
                                 appColor,
