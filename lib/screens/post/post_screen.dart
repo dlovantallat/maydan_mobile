@@ -690,6 +690,7 @@ class _PostScreenState extends State<PostScreen>
                   ),
                   TextFormField(
                     controller: titleController,
+                    maxLength: 15,
                     validator: validateTitle,
                     decoration: InputDecoration(
                       focusedBorder: oib,

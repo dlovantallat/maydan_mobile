@@ -56,6 +56,10 @@ const String instagramSvg = 'assets/instagram.svg';
 const String ytSvg = 'assets/youtube.svg';
 const String waSvg = 'assets/whatsapp.svg';
 const String vSvg = 'assets/viber.svg';
+const String aboutMaydanSvg = "assets/about.svg";
+const String deleteAccountSvg = "assets/delete_account.svg";
+const String logoutSvg = "assets/logout.svg";
+const String settingSvg = "assets/setting.svg";
 
 /// Static Strings for static values
 const String appToken = "app-token";

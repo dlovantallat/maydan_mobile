@@ -49,7 +49,7 @@
   "post_district_caption": "منطقة",
   "post_clear_button": "مسح",
   "post_save_button": "حفظ",
-  "post_title_caption": "العنوان",
+  "post_title_caption": "اسم السلع",
   "login_title": "تسجيل الدخول",
   "item_detail_price": "السعر",
   "item_detail_date": "التاريخ",
@@ -130,5 +130,15 @@
   "seller_name": "البائع اسم",
   "seller_phone_number": "رقم هاتف البائع",
   "select_title": "يختار",
-  "setting_language_title": "لغة"
+  "setting_language_title": "لغة",
+  "delete_account_title": "Delete Account",
+  "account_delete_first_line": "Deleting your account will,",
+  "account_delete_second_line": "Deleting your account is permanent.",
+  "account_delete_third_line": "when you delete your Maydan account, you won't able to retrieve the data or information. Following action will be affected.",
+  "account_delete_point_one": "-Delete your account from Maydan",
+  "account_delete_point_two": "-Erase your data history",
+  "account_delete_point_three": "-Erase your all information",
+  "account_delete_last_line": "Note: Once you placed the delete request will keep your information for the 90 days. After deleting request if you login to the Maydan then the deleting request will be void. if you dont use your Maydan by the provided time frame then your account will deactive automatically.",
+  "delete_understand_btn": "I Understand",
+  "delete_desc": "Are you sure you want to delete your account"
 }

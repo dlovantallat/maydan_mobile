@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:maydan/screens/setting/setting_screen.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../utilities/app_utilities.dart';
+import '../setting/setting_screen.dart';
 import '../static_content/static_content_screen.dart';
+import 'delete_profile_screen.dart';
 import 'edit_profile.dart';
 import 'login_widget.dart';
 import 'profile.dart';
@@ -195,9 +197,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                             start: 16, end: 8, top: 16),
                         height: 110,
                         color: const Color(0xFFF1F1F1),
-                        child: Center(
-                          child: Text(
-                              AppLocalizations.of(context)!.profile_setting),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsetsDirectional.only(bottom: 8),
+                              child: SvgPicture.asset(
+                                settingSvg,
+                                semanticsLabel: '',
+                              ),
+                            ),
+                            Text(AppLocalizations.of(context)!.profile_setting),
+                          ],
                         ),
                       ),
                     ),
@@ -216,9 +228,20 @@ class _ProfileScreenState extends State<ProfileScreen>
                             start: 8, end: 16, top: 16),
                         height: 110,
                         color: const Color(0xFFF1F1F1),
-                        child: Center(
-                          child: Text(
-                              AppLocalizations.of(context)!.profile_about_us),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsetsDirectional.only(bottom: 8),
+                              child: SvgPicture.asset(
+                                aboutMaydanSvg,
+                                semanticsLabel: '',
+                              ),
+                            ),
+                            Text(
+                                AppLocalizations.of(context)!.profile_about_us),
+                          ],
                         ),
                       ),
                     ),
@@ -230,26 +253,60 @@ class _ProfileScreenState extends State<ProfileScreen>
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        logout(context, this);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const DeleteProfileScreen()));
                       },
                       child: Container(
                         margin: const EdgeInsetsDirectional.only(
                             start: 16, end: 8, top: 16),
                         height: 110,
                         color: const Color(0xFFF1F1F1),
-                        child: Center(
-                          child: Text(
-                              AppLocalizations.of(context)!.home_drawer_logout),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsetsDirectional.only(bottom: 8),
+                              child: SvgPicture.asset(
+                                deleteAccountSvg,
+                                semanticsLabel: '',
+                              ),
+                            ),
+                            Text(AppLocalizations.of(context)!
+                                .delete_account_title),
+                          ],
                         ),
                       ),
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                      margin: const EdgeInsetsDirectional.only(
-                          start: 8, end: 16, top: 16),
-                      height: 110,
-                      color: const Color(0xFFFFFFFF),
+                    child: InkWell(
+                      onTap: () {
+                        logout(context, this);
+                      },
+                      child: Container(
+                        margin: const EdgeInsetsDirectional.only(
+                            start: 8, end: 16, top: 16),
+                        height: 110,
+                        color: const Color(0xFFF1F1F1),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsetsDirectional.only(bottom: 8),
+                              child: SvgPicture.asset(
+                                logoutSvg,
+                                semanticsLabel: '',
+                              ),
+                            ),
+                            Text(AppLocalizations.of(context)!
+                                .home_drawer_logout),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ],
