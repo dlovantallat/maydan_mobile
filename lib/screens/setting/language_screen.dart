@@ -34,7 +34,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
   setLanguage(String key) async {
     final provider = Provider.of<LocaleProvider>(context, listen: false);
-    provider.setLocale(Locale(key));
+    provider.setLocale(key);
 
     checker(key);
     SharedPreferences preferences = await SharedPreferences.getInstance();

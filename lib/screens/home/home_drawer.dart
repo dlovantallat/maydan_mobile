@@ -44,7 +44,7 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
 
   setLanguage(String key) async {
     final provider = Provider.of<LocaleProvider>(context, listen: false);
-    provider.setLocale(Locale(key));
+    provider.setLocale(key);
 
     checker(key);
     widget.callBack.returnKey(key);

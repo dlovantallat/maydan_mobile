@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -8,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:maydan/screens/on_boarding/language_start_up_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -16,7 +13,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'cloud_functions/maydan_services.dart';
 import 'firebase_options.dart';
 import 'l10n/l10n.dart';
-import 'screens/on_boarding/on_boarding_screen.dart';
+import 'screens/on_boarding/language_start_up_screen.dart';
 import 'utilities/locale_provider.dart';
 import 'screens/category/category_screen.dart';
 import 'screens/favorite/favorite_screen.dart';
@@ -77,16 +74,14 @@ Future<void> main() async {
 
   servicesLocator();
 
-  String key = await getLanguageKey();
   bool isOnBoard = await getOnBoard();
-  Locale locale = Locale(key);
+
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => LocaleProvider()),
+        ChangeNotifierProvider(create: (_) => LocaleProvider("en")),
       ],
       child: MyApp(
-        locale: locale,
         isOnboard: isOnBoard,
       ),
     ),
@@ -119,27 +114,22 @@ Future<bool> getOnBoard() async {
 }
 
 class MyApp extends StatelessWidget {
-  bool isFirst = true;
-  Locale? locale;
-  bool isOnboard;
+  final bool isOnboard;
 
-  MyApp({super.key, this.locale, this.isOnboard = false});
+  const MyApp({super.key, this.isOnboard = false});
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<LocaleProvider>(context);
     print("GetMaterialApp");
-    if (isFirst) {
-      provider.setLocale(locale!);
-      isFirst = false;
-    }
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: appTheme,
         appBarTheme: const AppBarTheme(elevation: 0),
       ),
-      locale: provider.local,
+      locale: Locale(provider.local == "" ? "en" : provider.local),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
