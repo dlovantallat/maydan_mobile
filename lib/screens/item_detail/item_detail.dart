@@ -44,6 +44,10 @@ class _ItemDetailState extends State<ItemDetail> {
 
   @override
   void initState() {
+    setState(() {
+      isFav = widget.isFav;
+    });
+
     getItem();
     super.initState();
   }
@@ -60,7 +64,7 @@ class _ItemDetailState extends State<ItemDetail> {
     item = await service.getItemId(token, widget.item.id);
     if (!item.requestStatus) {
       if (item.statusCode == 200) {
-        isFav = item.data!.favorite;
+        // isFav = item.data!.favorite;
         descController.text = item.data!.description;
         getRelatedItem();
       }
