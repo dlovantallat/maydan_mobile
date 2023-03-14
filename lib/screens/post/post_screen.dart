@@ -188,7 +188,8 @@ class _PostScreenState extends State<PostScreen>
       isCityLoaded = false;
     });
 
-    cities = await service.getCities();
+    localLang = await getLanguageKeyForApi();
+    cities = await service.getCities(localLang);
 
     _dropdownCitiesDrop.clear();
     _dropdownCityValue = null;
@@ -217,7 +218,7 @@ class _PostScreenState extends State<PostScreen>
       isDistrictLoaded = false;
     });
 
-    districts = await service.getDistricts(cityId);
+    districts = await service.getDistricts(cityId, localLang);
     setState(() {
       isDistrictLoading = false;
     });

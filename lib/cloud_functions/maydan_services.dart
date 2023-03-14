@@ -879,9 +879,10 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<CityObj>> getCities() {
+  Future<ApiResponse<CityObj>> getCities(String localLang) {
     return http
-        .get(Uri.parse("${baseURL}cities"), headers: headers())
+        .get(Uri.parse("${baseURL}cities"),
+            headers: headers(languageKey: localLang))
         .timeout(timeOutDuration)
         .then(
       (data) {
@@ -904,9 +905,10 @@ class MaydanServices {
     );
   }
 
-  Future<ApiResponse<DistrictObj>> getDistricts(String id) {
+  Future<ApiResponse<DistrictObj>> getDistricts(String id, String localLang) {
     return http
-        .get(Uri.parse("${baseURL}cities/$id/districts"), headers: headers())
+        .get(Uri.parse("${baseURL}cities/$id/districts"),
+            headers: headers(languageKey: localLang))
         .timeout(timeOutDuration)
         .then(
       (data) {
