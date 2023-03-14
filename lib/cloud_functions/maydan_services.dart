@@ -881,7 +881,7 @@ class MaydanServices {
 
   Future<ApiResponse<CityObj>> getCities(String localLang) {
     return http
-        .get(Uri.parse("${baseURL}cities"),
+        .get(Uri.parse("${baseURL}cities?per_page=100"),
             headers: headers(languageKey: localLang))
         .timeout(timeOutDuration)
         .then(
@@ -907,7 +907,7 @@ class MaydanServices {
 
   Future<ApiResponse<DistrictObj>> getDistricts(String id, String localLang) {
     return http
-        .get(Uri.parse("${baseURL}cities/$id/districts"),
+        .get(Uri.parse("${baseURL}cities/$id/districts?per_page=300"),
             headers: headers(languageKey: localLang))
         .timeout(timeOutDuration)
         .then(
