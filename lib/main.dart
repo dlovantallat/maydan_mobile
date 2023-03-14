@@ -74,6 +74,7 @@ Future<void> main() async {
 
   servicesLocator();
 
+  String key = await getLanguageKey();
   bool isOnBoard = await getOnBoard();
 
   runApp(
@@ -82,6 +83,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => LocaleProvider("en")),
       ],
       child: MyApp(
+        langKey: key,
         isOnboard: isOnBoard,
       ),
     ),
@@ -115,21 +117,19 @@ Future<bool> getOnBoard() async {
 
 class MyApp extends StatelessWidget {
   final bool isOnboard;
+  final String langKey;
 
-  const MyApp({super.key, this.isOnboard = false});
+  const MyApp({super.key, this.langKey = "", this.isOnboard = false});
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<LocaleProvider>(context);
-    print("GetMaterialApp");
-
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: appTheme,
         appBarTheme: const AppBarTheme(elevation: 0),
       ),
-      locale: Locale(provider.local == "" ? "en" : provider.local),
+      locale: Locale(langKey),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
