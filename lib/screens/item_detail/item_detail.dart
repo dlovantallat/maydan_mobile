@@ -98,8 +98,8 @@ class _ItemDetailState extends State<ItemDetail> {
     });
   }
 
-  void callingFunctionality() {
-    final uri = Uri(scheme: 'tel', path: '+${widget.item.user.msisdn}');
+  void callingFunctionality(String phoneNumber) {
+    final uri = Uri(scheme: 'tel', path: '+$phoneNumber');
     canLaunchUrl(uri).then((bool result) async {
       if (result) {
         await launchUrl(uri);
@@ -389,7 +389,10 @@ class _ItemDetailState extends State<ItemDetail> {
                             ),
                             Center(
                               child: TextButton(
-                                  onPressed: callingFunctionality,
+                                  onPressed: () {
+                                    callingFunctionality(
+                                        item.data!.phoneNumber);
+                                  },
                                   child: Text(
                                     item.data!.phoneNumber,
                                     style: const TextStyle(color: Colors.white),
