@@ -92,6 +92,7 @@ class _ItemsItemState extends State<ItemsItem> {
         color: const Color(0xFFE5E5E5),
         margin: const EdgeInsetsDirectional.only(start: 4, end: 4, bottom: 16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               clipBehavior: Clip.hardEdge,
@@ -161,48 +162,32 @@ class _ItemsItemState extends State<ItemsItem> {
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.only(start: 8, top: 8),
-                        child: Text(
-                          widget.item.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w400, color: Colors.black),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.only(
-                            start: 8, bottom: 4),
-                        child: Text(
-                          dateFormat(widget.item.statusDate),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w400, color: Colors.black),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
-                    child: Text(
-                      "${widget.item.priceAnnounced} ${widget.item.currencyType == "U" ? "\$" : "IQD"}",
-                      maxLines: 2,
-                    ),
-                  ),
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsetsDirectional.only(start: 8, top: 8),
+              child: Text(
+                widget.item.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                    fontWeight: FontWeight.w400, color: Colors.black),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
+              child: Text(
+                "${widget.item.priceAnnounced} ${widget.item.currencyType == "U" ? "\$" : "IQD"}",
+                maxLines: 1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.only(start: 8, bottom: 8),
+              child: Text(
+                dateFormat(widget.item.statusDate),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                    fontWeight: FontWeight.w400, color: Colors.black),
+              ),
             ),
           ],
         ),

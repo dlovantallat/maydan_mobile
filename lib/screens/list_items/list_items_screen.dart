@@ -129,7 +129,7 @@ class _ListItemsScreenState extends State<ListItemsScreen> {
             },
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, mainAxisExtent: 225),
+                  crossAxisCount: 2, mainAxisExtent: 240),
               itemBuilder: (BuildContext context, int index) => ItemsItem(
                 item: data[index],
                 isFav: data[index].favorite,

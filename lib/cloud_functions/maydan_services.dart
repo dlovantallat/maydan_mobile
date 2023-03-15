@@ -17,6 +17,8 @@ import 'api_response.dart';
 
 class MaydanServices {
   final String baseURL = "https://apimaydan.tornet.co/api/mobile/";
+  final String noInternet =
+      "No Internet, Please check your internet connection.";
 
   static const Duration timeOutDuration = Duration(seconds: 15);
   static const int perPage = 10;
@@ -47,11 +49,8 @@ class MaydanServices {
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-      (s) => ApiResponse<HomeObj>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+      (s) =>
+          ApiResponse<HomeObj>(requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -74,10 +73,7 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<CategoryObj>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+          requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -103,10 +99,7 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<SubCategoryObj>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+          requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -131,10 +124,7 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<CompanyObj>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+          requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -159,11 +149,8 @@ class MaydanServices {
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-      (s) => ApiResponse<ItemObj>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+      (s) =>
+          ApiResponse<ItemObj>(requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -728,10 +715,7 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<ProfileData>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+          requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -756,10 +740,7 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<ItemDeleteRespond>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+          requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -785,11 +766,8 @@ class MaydanServices {
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-      (s) => ApiResponse<ItemObj>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+      (s) =>
+          ApiResponse<ItemObj>(requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -815,11 +793,8 @@ class MaydanServices {
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-      (s) => ApiResponse<ItemObj>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+      (s) =>
+          ApiResponse<ItemObj>(requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -844,10 +819,7 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<FavoriteRequest>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+          requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -872,10 +844,7 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<FavoriteRemove>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+          requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -897,11 +866,8 @@ class MaydanServices {
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-      (s) => ApiResponse<CityObj>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+      (s) =>
+          ApiResponse<CityObj>(requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -924,10 +890,7 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<DistrictObj>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+          requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -950,11 +913,8 @@ class MaydanServices {
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-      (s) => ApiResponse<ItemObj>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+      (s) =>
+          ApiResponse<ItemObj>(requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -976,11 +936,8 @@ class MaydanServices {
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-      (s) => ApiResponse<ItemObj>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+      (s) =>
+          ApiResponse<ItemObj>(requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -1002,11 +959,8 @@ class MaydanServices {
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-      (s) => ApiResponse<ItemData>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+      (s) =>
+          ApiResponse<ItemData>(requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -1036,10 +990,7 @@ class MaydanServices {
       },
     ).catchError(
       (s) => ApiResponse<StaticContentObj>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+          requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -1062,11 +1013,8 @@ class MaydanServices {
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-      (s) => ApiResponse<ItemObj>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+      (s) =>
+          ApiResponse<ItemObj>(requestStatus: true, errorMessage: noInternet),
     );
   }
 
@@ -1092,11 +1040,8 @@ class MaydanServices {
             requestStatus: true, errorMessage: "API Communication Down");
       },
     ).catchError(
-      (s) => ApiResponse<ItemObj>(
-          requestStatus: true,
-          errorMessage: s.toString() == "Connection failed"
-              ? " No Internet, Please check your internet connection."
-              : "API Down we are working to get things back to normal. Please have a patient"),
+      (s) =>
+          ApiResponse<ItemObj>(requestStatus: true, errorMessage: noInternet),
     );
   }
 

@@ -295,6 +295,7 @@ class _HomeSubItemState extends State<HomeSubItem> {
         child: SizedBox(
           width: 165,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 clipBehavior: Clip.hardEdge,
@@ -365,49 +366,31 @@ class _HomeSubItemState extends State<HomeSubItem> {
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.only(bottom: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.only(
-                                start: 8, top: 8),
-                            child: Text(
-                              widget.data.title,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.only(
-                                start: 8, bottom: 4),
-                            child: Text(
-                              "${dateFormat(widget.data.statusDate)}\n",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
-                    child: Text(
-                        "${widget.data.priceAnnounced} ${widget.data.currencyType == "U" ? "\$" : "IQD"}"),
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsetsDirectional.only(start: 8, top: 8),
+                child: Text(
+                  widget.data.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w400, color: Colors.black),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
+                child: Text(
+                    "${widget.data.priceAnnounced} ${widget.data.currencyType == "U" ? "\$" : "IQD"}"),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.only(start: 8, bottom: 8),
+                child: Text(
+                  "${dateFormat(widget.data.statusDate)}\n",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w400, color: Colors.black),
+                ),
               ),
             ],
           ),

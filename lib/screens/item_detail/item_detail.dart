@@ -430,7 +430,7 @@ class _ItemDetailState extends State<ItemDetail> {
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2, mainAxisExtent: 225),
+                                  crossAxisCount: 2, mainAxisExtent: 240),
                           itemBuilder: (BuildContext context, int index) =>
                               ItemsItem(
                             item: items.data!.list[index],
