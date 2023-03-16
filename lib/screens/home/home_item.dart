@@ -168,26 +168,30 @@ class HomeCategoryItem extends StatelessWidget {
         width: 87,
         child: Column(
           children: [
-            SizedBox(
-              height: 52,
-              width: double.infinity,
-              child:
-                  data.urlImg.substring(data.urlImg.length - 3).toLowerCase() !=
-                          "svg"
-                      ? Image.network(
-                          imageLoader(data.urlImg),
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => const Image(
-                            image: AssetImage(imageHolder),
-                            fit: BoxFit.fitWidth,
-                          ),
-                        )
-                      : SvgPicture.network(
-                          imageLoader(data.urlImg),
-                          semanticsLabel: 'SVG From Network',
-                          placeholderBuilder: (BuildContext context) =>
-                              const Center(child: CircularProgressIndicator()),
+            Padding(
+              padding: const EdgeInsetsDirectional.only(top: 8),
+              child: SizedBox(
+                height: 52,
+                width: double.infinity,
+                child: data.urlImg
+                            .substring(data.urlImg.length - 3)
+                            .toLowerCase() !=
+                        "svg"
+                    ? Image.network(
+                        imageLoader(data.urlImg),
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => const Image(
+                          image: AssetImage(imageHolder),
+                          fit: BoxFit.fitWidth,
                         ),
+                      )
+                    : SvgPicture.network(
+                        imageLoader(data.urlImg),
+                        semanticsLabel: 'SVG From Network',
+                        placeholderBuilder: (BuildContext context) =>
+                            const Center(child: CircularProgressIndicator()),
+                      ),
+              ),
             ),
             Padding(
               padding: const EdgeInsetsDirectional.only(
@@ -376,7 +380,6 @@ class _HomeSubItemState extends State<HomeSubItem> {
                       fontWeight: FontWeight.w400, color: Colors.black),
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
                 child: Text(
