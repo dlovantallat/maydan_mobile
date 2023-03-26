@@ -93,35 +93,38 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           ),
           Padding(
             padding: const EdgeInsetsDirectional.all(16),
-            child: TextField(
-              maxLength: 10,
-              keyboardType: TextInputType.number,
-              controller: phoneNumberController,
-              onChanged: (v) {
-                setState(() {
-                  phoneNumberControllerCounter = v.trim().length;
-                });
-              },
-              decoration: InputDecoration(
-                fillColor: Colors.white,
-                filled: true,
-                prefixIcon: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Row(
-                    children: const [
-                      Padding(
-                        padding: EdgeInsetsDirectional.only(start: 16),
-                        child: Icon(Icons.phone_android_rounded),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.only(start: 8),
-                        child: Text("+964 (0)"),
-                      ),
-                    ],
+            child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: TextField(
+                maxLength: 10,
+                keyboardType: TextInputType.number,
+                controller: phoneNumberController,
+                onChanged: (v) {
+                  setState(() {
+                    phoneNumberControllerCounter = v.trim().length;
+                  });
+                },
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  prefixIcon: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(
+                      children: const [
+                        Padding(
+                          padding: EdgeInsetsDirectional.only(start: 16),
+                          child: Icon(Icons.phone_android_rounded),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.only(start: 8),
+                          child: Text("+964 (0)"),
+                        ),
+                      ],
+                    ),
                   ),
+                  focusedBorder: oib,
+                  enabledBorder: oib,
                 ),
-                focusedBorder: oib,
-                enabledBorder: oib,
               ),
             ),
           ),
