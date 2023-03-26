@@ -42,7 +42,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       if (otp.statusCode == 403) {
         setSnackBar(context, otp.data!.message);
       } else {
-        setSnackBar(context, "200: ${otp.data!.message}");
         nextScreen(phoneNumber);
       }
     }
