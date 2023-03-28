@@ -7,7 +7,7 @@
   "home_view_all": "View All",
   "home_categories": "Categories",
   "home_company_profile": "Company Profile",
-  "home_hot_items": "hot Items",
+  "home_hot_items": "Hot Items",
   "home_latest_items": "Latest Items",
   "home_search_caption": "What are you looking for?",
   "home_drawer_my_profile": "My Profile",
@@ -168,5 +168,6 @@
   "account_delete_point_three": "-Erase your all information",
   "account_delete_last_line": "Note: Once you placed the delete request will keep your information for the 90 days. After deleting request if you login to the Maydan then the deleting request will be void. if you dont use your Maydan by the provided time frame then your account will deactive automatically.",
   "delete_understand_btn": "I Understand",
-  "delete_desc": "Are you sure you want to delete your account"
+  "delete_desc": "Are you sure you want to delete your account",
+  "no_more_photo": "Please upload no more than 5 images"
 }

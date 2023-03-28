@@ -321,7 +321,7 @@ class _PostScreenState extends State<PostScreen>
       }
 
       if (uploadedPhotos.length > 5) {
-        setSnackBar(context, "Please upload no more than five image");
+        setSnackBar(context, AppLocalizations.of(Get.context!)!.no_more_photo);
         return;
       }
 
