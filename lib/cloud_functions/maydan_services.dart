@@ -771,6 +771,34 @@ class MaydanServices {
     );
   }
 
+  Future<ApiResponse<ItemObj>> getItemsByUser(
+      String id, String token, int currentPage) {
+    return http
+        .get(
+            Uri.parse(
+                "${baseURL}users/$id/items?per_page=$perPage&page=$currentPage"),
+            headers: headers(token: token))
+        .timeout(timeOutDuration)
+        .then(
+      (data) {
+        if (data.statusCode == 200) {
+          final jsonData = json.decode(data.body);
+
+          final myItems = ItemObj.fromJson(jsonData);
+
+          return ApiResponse<ItemObj>(data: myItems, statusCode: 200);
+        } else if (data.statusCode == 401) {
+          return ApiResponse<ItemObj>(requestStatus: true, statusCode: 401);
+        }
+        return ApiResponse<ItemObj>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) =>
+          ApiResponse<ItemObj>(requestStatus: true, errorMessage: noInternet),
+    );
+  }
+
   Future<ApiResponse<ItemObj>> getMyFavorite(String token, int currentPage) {
     return http
         .get(

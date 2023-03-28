@@ -50,7 +50,7 @@ class _CompanyWidgetState extends State<CompanyWidget> {
 
     token = await getToken();
 
-    items = await service.getMyItems(token, currentPage);
+    items = await service.getItemsByUser(widget.data.id, token, currentPage);
 
     if (!items.requestStatus) {
       if (items.statusCode == 200) {
@@ -75,7 +75,7 @@ class _CompanyWidgetState extends State<CompanyWidget> {
     setState(() {
       isLoading2 = true;
     });
-    items = await service.getMyItems(token, currentPage);
+    items = await service.getItemsByUser(widget.data.id, token, currentPage);
     data.addAll(items.data!.list);
     currentPage++;
 
@@ -139,7 +139,7 @@ class _CompanyWidgetState extends State<CompanyWidget> {
               meteData(AppLocalizations.of(context)!.company_email,
                   widget.data.email),
               meteData(AppLocalizations.of(context)!.company_service_type,
-                  widget.data.cat!.id),
+                  widget.data.cat!.title),
               meteData(AppLocalizations.of(context)!.company_location,
                   widget.data.address),
               meteData(
@@ -177,7 +177,7 @@ class _CompanyWidgetState extends State<CompanyWidget> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, mainAxisExtent: 220),
+                  crossAxisCount: 2, mainAxisExtent: 240),
               itemBuilder: (BuildContext context, int index) => ItemsItem(
                 item: data[index],
                 isFav: data[index].favorite,

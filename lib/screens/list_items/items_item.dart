@@ -162,33 +162,41 @@ class _ItemsItemState extends State<ItemsItem> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsetsDirectional.only(start: 8, top: 8),
-              child: Text(
-                widget.item.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    fontWeight: FontWeight.w400, color: Colors.black),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(start: 8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.item.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                        height: 1,
+                      ),
+                    ),
+                    Text(
+                      "${0.00} ${widget.item.currencyType == "U" ? "\$" : "IQD"}",
+                      maxLines: 1,
+                      style: const TextStyle(height: 1),
+                    ),
+                    Text(
+                      dateFormat(widget.item.statusDate),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                          height: 1),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
-              child: Text(
-                "${widget.item.priceAnnounced} ${widget.item.currencyType == "U" ? "\$" : "IQD"}",
-                maxLines: 1,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.only(start: 8, bottom: 8),
-              child: Text(
-                dateFormat(widget.item.statusDate),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    fontWeight: FontWeight.w400, color: Colors.black),
-              ),
-            ),
+            )
           ],
         ),
       ),

@@ -57,12 +57,14 @@ class ProfileData {
 
 class CompanyCat {
   String id;
+  String title;
 
-  CompanyCat({required this.id});
+  CompanyCat({required this.id, required this.title});
 
   factory CompanyCat.fromJson(Map<String, dynamic> item) {
     return CompanyCat(
       id: item['id'] ?? "",
+      title: item['title'] ?? "",
     );
   }
 }
