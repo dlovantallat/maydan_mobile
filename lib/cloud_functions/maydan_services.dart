@@ -169,9 +169,17 @@ class MaydanServices {
     required List<UploadImage> uploadedPhotos,
   }) async {
     var request = http.MultipartRequest('POST', Uri.parse("${baseURL}items"));
-    request.fields['title'] = jsonEncode({"en": title});
+    request.fields['title'] = jsonEncode({
+      "en": title,
+      "ckb": title,
+      "ar": title,
+    });
     request.fields['subcategory_id'] = subCategory;
-    request.fields['description'] = jsonEncode({"en": description});
+    request.fields['description'] = jsonEncode({
+      "en": description,
+      "ckb": description,
+      "ar": description,
+    });
     request.fields['duration'] = duration;
     request.fields['seller_name'] = sellerName;
     request.fields['phone_number'] = phoneNumber;
@@ -228,8 +236,16 @@ class MaydanServices {
   }) async {
     var request = http.MultipartRequest(
         'POST', Uri.parse("${baseURL}items/$itemId?_method=PUT"));
-    request.fields['title'] = jsonEncode({"en": title});
-    request.fields['description'] = jsonEncode({"en": description});
+    request.fields['title'] = jsonEncode({
+      "en": title,
+      "ckb": title,
+      "ar": title,
+    });
+    request.fields['description'] = jsonEncode({
+      "en": description,
+      "ckb": description,
+      "ar": description,
+    });
     request.fields['district_id'] = districtId;
     request.fields['currency_type'] = currencyType == "USD" ? "U" : "I";
     request.fields['duration'] = duration;
