@@ -242,11 +242,10 @@ class _PostScreenState extends State<PostScreen>
     });
   }
 
-  void openGallery() async {
+  void openCamera() async {
     if (uploadedPhotos.length < 5) {
       try {
-        final image =
-            await ImagePicker().pickImage(source: ImageSource.gallery);
+        final image = await ImagePicker().pickImage(source: ImageSource.camera);
         if (image == null) {
           return;
         }
@@ -272,27 +271,106 @@ class _PostScreenState extends State<PostScreen>
   }
 
   void multiImage() async {
-    try {
-      final image = await ImagePicker().pickMultiImage(
-          maxHeight: 200000, maxWidth: 200000, imageQuality: 30);
+    if (uploadedPhotos.length < 5) {
+      try {
+        final image = await ImagePicker().pickMultiImage(
+            maxHeight: 200000, maxWidth: 200000, imageQuality: 30);
 
-      List<UploadImage> arr = [];
-      for (var i in image) {
-        File tempCompressedImage = await customCompress(File(i.path));
-        paths.add(tempCompressedImage.path);
-        final imageTemp = File(i.path);
+        List<UploadImage> arr = [];
+        for (var i in image) {
+          File tempCompressedImage = await customCompress(File(i.path));
+          paths.add(tempCompressedImage.path);
+          final imageTemp = File(i.path);
 
-        images.add(imageTemp);
+          images.add(imageTemp);
 
-        arr.add(UploadImage(tempCompressedImage.path, imageTemp));
+          arr.add(UploadImage(tempCompressedImage.path, imageTemp));
+        }
+
+        setState(() {
+          uploadedPhotos.addAll(arr);
+        });
+      } on PlatformException catch (e) {
+        setSnackBar(context, "an error occurred $e");
       }
-
-      setState(() {
-        uploadedPhotos.addAll(arr);
-      });
-    } on PlatformException catch (e) {
-      setSnackBar(context, "an error occurred $e");
+    } else {
+      setSnackBar(
+          context,
+          AppLocalizations.of(context)!
+              .post_limit_image("${uploadedPhotos.length}"));
     }
+  }
+
+  void cameraAndGallery() {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return Container(
+          color: const Color(0xFF757575),
+          width: double.infinity,
+          height: 200,
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadiusDirectional.only(
+                topStart: Radius.circular(20),
+                topEnd: Radius.circular(20),
+              ),
+            ),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                      start: 32, end: 32, top: 24),
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(
+                        double.infinity,
+                        40,
+                      ),
+                    ),
+                    onPressed: () {
+                      openCamera();
+
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.camera_alt),
+                    label: Text(
+                        AppLocalizations.of(context)!.camera.toUpperCase()),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 32, end: 32),
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(
+                        double.infinity,
+                        40,
+                      ),
+                    ),
+                    onPressed: () {
+                      multiImage();
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.photo_album),
+                    label: Text(
+                        AppLocalizations.of(context)!.gallery.toUpperCase()),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.cancel,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   void save() async {
@@ -640,7 +718,7 @@ class _PostScreenState extends State<PostScreen>
                           itemCount: uploadedPhotos.length + 1,
                           itemBuilder: (context, index) => index == 0
                               ? InkWell(
-                                  onTap: multiImage,
+                                  onTap: cameraAndGallery,
                                   child: Card(
                                     elevation: 8,
                                     shape: RoundedRectangleBorder(

@@ -172,5 +172,7 @@
   "no_more_photo": "Please upload no more than 5 images",
   "logout_title_popup": "Are you sure of logout",
   "cancel": "Cancel",
-  "new_message": "New message has been sent"
+  "new_message": "New message has been sent",
+  "camera": "Camera",
+  "gallery": "gallery"
 }
