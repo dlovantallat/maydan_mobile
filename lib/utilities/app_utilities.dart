@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:intl/intl.dart';
@@ -164,9 +164,11 @@ logout(BuildContext context, LogoutListener listener) {
             children: [
               Column(
                 children: [
-                  const Padding(
-                    padding: EdgeInsetsDirectional.only(top: 8, bottom: 16),
-                    child: Text("Are you sure of logout"),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(top: 8, bottom: 16),
+                    child:
+                        Text(AppLocalizations.of(context)!.logout_title_popup),
                   ),
                   Row(
                     children: [
@@ -189,7 +191,9 @@ logout(BuildContext context, LogoutListener listener) {
                               },
                             ),
                           ),
-                          child: Text("Logout".toUpperCase()),
+                          child: Text(AppLocalizations.of(context)!
+                              .home_drawer_logout
+                              .toUpperCase()),
                         ),
                       ),
                       Expanded(
@@ -210,7 +214,9 @@ logout(BuildContext context, LogoutListener listener) {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text("cancel".toUpperCase()),
+                            child: Text(AppLocalizations.of(context)!
+                                .cancel
+                                .toUpperCase()),
                           ),
                         ),
                       ),

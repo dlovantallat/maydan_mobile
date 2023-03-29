@@ -1,9 +1,9 @@
 {
   "helloWorld": "Hello World!",
-  "main_bottom_navigation_home": "الصفحة الرئيسية",
+  "main_bottom_navigation_home": "الرئيسية",
   "main_bottom_navigation_category": "فئة",
   "main_bottom_navigation_favorite": "المفضلة",
-  "main_bottom_navigation_profile": "الصفحة الشخصية",
+  "main_bottom_navigation_profile": "حساب",
   "home_view_all": "عرض الكل",
   "home_categories": "فئات",
   "home_company_profile": "ملف الشركة",
@@ -141,5 +141,7 @@
   "account_delete_last_line": "ملاحظة: سيبقى معلوماتك لمدة 90 يومًا بعد تقديم طلب الحذف. بعد حذف الطلب إذا قمت بتسجيل الدخول إلى الميدان ، فسيكون طلب الحذف باطلاً. إذا لم تستخدم ميدان الخاص بك في الإطار الزمني المحدد ، فسيتم إلغاء تنشيط حسابك تلقائيًا.",
   "delete_understand_btn": "مفهوم",
   "delete_desc": "هل انت متأكد انك تريد حذف حسابك",
-  "no_more_photo": "الرجاء عدم زيادة اكثر من 5 صور"
+  "no_more_photo": "الرجاء عدم زيادة اكثر من 5 صور",
+  "logout_title_popup": "هل أنت متأكد من تسجيل الخروج",
+  "cancel": "يلغي"
 }

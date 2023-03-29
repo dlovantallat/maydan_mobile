@@ -169,5 +169,7 @@
   "account_delete_last_line": "Note: Once you placed the delete request will keep your information for the 90 days. After deleting request if you login to the Maydan then the deleting request will be void. if you dont use your Maydan by the provided time frame then your account will deactive automatically.",
   "delete_understand_btn": "I Understand",
   "delete_desc": "Are you sure you want to delete your account",
-  "no_more_photo": "Please upload no more than 5 images"
+  "no_more_photo": "Please upload no more than 5 images",
+  "logout_title_popup": "Are you sure of logout",
+  "cancel": "Cancel"
 }

@@ -1,6 +1,6 @@
 {
   "helloWorld": "Hello World!",
-  "main_bottom_navigation_home": "ماڵپەڕی سەرەکی",
+  "main_bottom_navigation_home": "سەرەکی",
   "main_bottom_navigation_category": "جۆر",
   "main_bottom_navigation_favorite": "خوازراوەکان",
   "main_bottom_navigation_profile": "پرۆفایل",
@@ -141,5 +141,7 @@
   "account_delete_last_line": "تێبینی:دوای داواکاری سڕینەوە زانیاریەکانت بۆ ماوەی ٩٠ ڕۆژ دەهێڵێتەوە. دوای سڕینەوەی داواکاری ئەگەر بچیتە ناو مەیدان ئەوا داواکاری سڕینەوە پووچەڵ دەبێتەوە. ئەگەر تۆ مایدان ەکەت بەکارنەهێنیت بەپێی ماوەی دیاریکراو ئەوا ئەکاونتەکەت بە شێوەیەکی ئۆتۆماتیکی ناچالاک دەبێت.",
   "delete_understand_btn": "تێگەیشتم",
   "delete_desc": "ئایا دڵنیای کە دەتەوێت ئەکاونتەکەت بسڕیتەوە",
-  "no_more_photo": "تکایە زیاتر لە 5 وێنە زیاد مەکە"
+  "no_more_photo": "تکایە زیاتر لە 5 وێنە زیاد مەکە",
+  "logout_title_popup": "ئایا دڵنیای لە چوونە دەرەوە",
+  "cancel": "ڕەتکردنەوە"
 }
