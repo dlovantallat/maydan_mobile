@@ -96,7 +96,7 @@ class _OtpScreenState extends State<OtpScreen> {
       if (otpRe.statusCode == 403) {
         setSnackBar(context, otpRe.data!.message);
       } else {
-        setSnackBar(context, "200: ${otpRe.data!.message}");
+        setSnackBar(context, AppLocalizations.of(context)!.new_message);
       }
     }
   }

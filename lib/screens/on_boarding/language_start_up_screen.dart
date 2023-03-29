@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:maydan/screens/on_boarding/on_boarding_screen.dart';
-
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../utilities/app_utilities.dart';
 import '../../utilities/locale_provider.dart';
+import 'on_boarding_screen.dart';
 
 class LanguageStartUpScreen extends StatefulWidget {
   const LanguageStartUpScreen({Key? key}) : super(key: key);

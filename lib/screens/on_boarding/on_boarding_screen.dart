@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import 'on_boarding_item.dart';
+import 'register_login_option_screen.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -21,8 +21,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     preferences.setBool(onBoardKey, true);
 
     if (!mounted) return;
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => const MainPage()), (route) => false);
+    Navigator.push(context,
+        MaterialPageRoute(builder: (_) => const RegisterLoginOptionScreen()));
   }
 
   @override
