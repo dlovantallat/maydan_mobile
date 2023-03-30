@@ -24,7 +24,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   int phoneCounter = 0;
 
   otpRequest() async {
-    String phoneNumber = phoneNumberController.text.trim();
+    String phoneNumber =
+        replaceArabicNumberToEnglish(phoneNumberController.text.trim());
     loading(context);
     otp = await service.requestPinCode(phoneNumber, isPersonal);
     if (!mounted) return;
@@ -164,6 +165,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const EdgeInsetsDirectional.only(start: 4, end: 4),
                       child: Center(
                         child: TextField(
+                          keyboardType: TextInputType.phone,
                           maxLength: 10,
                           controller: phoneNumberController,
                           onChanged: (v) {

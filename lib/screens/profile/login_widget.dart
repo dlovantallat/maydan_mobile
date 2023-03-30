@@ -32,7 +32,8 @@ class _LoginWidgetState extends State<LoginWidget> {
   loginRequest() async {
     loading(context);
 
-    String phone = phoneNumberController.text.trim();
+    String phone =
+        replaceArabicNumberToEnglish(phoneNumberController.text.trim());
     String password = passwordController.text.trim();
     login = await service.login(phone, password);
     if (!mounted) return;

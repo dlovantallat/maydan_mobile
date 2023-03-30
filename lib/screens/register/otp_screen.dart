@@ -43,6 +43,8 @@ class _OtpScreenState extends State<OtpScreen> {
   void otpSend() async {
     loading(context);
 
+    otp = replaceArabicNumberToEnglish(otp);
+
     if (widget.isRest) {
       otpServiceRest = await service.verifyChangePass(widget.phoneNumber, otp);
       if (!mounted) return;
@@ -155,6 +157,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             });
 
                             if (counter >= 6) {
+                              otp = text;
                               otpSend();
                             }
                           },

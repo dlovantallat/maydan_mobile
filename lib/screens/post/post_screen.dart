@@ -387,9 +387,10 @@ class _PostScreenState extends State<PostScreen>
     if (_formKey.currentState!.validate()) {
       String title = titleController.text.trim();
       String description = descriptionController.text.trim();
-      String price = priceController.text.trim();
+      String price = replaceArabicNumberToEnglish(priceController.text.trim());
       String sellerName = sellerController.text.trim();
-      String phoneNumber = sellerPhoneController.text.trim();
+      String phoneNumber =
+          replaceArabicNumberToEnglish(sellerPhoneController.text.trim());
 
       if (_dropdownSubCategoryValue == null ||
           _dropdownSubCategoryValue == _dropdownSubCategoriesDrop.first) {
@@ -955,6 +956,7 @@ class _PostScreenState extends State<PostScreen>
                   ),
                   TextFormField(
                     controller: sellerPhoneController,
+                    keyboardType: TextInputType.number,
                     validator: validateSellerPhone,
                     decoration: InputDecoration(
                       focusedBorder: oib,

@@ -58,7 +58,7 @@ class _EditItemState extends State<EditItem> {
     if (_formKey.currentState!.validate()) {
       String title = titleController.text.trim();
       String description = descriptionController.text.trim();
-      String price = priceController.text.trim();
+      String price = replaceArabicNumberToEnglish(priceController.text.trim());
 
       String token = await getToken();
 
