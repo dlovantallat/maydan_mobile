@@ -35,8 +35,10 @@ class _OtpScreenState extends State<OtpScreen> {
   late ApiResponse<RequestOtpRespond> otpRe;
 
   String otp = "";
-  int otpNumberControllerCounter = 0;
+
   OtpFieldController otpController = OtpFieldController();
+  final myController = TextEditingController();
+  int counter = 0;
 
   void otpSend() async {
     loading(context);
@@ -55,11 +57,11 @@ class _OtpScreenState extends State<OtpScreen> {
                       )));
         } else {
           Navigator.pop(context);
-          setSnackBar(context, "eeer");
+          setSnackBar(context, AppLocalizations.of(context)!.invalid_pin_code);
         }
       } else {
         Navigator.pop(context);
-        setSnackBar(context, "errr");
+        setSnackBar(context, AppLocalizations.of(context)!.invalid_pin_code);
       }
     } else {
       otpService = await service.verifyPinCode(widget.phoneNumber, otp);
@@ -82,7 +84,13 @@ class _OtpScreenState extends State<OtpScreen> {
                         isPersonal: widget.isPersonal,
                       ),
               ));
+        } else {
+          Navigator.pop(context);
+          setSnackBar(context, AppLocalizations.of(context)!.invalid_pin_code);
         }
+      } else {
+        Navigator.pop(context);
+        setSnackBar(context, AppLocalizations.of(context)!.invalid_pin_code);
       }
     }
   }
@@ -132,23 +140,37 @@ class _OtpScreenState extends State<OtpScreen> {
                       ),
                       Directionality(
                         textDirection: TextDirection.ltr,
-                        child: OTPTextField(
-                            controller: otpController,
-                            length: 6,
-                            width: MediaQuery.of(context).size.width,
-                            textFieldAlignment: MainAxisAlignment.spaceAround,
-                            fieldWidth: 45,
-                            fieldStyle: FieldStyle.underline,
-                            outlineBorderRadius: 8,
-                            style: const TextStyle(fontSize: 17),
-                            onChanged: (pin) {
-                              setState(() {
-                                otpNumberControllerCounter = pin.length;
-                              });
-                            },
-                            onCompleted: (pin) {
-                              otp = pin;
-                            }),
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              color: Colors.black,
+                              letterSpacing: 30,
+                              fontSize: 30),
+                          cursorColor: Colors.grey,
+                          controller: myController,
+                          maxLength: 6,
+                          onChanged: (text) {
+                            setState(() {
+                              counter = text.length;
+                            });
+
+                            if (counter >= 6) {
+                              otpSend();
+                            }
+                          },
+                          keyboardType: TextInputType.phone,
+                          decoration: const InputDecoration(
+                            counterText: "",
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.grey, width: 2.0),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.grey, width: 2.0),
+                            ),
+                          ),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsetsDirectional.only(
@@ -168,9 +190,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 ),
                               ),
                             ),
-                            onPressed: otpNumberControllerCounter >= 6
-                                ? otpSend
-                                : null,
+                            onPressed: counter >= 6 ? otpSend : null,
                             child:
                                 Text(AppLocalizations.of(context)!.otp_verify)),
                       ),
