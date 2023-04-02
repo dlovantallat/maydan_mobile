@@ -3,9 +3,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/screens/my_ads/my_ads_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -71,6 +73,11 @@ Future<void> main() async {
 
   // getDeviceToken();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    Navigator.push(
+        Get.context!, MaterialPageRoute(builder: (_) => const MyAdsScreen()));
+  });
 
   servicesLocator();
 
