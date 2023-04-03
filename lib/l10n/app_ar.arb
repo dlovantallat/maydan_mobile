@@ -142,10 +142,11 @@
   "delete_understand_btn": "مفهوم",
   "delete_desc": "هل انت متأكد انك تريد حذف حسابك",
   "no_more_photo": "الرجاء عدم زيادة اكثر من 5 صور",
-  "logout_title_popup": "هل أنت متأكد من تسجيل الخروج",
-  "cancel": "يلغي",
+  "logout_title_popup": "تأكيد تسجيل الخروج؟",
+  "cancel": "إلغاء",
   "new_message": "تم إرسال رسالة جديدة",
   "camera": "كاميرا",
   "gallery": "صالة عرض",
-  "invalid_pin_code": "رمز كلمة المرور لمرة واحدة غير صالح"
+  "invalid_pin_code": "رمز كلمة المرور لمرة واحدة غير صالح",
+  "log_out_btn": "تأكيد"
 }

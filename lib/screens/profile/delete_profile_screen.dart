@@ -153,11 +153,6 @@ class _DeleteProfileScreenState extends State<DeleteProfileScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        AppLocalizations.of(context)!.account_delete_first_line,
-                        style: const TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.w700),
-                      ),
                       Padding(
                         padding: const EdgeInsetsDirectional.only(top: 16),
                         child: Text(
@@ -174,18 +169,35 @@ class _DeleteProfileScreenState extends State<DeleteProfileScreen> {
                         padding: const EdgeInsetsDirectional.only(top: 16),
                         child: Text(
                           AppLocalizations.of(context)!
+                              .account_delete_first_line,
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.only(top: 4, start: 16),
+                        child: Text(
+                          AppLocalizations.of(context)!
                               .account_delete_point_one,
                           style: const TextStyle(fontSize: 12),
                         ),
                       ),
-                      Text(
-                        AppLocalizations.of(context)!.account_delete_point_two,
-                        style: const TextStyle(fontSize: 12),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 16),
+                        child: Text(
+                          AppLocalizations.of(context)!
+                              .account_delete_point_two,
+                          style: const TextStyle(fontSize: 12),
+                        ),
                       ),
-                      Text(
-                        AppLocalizations.of(context)!
-                            .account_delete_point_three,
-                        style: const TextStyle(fontSize: 12),
+                      Padding(
+                        padding:
+                        const EdgeInsetsDirectional.only( start: 16),
+                        child: Text(
+                          AppLocalizations.of(context)!
+                              .account_delete_point_three,
+                          style: const TextStyle(fontSize: 12),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsetsDirectional.only(

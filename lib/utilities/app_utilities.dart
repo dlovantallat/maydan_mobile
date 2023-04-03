@@ -192,7 +192,7 @@ logout(BuildContext context, LogoutListener listener) {
                             ),
                           ),
                           child: Text(AppLocalizations.of(context)!
-                              .home_drawer_logout
+                              .log_out_btn
                               .toUpperCase()),
                         ),
                       ),
