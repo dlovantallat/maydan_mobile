@@ -421,6 +421,7 @@ class _PostScreenState extends State<PostScreen>
       }
 
       String token = await getToken();
+      String prefLang = await getLanguageKeyForApi();
       String firebaseToken = await FirebaseMessaging.instance.getToken() ?? "";
 
       loading(context);
@@ -436,6 +437,7 @@ class _PostScreenState extends State<PostScreen>
         currencyType: _dropdownPriceValue,
         districtId: _dropdownDistrictValue!.id,
         firebaseToken: firebaseToken,
+        prefLang: prefLang,
         uploadedPhotos: uploadedPhotos,
       );
       if (!mounted) return;
