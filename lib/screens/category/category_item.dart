@@ -74,7 +74,8 @@ class CategoryItem extends StatelessWidget {
               ),
               child: Text(
                 category.title,
-                maxLines: 1,
+                textAlign: TextAlign.center,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
