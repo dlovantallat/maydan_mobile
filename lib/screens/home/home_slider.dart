@@ -39,6 +39,18 @@ Swiper homeSlider(context,
                 ? images[index].urlImg
                 : itemPhotos![index].filePath),
             fit: BoxFit.cover,
+            loadingBuilder: (BuildContext context, Widget child,
+                ImageChunkEvent? loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                          loadingProgress.expectedTotalBytes!
+                      : null,
+                ),
+              );
+            },
             errorBuilder: (_, __, ___) => const Image(
               image: AssetImage(imageHolder),
               fit: BoxFit.cover,
@@ -49,6 +61,7 @@ Swiper homeSlider(context,
     },
     itemCount: images != null ? images.length : itemPhotos!.length,
     scale: 0.9,
+    duration: 300,
     pagination: const SwiperPagination(
       builder: DotSwiperPaginationBuilder(
         activeColor: appColor,
