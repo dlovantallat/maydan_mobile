@@ -180,7 +180,7 @@ class _ItemsItemState extends State<ItemsItem> {
                       ),
                     ),
                     Text(
-                      "${0.00} ${widget.item.currencyType == "U" ? "\$" : "IQD"}",
+                      "${widget.item.priceAnnounced} ${widget.item.currencyType == "U" ? "\$" : "IQD"}",
                       maxLines: 1,
                       style: const TextStyle(height: 1),
                     ),
