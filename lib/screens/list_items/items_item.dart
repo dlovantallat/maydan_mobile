@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -180,7 +181,8 @@ class _ItemsItemState extends State<ItemsItem> {
                       ),
                     ),
                     Text(
-                      "${widget.item.priceAnnounced} ${widget.item.currencyType == "U" ? "\$" : "IQD"}",
+                      currencyFormat(
+                          widget.item.currencyType, widget.item.priceAnnounced),
                       maxLines: 1,
                       style: const TextStyle(height: 1),
                     ),

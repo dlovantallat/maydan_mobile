@@ -251,6 +251,17 @@ String replaceArabicNumberToEnglish(String input) {
   return input;
 }
 
+String currencyFormat(String type, String price) {
+  final dollar = NumberFormat("#,##0.00", "en_US");
+  final dinar = NumberFormat("#,##0", "ar_IQ");
+
+  if (type == "U") {
+    return "${dollar.format(double.parse(price))} \$";
+  } else {
+    return "${dinar.format(double.parse(price))} IQD";
+  }
+}
+
 abstract class LogoutListener {
   void onLogout();
 }

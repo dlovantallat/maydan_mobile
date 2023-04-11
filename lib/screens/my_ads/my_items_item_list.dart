@@ -232,8 +232,8 @@ class _MyItemsItemListState extends State<MyItemsItemList> {
                         ),
                       ),
                       if (!widget.isFav) customDivider() else const SizedBox(),
-                      Text(
-                          "${widget.data.priceAnnounced} ${widget.data.currencyType == "U" ? "\$" : "IQD"}"),
+                      Text(currencyFormat(widget.data.currencyType,
+                          widget.data.priceAnnounced)),
                       if (!widget.isFav) customDivider() else const SizedBox(),
                       !widget.isFav
                           ? Text(

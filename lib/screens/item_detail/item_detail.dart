@@ -289,7 +289,8 @@ class _ItemDetailState extends State<ItemDetail> {
                             ),
                             meteData(
                                 AppLocalizations.of(context)!.item_detail_price,
-                                "${item.data!.priceAnnounced} ${item.data!.currencyType == "U" ? "\$" : "IQD"}"),
+                                currencyFormat(item.data!.currencyType,
+                                    item.data!.priceAnnounced)),
                             meteData(
                                 AppLocalizations.of(context)!.item_detail_date,
                                 dateFormat(item.data!.statusDate)),
