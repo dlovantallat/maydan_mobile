@@ -176,5 +176,6 @@
   "camera": "Camera",
   "gallery": "gallery",
   "invalid_pin_code": "Invalid otp code",
-  "log_out_btn": "log out"
+  "log_out_btn": "log out",
+  "trouble_sign_in": "do you have trouble? Request a new code in"
 }

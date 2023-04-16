@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -7,7 +9,6 @@ import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../utilities/app_utilities.dart';
 import '../../widgets/otp/otp_field.dart';
-import '../../widgets/otp/style.dart';
 import 'company_register_screen.dart';
 import 'personal_register_screen.dart';
 import 'register.dart';
@@ -39,6 +40,15 @@ class _OtpScreenState extends State<OtpScreen> {
   OtpFieldController otpController = OtpFieldController();
   final myController = TextEditingController();
   int counter = 0;
+
+  int _start = 119;
+  bool isResend = false;
+
+  @override
+  void initState() {
+    startTimer();
+    super.initState();
+  }
 
   void otpSend() async {
     loading(context);
@@ -109,6 +119,28 @@ class _OtpScreenState extends State<OtpScreen> {
         setSnackBar(context, AppLocalizations.of(context)!.new_message);
       }
     }
+  }
+
+  void startTimer() {
+    Timer.periodic(
+      const Duration(seconds: 1),
+      (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+            isResend = true;
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+  String formatTime(int seconds) {
+    return '${(Duration(seconds: seconds))}'.split('.')[0].padLeft(8, '0');
   }
 
   @override
@@ -202,9 +234,16 @@ class _OtpScreenState extends State<OtpScreen> {
                 ],
               ),
             ),
-            TextButton(
-                onPressed: otpRequest,
-                child: Text(AppLocalizations.of(context)!.send_again_btn))
+            isResend
+                ? TextButton(
+                    onPressed: otpRequest,
+                    child: Text(AppLocalizations.of(context)!.send_again_btn))
+                : Text(
+                    "${AppLocalizations.of(context)!.trouble_sign_in}  ${formatTime(_start)}",
+                    style: const TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
           ],
         ),
       ),
