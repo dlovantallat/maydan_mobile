@@ -7,7 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../utilities/app_utilities.dart';
 import '../../utilities/locale_provider.dart';
-import 'on_boarding_screen.dart';
+import 'register_login_option_screen.dart';
 
 class LanguageStartUpScreen extends StatefulWidget {
   const LanguageStartUpScreen({Key? key}) : super(key: key);
@@ -32,9 +32,10 @@ class _LanguageStartUpScreenState extends State<LanguageStartUpScreen> {
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString(languageKey, key);
+    preferences.setBool(onBoardKey, true);
     if (!mounted) return;
     Navigator.push(
-        context, MaterialPageRoute(builder: (_) => const OnBoardingScreen()));
+        context, MaterialPageRoute(builder: (_) => const RegisterLoginOptionScreen()));
   }
 
   @override
