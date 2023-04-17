@@ -60,6 +60,10 @@ const String aboutMaydanSvg = "assets/about.svg";
 const String deleteAccountSvg = "assets/delete_account.svg";
 const String logoutSvg = "assets/logout.svg";
 const String settingSvg = "assets/setting.svg";
+const String onBoardingNewLogoSvg = "assets/on_boarding_new_logo.svg";
+const String onBoardingBackJpg = "assets/on_boarding_back.jpg";
+const String onBoarding1Png = "assets/on_board_1.png";
+const String onBoarding2Png = "assets/on_board_2.png";
 
 /// Static Strings for static values
 const String appToken = "app-token";

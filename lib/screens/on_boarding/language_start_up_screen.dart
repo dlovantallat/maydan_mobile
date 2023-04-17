@@ -17,13 +17,22 @@ class LanguageStartUpScreen extends StatefulWidget {
 }
 
 class _LanguageStartUpScreenState extends State<LanguageStartUpScreen> {
-  final ff = MaterialStateProperty.resolveWith<Color?>(
-    (Set<MaterialState> states) {
-      if (states.contains(MaterialState.disabled)) {
-        return const Color(0x81acce52);
-      }
-      return Colors.white; // Use the component's default.
-    },
+  final btnStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+      (Set<MaterialState> states) {
+        return const Color(0xFF565656);
+      },
+    ),
+    minimumSize: MaterialStateProperty.resolveWith<Size>(
+      (Set<MaterialState> states) {
+        return const Size(double.infinity, 40);
+      },
+    ),
+    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18),
+      ),
+    ),
   );
 
   setLanguage(String key) async {
@@ -34,71 +43,82 @@ class _LanguageStartUpScreenState extends State<LanguageStartUpScreen> {
     preferences.setString(languageKey, key);
     preferences.setBool(onBoardKey, true);
     if (!mounted) return;
-    Navigator.push(
-        context, MaterialPageRoute(builder: (_) => const RegisterLoginOptionScreen()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (_) => const RegisterLoginOptionScreen()));
   }
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: appColor,
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.only(bottom: 36),
-              child: SvgPicture.asset(
-                homeLogoSvg,
-                height: 100,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(onBoardingBackJpg),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SvgPicture.asset(
+                onBoardingNewLogoSvg,
+                height: 140,
                 semanticsLabel: '',
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: ff,
-                  ),
-                  onPressed: () {
-                    setLanguage("fa");
-                    Get.updateLocale(const Locale("fa"));
-                  },
-                  child: Text(
-                    AppLocalizations.of(context)!.home_drawer_kurdish,
-                    style: const TextStyle(color: appColor),
-                  ),
+              SizedBox(
+                height: 250,
+                width: 400,
+                child: Image.asset(
+                  onBoarding2Png,
+                  fit: BoxFit.cover,
                 ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: ff,
-                  ),
-                  onPressed: () {
-                    setLanguage("ar");
-                    Get.updateLocale(const Locale("ar"));
-                  },
-                  child: Text(
-                    AppLocalizations.of(context)!.home_drawer_arabic,
-                    style: const TextStyle(color: appColor),
-                  ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.only(
+                    start: width / 5, end: width / 5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      style: btnStyle,
+                      onPressed: () {
+                        setLanguage("fa");
+                        Get.updateLocale(const Locale("fa"));
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.home_drawer_kurdish,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    ElevatedButton(
+                      style: btnStyle,
+                      onPressed: () {
+                        setLanguage("ar");
+                        Get.updateLocale(const Locale("ar"));
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.home_drawer_arabic,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    ElevatedButton(
+                      style: btnStyle,
+                      onPressed: () {
+                        setLanguage("en");
+                        Get.updateLocale(const Locale("en"));
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.home_drawer_english,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
                 ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: ff,
-                  ),
-                  onPressed: () {
-                    setLanguage("en");
-                    Get.updateLocale(const Locale("en"));
-                  },
-                  child: Text(
-                    AppLocalizations.of(context)!.home_drawer_english,
-                    style: const TextStyle(color: appColor),
-                  ),
-                ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
