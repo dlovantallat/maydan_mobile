@@ -30,7 +30,7 @@ class CategoryData {
       id: item['id'] ?? "",
       title: item['title'] ?? "",
       description: item['description'] ?? "",
-      urlImg: item['url_img'] ?? "",
+      urlImg: item['url_img'] ?? "333",
     );
   }
 }
@@ -53,12 +53,14 @@ class SubCategoryObj {
 class SubCategoryData {
   String id;
   String title;
+  String urlImg;
   String description;
   String categoryId;
 
   SubCategoryData({
     required this.id,
     required this.title,
+    required this.urlImg,
     required this.description,
     required this.categoryId,
   });
@@ -67,6 +69,7 @@ class SubCategoryData {
     return SubCategoryData(
       id: item['id'] ?? "",
       title: item['title'] ?? "",
+      urlImg: item['url_img'] ?? "333",
       description: item['description'] ?? "",
       categoryId: item['category_id'] ?? "",
     );

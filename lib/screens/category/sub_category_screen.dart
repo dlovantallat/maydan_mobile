@@ -76,8 +76,10 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
 
         return Padding(
           padding:
-              const EdgeInsetsDirectional.only(start: 24, end: 24, top: 68),
-          child: ListView.builder(
+              const EdgeInsetsDirectional.only(start: 24, end: 24, top: 16),
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, mainAxisExtent: 135),
             itemBuilder: (context, index) => SubCategoryItem(
               context: context,
               subCategory: subCategories.data!.data[index],

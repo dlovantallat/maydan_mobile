@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../common/model/category.dart';
+import '../../utilities/app_utilities.dart';
 import '../list_items/list_items_screen.dart';
 
 class SubCategoryItem extends StatelessWidget {
@@ -29,29 +31,56 @@ class SubCategoryItem extends StatelessWidget {
     return InkWell(
       onTap: onSubItemClick,
       child: Container(
-        margin: const EdgeInsetsDirectional.only(start: 16, end: 16, bottom: 0),
+        margin: const EdgeInsetsDirectional.only(end: 8, bottom: 8),
+        decoration: BoxDecoration(
+            color: const Color(0xffffffff),
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                  blurRadius: 8,
+                  offset: const Offset(12, 12),
+                  color: const Color(0x06b4b0b0).withOpacity(.8),
+                  spreadRadius: -9)
+            ]),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(start: 8),
-                  child: Text(
-                    subCategory.title,
-                    style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.w400),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsetsDirectional.all(8.0),
-                  child: Icon(Icons.arrow_forward_ios_outlined),
-                )
-              ],
+            Container(
+              margin:
+                  const EdgeInsetsDirectional.only(start: 8, end: 8, top: 8),
+              height: 65,
+              width: double.infinity,
+              child: subCategory.urlImg
+                          .substring(subCategory.urlImg.length - 3)
+                          .toLowerCase() !=
+                      "svg"
+                  ? Image.network(
+                      imageLoader(subCategory.urlImg),
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => const Image(
+                        image: AssetImage(imageHolder),
+                        fit: BoxFit.fitWidth,
+                      ),
+                    )
+                  : SvgPicture.network(
+                      imageLoader(subCategory.urlImg),
+                      semanticsLabel: 'SVG From Network',
+                      placeholderBuilder: (BuildContext context) =>
+                          const Center(child: CircularProgressIndicator()),
+                    ),
             ),
-            const Divider(
-              thickness: 1,
-              color: Colors.grey,
+            Padding(
+              padding: const EdgeInsetsDirectional.only(
+                start: 8,
+                end: 8,
+                top: 8,
+                bottom: 8,
+              ),
+              child: Text(
+                subCategory.title,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),
