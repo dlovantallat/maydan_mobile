@@ -66,11 +66,13 @@ class _StaticContentScreenState extends State<StaticContentScreen> {
           );
         }
 
-        return Container(
-          margin: const EdgeInsetsDirectional.all(16),
-          child: Text(
-            staticContent.data!.text,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+        return SingleChildScrollView(
+          child: Container(
+            margin: const EdgeInsetsDirectional.all(16),
+            child: Text(
+              staticContent.data!.text,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+            ),
           ),
         );
       }),
