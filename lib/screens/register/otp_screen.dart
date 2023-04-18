@@ -34,6 +34,7 @@ class _OtpScreenState extends State<OtpScreen> {
   late ApiResponse<OtpRespond> otpService;
   late ApiResponse<OtpRespond> otpServiceRest;
   late ApiResponse<RequestOtpRespond> otpRe;
+  late ApiResponse<RequestOtpRespond> otp111;
 
   String otp = "";
 
@@ -117,6 +118,31 @@ class _OtpScreenState extends State<OtpScreen> {
         setSnackBar(context, otpRe.data!.message);
       } else {
         setSnackBar(context, AppLocalizations.of(context)!.new_message);
+        setState(() {
+          _start = 119;
+          isResend = false;
+          startTimer();
+        });
+      }
+    }
+  }
+
+  void smsSend() async {
+    otp111 = await service.requestChangePass(widget.phoneNumber);
+
+    if (!mounted) return;
+    if (otp111.requestStatus) {
+      setSnackBar(context, otp111.errorMessage);
+    } else {
+      if (otp111.statusCode == 403) {
+        setSnackBar(context, otp111.data!.message);
+      } else {
+        setSnackBar(context, AppLocalizations.of(context)!.new_message);
+        setState(() {
+          _start = 119;
+          isResend = false;
+          startTimer();
+        });
       }
     }
   }
@@ -236,7 +262,7 @@ class _OtpScreenState extends State<OtpScreen> {
             ),
             isResend
                 ? TextButton(
-                    onPressed: otpRequest,
+                    onPressed: widget.isRest ? smsSend : otpRequest,
                     child: Text(AppLocalizations.of(context)!.send_again_btn))
                 : Text(
                     "${AppLocalizations.of(context)!.trouble_sign_in}  ${formatTime(_start)}",
