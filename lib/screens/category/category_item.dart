@@ -44,8 +44,11 @@ class CategoryItem extends StatelessWidget {
             Container(
               margin:
                   const EdgeInsetsDirectional.only(start: 8, end: 8, top: 8),
-              height: 65,
-              width: double.infinity,
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  color: Color(0xFFE5E5E5)),
+              height: 80,
+              width: 80,
               child: category.urlImg
                           .substring(category.urlImg.length - 3)
                           .toLowerCase() !=

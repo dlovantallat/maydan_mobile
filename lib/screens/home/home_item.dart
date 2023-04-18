@@ -170,9 +170,12 @@ class HomeCategoryItem extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsetsDirectional.only(top: 8),
-              child: SizedBox(
-                height: 52,
-                width: double.infinity,
+              child: Container(
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                    color: Color(0xFFE5E5E5)),
+                height: 62,
+                width: 62,
                 child: data.urlImg
                             .substring(data.urlImg.length - 3)
                             .toLowerCase() !=

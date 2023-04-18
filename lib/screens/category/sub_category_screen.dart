@@ -79,7 +79,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
               const EdgeInsetsDirectional.only(start: 24, end: 24, top: 16),
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3, mainAxisExtent: 135),
+                crossAxisCount: 3, mainAxisExtent: 147),
             itemBuilder: (context, index) => SubCategoryItem(
               context: context,
               subCategory: subCategories.data!.data[index],
