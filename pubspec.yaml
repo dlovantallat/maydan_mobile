@@ -56,14 +56,14 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter_native_splash:
-  color: "#79a207"
-  image: "assets/background.png"
+  color: "#FFFFFF"
+  image: "assets/background_1.png"
   branding_mode: bottom
   android_12:
-    image: assets/background.png
-    icon_background_color: "#79a207"
-    image_dark: assets/background.png
-    icon_background_color_dark: "#79a207"
+    image: assets/background_1.png
+    icon_background_color: "#FFFFFF"
+    image_dark: assets/background_1.png
+    icon_background_color_dark: "#FFFFFF"
 
   android: true
   ios: true
