@@ -57,14 +57,30 @@ class ProfileData {
 
 class CompanyCat {
   String id;
-  String title;
+  CatTitle title;
 
   CompanyCat({required this.id, required this.title});
 
   factory CompanyCat.fromJson(Map<String, dynamic> item) {
     return CompanyCat(
       id: item['id'] ?? "",
-      title: item['title'] ?? "",
+      title: CatTitle.fromJson(item['title']),
+    );
+  }
+}
+
+class CatTitle {
+  String ar;
+  String en;
+  String ckb;
+
+  CatTitle({required this.ar, required this.en, required this.ckb});
+
+  factory CatTitle.fromJson(Map<String, dynamic> item) {
+    return CatTitle(
+      ar: item['ar'] ?? "",
+      en: item['en'] ?? "",
+      ckb: item['ckb'] ?? "",
     );
   }
 }

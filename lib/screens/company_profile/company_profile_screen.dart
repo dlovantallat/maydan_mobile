@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../cloud_functions/api_response.dart';
+import '../../cloud_functions/maydan_services.dart';
 import '../../utilities/app_utilities.dart';
 import '../../widgets/whatsapp_unilink.dart';
 import '../profile/profile.dart';
 import 'company_widget.dart';
 
 class CompanyProfileScreen extends StatefulWidget {
-  final ProfileData data;
+  final String id;
 
-  const CompanyProfileScreen({Key? key, required this.data}) : super(key: key);
+  const CompanyProfileScreen({Key? key, required this.id}) : super(key: key);
 
   @override
   State<CompanyProfileScreen> createState() => _CompanyProfileScreenState();
@@ -29,10 +32,33 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
 
   launchWhatsAppUri() async {
     final link = WhatsAppUnilink(
-      phoneNumber: '+${widget.data.msisdn}',
+      phoneNumber: '+',
       text: AppLocalizations.of(context)!.viber_whatsapp_temp,
     );
     await launchUrl(link.asUri());
+  }
+
+  MaydanServices get service => GetIt.I<MaydanServices>();
+  bool isItemLoading = false;
+  late ApiResponse<ProfileData> profile;
+  String key = "";
+
+  @override
+  void initState() {
+    getAccount();
+    super.initState();
+  }
+
+  getAccount() async {
+    setState(() {
+      isItemLoading = true;
+    });
+    key = await getLanguageKeyForApi();
+    profile = await service.getCompanyId(widget.id);
+
+    setState(() {
+      isItemLoading = false;
+    });
   }
 
   @override
@@ -45,75 +71,97 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
         ),
         backgroundColor: Colors.transparent,
         actions: [
-          if (widget.data.whatsapp != "")
-            Padding(
-              padding: const EdgeInsetsDirectional.only(end: 16),
-              child: InkWell(
-                onTap: () {
-                  launchWhatsAppUri();
-                },
-                child: SvgPicture.asset(
-                  waSvg,
-                  semanticsLabel: '',
+          if (!isItemLoading)
+            if (profile.data!.whatsapp != "")
+              Padding(
+                padding: const EdgeInsetsDirectional.only(end: 16),
+                child: InkWell(
+                  onTap: () {
+                    launchWhatsAppUri();
+                  },
+                  child: SvgPicture.asset(
+                    waSvg,
+                    semanticsLabel: '',
+                  ),
                 ),
               ),
-            ),
-          if (widget.data.viber != "")
-            Padding(
-              padding: const EdgeInsetsDirectional.only(end: 16),
-              child: InkWell(
-                onTap: () {
-                  _launchUrl(
-                      "viber://chat/?number=+${widget.data.msisdn}&draft=${AppLocalizations.of(context)!.viber_whatsapp_temp}");
-                },
-                child: SvgPicture.asset(
-                  vSvg,
-                  semanticsLabel: '',
+          if (!isItemLoading)
+            if (profile.data!.viber != "")
+              Padding(
+                padding: const EdgeInsetsDirectional.only(end: 16),
+                child: InkWell(
+                  onTap: () {
+                    _launchUrl(
+                        "viber://chat/?number=+${profile.data!.msisdn}&draft=${AppLocalizations.of(context)!.viber_whatsapp_temp}");
+                  },
+                  child: SvgPicture.asset(
+                    vSvg,
+                    semanticsLabel: '',
+                  ),
                 ),
               ),
-            ),
-          if (widget.data.facebook != "")
-            Padding(
-              padding: const EdgeInsetsDirectional.only(end: 16),
-              child: InkWell(
-                onTap: () {
-                  _launchUrl(widget.data.facebook!);
-                },
-                child: SvgPicture.asset(
-                  fbSvg,
-                  semanticsLabel: '',
+          if (!isItemLoading)
+            if (profile.data!.facebook != "")
+              Padding(
+                padding: const EdgeInsetsDirectional.only(end: 16),
+                child: InkWell(
+                  onTap: () {
+                    _launchUrl(profile.data!.facebook!);
+                  },
+                  child: SvgPicture.asset(
+                    fbSvg,
+                    semanticsLabel: '',
+                  ),
                 ),
               ),
-            ),
-          if (widget.data.youtube != "")
-            Padding(
-              padding: const EdgeInsetsDirectional.only(end: 16),
-              child: InkWell(
-                onTap: () {
-                  _launchUrl(widget.data.youtube!);
-                },
-                child: SvgPicture.asset(
-                  ytSvg,
-                  semanticsLabel: '',
+          if (!isItemLoading)
+            if (profile.data!.youtube != "")
+              Padding(
+                padding: const EdgeInsetsDirectional.only(end: 16),
+                child: InkWell(
+                  onTap: () {
+                    _launchUrl(profile.data!.youtube!);
+                  },
+                  child: SvgPicture.asset(
+                    ytSvg,
+                    semanticsLabel: '',
+                  ),
                 ),
               ),
-            ),
-          if (widget.data.instagram != "")
-            Padding(
-              padding: const EdgeInsetsDirectional.only(end: 16),
-              child: InkWell(
-                onTap: () {
-                  _launchUrl(widget.data.instagram!);
-                },
-                child: SvgPicture.asset(
-                  instagramSvg,
-                  semanticsLabel: '',
+          if (!isItemLoading)
+            if (profile.data!.instagram != "")
+              Padding(
+                padding: const EdgeInsetsDirectional.only(end: 16),
+                child: InkWell(
+                  onTap: () {
+                    _launchUrl(profile.data!.instagram!);
+                  },
+                  child: SvgPicture.asset(
+                    instagramSvg,
+                    semanticsLabel: '',
+                  ),
                 ),
-              ),
-            )
+              )
         ],
       ),
-      body: CompanyWidget(data: widget.data),
+      body: Builder(builder: (context) {
+        if (isItemLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if (profile.requestStatus) {
+          return Center(
+            child: Text(profile.errorMessage),
+          );
+        }
+
+        return CompanyWidget(
+          data: profile.data!,
+          langKey: key,
+        );
+      }),
     );
   }
 }

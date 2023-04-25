@@ -1010,6 +1010,28 @@ class MaydanServices {
     );
   }
 
+  Future<ApiResponse<ProfileData>> getCompanyId(String companyId) {
+    return http
+        .get(Uri.parse("${baseURL}users/$companyId"))
+        .timeout(timeOutDuration)
+        .then(
+      (data) {
+        if (data.statusCode == 200) {
+          final jsonData = json.decode(data.body);
+
+          final list = ProfileData.fromJson(jsonData);
+
+          return ApiResponse<ProfileData>(data: list, statusCode: 200);
+        }
+        return ApiResponse<ProfileData>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<ProfileData>(
+          requestStatus: true, errorMessage: noInternet),
+    );
+  }
+
   Future<ApiResponse<StaticContentObj>> getStaticContent(
       String name, String local) {
     return http

@@ -13,8 +13,10 @@ import '../profile/profile.dart';
 
 class CompanyWidget extends StatefulWidget {
   final ProfileData data;
+  final String langKey;
 
-  const CompanyWidget({Key? key, required this.data}) : super(key: key);
+  const CompanyWidget({Key? key, required this.data, required this.langKey})
+      : super(key: key);
 
   @override
   State<CompanyWidget> createState() => _CompanyWidgetState();
@@ -27,7 +29,6 @@ class _CompanyWidgetState extends State<CompanyWidget> {
   bool isLoading2 = false;
 
   String token = "";
-  String key = "";
 
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
@@ -138,8 +139,13 @@ class _CompanyWidgetState extends State<CompanyWidget> {
                   widget.data.msisdn),
               meteData(AppLocalizations.of(context)!.company_email,
                   widget.data.email),
-              meteData(AppLocalizations.of(context)!.company_service_type,
-                  widget.data.cat!.title),
+              meteData(
+                  AppLocalizations.of(context)!.company_service_type,
+                  widget.langKey == "en"
+                      ? widget.data.cat!.title.en
+                      : widget.langKey == "ar"
+                          ? widget.data.cat!.title.ar
+                          : widget.data.cat!.title.ckb),
               meteData(AppLocalizations.of(context)!.company_location,
                   widget.data.address),
               meteData(
@@ -181,7 +187,7 @@ class _CompanyWidgetState extends State<CompanyWidget> {
               itemBuilder: (BuildContext context, int index) => ItemsItem(
                 item: data[index],
                 isFav: data[index].favorite,
-                keyLang: key,
+                keyLang: widget.langKey,
               ),
               itemCount: data.length,
             ),

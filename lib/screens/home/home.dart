@@ -44,12 +44,16 @@ class HomeBanner {
   String name;
   String urlImg;
   String url;
+  String bannerableType;
+  String bannerableId;
 
   HomeBanner({
     required this.id,
     required this.name,
     required this.urlImg,
     required this.url,
+    required this.bannerableType,
+    required this.bannerableId,
   });
 
   factory HomeBanner.fromJson(Map<String, dynamic> item) {
@@ -58,6 +62,8 @@ class HomeBanner {
       name: item['name'],
       urlImg: item['url_img'],
       url: item['url'],
+      bannerableType: item['bannerable_type'],
+      bannerableId: item['bannerable_id'],
     );
   }
 }
