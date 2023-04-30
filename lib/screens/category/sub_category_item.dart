@@ -32,45 +32,44 @@ class SubCategoryItem extends StatelessWidget {
       onTap: onSubItemClick,
       child: Container(
         margin: const EdgeInsetsDirectional.only(end: 8, bottom: 8),
-        decoration: BoxDecoration(
-            color: const Color(0xffffffff),
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                  blurRadius: 8,
-                  offset: const Offset(12, 12),
-                  color: const Color(0x06b4b0b0).withOpacity(.8),
-                  spreadRadius: -9)
-            ]),
         child: Column(
           children: [
-            Container(
-              clipBehavior: Clip.hardEdge,
-              margin:
-                  const EdgeInsetsDirectional.only(start: 8, end: 8, top: 8),
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(50)),
-                  color: Color(0xFFE5E5E5)),
-              height: 80,
-              width: 80,
-              child: subCategory.urlImg
-                          .substring(subCategory.urlImg.length - 3)
-                          .toLowerCase() !=
-                      "svg"
-                  ? Image.network(
+            ClipRRect(
+              borderRadius: BorderRadius.circular(40.0),
+              child: Container(
+                color: const Color(0xFFF9F9F9),
+                child: AspectRatio(
+                  aspectRatio: 1 / 1,
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.all(0.0),
+                    child:
+
+                        // subCategory.urlImg
+                        //             .substring(subCategory.urlImg.length - 3)
+                        //             .toLowerCase() !=
+                        //         "svg"
+                        //     ?
+
+                        Image.network(
                       imageLoader(subCategory.urlImg),
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, ___) => const Image(
+                        fit: BoxFit.cover,
                         image: AssetImage(imageHolder),
-                        fit: BoxFit.fitWidth,
                       ),
                     )
-                  : SvgPicture.network(
-                      imageLoader(subCategory.urlImg),
-                      semanticsLabel: 'SVG From Network',
-                      placeholderBuilder: (BuildContext context) =>
-                          const Center(child: CircularProgressIndicator()),
-                    ),
+                    // : SvgPicture.network(
+                    //     imageLoader(subCategory.urlImg),
+                    //     semanticsLabel: 'SVG From Network',
+                    //     placeholderBuilder: (BuildContext context) =>
+                    //         const Center(
+                    //             child: CircularProgressIndicator()),
+                    //   )
+
+                    ,
+                  ),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsetsDirectional.only(

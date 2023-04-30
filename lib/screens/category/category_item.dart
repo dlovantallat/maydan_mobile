@@ -28,58 +28,52 @@ class CategoryItem extends StatelessWidget {
     return InkWell(
       onTap: onItemClick,
       child: Container(
-        margin: const EdgeInsetsDirectional.only(end: 8, bottom: 8),
-        decoration: BoxDecoration(
-            color: const Color(0xffffffff),
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                  blurRadius: 8,
-                  offset: const Offset(12, 12),
-                  color: const Color(0x06b4b0b0).withOpacity(.8),
-                  spreadRadius: -9)
-            ]),
+        margin: const EdgeInsetsDirectional.only(start: 4, end: 4, bottom: 12),
         child: Column(
           children: [
-            Container(
-              margin:
-                  const EdgeInsetsDirectional.only(start: 8, end: 8, top: 8),
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(50)),
-                  color: Color(0xFFE5E5E5)),
-              height: 80,
-              width: 80,
-              child: category.urlImg
-                          .substring(category.urlImg.length - 3)
-                          .toLowerCase() !=
-                      "svg"
-                  ? Image.network(
-                      imageLoader(category.urlImg),
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => const Image(
-                        image: AssetImage(imageHolder),
-                        fit: BoxFit.fitWidth,
-                      ),
-                    )
-                  : SvgPicture.network(
-                      imageLoader(category.urlImg),
-                      semanticsLabel: 'SVG From Network',
-                      placeholderBuilder: (BuildContext context) =>
-                          const Center(child: CircularProgressIndicator()),
-                    ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(40.0),
+              child: Container(
+                color: appColor,
+                child: AspectRatio(
+                  aspectRatio: 1 / 1,
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.all(0.0),
+                    child: category.urlImg
+                                .substring(category.urlImg.length - 3)
+                                .toLowerCase() !=
+                            "svg"
+                        ? Image.network(
+                            imageLoader(category.urlImg),
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => const Image(
+                              image: AssetImage(imageHolder),
+                              fit: BoxFit.fitWidth,
+                            ),
+                          )
+                        : SvgPicture.network(
+                            imageLoader(category.urlImg),
+                            semanticsLabel: 'SVG From Network',
+                            placeholderBuilder: (BuildContext context) =>
+                                const Center(
+                                    child: CircularProgressIndicator()),
+                          ),
+                  ),
+                ),
+              ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.only(
-                start: 8,
-                end: 8,
-                top: 8,
-                bottom: 8,
-              ),
+              padding: const EdgeInsetsDirectional.all(8.0),
               child: Text(
-                category.title,
-                textAlign: TextAlign.center,
+                "${category.title}\n",
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xFF3D3E3F),
+                ),
               ),
             ),
           ],

@@ -58,12 +58,12 @@ class HomeBanner {
 
   factory HomeBanner.fromJson(Map<String, dynamic> item) {
     return HomeBanner(
-      id: item['id'],
-      name: item['name'],
-      urlImg: item['url_img'],
-      url: item['url'],
-      bannerableType: item['bannerable_type'],
-      bannerableId: item['bannerable_id'],
+      id: item['id'] ?? "",
+      name: item['name'] ?? "",
+      urlImg: item['url_img'] ?? "",
+      url: item['url'] ?? "",
+      bannerableType: item['bannerable_type'] ?? "",
+      bannerableId: item['bannerable_id'] ?? "",
     );
   }
 }

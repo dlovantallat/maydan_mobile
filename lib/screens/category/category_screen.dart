@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
@@ -69,14 +70,19 @@ class _CategoryScreenState extends State<CategoryScreen> {
           );
         }
 
-        return GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, mainAxisExtent: 147),
-          itemBuilder: (BuildContext context, int index) => CategoryItem(
-            context: context,
-            category: categories.data!.data[index],
+        return Padding(
+          padding: const EdgeInsetsDirectional.only(start: 40, end: 40),
+          child: StaggeredGridView.countBuilder(
+            mainAxisSpacing: 4.0,
+            crossAxisSpacing: 40.0,
+            crossAxisCount: 2,
+            itemBuilder: (BuildContext context, int index) => CategoryItem(
+              context: context,
+              category: categories.data!.data[index],
+            ),
+            itemCount: categories.data!.data.length,
+            staggeredTileBuilder: (int index) => const StaggeredTile.fit(1),
           ),
-          itemCount: categories.data!.data.length,
         );
       }),
     );

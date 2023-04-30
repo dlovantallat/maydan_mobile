@@ -165,7 +165,7 @@ class HomeCategoryItem extends StatelessWidget {
                   color: const Color(0x06b4b0b0).withOpacity(.8),
                   spreadRadius: -9)
             ]),
-        width: 87,
+        width: 100,
         child: Column(
           children: [
             Padding(
@@ -173,9 +173,9 @@ class HomeCategoryItem extends StatelessWidget {
               child: Container(
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(50)),
-                    color: Color(0xFFE5E5E5)),
-                height: 62,
-                width: 62,
+                    color: appColor),
+                height: 52,
+                width: 52,
                 child: data.urlImg
                             .substring(data.urlImg.length - 3)
                             .toLowerCase() !=

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../cloud_functions/api_response.dart';
@@ -77,14 +78,16 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
         return Padding(
           padding:
               const EdgeInsetsDirectional.only(start: 24, end: 24, top: 16),
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3, mainAxisExtent: 147),
-            itemBuilder: (context, index) => SubCategoryItem(
+          child: StaggeredGridView.countBuilder(
+            itemBuilder: (BuildContext context, int index) => SubCategoryItem(
               context: context,
               subCategory: subCategories.data!.data[index],
             ),
             itemCount: subCategories.data!.data.length,
+            mainAxisSpacing: 4.0,
+            crossAxisSpacing: 4.0,
+            crossAxisCount: 3,
+            staggeredTileBuilder: (int index) => const StaggeredTile.fit(1),
           ),
         );
       }),
