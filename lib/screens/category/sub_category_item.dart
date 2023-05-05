@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../common/model/category.dart';
 import '../../utilities/app_utilities.dart';
@@ -42,31 +41,26 @@ class SubCategoryItem extends StatelessWidget {
                   aspectRatio: 1 / 1,
                   child: Padding(
                     padding: const EdgeInsetsDirectional.all(0.0),
-                    child:
-
-                        // subCategory.urlImg
-                        //             .substring(subCategory.urlImg.length - 3)
-                        //             .toLowerCase() !=
-                        //         "svg"
-                        //     ?
-
-                        Image.network(
+                    child: Image.network(
                       imageLoader(subCategory.urlImg),
                       fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                        );
+                      },
                       errorBuilder: (_, __, ___) => const Image(
                         fit: BoxFit.cover,
                         image: AssetImage(imageHolder),
                       ),
-                    )
-                    // : SvgPicture.network(
-                    //     imageLoader(subCategory.urlImg),
-                    //     semanticsLabel: 'SVG From Network',
-                    //     placeholderBuilder: (BuildContext context) =>
-                    //         const Center(
-                    //             child: CircularProgressIndicator()),
-                    //   )
-
-                    ,
+                    ),
                   ),
                 ),
               ),
@@ -79,7 +73,7 @@ class SubCategoryItem extends StatelessWidget {
                 bottom: 8,
               ),
               child: Text(
-                subCategory.title,
+                "${subCategory.title}\n",
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
