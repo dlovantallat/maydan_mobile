@@ -177,5 +177,6 @@
   "gallery": "gallery",
   "invalid_pin_code": "Invalid otp code",
   "log_out_btn": "log out",
-  "trouble_sign_in": "do you have trouble? Request a new code in"
+  "trouble_sign_in": "do you have trouble? Request a new code in",
+  "invalid_credentials": "Username or password was wrong"
 }

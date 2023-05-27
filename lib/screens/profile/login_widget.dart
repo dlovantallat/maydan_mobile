@@ -44,7 +44,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     } else {
       Navigator.pop(context);
       if (login.statusCode == 401) {
-        setSnackBar(context, login.data!.message!);
+        setSnackBar(context, AppLocalizations.of(context)!.invalid_credentials);
       } else {
         setToken(login.data!.token!);
         setUserName(login.data!.userData!.name!);

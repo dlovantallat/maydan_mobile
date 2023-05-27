@@ -7,9 +7,9 @@ class LoginData {
 
   factory LoginData.json(dynamic it) {
     return LoginData(
-      token: it['token'],
-      message: it['message'],
-      userData: UserData.json(it['user']),
+      token: it['token'] ?? "",
+      message: it['message'] ?? "",
+      userData: it['user'] == null ? null : UserData.json(it['user']),
     );
   }
 }
