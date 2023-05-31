@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.12"
+  appsflyer_sdk:
+    dependency: "direct main"
+    description:
+      name: appsflyer_sdk
+      sha256: "48d5ef435b5f34de2f9b54f71200d9243a5b23b493f16f53a750ddf7396c3d5d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.10.3"
   archive:
     dependency: transitive
     description:

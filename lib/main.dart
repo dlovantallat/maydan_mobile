@@ -14,6 +14,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import 'cloud_functions/maydan_services.dart';
 import 'firebase_options.dart';
+import 'init_appsflyer.dart';
 import 'l10n/l10n.dart';
 import 'screens/on_boarding/language_start_up_screen.dart';
 import 'utilities/locale_provider.dart';
@@ -164,6 +165,13 @@ class _MainPageState extends State<MainPage> with HomeDrawerListener {
   @override
   void initState() {
     currentIndex = widget.index;
+    // SchedulerBinding.instance.addPostFrameCallback((_) async {
+    //   await AppTrackingTransparency.requestTrackingAuthorization();
+
+    // });
+
+    initAppsFlyer();
+
     super.initState();
   }
 
