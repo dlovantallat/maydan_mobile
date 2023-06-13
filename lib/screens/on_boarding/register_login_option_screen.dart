@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:maydan/screens/item_detail/login_screen.dart';
+import 'package:maydan/screens/register/login_screen.dart';
 import 'package:maydan/screens/register/register_screen.dart';
 
 import '../../main.dart';

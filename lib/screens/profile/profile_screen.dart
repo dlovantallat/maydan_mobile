@@ -10,7 +10,7 @@ import '../setting/setting_screen.dart';
 import '../static_content/static_content_screen.dart';
 import 'delete_profile_screen.dart';
 import 'edit_profile.dart';
-import 'login_widget.dart';
+import '../register/login_widget.dart';
 import 'profile.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -147,16 +147,26 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.only(start: 8.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(profile.data!.name),
-                                  Text(profile.data!.email),
-                                ],
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.only(
+                                    start: 8.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      profile.data!.name,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      profile.data!.email,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
                               ),
                             )
                           ],

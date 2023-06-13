@@ -15,7 +15,7 @@ import '../../common/model/category.dart';
 import '../../common/model/item.dart';
 import '../../main.dart';
 import '../../utilities/app_utilities.dart';
-import '../profile/login_widget.dart';
+import '../register/login_widget.dart';
 import 'image_row_item.dart';
 import 'post_obj.dart';
 

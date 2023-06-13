@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Maydan</string>
+    <string name="facebook_app_id">216457407874420</string>
+    <string name="fb_login_protocol_scheme">fb216457407874420</string>
+    <string name="facebook_client_token">2e18522b55121bffd52e2134ace04e6d</string>
+</resources>

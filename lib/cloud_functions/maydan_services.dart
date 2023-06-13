@@ -595,6 +595,58 @@ class MaydanServices {
     );
   }
 
+  Future<ApiResponse<RegisterModel>> social(
+      {required String token,
+      required String name,
+      bool isFace = false}) async {
+    http.MultipartRequest request;
+    if (isFace) {
+      request = http.MultipartRequest(
+          'POST', Uri.parse("${baseURL}socialite/facebook"));
+    } else {
+      request =
+          http.MultipartRequest('POST', Uri.parse("${baseURL}socialite/apple"));
+    }
+
+    request.fields['authToken'] = token;
+
+    if (name.isNotEmpty) {
+      request.fields['fullName'] = name;
+    }
+
+    request.headers.addAll(headers());
+
+    return request.send().then(
+      (data) async {
+        if (data.statusCode == 200) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = RegisterModel.json(jsonDecode(respStr));
+
+          return ApiResponse<RegisterModel>(data: register);
+        } else if (data.statusCode == 422) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = RegisterModel.json(jsonDecode(respStr));
+          return ApiResponse<RegisterModel>(
+              statusCode: 422, errorMessage: register.message);
+        } else if (data.statusCode == 403) {
+          final respStr = await data.stream.bytesToString();
+
+          final register = RegisterModel.json(jsonDecode(respStr));
+          return ApiResponse<RegisterModel>(
+              statusCode: 403, errorMessage: register.message);
+        }
+
+        return ApiResponse<RegisterModel>(
+            requestStatus: true, errorMessage: "API Communication Down");
+      },
+    ).catchError(
+      (s) => ApiResponse<RegisterModel>(
+          requestStatus: true, errorMessage: s.toString()),
+    );
+  }
+
   Future<ApiResponse<UpdateUser>> updateMe(
       String name,
       String email,

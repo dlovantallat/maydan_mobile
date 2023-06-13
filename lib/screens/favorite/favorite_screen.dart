@@ -8,7 +8,7 @@ import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
 import '../my_ads/my_items_item_list.dart';
-import '../profile/login_widget.dart';
+import '../register/login_widget.dart';
 import 'favorite_obj.dart';
 
 class FavoriteScreen extends StatefulWidget {

@@ -7,7 +7,7 @@ import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/item.dart';
 import '../../utilities/app_utilities.dart';
-import '../profile/login_widget.dart';
+import '../register/login_widget.dart';
 import 'my_items_item_list.dart';
 
 class MyAdsScreen extends StatefulWidget {
