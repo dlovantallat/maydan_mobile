@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import '../register/otp_screen.dart';
 import '../register/register.dart';
@@ -17,7 +16,6 @@ class ForgetPasswordScreen extends StatefulWidget {
 }
 
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
-  MaydanServices get service => GetIt.I<MaydanServices>();
   final phoneNumberController = TextEditingController();
   int phoneNumberControllerCounter = 0;
 

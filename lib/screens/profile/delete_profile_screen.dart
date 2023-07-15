@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get_it/get_it.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
 import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import '../register/register.dart';
@@ -18,7 +16,6 @@ class DeleteProfileScreen extends StatefulWidget {
 }
 
 class _DeleteProfileScreenState extends State<DeleteProfileScreen> {
-  MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<UpdateUser> deleteProfile;
 
   delete() async {

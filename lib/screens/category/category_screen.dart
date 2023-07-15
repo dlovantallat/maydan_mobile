@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/category.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import 'category_item.dart';
 
@@ -17,7 +16,6 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<CategoryObj> categories;
   bool isLoading = false;
 

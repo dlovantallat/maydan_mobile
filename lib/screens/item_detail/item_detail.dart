@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
 import '../../common/meta_data_widget.dart';
 import '../../common/model/item.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import '../favorite/favorite_obj.dart';
 import '../home/home_slider.dart';
@@ -26,7 +25,6 @@ class ItemDetail extends StatefulWidget {
 }
 
 class _ItemDetailState extends State<ItemDetail> {
-  MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<FavoriteRequest> favReq;
   late ApiResponse<FavoriteRemove> removeFavo;
 

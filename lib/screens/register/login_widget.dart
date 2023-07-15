@@ -3,13 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:maydan/screens/profile/forget_password_screen.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/login.dart';
 import '../../main.dart';
 import '../../utilities/app_utilities.dart';
@@ -32,8 +30,6 @@ class _LoginWidgetState extends State<LoginWidget> {
   int passwordCounter = 0;
 
   bool isOther = false;
-
-  MaydanServices get service => GetIt.I<MaydanServices>();
 
   late ApiResponse<LoginData> login;
   late ApiResponse<RegisterModel> register;

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
+import '../../main.dart';
 import '../profile/profile.dart';
 import 'company_item.dart';
 import 'company_obj.dart';
@@ -17,7 +16,6 @@ class CompanyListScreen extends StatefulWidget {
 }
 
 class _CompanyListScreenState extends State<CompanyListScreen> {
-  MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<CompanyObj> companies;
   bool isLoading = false;
 

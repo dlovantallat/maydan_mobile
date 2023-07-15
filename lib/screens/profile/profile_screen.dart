@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import '../setting/setting_screen.dart';
 import '../static_content/static_content_screen.dart';
@@ -22,8 +21,6 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen>
     with LoginCallBack, LogoutListener {
-  MaydanServices get service => GetIt.I<MaydanServices>();
-
   late ApiResponse<ProfileData> profile;
   bool isLoading = false;
   bool isTokenLoading = false;

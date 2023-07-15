@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import '../../widgets/whatsapp_unilink.dart';
 import '../profile/profile.dart';
@@ -38,7 +37,6 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
     await launchUrl(link.asUri());
   }
 
-  MaydanServices get service => GetIt.I<MaydanServices>();
   bool isItemLoading = false;
   late ApiResponse<ProfileData> profile;
   String key = "";

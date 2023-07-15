@@ -3,11 +3,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
 import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import 'register.dart';
@@ -29,7 +27,6 @@ class PersonalRegisterScreen extends StatefulWidget {
 }
 
 class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
-  MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<RegisterModel> register;
 
   final nameController = TextEditingController();

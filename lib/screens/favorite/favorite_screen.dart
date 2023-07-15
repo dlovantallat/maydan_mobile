@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/item.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import '../my_ads/my_items_item_list.dart';
 import '../register/login_widget.dart';
@@ -20,7 +19,6 @@ class FavoriteScreen extends StatefulWidget {
 
 class _FavoriteScreenState extends State<FavoriteScreen>
     with LoginCallBack, ItemListener {
-  MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<ItemObj> myItems;
   late ApiResponse<FavoriteRemove> removeFav;
   bool isLoading = false;

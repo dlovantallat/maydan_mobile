@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
 import '../../common/meta_data_widget.dart';
 import '../../common/model/item.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import '../list_items/items_item.dart';
 import '../profile/profile.dart';
@@ -23,7 +22,6 @@ class CompanyWidget extends StatefulWidget {
 }
 
 class _CompanyWidgetState extends State<CompanyWidget> {
-  MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<ItemObj> items;
   bool isLoading = false;
   bool isLoading2 = false;

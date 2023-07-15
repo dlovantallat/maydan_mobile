@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/category.dart';
 import '../../common/model/item.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import 'items_item.dart';
 
@@ -20,7 +19,6 @@ class ListItemsScreen extends StatefulWidget {
 }
 
 class _ListItemsScreenState extends State<ListItemsScreen> {
-  MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<ItemObj> items;
   bool isLoading = false;
   String token = "";

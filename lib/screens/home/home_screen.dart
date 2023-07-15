@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:maydan/screens/search/search_screen.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/item.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import '../company_profile/company_item.dart';
 import '../company_profile/company_obj.dart';
 import '../list_items/items_item.dart';
 import '../profile/profile.dart';
+import '../search/search_screen.dart';
 import 'home.dart';
 import 'home_drawer.dart';
 import 'home_item.dart';
@@ -29,7 +28,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     with HomeViewAllListener, DrawerCallBack {
-  MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<HomeObj> home;
   late ApiResponse<CompanyObj> companies;
   late ApiResponse<ProfileData> profile;

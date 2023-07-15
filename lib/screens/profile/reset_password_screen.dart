@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
 import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import '../register/register.dart';
@@ -24,8 +22,6 @@ class ResetPasswordScreen extends StatefulWidget {
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final passwordController = TextEditingController();
   final passwordConfirmationController = TextEditingController();
-
-  MaydanServices get service => GetIt.I<MaydanServices>();
 
   late ApiResponse<ChangePassword> changePassword;
   final oib = const OutlineInputBorder(

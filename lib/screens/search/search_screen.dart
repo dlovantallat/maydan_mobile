@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/item.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import 'search_item.dart';
 
@@ -18,8 +17,6 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
-
-  MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<ItemObj> search;
   bool _isLoading = false;
   bool isShow = true;

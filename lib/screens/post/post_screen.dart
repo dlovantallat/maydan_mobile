@@ -5,12 +5,10 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/category.dart';
 import '../../common/model/item.dart';
 import '../../main.dart';
@@ -58,7 +56,6 @@ class _PostScreenState extends State<PostScreen>
   final List<String> _dropdownPriceDrop = ["IQD", "USD"];
   String _dropdownPriceValue = "IQD";
 
-  MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<CategoryObj> categories;
   late ApiResponse<SubCategoryObj> subCategories;
   late ApiResponse<CityObj> cities;

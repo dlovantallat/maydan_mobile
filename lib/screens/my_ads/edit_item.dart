@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get_it/get_it.dart';
 
 import '../../cloud_functions/api_response.dart';
-import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/item.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 
 class EditItem extends StatefulWidget {
@@ -17,7 +16,6 @@ class EditItem extends StatefulWidget {
 }
 
 class _EditItemState extends State<EditItem> {
-  MaydanServices get service => GetIt.I<MaydanServices>();
   late ApiResponse<ItemRespond> updateItemRequest;
   final List<String> _dropdownDurationDrop = ["1", "2", "3"];
   String _dropdownDurationValue = "1";
