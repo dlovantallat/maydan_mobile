@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,7 +11,10 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/cloud_functions/api_response.dart';
+import 'package:maydan/screens/config/config_screen.dart';
 import 'package:maydan/screens/my_ads/my_ads_screen.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,6 +22,7 @@ import 'cloud_functions/maydan_services.dart';
 import 'firebase_options.dart';
 import 'init_appsflyer.dart';
 import 'l10n/l10n.dart';
+import 'screens/config/config_model.dart';
 import 'screens/on_boarding/language_start_up_screen.dart';
 import 'utilities/locale_provider.dart';
 import 'screens/category/category_screen.dart';
@@ -25,6 +31,9 @@ import 'screens/home/home_screen.dart';
 import 'screens/post/post_screen.dart';
 import 'screens/profile/profile_screen.dart';
 import 'utilities/app_utilities.dart';
+
+/// Global Variable
+MaydanServices get service => GetIt.I<MaydanServices>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -97,7 +106,29 @@ Future<void> main() async {
   };
 
   servicesLocator();
+  config();
+}
 
+void config() async {
+  bool isUpdate = false;
+  Update? update;
+
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  String platform = Platform.isIOS ? "ios" : "android";
+  String buildNumber = packageInfo.buildNumber;
+  ApiResponse<Config> apiResponse =
+      await service.getConfig(buildNumber, platform);
+
+  if (!apiResponse.requestStatus) {
+    if (apiResponse.statusCode == 200) {
+      if (apiResponse.data!.data != null) {
+        isUpdate = true;
+        update = apiResponse.data!.data;
+      }
+    }
+  }
+
+  /// here
   String key = await getLanguageKey();
   bool isOnBoard = await getOnBoard();
 
@@ -108,7 +139,9 @@ Future<void> main() async {
       ],
       child: MyApp(
         langKey: key,
+        isUpdate: isUpdate,
         isOnboard: isOnBoard,
+        update: update,
       ),
     ),
   );
@@ -141,9 +174,17 @@ Future<bool> getOnBoard() async {
 
 class MyApp extends StatelessWidget {
   final bool isOnboard;
+  final bool isUpdate;
   final String langKey;
+  final Update? update;
 
-  const MyApp({super.key, this.langKey = "", this.isOnboard = false});
+  const MyApp({
+    super.key,
+    this.langKey = "",
+    this.isOnboard = false,
+    this.isUpdate = false,
+    this.update,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +202,11 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: L10n.all,
-      home: isOnboard ? const MainPage() : const LanguageStartUpScreen(),
+      home: isUpdate
+          ? ConfigScreen(update: update)
+          : isOnboard
+              ? const MainPage()
+              : const LanguageStartUpScreen(),
     );
   }
 }

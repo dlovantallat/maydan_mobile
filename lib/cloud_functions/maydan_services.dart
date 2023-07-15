@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/src/media_type.dart';
+import 'package:maydan/screens/config/config_model.dart';
 import 'package:maydan/screens/static_content/static_content_obj.dart';
 
 import '../common/model/category.dart';
@@ -1219,5 +1220,24 @@ class MaydanServices {
       (s) => ApiResponse<UpdateUser>(
           requestStatus: true, errorMessage: s.toString()),
     );
+  }
+
+  // Config
+  Future<ApiResponse<Config>> getConfig(String buildNo, String platform) {
+    return http
+        .get(Uri.parse(
+            '${baseURL}boot?buildNumber=$buildNo&platformType=$platform'))
+        .timeout(timeOutDuration)
+        .then((data) {
+      if (data.statusCode == 200) {
+        final jsonData = json.decode(data.body);
+        Config home = Config.fromJson(jsonData);
+
+        return ApiResponse<Config>(data: home, statusCode: 200);
+      }
+      return ApiResponse<Config>(
+          requestStatus: true, errorMessage: "API Communication Down");
+    }).catchError((s) => ApiResponse<Config>(
+            requestStatus: true, errorMessage: "API Communication Down"));
   }
 }

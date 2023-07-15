@@ -150,5 +150,7 @@
   "invalid_pin_code": "رمز كلمة المرور لمرة واحدة غير صالح",
   "log_out_btn": "تأكيد",
   "trouble_sign_in": "هل لديك مشكلة؟ قم بطلب رمز جديد",
-  "invalid_credentials": "اسم المستخدم أو كلمة المرور كانت خاطئة"
+  "invalid_credentials": "اسم المستخدم أو كلمة المرور كانت خاطئة",
+  "other_option": "خيار آخر",
+  "config_title": "التكوين"
 }

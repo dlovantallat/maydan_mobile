@@ -179,5 +179,6 @@
   "log_out_btn": "log out",
   "trouble_sign_in": "do you have trouble? Request a new code in",
   "invalid_credentials": "Username or password was wrong",
-  "other_option": "Other Option"
+  "other_option": "Other Option",
+  "config_title": "Config"
 }

@@ -150,5 +150,7 @@
   "invalid_pin_code": "کۆدی وشەی نهێنی یەک جار نادروست",
   "log_out_btn": "دڵنیام",
   "trouble_sign_in": "کێشەت هەیە لە بەدەست هێنانی کۆد",
-  "invalid_credentials": "ناوی بەکارهێنەر یان وشەی نهێنی هەڵە بوو"
+  "invalid_credentials": "ناوی بەکارهێنەر یان وشەی نهێنی هەڵە بوو",
+  "other_option": "بژاردەی تر",
+  "config_title": "ڕێکخستن"
 }
