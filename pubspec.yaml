@@ -56,6 +56,8 @@ dependencies:
   flutter_facebook_auth: ^5.0.11
   sign_in_with_apple: ^4.3.0
 
+  flutter_dotenv: ^5.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
