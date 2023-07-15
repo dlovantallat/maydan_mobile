@@ -31,6 +31,17 @@ class MaydanServices {
     };
   }
 
+  Map<String, String> headersForOtp(String phone) {
+    int phoneNo = int.parse(phone);
+    final now = DateTime.now();
+    final encryptedNo = (((phoneNo * now.year * now.month) /
+                (now.minute + now.day + now.hour)) *
+            (now.month + now.day))
+        .toInt();
+    final sKey = dotenv.env['SECRET_KEY'];
+    return {'x-sub-version': '$encryptedNo$sKey'};
+  }
+
   Future<ApiResponse<HomeObj>> getHome(String token, String localLang) {
     return http
         .get(Uri.parse("${baseURL}home"),
@@ -345,13 +356,13 @@ class MaydanServices {
 
   Future<ApiResponse<RequestOtpRespond>> requestPinCode(
       String phoneNumber, bool isPersonal) {
-    var request =
-        http.MultipartRequest('POST', Uri.parse("${baseURL}requestPincode"));
+    String endPoint = dotenv.env['OTP_END_POINT'] ?? "";
+    var request = http.MultipartRequest('POST', Uri.parse(baseURL + endPoint));
 
     request.fields['msisdn'] = "964$phoneNumber";
     request.fields['usertype'] = !isPersonal ? "P" : "C";
 
-    request.headers.addAll(headers());
+    request.headers.addAll(headersForOtp(phoneNumber));
 
     return request.send().then(
       (data) async {
@@ -379,12 +390,12 @@ class MaydanServices {
   }
 
   Future<ApiResponse<RequestOtpRespond>> requestChangePass(String phoneNumber) {
-    var request =
-        http.MultipartRequest('POST', Uri.parse("${baseURL}requestChangePass"));
+    String endPoint = dotenv.env['OTP_FORGET_END_POINT'] ?? "";
+    var request = http.MultipartRequest('POST', Uri.parse(baseURL + endPoint));
 
     request.fields['msisdn'] = "964$phoneNumber";
 
-    request.headers.addAll(headers());
+    request.headers.addAll(headersForOtp(phoneNumber));
 
     return request.send().then(
       (data) async {
