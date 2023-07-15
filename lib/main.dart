@@ -3,6 +3,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -11,7 +12,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:maydan/screens/my_ads/my_ads_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import 'cloud_functions/maydan_services.dart';
 import 'firebase_options.dart';
@@ -31,6 +31,9 @@ Future<void> main() async {
   final fire = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // Initializing env file to load secret variables
+  await dotenv.load(fileName: ".env");
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 

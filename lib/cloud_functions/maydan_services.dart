@@ -1,8 +1,8 @@
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/src/media_type.dart';
 import 'package:maydan/screens/static_content/static_content_obj.dart';
-import 'package:maydan/utilities/app_utilities.dart';
 
 import '../common/model/category.dart';
 import '../common/model/item.dart';
@@ -16,7 +16,7 @@ import '../screens/register/register.dart';
 import 'api_response.dart';
 
 class MaydanServices {
-  final String baseURL = "https://apimaydan.tornet.co/api/mobile/";
+  final String baseURL = dotenv.env['BASE_URL'] ?? "";
   final String noInternet =
       "No Internet, Please check your internet connection.";
 

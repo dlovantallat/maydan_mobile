@@ -84,6 +84,7 @@ flutter:
 
   assets:
     - assets/
+    - .env
   fonts:
     - family: Myraid
       fonts:
