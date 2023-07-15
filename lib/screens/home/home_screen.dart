@@ -83,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen>
     key = await getLanguageKey();
 
     String token = await getToken();
+    print("token: $token");
     profile = await service.getMe(token);
 
     if (!profile.requestStatus) {
@@ -332,10 +333,10 @@ class _HomeScreenState extends State<HomeScreen>
                               padding: const EdgeInsetsDirectional.only(
                                   top: 8, start: 8, end: 8),
                               child: CompanyItem(
-                                data: companies.data!.data[index],
+                                data: companyData[index],
                               ),
                             ),
-                            itemCount: companies.data!.data.length,
+                            itemCount: companyData.length,
                           ),
                         ),
                       ),
