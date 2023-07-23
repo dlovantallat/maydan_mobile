@@ -32,7 +32,7 @@ class MaydanServices {
     };
   }
 
-  Map<String, String> headersForOtp(String phone) {
+  Map<String, String> headersForOtp(String phone, String languageKey) {
     int phoneNo = int.parse(phone);
     final now = DateTime.now();
     final encryptedNo = (((phoneNo * now.year * now.month) /
@@ -40,7 +40,10 @@ class MaydanServices {
             (now.month + now.day))
         .toInt();
     final sKey = dotenv.env['SECRET_KEY'];
-    return {'x-sub-version': '$encryptedNo$sKey'};
+    return {
+      'x-sub-version': '$encryptedNo$sKey',
+      'app-language': languageKey,
+    };
   }
 
   Future<ApiResponse<HomeObj>> getHome(String token, String localLang) {
@@ -363,8 +366,7 @@ class MaydanServices {
     request.fields['msisdn'] = "964$phoneNumber";
     request.fields['usertype'] = !isPersonal ? "P" : "C";
 
-    request.headers.addAll(headersForOtp(phoneNumber));
-
+    request.headers.addAll(headersForOtp("964$phoneNumber", "en"));
     return request.send().then(
       (data) async {
         if (data.statusCode == 200) {
@@ -396,7 +398,7 @@ class MaydanServices {
 
     request.fields['msisdn'] = "964$phoneNumber";
 
-    request.headers.addAll(headersForOtp(phoneNumber));
+    request.headers.addAll(headersForOtp("964$phoneNumber", "en"));
 
     return request.send().then(
       (data) async {
