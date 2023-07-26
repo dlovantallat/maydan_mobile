@@ -15,18 +15,11 @@ PODS:
     - FBSDKCoreKit (= 16.0.1)
   - Firebase/CoreOnly (10.9.0):
     - FirebaseCore (= 10.9.0)
-  - Firebase/Crashlytics (10.9.0):
-    - Firebase/CoreOnly
-    - FirebaseCrashlytics (~> 10.9.0)
   - Firebase/Messaging (10.9.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 10.9.0)
   - firebase_core (2.13.1):
     - Firebase/CoreOnly (= 10.9.0)
-    - Flutter
-  - firebase_crashlytics (3.3.2):
-    - Firebase/Crashlytics (= 10.9.0)
-    - firebase_core
     - Flutter
   - firebase_messaging (14.2.1):
     - Firebase/Messaging (= 10.9.0)
@@ -36,19 +29,9 @@ PODS:
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/Logger (~> 7.8)
-  - FirebaseCoreExtension (10.11.0):
-    - FirebaseCore (~> 10.0)
   - FirebaseCoreInternal (10.11.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseCrashlytics (10.9.0):
-    - FirebaseCore (~> 10.5)
-    - FirebaseInstallations (~> 10.0)
-    - FirebaseSessions (~> 10.5)
-    - GoogleDataTransport (~> 9.2)
-    - GoogleUtilities/Environment (~> 7.8)
-    - nanopb (< 2.30910.0, >= 2.30908.0)
-    - PromisesObjC (~> 2.1)
-  - FirebaseInstallations (10.11.0):
+  - FirebaseInstallations (10.12.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
@@ -62,14 +45,6 @@ PODS:
     - GoogleUtilities/Reachability (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FirebaseSessions (10.11.0):
-    - FirebaseCore (~> 10.5)
-    - FirebaseCoreExtension (~> 10.0)
-    - FirebaseInstallations (~> 10.0)
-    - GoogleDataTransport (~> 9.2)
-    - GoogleUtilities/Environment (~> 7.10)
-    - nanopb (< 2.30910.0, >= 2.30908.0)
-    - PromisesSwift (~> 2.1)
   - Flutter (1.0.0)
   - flutter_facebook_auth (5.0.9):
     - FBSDKLoginKit (~> 16.0.1)
@@ -113,9 +88,7 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - PromisesObjC (2.2.0)
-  - PromisesSwift (2.2.0):
-    - PromisesObjC (= 2.2.0)
+  - PromisesObjC (2.3.1)
   - share_plus (0.0.1):
     - Flutter
   - shared_preferences_ios (0.0.1):
@@ -128,7 +101,6 @@ PODS:
 DEPENDENCIES:
   - appsflyer_sdk (from `.symlinks/plugins/appsflyer_sdk/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
-  - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
   - flutter_facebook_auth (from `.symlinks/plugins/flutter_facebook_auth/ios`)
@@ -152,25 +124,19 @@ SPEC REPOS:
     - FBSDKLoginKit
     - Firebase
     - FirebaseCore
-    - FirebaseCoreExtension
     - FirebaseCoreInternal
-    - FirebaseCrashlytics
     - FirebaseInstallations
     - FirebaseMessaging
-    - FirebaseSessions
     - GoogleDataTransport
     - GoogleUtilities
     - nanopb
     - PromisesObjC
-    - PromisesSwift
 
 EXTERNAL SOURCES:
   appsflyer_sdk:
     :path: ".symlinks/plugins/appsflyer_sdk/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
-  firebase_crashlytics:
-    :path: ".symlinks/plugins/firebase_crashlytics/ios"
   firebase_messaging:
     :path: ".symlinks/plugins/firebase_messaging/ios"
   Flutter:
@@ -207,15 +173,11 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: c47a3b90920702487b10b647c63520dc2676dad9
   Firebase: bd152f0f3d278c4060c5c71359db08ebcfd5a3e2
   firebase_core: ce64b0941c6d87c6ef5022ae9116a158236c8c94
-  firebase_crashlytics: 9b80d1944507cc07fa1c4455797f7d2eb7c8873f
   firebase_messaging: 113af2fe1fb966565c66812a52cdddd7e7c63fac
   FirebaseCore: b68d3616526ec02e4d155166bbafb8eca64af557
-  FirebaseCoreExtension: cacdad57fdb60e0b86dcbcac058ec78237946759
   FirebaseCoreInternal: 9e46c82a14a3b3a25be4e1e151ce6d21536b89c0
-  FirebaseCrashlytics: b60329455285aff853e54139d8ddbfe1e5f2b9f9
-  FirebaseInstallations: 2a2c6859354cbec0a228a863d4daf6de7c74ced4
+  FirebaseInstallations: 7b99ef103f013624444c614397038219c45f8e63
   FirebaseMessaging: 6b7052cc3da7bc8e5f72bef871243e8f04a14eed
-  FirebaseSessions: a62ba5c45284adb7714f4126cfbdb32b17c260bd
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_facebook_auth: 42016bec1574eabf69bc2fe4311e8cd55813d352
   flutter_native_image: 9c0b7451838484458e5b0fae007b86a4c2d4bdfe
@@ -227,8 +189,7 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
   path_provider_foundation: 37748e03f12783f9de2cb2c4eadfaa25fe6d4852
-  PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
-  PromisesSwift: cf9eb58666a43bbe007302226e510b16c1e10959
+  PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   share_plus: 599aa54e4ea31d4b4c0e9c911bcc26c55e791028
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
@@ -236,4 +197,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1
