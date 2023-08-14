@@ -180,5 +180,11 @@
   "trouble_sign_in": "do you have trouble? Request a new code in",
   "invalid_credentials": "Username or password was wrong",
   "other_option": "Other Option",
-  "config_title": "Config"
+  "config_title": "Config",
+  "week1": "1 Week",
+  "week2": "2 Week",
+  "week3": "3 Week",
+  "month3": "3 Month",
+  "month6": "6 Month",
+  "year1": "1 Year"
 }

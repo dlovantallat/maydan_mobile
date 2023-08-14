@@ -49,8 +49,20 @@ class _PostScreenState extends State<PostScreen>
   DistrictDrop? _dropdownDistrictValue;
 
   /// Duration DropDown
-  final List<String> _dropdownDurationDrop = ["1", "2", "3"];
-  String _dropdownDurationValue = "1";
+  final List<DurationDropDown> _dropdownDurationDrop = [
+    DurationDropDown(AppLocalizations.of(Get.context!)!.week1, 0),
+    DurationDropDown(AppLocalizations.of(Get.context!)!.week2, 1),
+    DurationDropDown(AppLocalizations.of(Get.context!)!.week3, 2),
+  ];
+  final List<DurationDropDown> _dropdownDurationDrop1 = [
+    DurationDropDown(AppLocalizations.of(Get.context!)!.week1, 0),
+    DurationDropDown(AppLocalizations.of(Get.context!)!.week2, 1),
+    DurationDropDown(AppLocalizations.of(Get.context!)!.week3, 2),
+    DurationDropDown(AppLocalizations.of(Get.context!)!.month3, 3),
+    DurationDropDown(AppLocalizations.of(Get.context!)!.month6, 4),
+    DurationDropDown(AppLocalizations.of(Get.context!)!.year1, 5),
+  ];
+  int _dropdownDurationValue = 0;
 
   /// City DropDown
   final List<String> _dropdownPriceDrop = ["IQD", "USD"];
@@ -84,6 +96,7 @@ class _PostScreenState extends State<PostScreen>
   List<UploadImage> uploadedPhotos = [];
   String localLang = "";
   bool isPrice = false;
+  bool isUserP = true;
 
   final oib = const OutlineInputBorder(
     borderSide: BorderSide(color: Colors.grey, width: 1),
@@ -112,6 +125,9 @@ class _PostScreenState extends State<PostScreen>
       setState(() {
         isLogin = true;
       });
+
+      String userType = await getUserType();
+      isUserP = userType == "P" ? true : false;
       getCategories();
       getCity();
     }
@@ -420,6 +436,21 @@ class _PostScreenState extends State<PostScreen>
       String token = await getToken();
       String prefLang = await getLanguageKeyForApi();
       String firebaseToken = await FirebaseMessaging.instance.getToken() ?? "";
+      String duration = "";
+
+      if (_dropdownDurationValue == 0) {
+        duration = "1";
+      } else if (_dropdownDurationValue == 1) {
+        duration = "2";
+      } else if (_dropdownDurationValue == 2) {
+        duration = "3";
+      } else if (_dropdownDurationValue == 3) {
+        duration = "12";
+      } else if (_dropdownDurationValue == 4) {
+        duration = "24";
+      } else if (_dropdownDurationValue == 5) {
+        duration = "52";
+      }
 
       loading(context);
       postItem = await service.postItem(
@@ -430,7 +461,7 @@ class _PostScreenState extends State<PostScreen>
         price: price,
         description: description,
         subCategory: _dropdownSubCategoryValue!.id,
-        duration: _dropdownDurationValue,
+        duration: duration,
         currencyType: _dropdownPriceValue,
         districtId: _dropdownDistrictValue!.id,
         firebaseToken: firebaseToken,
@@ -895,29 +926,37 @@ class _PostScreenState extends State<PostScreen>
                                 Padding(
                                   padding: const EdgeInsetsDirectional.only(
                                       start: 8, end: 8),
-                                  child: Text(
-                                    AppLocalizations.of(context)!.post_week,
-                                    style: const TextStyle(color: appColor),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsetsDirectional.only(end: 8),
                                   child: DropdownButton(
                                       underline: const SizedBox(),
-                                      items: _dropdownDurationDrop
-                                          .map((value) => DropdownMenuItem(
-                                                value: value,
-                                                child: Text(
-                                                  value,
-                                                  style: TextStyle(
-                                                      color: value ==
-                                                              _dropdownDurationValue
-                                                          ? appColor
-                                                          : Colors.black),
-                                                ),
-                                              ))
-                                          .toList(),
+                                      items: isUserP
+                                          ? _dropdownDurationDrop
+                                              .map((DurationDropDown value) =>
+                                                  DropdownMenuItem(
+                                                    value: value.id,
+                                                    child: Text(
+                                                      value.title,
+                                                      style: TextStyle(
+                                                          color: value.id ==
+                                                                  _dropdownDurationValue
+                                                              ? appColor
+                                                              : Colors.black),
+                                                    ),
+                                                  ))
+                                              .toList()
+                                          : _dropdownDurationDrop1
+                                              .map((DurationDropDown value) =>
+                                                  DropdownMenuItem(
+                                                    value: value.id,
+                                                    child: Text(
+                                                      value.title,
+                                                      style: TextStyle(
+                                                          color: value.id ==
+                                                                  _dropdownDurationValue
+                                                              ? appColor
+                                                              : Colors.black),
+                                                    ),
+                                                  ))
+                                              .toList(),
                                       value: _dropdownDurationValue,
                                       onChanged: (i) {
                                         setState(() {

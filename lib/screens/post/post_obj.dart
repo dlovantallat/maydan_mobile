@@ -100,3 +100,10 @@ class DistrictData {
     );
   }
 }
+
+class DurationDropDown {
+  String title;
+  int id;
+
+  DurationDropDown(this.title, this.id);
+}
