@@ -88,6 +88,12 @@ class _HomeScreenState extends State<HomeScreen>
       if (profile.statusCode == 401) {
         setToken("");
       }
+
+      if (profile.statusCode == 200) {
+        if (profile.data!.userType != "P") {
+          setUserType(profile.data!.userType);
+        }
+      }
     }
 
     setState(() {

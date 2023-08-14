@@ -66,6 +66,12 @@ class _ProfileScreenState extends State<ProfileScreen>
         setToken("");
         tokenCheck();
       }
+
+      if (profile.statusCode == 200) {
+        if (profile.data!.userType != "P") {
+          setUserType(profile.data!.userType);
+        }
+      }
     }
 
     setState(() {
