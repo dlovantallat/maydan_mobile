@@ -54,6 +54,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         setToken(login.data!.token!);
         setUserName(login.data!.userData!.name!);
         setUserPhone(login.data!.userData!.phone!);
+        setUserType(login.data!.userData!.usertype!);
         widget.callBack.onLogin();
       }
     }

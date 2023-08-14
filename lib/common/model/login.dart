@@ -17,13 +17,15 @@ class LoginData {
 class UserData {
   String? name;
   String? phone;
+  String? usertype;
 
-  UserData({required this.name, required this.phone});
+  UserData({required this.name, required this.phone, required this.usertype});
 
   factory UserData.json(dynamic it) {
     return UserData(
       name: it['name'],
       phone: it['msisdn'],
+      usertype: it['usertype'],
     );
   }
 }

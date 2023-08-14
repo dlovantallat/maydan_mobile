@@ -42,6 +42,12 @@ class _RegisterLoginOptionScreenState extends State<RegisterLoginOptionScreen> {
     ),
   );
 
+  void mainRoute() {
+    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) {
+      return const MainPage();
+    }), (route) => false);
+  }
+
   final phoneNumberController = TextEditingController();
   final passwordController = TextEditingController();
   int phoneCounter = 0;
@@ -72,6 +78,9 @@ class _RegisterLoginOptionScreenState extends State<RegisterLoginOptionScreen> {
         setToken(login.data!.token!);
         setUserName(login.data!.userData!.name!);
         setUserPhone(login.data!.userData!.phone!);
+        setUserType(login.data!.userData!.usertype!);
+
+        mainRoute();
 
         /// widget.callBack.onLogin();
       }
@@ -102,12 +111,7 @@ class _RegisterLoginOptionScreenState extends State<RegisterLoginOptionScreen> {
         } else {
           setToken(register.data!.token);
 
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (_) {
-            return const MainPage(
-              index: 4,
-            );
-          }), (route) => false);
+          mainRoute();
         }
       }
     } else {
@@ -144,12 +148,7 @@ class _RegisterLoginOptionScreenState extends State<RegisterLoginOptionScreen> {
       } else {
         setToken(register.data!.token);
 
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (_) {
-          return const MainPage(
-            index: 4,
-          );
-        }), (route) => false);
+        mainRoute();
       }
     }
   }

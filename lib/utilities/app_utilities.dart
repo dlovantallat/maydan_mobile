@@ -69,6 +69,7 @@ const String onBoarding2Png = "assets/on_board_2.png";
 const String appToken = "app-token";
 const String userName = "user-name";
 const String userPhone = "user-phone";
+const String userTypeKey = "user-type";
 const String languageKey = "languageKey";
 const String onBoardKey = "onBoard";
 
@@ -107,6 +108,20 @@ void setUserPhone(String phone) async {
   final prefs = await SharedPreferences.getInstance();
   // Write value
   prefs.setString(userPhone, phone);
+}
+
+void setUserType(String userType) async {
+  // Create storage
+  final prefs = await SharedPreferences.getInstance();
+  // Write value
+  prefs.setString(userTypeKey, userType);
+}
+
+Future<String> getUserType() async {
+  // Create storage
+  final prefs = await SharedPreferences.getInstance();
+  // Read value
+  return prefs.getString(userTypeKey) ?? "P";
 }
 
 Future<String> getUserPhone() async {
