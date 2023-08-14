@@ -167,9 +167,8 @@ class _RegisterLoginOptionScreenState extends State<RegisterLoginOptionScreen> {
         ),
         child: SafeArea(
           child: SingleChildScrollView(
-            reverse: true,
+
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SvgPicture.asset(
                   onBoardingNewLogoSvg,
