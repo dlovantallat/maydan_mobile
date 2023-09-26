@@ -28,6 +28,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     otp = await service.requestPinCode(phoneNumber, isPersonal);
     if (!mounted) return;
     if (otp.requestStatus) {
+      print("code ${otp.statusCode}");
       setSnackBar(context, otp.errorMessage);
     } else {
       if (otp.statusCode == 403) {

@@ -6,10 +6,11 @@ initAppsFlyer() {
   AppsflyerSdk _appsflyerSdk;
 
   try {
+    String appId = Platform.isIOS ? "1662821784" : "co.tornet.maydan";
     final AppsFlyerOptions options = AppsFlyerOptions(
         afDevKey: "MjGmUKzWdMYJ654pKjVXJ",
-        appId: Platform.isIOS ? "id1662821784" : "co.tornet.maydan",
-        showDebug: true,
+        appId: appId,
+        showDebug: false,
         timeToWaitForATTUserAuthorization: 15);
     _appsflyerSdk = AppsflyerSdk(options);
     _appsflyerSdk.onAppOpenAttribution((res) {

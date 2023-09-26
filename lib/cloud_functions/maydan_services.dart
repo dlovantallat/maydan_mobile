@@ -373,14 +373,11 @@ class MaydanServices {
           final respStr = await data.stream.bytesToString();
 
           final login = RequestOtpRespond.json(jsonDecode(respStr));
-
-          return ApiResponse<RequestOtpRespond>(data: login);
+          return ApiResponse<RequestOtpRespond>(data: login, statusCode: 200);
         } else if (data.statusCode == 403) {
-          final respStr = await data.stream.bytesToString();
-
-          final login = RequestOtpRespond.json(jsonDecode(respStr));
-
-          return ApiResponse<RequestOtpRespond>(data: login, statusCode: 403);
+          return ApiResponse<RequestOtpRespond>(statusCode: 403);
+        } else if (data.statusCode == 429) {
+          return ApiResponse<RequestOtpRespond>(statusCode: 429);
         }
 
         return ApiResponse<RequestOtpRespond>(
@@ -404,16 +401,12 @@ class MaydanServices {
       (data) async {
         if (data.statusCode == 200) {
           final respStr = await data.stream.bytesToString();
-
           final login = RequestOtpRespond.json(jsonDecode(respStr));
-
-          return ApiResponse<RequestOtpRespond>(data: login);
+          return ApiResponse<RequestOtpRespond>(data: login, statusCode: 200);
         } else if (data.statusCode == 403) {
-          final respStr = await data.stream.bytesToString();
-
-          final login = RequestOtpRespond.json(jsonDecode(respStr));
-
-          return ApiResponse<RequestOtpRespond>(data: login, statusCode: 403);
+          return ApiResponse<RequestOtpRespond>(statusCode: 403);
+        } else if (data.statusCode == 429) {
+          return ApiResponse<RequestOtpRespond>(statusCode: 429);
         }
 
         return ApiResponse<RequestOtpRespond>(
