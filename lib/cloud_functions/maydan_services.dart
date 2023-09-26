@@ -546,6 +546,7 @@ class MaydanServices {
       String password,
       String categoryId,
       String? path,
+      String? address,
       bool isPersonal) async {
     var request =
         http.MultipartRequest('POST', Uri.parse("${baseURL}register"));
@@ -562,6 +563,7 @@ class MaydanServices {
 
     if (isPersonal) {
       request.fields['category_id'] = categoryId;
+      request.fields['address'] = address!;
     }
 
     if (path != null) {
@@ -1070,6 +1072,7 @@ class MaydanServices {
   }
 
   Future<ApiResponse<ProfileData>> getCompanyId(String companyId) {
+    print("url: ${"${baseURL}users/$companyId"}");
     return http
         .get(Uri.parse("${baseURL}users/$companyId"))
         .timeout(timeOutDuration)

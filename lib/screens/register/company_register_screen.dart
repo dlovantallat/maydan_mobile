@@ -80,6 +80,7 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
 
   registerRequest() async {
     String name = nameController.text.trim().toString();
+    String address = addressController.text.trim().toString();
     String email = emailController.text.trim().toString();
     String password = passwordController.text.trim().toString();
     String passwordConfirmation =
@@ -87,6 +88,11 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
 
     if (name.isEmpty) {
       setSnackBar(context, AppLocalizations.of(context)!.profile_name_val);
+      return;
+    }
+
+    if (address.isEmpty) {
+      setSnackBar(context, AppLocalizations.of(context)!.profile_address_val);
       return;
     }
 
@@ -128,6 +134,7 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
         password,
         _dropdownCategoryValue!.id,
         path == "" ? null : path,
+        address == "" ? null : address,
         widget.isPersonal);
     if (!mounted) return;
 

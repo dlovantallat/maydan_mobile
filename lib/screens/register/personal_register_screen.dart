@@ -99,6 +99,7 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
         password,
         "",
         path == "" ? null : path,
+        null,
         widget.isPersonal);
     if (!mounted) return;
 

@@ -97,6 +97,7 @@
   "signup_btn": "تسجيل حساب",
   "forget_password_btn": "نسيت كلمة المرور",
   "profile_name_val": "الرجاء إدخال الاسم",
+  "profile_address_val": "الرجاء إدخال عنوان",
   "profile_email_val": "الرجاء إدخال بريد إلكتروني صحيح",
   "profile_password_val": "الرجاء إدخال كلمة المرور",
   "profile_password_con_val": "يجب أن تكون كلمة المرورالمؤكدة مطابقة تمامًا لكلمة المرور",

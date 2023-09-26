@@ -97,6 +97,7 @@
   "signup_btn": "تۆمارکردن",
   "forget_password_btn": " وشه\u200Cی نهێنیم لەبیر کردووە",
   "profile_name_val": "تکایە ناوێک داخڵ بکە",
+  "profile_address_val": "تکایە ناونیشانێک دابنێ",
   "profile_email_val": "تکایە ئیمەیڵێکی دروست داخڵ بکە",
   "profile_password_val": "تکایە وشەیەکی نهێنی داخڵ بکە",
   "profile_password_con_val": "وشەی نهێنی پشتڕاستکراوە دەبێت هەمان وشەی نهێنی بێت",
