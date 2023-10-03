@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maydan/utilities/log_event_names.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
@@ -34,6 +35,12 @@ class _ListItemsScreenState extends State<ListItemsScreen> {
 
   @override
   void initState() {
+    analytics.logEvent(name: leItemsScreen, parameters: <String, dynamic>{
+      leItemsScreen: "Items Screen",
+      "sub_category_name": widget.subCategory.title,
+      "sub_category_id": widget.subCategory.id,
+    });
+
     getItems();
     super.initState();
   }

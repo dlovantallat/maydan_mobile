@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../cloud_functions/api_response.dart';
 import '../../main.dart';
 import '../../utilities/app_utilities.dart';
+import '../../utilities/log_event_names.dart';
 import 'register.dart';
 
 class PersonalRegisterScreen extends StatefulWidget {
@@ -122,6 +123,16 @@ class _PersonalRegisterScreenState extends State<PersonalRegisterScreen> {
         }), (route) => false);
       }
     }
+  }
+
+
+  @override
+  void initState() {
+    analytics.logEvent(name: lePersonalRegisterScreen, parameters: <String, dynamic>{
+      lePersonalRegisterScreen: "Personal Register Screen",
+      "phone_number": widget.phoneNumber,
+    });
+    super.initState();
   }
 
   @override

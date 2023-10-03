@@ -16,7 +16,10 @@ class CompanyItem extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (_) => CompanyProfileScreen(id: data.id)));
+                builder: (_) => CompanyProfileScreen(
+                      id: data.id,
+                      title: data.name,
+                    )));
       },
       child: Card(
         elevation: 4,

@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import '../../utilities/locale_provider.dart';
+import '../../utilities/log_event_names.dart';
 import '../company_profile/company_list_screen.dart';
 import '../my_ads/my_ads_screen.dart';
 import '../profile/profile.dart';
@@ -37,6 +39,9 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
 
   @override
   void initState() {
+    analytics.logEvent(name: leDrawer, parameters: <String, dynamic>{
+      leDrawer: "Maydan Drawer",
+    });
     checker(widget.languageKey);
 
     super.initState();

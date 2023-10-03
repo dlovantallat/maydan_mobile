@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/utilities/log_event_names.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../common/model/category.dart';
@@ -107,6 +108,9 @@ class _PostScreenState extends State<PostScreen>
 
   @override
   void initState() {
+    analytics.logEvent(name: lePostScreen, parameters: <String, dynamic>{
+      lePostScreen: "Post Screen",
+    });
     tokenCheck();
     super.initState();
   }
@@ -472,13 +476,29 @@ class _PostScreenState extends State<PostScreen>
 
       if (!postItem.requestStatus) {
         if (postItem.statusCode == 201) {
+          analytics.logEvent(name: lePostScreen, parameters: <String, dynamic>{
+            lePostScreen: "Post Screen",
+            "save": "User Clicked on Save",
+            "post_status": "Post Completed",
+          });
+
           Navigator.pop(context);
           postSucceed();
         } else {
+          analytics.logEvent(name: lePostScreen, parameters: <String, dynamic>{
+            lePostScreen: "Post Screen",
+            "save": "User Clicked on Save",
+            "post_status": postItem.errorMessage,
+          });
           Navigator.pop(context);
           setSnackBar(context, "post added: error ${postItem.errorMessage}");
         }
       } else {
+        analytics.logEvent(name: lePostScreen, parameters: <String, dynamic>{
+          lePostScreen: "Post Screen",
+          "save": "User Clicked on Save",
+          "post_status": postItem.errorMessage,
+        });
         Navigator.pop(context);
         setSnackBar(context, "post added: error ${postItem.errorMessage}");
       }

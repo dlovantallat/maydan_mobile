@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/utilities/log_event_names.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
@@ -54,6 +55,9 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
+    analytics.logEvent(name: leHomeScreen, parameters: <String, dynamic>{
+      leHomeScreen: "Home Screen",
+    });
     getMe();
     getHome();
     super.initState();
@@ -463,9 +467,15 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void viewAll(int index) {
     if (index == 0) {
+      analytics.logEvent(name: leHomeScreen, parameters: <String, dynamic>{
+        leViewAllScreen: "Category Section",
+      });
       //Category
       widget.listener.indexListener(1);
     } else if (index == 1) {
+      analytics.logEvent(name: leHomeScreen, parameters: <String, dynamic>{
+        leViewAllScreen: "Hot Deals Section",
+      });
       //hot
       currentPage = 1;
       totalPage = 0;
@@ -478,6 +488,9 @@ class _HomeScreenState extends State<HomeScreen>
 
       getHotDeals();
     } else if (index == 2) {
+      analytics.logEvent(name: leHomeScreen, parameters: <String, dynamic>{
+        leViewAllScreen: "Latest Deals Section",
+      });
       //latest
       currentPage = 1;
       totalPage = 0;
@@ -490,6 +503,9 @@ class _HomeScreenState extends State<HomeScreen>
 
       getLatestDeals();
     } else if (index == 3) {
+      analytics.logEvent(name: leHomeScreen, parameters: <String, dynamic>{
+        leViewAllScreen: "Company Section",
+      });
       // Company
       currentPage = 1;
       totalPage = 0;

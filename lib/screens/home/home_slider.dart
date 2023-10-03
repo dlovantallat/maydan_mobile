@@ -32,7 +32,8 @@ Swiper homeSlider(context,
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => CompanyProfileScreen(id: image.bannerableId),
+                  builder: (_) => CompanyProfileScreen(
+                      title: image.name, id: image.bannerableId),
                 ),
               );
             } else if (images[index].bannerableType == "sub-category") {

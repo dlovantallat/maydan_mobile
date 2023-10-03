@@ -416,7 +416,8 @@ class HomeProfileItem extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (_) => CompanyProfileScreen(id: profile.id)));
+                builder: (_) =>
+                    CompanyProfileScreen(title: profile.name, id: profile.id)));
       },
       child: Card(
         elevation: 4,

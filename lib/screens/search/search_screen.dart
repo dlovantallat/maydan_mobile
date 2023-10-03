@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maydan/utilities/log_event_names.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
@@ -99,6 +100,12 @@ class _SearchScreenState extends State<SearchScreen> {
                 isShow = true;
               });
             }
+
+            analytics
+                .logEvent(name: leSearchScreen, parameters: <String, dynamic>{
+              leSearchScreen: "Search Screen",
+              "search_query": myController.text.trim(),
+            });
 
             _fetchItems();
           },

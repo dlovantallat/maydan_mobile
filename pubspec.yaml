@@ -39,6 +39,7 @@ dependencies:
   # Firebase
   firebase_core: ^2.4.0
   firebase_messaging: ^14.2.0
+  firebase_analytics: ^10.5.0
 
   # Multi-Languages
   flutter_localizations:

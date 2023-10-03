@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../main.dart';
+import '../../utilities/log_event_names.dart';
 import 'language_screen.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -11,6 +13,14 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  @override
+  void initState() {
+    analytics.logEvent(name: leSettingScreen, parameters: <String, dynamic>{
+      leSettingScreen: "Setting Screen",
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/utilities/log_event_names.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../main.dart';
@@ -43,6 +44,11 @@ class _ProfileScreenState extends State<ProfileScreen>
       setState(() {
         isLogin = false;
       });
+
+      analytics.logEvent(name: leProfileScreen, parameters: <String, dynamic>{
+        leProfileScreen: "Profile Screen",
+        "user_not_login": "user not logged in",
+      });
     } else {
       setState(() {
         isLogin = true;
@@ -63,11 +69,23 @@ class _ProfileScreenState extends State<ProfileScreen>
 
     if (!profile.requestStatus) {
       if (profile.statusCode == 401) {
+        analytics.logEvent(name: leProfileScreen, parameters: <String, dynamic>{
+          leProfileScreen: "Profile Screen",
+          "status_code": "401",
+        });
         setToken("");
         tokenCheck();
       }
 
       if (profile.statusCode == 200) {
+        analytics.logEvent(name: leProfileScreen, parameters: <String, dynamic>{
+          leProfileScreen: "Profile Screen",
+          "user_name": profile.data!.name,
+          "user_type": profile.data!.userType,
+          "user_id": profile.data!.id,
+          "user_address": profile.data!.address,
+        });
+
         if (profile.data!.userType != "P") {
           setUserType(profile.data!.userType);
         }

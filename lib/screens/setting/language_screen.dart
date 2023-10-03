@@ -4,8 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import '../../utilities/locale_provider.dart';
+import '../../utilities/log_event_names.dart';
 
 class LanguageScreen extends StatefulWidget {
   const LanguageScreen({Key? key}) : super(key: key);
@@ -21,6 +23,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
   @override
   void initState() {
+    analytics.logEvent(name: leLanguageScreen, parameters: <String, dynamic>{
+      leLanguageScreen: "language Screen",
+    });
     getLanguage();
     super.initState();
   }

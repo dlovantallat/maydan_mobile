@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../cloud_functions/api_response.dart';
 import '../../main.dart';
 import '../../utilities/app_utilities.dart';
+import '../../utilities/log_event_names.dart';
 import '../register/register.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
@@ -71,6 +72,16 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         }), (route) => false);
       }
     }
+  }
+
+  @override
+  void initState() {
+    analytics
+        .logEvent(name: leResetPasswordScreen, parameters: <String, dynamic>{
+      leResetPasswordScreen: "Reset Password Screen",
+      "user_phone": widget.phoneNumber,
+    });
+    super.initState();
   }
 
   @override

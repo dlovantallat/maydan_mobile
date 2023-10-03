@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../cloud_functions/api_response.dart';
 import '../../main.dart';
 import '../../utilities/app_utilities.dart';
+import '../../utilities/log_event_names.dart';
 import 'otp_screen.dart';
 import 'register.dart';
 
@@ -50,6 +51,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    analytics.logEvent(name: leRegisterScreen, parameters: <String, dynamic>{
+      leRegisterScreen: "Register Screen",
+    });
+    super.initState();
   }
 
   @override

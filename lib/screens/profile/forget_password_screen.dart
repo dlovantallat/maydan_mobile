@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/utilities/log_event_names.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../main.dart';
@@ -56,6 +57,15 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    analytics
+        .logEvent(name: leForgetPasswordScreen, parameters: <String, dynamic>{
+      leForgetPasswordScreen: "Forget Password Screen",
+    });
+    super.initState();
   }
 
   @override

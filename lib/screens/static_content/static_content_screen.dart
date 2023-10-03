@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maydan/utilities/log_event_names.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../main.dart';
@@ -22,6 +23,13 @@ class _StaticContentScreenState extends State<StaticContentScreen> {
 
   @override
   void initState() {
+    analytics
+        .logEvent(name: leStaticContentScreen, parameters: <String, dynamic>{
+      leStaticContentScreen: "Static Content Screen",
+      "screen_title": widget.title,
+      "screen_name": widget.name,
+    });
+
     getStaticContent();
     super.initState();
   }

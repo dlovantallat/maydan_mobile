@@ -4,6 +4,7 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../main.dart';
+import '../../utilities/log_event_names.dart';
 import '../profile/profile.dart';
 import 'company_item.dart';
 import 'company_obj.dart';
@@ -31,6 +32,9 @@ class _CompanyListScreenState extends State<CompanyListScreen> {
 
   @override
   void initState() {
+    analytics.logEvent(name: leCompaniesScreen, parameters: <String, dynamic>{
+      leCompaniesScreen: "Companies Screen",
+    });
     getActiveCompanies();
     super.initState();
   }

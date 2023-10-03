@@ -5,8 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import '../../utilities/locale_provider.dart';
+import '../../utilities/log_event_names.dart';
 import 'register_login_option_screen.dart';
 
 class LanguageStartUpScreen extends StatefulWidget {
@@ -45,6 +47,15 @@ class _LanguageStartUpScreenState extends State<LanguageStartUpScreen> {
     if (!mounted) return;
     Navigator.push(context,
         MaterialPageRoute(builder: (_) => const RegisterLoginOptionScreen()));
+  }
+
+  @override
+  void initState() {
+    analytics
+        .logEvent(name: leLanguageStartUpScreen, parameters: <String, dynamic>{
+      leLanguageStartUpScreen: "language start up Screen",
+    });
+    super.initState();
   }
 
   @override

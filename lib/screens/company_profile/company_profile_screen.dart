@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:maydan/utilities/log_event_names.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -11,9 +12,11 @@ import '../profile/profile.dart';
 import 'company_widget.dart';
 
 class CompanyProfileScreen extends StatefulWidget {
+  final String title;
   final String id;
 
-  const CompanyProfileScreen({Key? key, required this.id}) : super(key: key);
+  const CompanyProfileScreen({Key? key, required this.title, required this.id})
+      : super(key: key);
 
   @override
   State<CompanyProfileScreen> createState() => _CompanyProfileScreenState();
@@ -43,6 +46,13 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
 
   @override
   void initState() {
+    analytics
+        .logEvent(name: leCompanyProfileScreen, parameters: <String, dynamic>{
+      leCompanyProfileScreen: "Company Profile Screen",
+      "company_name": widget.title,
+      "company_id": widget.id,
+    });
+
     getAccount();
     super.initState();
   }

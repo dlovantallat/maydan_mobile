@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/utilities/log_event_names.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../main.dart';
@@ -118,6 +119,16 @@ class _DeleteProfileScreenState extends State<DeleteProfileScreen> {
   }
 
   @override
+  void initState() {
+    analytics
+        .logEvent(name: leDeleteAccountScreen, parameters: <String, dynamic>{
+      leDeleteAccountScreen: "Delete Account Screen",
+      "user_phone": widget.msisdn,
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -188,8 +199,7 @@ class _DeleteProfileScreenState extends State<DeleteProfileScreen> {
                         ),
                       ),
                       Padding(
-                        padding:
-                        const EdgeInsetsDirectional.only( start: 16),
+                        padding: const EdgeInsetsDirectional.only(start: 16),
                         child: Text(
                           AppLocalizations.of(context)!
                               .account_delete_point_three,

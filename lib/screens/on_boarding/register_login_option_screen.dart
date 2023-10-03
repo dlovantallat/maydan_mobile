@@ -12,6 +12,7 @@ import '../../cloud_functions/api_response.dart';
 import '../../common/model/login.dart';
 import '../../main.dart';
 import '../../utilities/app_utilities.dart';
+import '../../utilities/log_event_names.dart';
 import '../profile/forget_password_screen.dart';
 import '../register/register.dart';
 
@@ -59,6 +60,13 @@ class _RegisterLoginOptionScreenState extends State<RegisterLoginOptionScreen> {
   late ApiResponse<RegisterModel> register;
 
   loginRequest() async {
+    analytics.logEvent(
+        name: leRegisterLoginStartUpScreen,
+        parameters: <String, dynamic>{
+          leRegisterLoginStartUpScreen: "Register Login start up Screen",
+          "maydan_login_btn": "Maydan Login Button Click",
+        });
+
     loading(context);
 
     String phone =
@@ -88,6 +96,12 @@ class _RegisterLoginOptionScreenState extends State<RegisterLoginOptionScreen> {
   }
 
   facebook() async {
+    analytics.logEvent(
+        name: leRegisterLoginStartUpScreen,
+        parameters: <String, dynamic>{
+          leRegisterLoginStartUpScreen: "Register Login start up Screen",
+          "facebook_btn": "Facebook Login Button Click",
+        });
     final LoginResult result = await FacebookAuth.instance.login(permissions: [
       'public_profile'
     ]); // by default we request the email and the public profile
@@ -120,6 +134,12 @@ class _RegisterLoginOptionScreenState extends State<RegisterLoginOptionScreen> {
   }
 
   apple() async {
+    analytics.logEvent(
+        name: leRegisterLoginStartUpScreen,
+        parameters: <String, dynamic>{
+          leRegisterLoginStartUpScreen: "Register Login start up Screen",
+          "apple_btn": "Apple Login Button Click",
+        });
     final credential = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
@@ -154,6 +174,16 @@ class _RegisterLoginOptionScreenState extends State<RegisterLoginOptionScreen> {
   }
 
   @override
+  void initState() {
+    analytics.logEvent(
+        name: leRegisterLoginStartUpScreen,
+        parameters: <String, dynamic>{
+          leRegisterLoginStartUpScreen: "Register Login start up Screen",
+        });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -167,7 +197,6 @@ class _RegisterLoginOptionScreenState extends State<RegisterLoginOptionScreen> {
         ),
         child: SafeArea(
           child: SingleChildScrollView(
-
             child: Column(
               children: [
                 SvgPicture.asset(
@@ -386,6 +415,15 @@ class _RegisterLoginOptionScreenState extends State<RegisterLoginOptionScreen> {
                       ),
                       TextButton(
                           onPressed: () {
+                            analytics.logEvent(
+                                name: leRegisterLoginStartUpScreen,
+                                parameters: <String, dynamic>{
+                                  leRegisterLoginStartUpScreen:
+                                      "Register Login start up Screen",
+                                  "maydan_register_btn":
+                                      "Maydan register Button Click",
+                                });
+
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

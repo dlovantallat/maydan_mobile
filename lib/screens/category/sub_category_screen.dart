@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get_it/get_it.dart';
+import 'package:maydan/utilities/log_event_names.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../cloud_functions/maydan_services.dart';
 import '../../common/model/category.dart';
+import '../../main.dart';
 import '../../utilities/app_utilities.dart';
 import 'sub_category_item.dart';
 
@@ -24,6 +26,12 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
 
   @override
   void initState() {
+    analytics.logEvent(name: leSubCategoryScreen, parameters: <String, dynamic>{
+      leSubCategoryScreen: "Sub Category Screen",
+      "category_name": widget.category.title,
+      "category_id": widget.category.id,
+    });
+
     getSubCategories();
     super.initState();
   }

@@ -11,6 +11,7 @@ import '../../cloud_functions/api_response.dart';
 import '../../common/model/login.dart';
 import '../../main.dart';
 import '../../utilities/app_utilities.dart';
+import '../../utilities/log_event_names.dart';
 import 'register.dart';
 import 'register_screen.dart';
 
@@ -35,6 +36,10 @@ class _LoginWidgetState extends State<LoginWidget> {
   late ApiResponse<RegisterModel> register;
 
   loginRequest() async {
+    analytics.logEvent(name: leLoginScreen, parameters: <String, dynamic>{
+      leLoginScreen: "Login Screen",
+      "login_btn": "Login button",
+    });
     loading(context);
 
     String phone =
@@ -61,6 +66,11 @@ class _LoginWidgetState extends State<LoginWidget> {
   }
 
   facebook() async {
+    analytics.logEvent(name: leLoginScreen, parameters: <String, dynamic>{
+      leLoginScreen: "Login Screen",
+      "facebook_btn": "facebook login button",
+    });
+
     final LoginResult result = await FacebookAuth.instance.login(permissions: [
       'public_profile'
     ]); // by default we request the email and the public profile
@@ -98,6 +108,10 @@ class _LoginWidgetState extends State<LoginWidget> {
   }
 
   apple() async {
+    analytics.logEvent(name: leLoginScreen, parameters: <String, dynamic>{
+      leLoginScreen: "Login Screen",
+      "apple_btn": "apple login button",
+    });
     final credential = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,

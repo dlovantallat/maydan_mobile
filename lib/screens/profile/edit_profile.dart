@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/utilities/log_event_names.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../common/model/category.dart';
@@ -60,6 +61,13 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   void initState() {
+    analytics.logEvent(name: leEditAccountScreen, parameters: <String, dynamic>{
+      leEditAccountScreen: "Edit Account Screen",
+      "user_name": widget.profile.name,
+      "user_email": widget.profile.email,
+      "user_phone": widget.profile.msisdn,
+    });
+
     nameController.text = widget.profile.name;
     emailController.text = widget.profile.email;
     phoneNumberController.text = widget.profile.msisdn;

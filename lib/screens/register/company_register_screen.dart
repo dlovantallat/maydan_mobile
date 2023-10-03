@@ -9,6 +9,7 @@ import '../../cloud_functions/api_response.dart';
 import '../../common/model/category.dart';
 import '../../main.dart';
 import '../../utilities/app_utilities.dart';
+import '../../utilities/log_event_names.dart';
 import '../post/post_obj.dart';
 import 'register.dart';
 
@@ -49,6 +50,11 @@ class _CompanyRegisterScreenState extends State<CompanyRegisterScreen> {
 
   @override
   void initState() {
+    analytics
+        .logEvent(name: leCompanyRegisterScreen, parameters: <String, dynamic>{
+      leCompanyRegisterScreen: "Company Register Screen",
+      "phone_number": widget.phoneNumber,
+    });
     getCategories();
     super.initState();
   }

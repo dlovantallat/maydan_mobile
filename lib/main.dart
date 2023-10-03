@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 // import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -35,6 +37,11 @@ import 'utilities/app_utilities.dart';
 /// Global Variable
 MaydanServices get service => GetIt.I<MaydanServices>();
 
+FirebaseAnalytics get analytics => FirebaseAnalytics.instance;
+
+FirebaseAnalyticsObserver get observer =>
+    FirebaseAnalyticsObserver(analytics: analytics);
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final fire = await Firebase.initializeApp(
@@ -55,6 +62,8 @@ Future<void> main() async {
     provisional: false,
     sound: true,
   );
+
+  analytics.setAnalyticsCollectionEnabled(true);
 
   if (kDebugMode) {
     print('User granted permission: ${settings.authorizationStatus}');
@@ -189,6 +198,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      navigatorObservers: [observer],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: appTheme,

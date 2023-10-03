@@ -7,6 +7,7 @@ import 'package:maydan/screens/profile/reset_password_screen.dart';
 import '../../cloud_functions/api_response.dart';
 import '../../main.dart';
 import '../../utilities/app_utilities.dart';
+import '../../utilities/log_event_names.dart';
 import '../../widgets/otp/otp_field.dart';
 import 'company_register_screen.dart';
 import 'personal_register_screen.dart';
@@ -45,6 +46,10 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   void initState() {
+    analytics.logEvent(name: leOtpScreen, parameters: <String, dynamic>{
+      leOtpScreen: "Otp Screen",
+      "phone_number": widget.phoneNumber,
+    });
     startTimer();
     super.initState();
   }

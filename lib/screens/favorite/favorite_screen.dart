@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maydan/utilities/log_event_names.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../cloud_functions/api_response.dart';
@@ -37,6 +38,10 @@ class _FavoriteScreenState extends State<FavoriteScreen>
 
   @override
   void initState() {
+    analytics.logEvent(name: leFavoritesScreen, parameters: <String, dynamic>{
+      leFavoritesScreen: "Favorites Screen",
+    });
+
     tokenCheck();
     super.initState();
   }

@@ -9,6 +9,7 @@ import '../../common/meta_data_widget.dart';
 import '../../common/model/item.dart';
 import '../../main.dart';
 import '../../utilities/app_utilities.dart';
+import '../../utilities/log_event_names.dart';
 import '../favorite/favorite_obj.dart';
 import '../home/home_slider.dart';
 import '../list_items/items_item.dart';
@@ -41,6 +42,17 @@ class _ItemDetailState extends State<ItemDetail> {
 
   @override
   void initState() {
+    analytics.logEvent(name: leItemScreen, parameters: <String, dynamic>{
+      leItemScreen: "Item Screen",
+      "item_name": widget.item.title,
+      "item_id": widget.item.id,
+      "item_view_count": widget.item.viewCount,
+      "seller_name": widget.item.sellerName,
+      "seller_phone": widget.item.phoneNumber,
+      "user_name": widget.item.user.name,
+      "user_phone": widget.item.user.msisdn,
+    });
+
     setState(() {
       isFav = widget.isFav;
     });

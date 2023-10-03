@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:maydan/utilities/log_event_names.dart';
 
 import '../../cloud_functions/api_response.dart';
 import '../../common/model/category.dart';
@@ -21,6 +22,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   void initState() {
+    analytics.logEvent(name: leCategoryScreen, parameters: <String, dynamic>{
+      leCategoryScreen: "Category Screen",
+    });
+
     getCategories();
     super.initState();
   }
