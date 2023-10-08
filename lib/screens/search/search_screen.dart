@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:maydan/utilities/log_event_names.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
@@ -30,6 +32,47 @@ class _SearchScreenState extends State<SearchScreen> {
   String token = "";
   String key = "";
 
+  int _start = 1;
+  Timer? timer;
+  String temp = "";
+
+
+  @override
+  void dispose() {
+    if (timer != null) {
+      timer?.cancel();
+    }
+    super.dispose();
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(
+      const Duration(seconds: 1),
+          (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+            if (myController.text.toString().trim() == "") {
+              setState(() {
+                isShow = true;
+              });
+            } else {
+              setState(() {
+                isShow = false;
+              });
+              print(myController.text);
+              _fetchItems();
+            }
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
   _fetchItems() async {
     list.clear();
 
@@ -41,8 +84,8 @@ class _SearchScreenState extends State<SearchScreen> {
     token = await getToken();
     key = await getLanguageKeyForApi();
 
-    search = await service.getLatestDeals(token, currentPage, key,
-        search: searchQuery);
+    search =
+        await service.getSearch(token, currentPage, key, search: searchQuery);
 
     if (!search.requestStatus) {
       if (search.statusCode == 200) {
@@ -67,7 +110,7 @@ class _SearchScreenState extends State<SearchScreen> {
       return;
     }
     String localLang = await getLanguageKeyForApi();
-    search = await service.getLatestDeals(token, currentPage, localLang);
+    search = await service.getSearch(token, currentPage, localLang);
     list.addAll(search.data!.list);
     currentPage++;
 
@@ -90,10 +133,28 @@ class _SearchScreenState extends State<SearchScreen> {
           enabled: true,
           autofocus: true,
           onChanged: (txt) {
-            setState(() {
-              _isLoading = true;
-              isShow = false;
-            });
+            if (timer != null) {
+              timer?.cancel();
+            }
+
+            if (txt != temp) {
+              temp = txt;
+              setState(() {
+                _isLoading = true;
+                isShow = false;
+                _start = 2;
+                list.clear();
+                currentPage = 1;
+              });
+              startTimer();
+            }
+
+
+
+            // setState(() {
+            //   _isLoading = true;
+            //   isShow = false;
+            // });
 
             if (txt.isEmpty) {
               setState(() {
@@ -107,8 +168,8 @@ class _SearchScreenState extends State<SearchScreen> {
               "search_query": myController.text.trim(),
             });
 
-            currentPage = 1;
-            _fetchItems();
+            // currentPage = 1;
+            // _fetchItems();
           },
           decoration: InputDecoration(
               prefixIcon: const Icon(

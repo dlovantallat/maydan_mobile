@@ -9,7 +9,8 @@ class ItemObj {
     for (var i in item['data']) {
       l.add(ItemData.fromJson(i));
     }
-    return ItemObj(list: l, lastPage: item['last_page']);
+    return ItemObj(
+        list: l, lastPage: item['last_page'] ?? item['meta']['last_page']);
   }
 }
 
@@ -118,8 +119,8 @@ class ItemPhotos {
 
   factory ItemPhotos.fromJson(Map<String, dynamic> item) {
     return ItemPhotos(
-      id: item['id'],
-      filePath: item['file_path'],
+      id: item['id'] ?? "",
+      filePath: item['file_path'] ?? "",
     );
   }
 }
