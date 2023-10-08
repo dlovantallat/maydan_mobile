@@ -1151,8 +1151,6 @@ class MaydanServices {
   Future<ApiResponse<ItemObj>> getLatestDeals(
       String token, int currentPage, String localLang,
       {String search = ""}) {
-
-    print("${baseURL}items?per_page=$perPage&page=$currentPage&title=$search");
     return http
         .get(
             Uri.parse(
@@ -1180,9 +1178,6 @@ class MaydanServices {
   Future<ApiResponse<ItemObj>> getSearch(
       String token, int currentPage, String localLang,
       {String search = ""}) {
-
-    print("${baseURL}search/items?per_page=$perPage&page=$currentPage&search=$search");
-    print(headers(token: token, languageKey: localLang));
     return http
         .get(
         Uri.parse(
@@ -1191,8 +1186,6 @@ class MaydanServices {
         .timeout(timeOutDuration)
         .then(
           (data) {
-            print("object: ${data.statusCode}");
-            // print("object: ${data.body}");
         if (data.statusCode == 200) {
           final jsonData = json.decode(data.body);
 
