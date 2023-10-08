@@ -107,6 +107,7 @@ class _SearchScreenState extends State<SearchScreen> {
               "search_query": myController.text.trim(),
             });
 
+            currentPage = 1;
             _fetchItems();
           },
           decoration: InputDecoration(
