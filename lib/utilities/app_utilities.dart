@@ -281,6 +281,6 @@ String currencyFormat(String type, String price) {
   }
 }
 
-abstract class LogoutListener {
+abstract mixin class LogoutListener {
   void onLogout();
 }

@@ -383,6 +383,6 @@ Widget customDivider() {
   );
 }
 
-abstract class ItemListener {
+abstract mixin class ItemListener {
   void onFavRemove(String id);
 }

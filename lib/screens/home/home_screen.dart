@@ -530,6 +530,6 @@ class _HomeScreenState extends State<HomeScreen>
   }
 }
 
-abstract class HomeDrawerListener {
+abstract mixin class HomeDrawerListener {
   void indexListener(int index);
 }

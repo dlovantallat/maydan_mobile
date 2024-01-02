@@ -293,6 +293,6 @@ class _HomeDrawerState extends State<HomeDrawer> with LogoutListener {
   }
 }
 
-abstract class DrawerCallBack {
+abstract mixin class DrawerCallBack {
   void returnKey(String key);
 }

@@ -387,6 +387,6 @@ class _LoginWidgetState extends State<LoginWidget> {
   }
 }
 
-abstract class LoginCallBack {
+abstract mixin class LoginCallBack {
   void onLogin();
 }

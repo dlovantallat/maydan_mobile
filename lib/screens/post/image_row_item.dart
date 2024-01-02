@@ -60,6 +60,6 @@ class PostImageItem extends StatelessWidget {
   }
 }
 
-abstract class DeleteListener {
+abstract mixin class DeleteListener {
   void onDelete(int index);
 }

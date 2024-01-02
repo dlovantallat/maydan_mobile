@@ -474,6 +474,6 @@ class HomeProfileItem extends StatelessWidget {
   }
 }
 
-abstract class HomeViewAllListener {
+abstract mixin class HomeViewAllListener {
   void viewAll(int index);
 }
